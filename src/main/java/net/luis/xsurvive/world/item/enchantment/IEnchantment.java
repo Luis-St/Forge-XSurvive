@@ -87,7 +87,7 @@ public interface IEnchantment {
 				int level = result.getEnchantmentLevel(enchantment);
 				if (ench.isUpgrade() && ench.getUpgradeLevel() > level) {
 					EnchantmentHandler.increaseEnchantment(enchantment, result, false);
-					return new EnchantedItem(result, 10);
+					return new EnchantedItem(result, 30);
 				} else {
 					return merge(left, right);
 				}
