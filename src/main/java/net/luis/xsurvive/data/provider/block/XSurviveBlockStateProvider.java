@@ -31,15 +31,17 @@ public class XSurviveBlockStateProvider extends BlockStateProvider {
 	
 	@Override
 	protected void registerStatesAndModels() {
-		this.models().orientable("smelting_furnace", this.modLoc("block/smelting_furnace_side"), this.modLoc("block/smelting_furnace_front"), this.modLoc("block/smelting_furnace_top"));
-		this.models().orientable("smelting_furnace_on", this.modLoc("block/smelting_furnace_side"), this.modLoc("block/smelting_furnace_front_on"), this.modLoc("block/smelting_furnace_top"));
 		this.litFacingBlock(XSurviveBlocks.SMELTING_FURNACE.get());
+		
 		for (Block block : XSurviveBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
 			this.simpleBlockItem(block, this.blockModel(block, null));
 		}
 	}
 	
 	private void litFacingBlock(Block block) {
+		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		this.models().orientable(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front"), this.modLoc("block/" + name + "_top"));
+		this.models().orientable(name + "_on", this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front_on"), this.modLoc("block/" + name + "_top"));
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (Direction direction : Lists.newArrayList(Direction.Plane.HORIZONTAL.iterator())) {
 			builder.partialState().with(AbstractFurnaceBlock.FACING, direction).with(AbstractFurnaceBlock.LIT, true).modelForState().modelFile(this.blockModel(block, "on")).rotationY(getYRotation(direction)).addModel();

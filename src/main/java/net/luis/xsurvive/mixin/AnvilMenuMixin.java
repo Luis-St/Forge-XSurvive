@@ -221,15 +221,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				}
 			}
 			if (!resultStack.isEmpty()) {
-				int k2 = resultStack.getBaseRepairCost();
-				if (!rightStack.isEmpty() && k2 < rightStack.getBaseRepairCost()) {
-					k2 = rightStack.getBaseRepairCost();
+				int baseRepairCost = resultStack.getBaseRepairCost();
+				if (!rightStack.isEmpty() && baseRepairCost < rightStack.getBaseRepairCost()) {
+					baseRepairCost = rightStack.getBaseRepairCost();
 				}
 				if (renameCost != enchantCost || renameCost == 0) {
-					k2 = calculateIncreasedRepairCost(k2);
+					baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
 				}
 				if (!decreaseRepairCost) {
-					resultStack.setRepairCost(k2);
+					resultStack.setRepairCost(baseRepairCost);
 				}
 				EnchantmentHelper.setEnchantments(resultEnchantments, resultStack);
 			}
