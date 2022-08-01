@@ -32,5 +32,14 @@ public class XSurvivePotions {
 	public static final RegistryObject<Potion> STRONG_WITHER = POTIONS.register("strong_wither", () -> {
 		return new Potion(new MobEffectInstance(MobEffects.WITHER, 400, 1));
 	});
+	public static final RegistryObject<Potion> DIG_SPEED = POTIONS.register("haste", () -> {
+		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
+	});
+	public static final RegistryObject<Potion> LONG_DIG_SPEED = POTIONS.register("long_haste", () -> {
+		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
+	});
+	public static final RegistryObject<Potion> STRONG_DIG_SPEED = POTIONS.register("strong_haste", () -> {
+		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
+	});
 	
 }

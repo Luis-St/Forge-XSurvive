@@ -21,6 +21,8 @@ public class OnCommonSetupEvent {
 			.addPowerUpgrade(XSurvivePotions.STRONG_FORST.get()).build());
 		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.WITHER_ROSE, XSurvivePotions.WITHER.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_WITHER.get())
 			.addPowerUpgrade(XSurvivePotions.STRONG_WITHER.get()).build());
+		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.IRON_PICKAXE, XSurvivePotions.DIG_SPEED.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_DIG_SPEED.get())
+			.addPowerUpgrade(XSurvivePotions.STRONG_DIG_SPEED.get()).build());
 	}
 	
 }

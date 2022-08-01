@@ -55,9 +55,9 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 	protected void add(Potion potion) {
 		ResourceLocation location = ForgeRegistries.POTIONS.getKey(potion);
 		String potionName = location.getPath();
-		this.add("item.minecraft.potion.effect." + potionName, this.getPotionName(location));
-		this.add("item.minecraft.splash_potion.effect." + potionName, this.getPotionName(location));
-		this.add("item.minecraft.lingering_potion.effect." + potionName, this.getPotionName(location));
+		this.add("item.minecraft.potion.effect." + potionName, "Potion of " + this.getPotionName(location));
+		this.add("item.minecraft.splash_potion.effect." + potionName, "Splash Potion of " + this.getPotionName(location));
+		this.add("item.minecraft.lingering_potion.effect." + potionName, "Lingering Potion of " + this.getPotionName(location));
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
 	}
 	
