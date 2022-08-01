@@ -36,7 +36,7 @@ public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 		}
 	}
 	
-	protected boolean isEndChunk(ChunkAccess chunk) {
+	private boolean isEndChunk(ChunkAccess chunk) {
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				if (chunk.getNoiseBiome(x, 100, z).is(Biomes.THE_END)) {
