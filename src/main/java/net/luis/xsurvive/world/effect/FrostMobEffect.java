@@ -15,7 +15,7 @@ public class FrostMobEffect extends MobEffect {
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier) {
 		if (EntityHelper.isAffectedByFrost(entity)) {
-			entity.hurt(DamageSource.FREEZE, amplifier * 2.0F);
+			entity.hurt(DamageSource.FREEZE, (amplifier + 1) * 2.0F);
 		}
 	}
 	

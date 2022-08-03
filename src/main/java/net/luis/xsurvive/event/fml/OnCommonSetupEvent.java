@@ -1,9 +1,11 @@
 package net.luis.xsurvive.event.fml;
 
+import net.luis.xbackpack.BackpackConstans;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.network.XSurviveNetworkHandler;
 import net.luis.xsurvive.world.item.alchemy.XSurviveBrewingRecipe;
 import net.luis.xsurvive.world.item.alchemy.XSurvivePotions;
+import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +19,7 @@ public class OnCommonSetupEvent {
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) {
 		XSurviveNetworkHandler.init();
+		BackpackConstans.FURNACE_RECIPE_TYPES.add(XSurviveRecipeTypes.SMELTING.get());
 		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.SNOWBALL, XSurvivePotions.FORST.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_FORST.get())
 			.addPowerUpgrade(XSurvivePotions.STRONG_FORST.get()).build());
 		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.WITHER_ROSE, XSurvivePotions.WITHER.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_WITHER.get())

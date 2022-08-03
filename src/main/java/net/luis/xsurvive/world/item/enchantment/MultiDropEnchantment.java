@@ -38,6 +38,11 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment {
 	}
 	
 	@Override
+	public boolean isTreasureOnly() {
+		return true;
+	}
+	
+	@Override
 	public boolean isDiscoverable() {
 		return false;
 	}

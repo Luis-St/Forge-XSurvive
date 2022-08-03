@@ -35,5 +35,15 @@ public class SmeltingEnchantment extends Enchantment {
 		}
 		return super.checkCompatibility(enchantment);
 	}
+	
+	@Override
+	public boolean isTreasureOnly() {
+		return true;
+	}
+	
+	@Override
+	public boolean isTradeable() {
+		return false;
+	}
 
 }

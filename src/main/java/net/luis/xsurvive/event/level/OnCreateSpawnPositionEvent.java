@@ -43,7 +43,6 @@ public class OnCreateSpawnPositionEvent {
 					return spawnPos;
 				}
 				spawnPos = PlayerRespawnLogic.getSpawnPosInChunk(level, new ChunkPos(pos.x + x, pos.z + z));
-
 			}
 		}
 		return null;

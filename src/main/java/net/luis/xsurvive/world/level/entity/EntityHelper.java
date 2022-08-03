@@ -59,16 +59,16 @@ public class EntityHelper {
 	
 	public static void updateAttributeModifier(Player player, Attribute attribute, Operation operation, UUID uuid, String name, double to, double from) {
 		AttributeInstance instance = player.getAttribute(attribute);
-		AttributeModifier gravityModifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to, operation);
+		AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to, operation);
 		boolean hasModifier = instance.getModifier(uuid) != null;
 		if (to == from && !hasModifier) {
-			instance.addTransientModifier(gravityModifier);
+			instance.addTransientModifier(modifier);
 		} else if (to != from) {
 			if (hasModifier) {
 				instance.removeModifier(uuid);
-				instance.addTransientModifier(gravityModifier);
+				instance.addTransientModifier(modifier);
 			} else {
-				instance.addTransientModifier(gravityModifier);
+				instance.addTransientModifier(modifier);
 			}
 		}
 	}

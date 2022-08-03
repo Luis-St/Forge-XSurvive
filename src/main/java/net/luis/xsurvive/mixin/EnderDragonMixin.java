@@ -46,7 +46,7 @@ public abstract class EnderDragonMixin extends Mob {
 	private EndDragonFight dragonFight;
 	@Shadow
 	public int dragonDeathTime;
-	@Shadow
+	@Shadow(remap = false)
 	private Player unlimitedLastHurtByPlayer = null;
 	
 	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
