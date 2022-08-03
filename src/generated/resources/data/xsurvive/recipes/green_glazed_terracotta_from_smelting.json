@@ -1,5 +1,5 @@
 {
-  "type": "xsurvive:smelting",
+  "type": "xsurvive:xsurvive_smelting",
   "cookingtime": 100,
   "experience": 0.5,
   "ingredient": {

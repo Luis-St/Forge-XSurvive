@@ -12,7 +12,7 @@ public class XSurviveRecipeSerializers {
 	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, XSurvive.MOD_ID);
 	
 	
-	public static final RegistryObject<SimpleCookingSerializer<SmeltingRecipe>> SMELTING_RECIPE = RECIPE_SERIALIZERS.register("smelting", () -> {
+	public static final RegistryObject<SimpleCookingSerializer<SmeltingRecipe>> SMELTING_RECIPE = RECIPE_SERIALIZERS.register("xsurvive_smelting", () -> {
 		return new SimpleCookingSerializer<SmeltingRecipe>(SmeltingRecipe::new, 100);
 	});
 	

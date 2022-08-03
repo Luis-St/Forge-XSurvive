@@ -95,7 +95,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		@Override
 		public JsonObject serializeRecipe() {
 			JsonObject jsonobject = new JsonObject();
-			jsonobject.addProperty("type", XSurvive.MOD_ID + ":smelting");
+			jsonobject.addProperty("type", XSurvive.MOD_ID + ":xsurvive_smelting");
 			this.serializeRecipeData(jsonobject);
 			return jsonobject;
 		}

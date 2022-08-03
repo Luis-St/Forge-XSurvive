@@ -12,8 +12,8 @@ public class XSurviveRecipeTypes {
 	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, XSurvive.MOD_ID);
 	
 	
-	public static final RegistryObject<RecipeType<SmeltingRecipe>> SMELTING = RECIPE_TYPES.register("smelting", () -> {
-		return RecipeType.simple(new ResourceLocation(XSurvive.MOD_ID, "smelting"));
+	public static final RegistryObject<RecipeType<SmeltingRecipe>> SMELTING = RECIPE_TYPES.register("xsurvive_smelting", () -> {
+		return RecipeType.simple(new ResourceLocation(XSurvive.MOD_ID, "xsurvive_smelting"));
 	});
 	
 }
