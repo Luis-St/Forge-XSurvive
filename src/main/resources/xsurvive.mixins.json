@@ -31,7 +31,8 @@
 		"client.ElytraLayerMixin",
 		"client.HumanoidArmorLayerMixin",
 		"client.ThrownTridentRendererMixin",
-		"client.AnvilScreenMixin"
+		"client.AnvilScreenMixin",
+		"client.ChatReportScreenMixin"
 	],
 	"server": [
 			
