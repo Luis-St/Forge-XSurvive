@@ -6,4 +6,9 @@ public class XSurviveRecipeBookTypes {
 	
 	public static final RecipeBookType SMELTING = RecipeBookType.create("smelting");
 	
+	
+	public static void register() {
+		
+	}
+	
 }

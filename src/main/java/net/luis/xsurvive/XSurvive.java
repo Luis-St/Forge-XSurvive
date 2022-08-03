@@ -6,6 +6,7 @@ import com.mojang.logging.LogUtils;
 
 import net.luis.xsurvive.world.effect.XSurviveMobEffects;
 import net.luis.xsurvive.world.inventory.XSurviveMenuTypes;
+import net.luis.xsurvive.world.inventory.XSurviveRecipeBookTypes;
 import net.luis.xsurvive.world.item.XSurviveCreativeModeTab;
 import net.luis.xsurvive.world.item.XSurviveItems;
 import net.luis.xsurvive.world.item.alchemy.XSurvivePotions;
@@ -47,6 +48,7 @@ public class XSurvive {
 		XSurviveMenuTypes.MENU_TYPES.register(eventBus);
 		XSurviveRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSurviveRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
+		XSurviveRecipeBookTypes.register();
 	}
 	
 }
