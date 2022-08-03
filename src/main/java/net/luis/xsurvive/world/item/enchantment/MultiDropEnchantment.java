@@ -14,7 +14,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment {
 	
 	@Override
 	public int getMaxLevel() {
-		return 2;
+		return 1;
 	}
 	
 	@Override
@@ -64,12 +64,12 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment {
 	
 	@Override
 	public int getMaxGoldenBookLevel() {
-		return 3;
+		return 2;
 	}
 	
 	@Override
 	public int getUpgradeLevel() {
-		return 2;
+		return 1;
 	}
 	
 }
