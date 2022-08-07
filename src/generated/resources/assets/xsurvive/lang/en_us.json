@@ -78,7 +78,8 @@
   "item.xsurvive.red_rune": "Red Rune",
   "item.xsurvive.white_rune": "White Rune",
   "item.xsurvive.yellow_rune": "Yellow Rune",
-  "itemGroup.xsurvive": "XSurvive",
+  "itemGroup.xsurvive.golden_book": "Golden Books",
+  "itemGroup.xsurvive.rune": "Runes",
   "xsurvive.container.smelting_furnace": "Smelting Furnace",
   "xsurvive.gui.recipebook.toggleRecipes.smeltable": "Showing Smeltable"
 }

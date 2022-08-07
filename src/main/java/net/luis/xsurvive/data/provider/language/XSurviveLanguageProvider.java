@@ -45,7 +45,8 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 			ResourceLocation location = ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession);
 			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), getName(location));
 		}
-		this.add(XSurvive.TAB.getDisplayName().getString(), XSurvive.MOD_NAME);
+		this.add(XSurvive.GOLDEN_BOOK_TAB.getDisplayName().getString(), "Golden Books");
+		this.add(XSurvive.RUNE_TAB.getDisplayName().getString(), "Runes");
 		this.add("death.attack.curse_of_harming", "%1$s die by his own weapon");
 		this.add("death.attack.curse_of_harming.player", "%1$s die by his own weapon whilst fighting %2$s");
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");

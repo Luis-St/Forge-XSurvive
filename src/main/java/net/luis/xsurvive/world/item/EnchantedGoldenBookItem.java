@@ -51,7 +51,7 @@ public class EnchantedGoldenBookItem extends Item {
 	@Override
 	@SuppressWarnings("deprecation")
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
-		if (tab == XSurvive.TAB || tab == CreativeModeTab.TAB_SEARCH) {
+		if (tab == XSurvive.GOLDEN_BOOK_TAB || tab == CreativeModeTab.TAB_SEARCH) {
 			for (Enchantment enchantment : Registry.ENCHANTMENT.stream().toList()) {
 				if (enchantment instanceof IEnchantment ench) {
 					if (ench.isAllowedOnGoldenBooks()) {

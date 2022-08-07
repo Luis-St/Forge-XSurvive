@@ -30,7 +30,8 @@ public class XSurvive {
 	public static final String MOD_ID = "xsurvive";
 	public static final String MOD_NAME = "XSurvive";
 	public static final Logger LOGGER = LogUtils.getLogger();
-	public static final CreativeModeTab TAB = new XSurviveCreativeModeTab(XSurvive.MOD_ID);
+	public static final CreativeModeTab GOLDEN_BOOK_TAB = new XSurviveCreativeModeTab(XSurvive.MOD_ID + ".golden_book", XSurviveItems.ENCHANTED_GOLDEN_BOOK);
+	public static final CreativeModeTab RUNE_TAB = new XSurviveCreativeModeTab(XSurvive.MOD_ID + ".rune", XSurviveItems.RAINBOW_RUNE);
 	
 	public XSurvive() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
