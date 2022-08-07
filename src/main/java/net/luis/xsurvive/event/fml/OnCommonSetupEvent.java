@@ -7,7 +7,9 @@ import java.nio.file.Path;
 import net.luis.xbackpack.BackpackConstans;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.network.XSurviveNetworkHandler;
+import net.luis.xsurvive.wiki.file.EffectsWikiFile;
 import net.luis.xsurvive.wiki.file.EnchantmentWikiFile;
+import net.luis.xsurvive.wiki.file.PotionsWikiFile;
 import net.luis.xsurvive.world.item.alchemy.XSurviveBrewingRecipe;
 import net.luis.xsurvive.world.item.alchemy.XSurvivePotions;
 import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
@@ -36,6 +38,8 @@ public class OnCommonSetupEvent {
 	
 	private static void createWikis(Path path) throws IOException {
 		EnchantmentWikiFile.create().write(path);
+		EffectsWikiFile.create().write(path);
+		PotionsWikiFile.create().write(path);
 	}
 	
 }

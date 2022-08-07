@@ -68,8 +68,7 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		Enchantment enchantment = (Enchantment) (Object) this;
 		List<Enchantment> goldenEnchantments = Lists.newArrayList(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE,
 			Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY, 
-			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK, XSurviveEnchantments.GROWTH.get(), XSurviveEnchantments.BLASTING.get(), XSurviveEnchantments.VOID_PROTECTION.get(),
-			XSurviveEnchantments.HARVESTING.get());
+			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK, XSurviveEnchantments.GROWTH.get(), XSurviveEnchantments.BLASTING.get(), XSurviveEnchantments.HARVESTING.get());
 		if (enchantment instanceof ProtectionEnchantment) {
 			return true;
 		} else if (enchantment instanceof DamageEnchantment) {

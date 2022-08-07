@@ -91,7 +91,7 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.item(4, Items.ENDER_EYE, 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.enchantedBook(XSurviveEnchantments.VOID_WALKER.get(), 1).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.enchantedBook(XSurviveEnchantments.VOID_PROTECTION.get(), 1).defaultBuild(5));
+			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSurviveEnchantments.VOID_PROTECTION.get()).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(XOresItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
 		} else if (event.getType() == XSurviveVillagerProfessions.LUMBERJACK.get()) {

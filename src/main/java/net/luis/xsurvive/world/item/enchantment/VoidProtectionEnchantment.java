@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
-public class VoidProtectionEnchantment extends Enchantment implements WikiFileEntry {
+public class VoidProtectionEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 
 	public VoidProtectionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -71,6 +71,26 @@ public class VoidProtectionEnchantment extends Enchantment implements WikiFileEn
 	@Override
 	public boolean isDiscoverable() {
 		return false;
+	}
+	
+	@Override
+	public boolean isAllowedOnBooks() {
+		return false;
+	}
+	
+	@Override
+	public boolean isAllowedOnGoldenBooks() {
+		return true;
+	}
+	
+	@Override
+	public int getMaxGoldenBookLevel() {
+		return 5;
+	}
+	
+	@Override
+	public int getUpgradeLevel() {
+		return 4;
 	}
 
 	@Override

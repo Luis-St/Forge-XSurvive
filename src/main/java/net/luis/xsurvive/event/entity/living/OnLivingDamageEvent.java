@@ -42,11 +42,7 @@ public class OnLivingDamageEvent {
 					case 4 -> 0.2F;
 					default -> 0.0F;
 				};
-				if (0.0 >= percent) {
-					event.setCanceled(true);
-				} else {
-					newAmount = amount * percent;
-				}
+				newAmount = amount * percent;
 			}
 		}
 		event.setAmount(newAmount);

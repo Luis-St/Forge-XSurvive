@@ -56,11 +56,12 @@ public class OnLivingAttackEvent {
 		if (target instanceof Player player && source == DamageSource.OUT_OF_WORLD && amount > 0) {
 			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSurviveEnchantments.VOID_PROTECTION.get());
 			if (voidProtection > 0) {
-				double percent = switch (voidProtection) {
-					case 0 -> 1.0;
-					case 1 -> 0.6666666666666666;
-					case 2 -> 0.3333333333333333;					
-					default -> 0.0;
+				float percent = switch (voidProtection) {
+					case 1 -> 1.0F;
+					case 2 -> 0.75F;
+					case 3 -> 0.5F;
+					case 4 -> 0.25F;
+					default -> 0.0F;
 				};
 				event.setCanceled(RNG.nextDouble() > percent);
 			}
