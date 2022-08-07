@@ -32,13 +32,13 @@ public class XSurviveItemModelProvider extends ItemModelProvider {
 		}
 	}
 	
-	protected void generatedItem(Item item) {
+	private void generatedItem(Item item) {
 		ResourceLocation location = ForgeRegistries.ITEMS.getKey(item);
 		ModelFile model = new ExistingModelFile(new ResourceLocation("item/generated"), this.existingFileHelper);
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", new ResourceLocation(XSurvive.MOD_ID, "item/" + location.getPath()));
 	}
 	
-	protected void handheldItem(TieredItem tool) {
+	private void handheldItem(TieredItem tool) {
 		ResourceLocation location = ForgeRegistries.ITEMS.getKey(tool);
 		ModelFile model = new ExistingModelFile(new ResourceLocation("item/handheld"), this.existingFileHelper);
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", new ResourceLocation(XSurvive.MOD_ID, "item/" + location.getPath()));

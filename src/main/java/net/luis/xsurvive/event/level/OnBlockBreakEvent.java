@@ -31,7 +31,7 @@ public class OnBlockBreakEvent {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}
 		if (blasting > 0) {
-			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0f * (blasting + 1), Explosion.BlockInteraction.BREAK);
+			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Explosion.BlockInteraction.BREAK);
 		}
 		if (harvesting > 0) {
 			if (event.getLevel().getBlockState(pos).is(BlockTags.LOGS)) {

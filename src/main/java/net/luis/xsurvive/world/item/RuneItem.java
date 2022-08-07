@@ -12,7 +12,6 @@ public class RuneItem extends Item implements IRuneColorProvider {
 		super(properties);
 		this.foil = foil;
 		this.color = color;
-		
 	}
 	
 	@Override

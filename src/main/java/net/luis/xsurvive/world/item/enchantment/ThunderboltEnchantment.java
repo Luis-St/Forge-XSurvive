@@ -1,12 +1,14 @@
 package net.luis.xsurvive.world.item.enchantment;
 
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 
-public class ThunderboltEnchantment extends Enchantment {
+public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry {
 
 	public ThunderboltEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -40,6 +42,14 @@ public class ThunderboltEnchantment extends Enchantment {
 	@Override
 	public boolean isTreasureOnly() {
 		return true;
+	}
+
+	@Override
+	public void add(WikiFileBuilder wikiBuilder) {
+		wikiBuilder.lines((builder) -> {
+			builder.append("When an Entity is hit by an Item with this Enchantment,").endLine();
+			builder.append("a lightning strikes at the position of the Entity.").endLine();
+		});
 	}
 	
 }

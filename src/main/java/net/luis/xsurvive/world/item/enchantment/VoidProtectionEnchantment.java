@@ -1,6 +1,9 @@
 package net.luis.xsurvive.world.item.enchantment;
 
 import net.luis.xores.world.item.ElytraChestplateItem;
+import net.luis.xsurvive.wiki.WikiFormat;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
-public class VoidProtectionEnchantment extends Enchantment {
+public class VoidProtectionEnchantment extends Enchantment implements WikiFileEntry {
 
 	public VoidProtectionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -17,7 +20,7 @@ public class VoidProtectionEnchantment extends Enchantment {
 	
 	@Override
 	public int getMaxLevel() {
-		return 3;
+		return 4;
 	}
 	
 	@Override
@@ -68,6 +71,15 @@ public class VoidProtectionEnchantment extends Enchantment {
 	@Override
 	public boolean isDiscoverable() {
 		return false;
+	}
+
+	@Override
+	public void add(WikiFileBuilder wikiBuilder) {
+		wikiBuilder.lines((builder) -> {
+			builder.append("When a Entity is wearing an Elytra with this Enchantment").endLine();
+			builder.append("and the Entity takes void damage, the Damage will be reduced and calculated as follows:").endLine();
+			builder.appendFormatted("1 - (voidProtectionLevel * 0,2)", WikiFormat.CODE).endLine();
+		});
 	}
 
 }

@@ -1,12 +1,14 @@
 package net.luis.xsurvive.world.item.enchantment;
 
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class MultiDropEnchantment extends Enchantment implements IEnchantment {
+public class MultiDropEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 	
 	public MultiDropEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -70,6 +72,14 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment {
 	@Override
 	public int getUpgradeLevel() {
 		return 1;
+	}
+
+	@Override
+	public void add(WikiFileBuilder wikiBuilder) {
+		wikiBuilder.lines((builder) -> {
+			builder.append("When a Block is destroyed by an Item with this Enchantment,").endLine();
+			builder.append("the Block's loot will be multiplied by the enchantment level.").endLine();
+		});
 	}
 	
 }

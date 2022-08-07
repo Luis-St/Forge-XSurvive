@@ -27,23 +27,23 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		for (Enchantment enchantment : XSurviveEnchantments.ENCHANTMENTS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(enchantment, this.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
+			this.add(enchantment, getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
 		}
 		for (Item item : XSurviveItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(item, this.getName(ForgeRegistries.ITEMS.getKey(item)));
+			this.add(item, getName(ForgeRegistries.ITEMS.getKey(item)));
 		}
 		for (Item item : XSurviveBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(item, this.getName(ForgeRegistries.ITEMS.getKey(item)));
+			this.add(item, getName(ForgeRegistries.ITEMS.getKey(item)));
 		}
 		for (MobEffect mobEffect : XSurviveMobEffects.MOB_EFFECTS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(mobEffect, this.getName(ForgeRegistries.MOB_EFFECTS.getKey(mobEffect)));
+			this.add(mobEffect, getName(ForgeRegistries.MOB_EFFECTS.getKey(mobEffect)));
 		}
 		for (Potion potion : XSurvivePotions.POTIONS.getEntries().stream().map(RegistryObject::get).toList()) {
 			this.add(potion);
 		}
 		for (VillagerProfession profession : XSurviveVillagerProfessions.VILLAGER_PROFESSIONS.getEntries().stream().map(RegistryObject::get).toList()) {
 			ResourceLocation location = ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession);
-			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), this.getName(location));
+			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), getName(location));
 		}
 		this.add(XSurvive.TAB.getDisplayName().getString(), XSurvive.MOD_NAME);
 		this.add("death.attack.curse_of_harming", "%1$s die by his own weapon");
@@ -52,7 +52,7 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 		this.add(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable", "Showing Smeltable");
 	}
 	
-	protected void add(Potion potion) {
+	private void add(Potion potion) {
 		ResourceLocation location = ForgeRegistries.POTIONS.getKey(potion);
 		String potionName = location.getPath();
 		this.add("item.minecraft.potion.effect." + potionName, "Potion of " + this.getPotionName(location));
@@ -61,7 +61,7 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
 	}
 	
-	protected String getName(ResourceLocation location) { 
+	private static String getName(ResourceLocation location) { 
 		String[] nameParts = location.getPath().split("_");
 		String name = "";
 		for (String namePart : nameParts) {
@@ -71,23 +71,23 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 		return name.trim();
 	}
 	
-	protected String getEnchantmentName(ResourceLocation location) {
-		String name = this.getName(location);
+	public static String getEnchantmentName(ResourceLocation location) {
+		String name = getName(location);
 		if (name.contains(" Of ")) {
 			return name.replace(" Of ", " of ");
 		}
 		return name;
 	}
 	
-	protected String getPotionName(ResourceLocation location) {
+	private String getPotionName(ResourceLocation location) {
 		if (location.getPath().startsWith("long_")) {
 			String path = location.getPath();
-			return this.getName(new ResourceLocation(location.getNamespace(), path.replace("long_", "")));
+			return getName(new ResourceLocation(location.getNamespace(), path.replace("long_", "")));
 		} else if (location.getPath().startsWith("strong_")) {
 			String path = location.getPath();
-			return this.getName(new ResourceLocation(location.getNamespace(), path.replace("strong_", "")));
+			return getName(new ResourceLocation(location.getNamespace(), path.replace("strong_", "")));
 		}
-		return this.getName(location);
+		return getName(location);
 	}
 	
 	@Override

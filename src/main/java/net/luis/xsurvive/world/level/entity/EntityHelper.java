@@ -15,7 +15,6 @@ import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.ElderGuardian;
@@ -32,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
 public class EntityHelper {
 	
 	public static boolean isAffectedByEnderSlayer(Entity entity) {
-		return entity instanceof EnderMan || entity instanceof Endermite || entity instanceof Shulker || entity instanceof EnderDragon;
+		return entity instanceof EnderMan || entity instanceof Endermite || entity instanceof Shulker;
 	}
 	
 	public static boolean isAffectedByImpaling(Entity entity) {
