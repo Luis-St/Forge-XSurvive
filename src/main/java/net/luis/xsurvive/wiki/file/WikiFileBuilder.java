@@ -12,6 +12,7 @@ import org.jetbrains.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.mojang.logging.LogUtils;
 
+import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.builder.WikiHeaderBuilder;
@@ -130,6 +131,7 @@ public class WikiFileBuilder {
 	}
 	
 	public void write(Path path) throws IOException {
+		XSurvive.LOGGER.debug("Create {} file", this.name);
 		path = path.resolve(this.name + ".md");
 		if (!Files.exists(path)) {
 			Files.createDirectories(path.getParent());
