@@ -33,3 +33,6 @@ build.bat
 
 # Cache Files
 src/generated/resources/.cache
+
+# Wiki Files
+wiki files
