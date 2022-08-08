@@ -14,6 +14,12 @@ import net.minecraft.data.tags.PoiTypeTagsProvider;
 import net.minecraft.tags.PoiTypeTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurvivePoiTypeTagsProvider extends PoiTypeTagsProvider {
 
 	public XSurvivePoiTypeTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {

@@ -6,6 +6,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFileEntry {
 
 	public EnderSlayerEnchantment(Rarity rarity, EquipmentSlot... slots) {

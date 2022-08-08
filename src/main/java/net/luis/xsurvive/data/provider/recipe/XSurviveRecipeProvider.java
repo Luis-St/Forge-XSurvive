@@ -17,6 +17,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveRecipeProvider extends RecipeProvider {
 	
 	public XSurviveRecipeProvider(DataGenerator generator) {

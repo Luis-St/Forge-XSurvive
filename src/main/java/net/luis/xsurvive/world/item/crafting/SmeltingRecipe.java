@@ -7,6 +7,12 @@ import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingRecipe extends AbstractCookingRecipe {
 
 	public SmeltingRecipe(ResourceLocation location, String group, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {

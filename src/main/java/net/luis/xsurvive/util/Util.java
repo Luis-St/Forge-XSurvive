@@ -6,6 +6,12 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class Util {
 	
 	public static <K, V> List<V> shufflePreferred(K firstKey, Map<K, V> map) {

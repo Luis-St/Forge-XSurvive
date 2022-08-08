@@ -15,6 +15,12 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class OnItemTooltipEvent {
 	

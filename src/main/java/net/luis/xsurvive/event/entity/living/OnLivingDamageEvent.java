@@ -13,6 +13,12 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mod.EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class OnLivingDamageEvent {
 	

@@ -8,6 +8,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class MultiDropEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 	
 	public MultiDropEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

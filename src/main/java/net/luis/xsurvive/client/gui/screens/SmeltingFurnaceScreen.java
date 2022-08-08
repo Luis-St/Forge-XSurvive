@@ -8,6 +8,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingFurnaceScreen extends AbstractFurnaceScreen<SmeltingFurnaceMenu> {
 	
 	private static final ResourceLocation TEXTURE = new ResourceLocation(XSurvive.MOD_ID, "textures/gui/container/smelting_furnace.png");

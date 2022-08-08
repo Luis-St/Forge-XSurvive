@@ -10,6 +10,12 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
 import net.minecraft.network.chat.Component;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(value = ChatReportScreen.class, priority = Integer.MIN_VALUE)
 public abstract class ChatReportScreenMixin extends Screen {
 	

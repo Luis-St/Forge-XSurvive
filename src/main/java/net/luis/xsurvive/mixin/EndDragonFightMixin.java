@@ -15,6 +15,12 @@ import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(EndDragonFight.class)
 public abstract class EndDragonFightMixin {
 	

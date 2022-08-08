@@ -16,6 +16,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Bus.MOD)
 public class OnGatherDataEvent {
 	

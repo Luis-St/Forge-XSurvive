@@ -15,6 +15,12 @@ import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 
+ * @author Luis-st
+ * 
+ */
+
 @Mixin(ElytraLayer.class)
 public abstract class ElytraLayerMixin<T extends LivingEntity, M extends EntityModel<T>> {
 	

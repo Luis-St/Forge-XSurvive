@@ -6,6 +6,12 @@ import com.mojang.serialization.Codec;
 
 import net.minecraft.client.OptionInstance;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Double> {
 	
 	private final double min;

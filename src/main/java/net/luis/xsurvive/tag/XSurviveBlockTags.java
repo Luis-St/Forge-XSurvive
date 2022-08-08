@@ -6,6 +6,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveBlockTags {
 	
 	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(new ResourceLocation(XSurvive.MOD_ID, "ocean_monument_blocks"));

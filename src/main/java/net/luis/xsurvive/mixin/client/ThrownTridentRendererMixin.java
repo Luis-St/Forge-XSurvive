@@ -12,6 +12,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(ThrownTridentRenderer.class)
 public abstract class ThrownTridentRendererMixin {
 	

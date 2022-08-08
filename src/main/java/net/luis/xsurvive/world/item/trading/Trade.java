@@ -8,6 +8,12 @@ import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class Trade implements ItemListing {
 	
 	public static final int[] VILLAGER_XP = new int[] {2, 10, 20, 30, 40};

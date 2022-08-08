@@ -28,6 +28,12 @@ import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class EntityHelper {
 	
 	public static boolean isAffectedByEnderSlayer(Entity entity) {

@@ -8,6 +8,12 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry {
 
 	public ThunderboltEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

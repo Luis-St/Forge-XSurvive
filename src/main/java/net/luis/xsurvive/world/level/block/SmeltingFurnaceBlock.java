@@ -16,6 +16,12 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 
 	public SmeltingFurnaceBlock(Properties properties) {

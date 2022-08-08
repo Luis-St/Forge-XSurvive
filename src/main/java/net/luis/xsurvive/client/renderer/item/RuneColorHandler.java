@@ -10,6 +10,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class RuneColorHandler {
 	
 	private static final ThreadLocal<ItemStack> STACK = new ThreadLocal<>();

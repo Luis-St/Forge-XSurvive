@@ -24,6 +24,12 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveBlockStateProvider extends BlockStateProvider {
 
 	protected final ExistingFileHelper existingFileHelper;

@@ -22,6 +22,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ThornsEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(ThornsEnchantment.class)
 public abstract class ThornsEnchantmentMixin {
 	

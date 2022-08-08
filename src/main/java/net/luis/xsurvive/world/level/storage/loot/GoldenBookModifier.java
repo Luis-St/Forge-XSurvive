@@ -20,6 +20,12 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class GoldenBookModifier extends LootModifier {
 	
 	public static final Codec<GoldenBookModifier> CODEC = RecordCodecBuilder.create((instance) -> {
@@ -85,8 +91,13 @@ public class GoldenBookModifier extends LootModifier {
 				enchantment = this.treasureEnchantments.get(RNG.nextInt(this.treasureEnchantments.size()));
 			}
 		}
-		if (enchantment instanceof IEnchantment) {
-			return enchantment;
+		if (enchantment instanceof IEnchantment ench) {
+			if (ench.isAllowedOnGoldenBooks()) {
+				return enchantment;
+			} else {
+				XSurvive.LOGGER.warn("Enchantment {} is not allowed on golden books", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				return getRandomEnchantment(location);
+			}
 		}
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 		return null;

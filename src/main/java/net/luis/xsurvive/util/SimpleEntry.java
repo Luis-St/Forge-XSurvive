@@ -6,7 +6,13 @@ import javax.annotation.Nullable;
 
 import net.luis.xsurvive.XSurvive;
 
-public class SimpleEntry<K, V> implements Map.Entry<K, V> {
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
+public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 	
 	protected final K key;
 	protected V value;

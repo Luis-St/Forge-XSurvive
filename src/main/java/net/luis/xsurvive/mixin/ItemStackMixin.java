@@ -14,6 +14,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 	

@@ -6,6 +6,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class PlayerCapabilityProvider implements ICapabilitySerializable<CompoundTag> {
 	
 	private final IPlayerCapability playerCapability;

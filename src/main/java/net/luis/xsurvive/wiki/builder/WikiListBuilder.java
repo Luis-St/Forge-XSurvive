@@ -7,6 +7,12 @@ import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class WikiListBuilder extends AbstractWikiBuilder<WikiListBuilder> {
 	
 	private final WikiList list;

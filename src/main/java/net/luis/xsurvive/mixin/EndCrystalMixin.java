@@ -15,6 +15,12 @@ import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(EndCrystal.class)
 public abstract class EndCrystalMixin extends Entity {
 	

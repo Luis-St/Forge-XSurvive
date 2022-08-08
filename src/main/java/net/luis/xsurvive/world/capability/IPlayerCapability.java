@@ -6,6 +6,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public interface IPlayerCapability {
 	
 	@Nullable

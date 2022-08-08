@@ -21,6 +21,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(WitherBoss.class)
 public abstract class WitherBossMixin extends Monster {
 	

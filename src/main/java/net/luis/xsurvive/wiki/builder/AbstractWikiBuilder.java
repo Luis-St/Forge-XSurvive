@@ -8,6 +8,12 @@ import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> implements WikiBuilder<T> {
 	
 	private final WikiFileBuilder fileBuilder;

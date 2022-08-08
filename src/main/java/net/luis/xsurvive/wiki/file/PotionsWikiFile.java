@@ -1,5 +1,11 @@
 package net.luis.xsurvive.wiki.file;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class PotionsWikiFile {
 	
 	public static WikiFileBuilder create() {

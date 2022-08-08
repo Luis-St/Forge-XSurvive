@@ -12,6 +12,12 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class VoidProtectionEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 
 	public VoidProtectionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

@@ -5,6 +5,12 @@ import java.util.List;
 
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class WikiMultiLineBuilder extends AbstractWikiLineBuilder<WikiMultiLineBuilder> {
 
 	public WikiMultiLineBuilder(WikiFileBuilder fileBuilder) {

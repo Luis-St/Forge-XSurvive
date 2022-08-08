@@ -7,6 +7,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.world.item.enchantment.ArrowKnockbackEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(ArrowKnockbackEnchantment.class)
 public abstract class ArrowKnockbackEnchantmentMixin {
 	

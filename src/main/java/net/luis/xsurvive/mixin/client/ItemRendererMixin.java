@@ -16,6 +16,12 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
 	

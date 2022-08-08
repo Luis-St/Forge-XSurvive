@@ -1,5 +1,11 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
+import static net.luis.xsurvive.world.item.XSurviveItems.BLACK_RUNE;
+import static net.luis.xsurvive.world.item.XSurviveItems.BROWN_RUNE;
+import static net.luis.xsurvive.world.item.XSurviveItems.GRAY_RUNE;
+import static net.luis.xsurvive.world.item.XSurviveItems.LIGHT_GRAY_RUNE;
+import static net.luis.xsurvive.world.item.XSurviveItems.WHITE_RUNE;
+
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -10,12 +16,17 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.world.item.RuneItem;
-import net.luis.xsurvive.world.item.XSurviveItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
+
+/**
+ * 
+ * @author Luis-st
+ *
+ */
 
 public class RuneItemModifier extends LootModifier {
 	
@@ -24,7 +35,7 @@ public class RuneItemModifier extends LootModifier {
 	});
 	private static final Random RNG = new Random();
 	
-	private final List<RuneItem> runes = Lists.newArrayList(XSurviveItems.WHITE_RUNE.get(), XSurviveItems.GRAY_RUNE.get(), XSurviveItems.LIGHT_GRAY_RUNE.get(), XSurviveItems.BROWN_RUNE.get(), XSurviveItems.BLACK_RUNE.get());
+	private final List<RuneItem> runes = Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get());
 	private final List<RuneItem> coloredRunes = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
 		return item instanceof RuneItem runeItem && !this.runes.contains(runeItem);
 	}).map((item) -> {

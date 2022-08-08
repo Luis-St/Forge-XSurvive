@@ -24,6 +24,12 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class DynamicTrades {
 	
 	public static ItemListing randomEnchantedBook(List<Enchantment> enchantments, int level, int villagerLevel) {

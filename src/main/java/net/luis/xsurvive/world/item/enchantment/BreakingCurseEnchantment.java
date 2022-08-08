@@ -7,6 +7,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class BreakingCurseEnchantment extends Enchantment implements WikiFileEntry {
 
 	public BreakingCurseEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

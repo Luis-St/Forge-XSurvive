@@ -1,5 +1,11 @@
 package net.luis.xsurvive.wiki.file;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;

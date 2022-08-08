@@ -6,6 +6,12 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class PoisonAspectEnchantment extends FireAspectEnchantment implements WikiFileEntry {
 
 	public PoisonAspectEnchantment(Rarity rarity, EquipmentSlot... slots) {

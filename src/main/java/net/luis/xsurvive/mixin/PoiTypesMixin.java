@@ -14,6 +14,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(PoiTypes.class)
 public abstract class PoiTypesMixin {
 	

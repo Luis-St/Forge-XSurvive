@@ -16,6 +16,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class FrostMobEffectOverlay implements IGuiOverlay {
 	
 	private static final ResourceLocation FROST_EFFECT = new ResourceLocation("textures/misc/powder_snow_outline.png");

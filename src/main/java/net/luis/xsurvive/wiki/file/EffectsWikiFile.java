@@ -2,6 +2,12 @@ package net.luis.xsurvive.wiki.file;
 
 import net.luis.xsurvive.wiki.WikiFormat;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class EffectsWikiFile {
 	
 	public static WikiFileBuilder create() {

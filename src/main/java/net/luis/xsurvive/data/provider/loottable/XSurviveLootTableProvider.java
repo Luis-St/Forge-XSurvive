@@ -18,6 +18,12 @@ import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveLootTableProvider extends LootTableProvider {
 
 	public XSurviveLootTableProvider(DataGenerator generator) {

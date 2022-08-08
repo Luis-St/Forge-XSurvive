@@ -7,6 +7,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class ExperienceEnchantment extends Enchantment implements WikiFileEntry {
 
 	public ExperienceEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

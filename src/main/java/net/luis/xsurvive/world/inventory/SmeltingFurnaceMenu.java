@@ -7,6 +7,12 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingFurnaceMenu extends AbstractFurnaceMenu {
 
 	public SmeltingFurnaceMenu(int id, Inventory inventory, FriendlyByteBuf data) {

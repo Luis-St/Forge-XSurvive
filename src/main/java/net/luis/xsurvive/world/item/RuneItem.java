@@ -3,6 +3,12 @@ package net.luis.xsurvive.world.item;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class RuneItem extends Item implements IRuneColorProvider {
 	
 	private final boolean foil;

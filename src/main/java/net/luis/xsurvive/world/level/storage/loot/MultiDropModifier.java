@@ -15,6 +15,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class MultiDropModifier extends LootModifier {
 	
 	public static final Codec<MultiDropModifier> CODEC = RecordCodecBuilder.create((instance) -> {

@@ -21,6 +21,12 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin implements IEnchantment {
 	

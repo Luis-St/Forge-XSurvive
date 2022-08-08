@@ -7,6 +7,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry {
 
 	public VoidWalkerEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {

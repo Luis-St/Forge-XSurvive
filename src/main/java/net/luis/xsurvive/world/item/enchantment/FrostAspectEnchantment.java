@@ -8,6 +8,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class FrostAspectEnchantment extends FireAspectEnchantment implements WikiFileEntry {
 	
 	public FrostAspectEnchantment(Rarity rarity, EquipmentSlot... slots) {

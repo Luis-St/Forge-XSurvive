@@ -16,6 +16,12 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveBrewingRecipe implements IBrewingRecipe {
 	
 	public static final List<Item> DEFAULT_INPUT = Lists.newArrayList(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);

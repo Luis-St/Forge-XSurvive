@@ -7,6 +7,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SimpleTradeBuilder {
 	
 	private final ItemStack cost;

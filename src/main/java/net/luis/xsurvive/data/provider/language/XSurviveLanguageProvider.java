@@ -18,6 +18,12 @@ import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveLanguageProvider extends LanguageProvider {
 
 	public XSurviveLanguageProvider(DataGenerator generator) {

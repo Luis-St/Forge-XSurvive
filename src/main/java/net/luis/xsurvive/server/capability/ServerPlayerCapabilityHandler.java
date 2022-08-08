@@ -8,6 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class ServerPlayerCapabilityHandler implements IPlayerCapability {
 	
 	private final ServerPlayer player;

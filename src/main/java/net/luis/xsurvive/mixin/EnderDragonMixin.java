@@ -36,6 +36,12 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(EnderDragon.class)
 public abstract class EnderDragonMixin extends Mob {
 	

@@ -18,6 +18,12 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class AdvancedTradeBuilder {
 	
 	private static final RandomSource RNG = RandomSource.create();

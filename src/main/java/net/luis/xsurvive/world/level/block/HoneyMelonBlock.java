@@ -4,6 +4,12 @@ import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.StemGrownBlock;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class HoneyMelonBlock extends StemGrownBlock {
 
 	public HoneyMelonBlock(Properties properties) {

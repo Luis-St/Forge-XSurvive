@@ -19,6 +19,12 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.ForgeEventFactory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(WitherSkull.class)
 public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 

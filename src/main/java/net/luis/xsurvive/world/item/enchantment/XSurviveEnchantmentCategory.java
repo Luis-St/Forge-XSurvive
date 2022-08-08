@@ -10,6 +10,12 @@ import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveEnchantmentCategory {
 	
 	public static final EnchantmentCategory TOOLS = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "tools").toString(), (item) -> {

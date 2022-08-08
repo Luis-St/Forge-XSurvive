@@ -17,6 +17,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public abstract class XSurviveRenderType extends RenderType {
 
 	private XSurviveRenderType(String name, VertexFormat format, Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {

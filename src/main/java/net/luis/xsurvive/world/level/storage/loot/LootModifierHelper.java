@@ -5,40 +5,46 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import static net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments.*;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
+import static net.minecraft.world.item.enchantment.Enchantments.*;
+
+/**
+ * 
+ * @author Luis-st
+ *
+ */
 
 public class LootModifierHelper {
 	
 	public static List<Enchantment> getTrashEnchantments() {
-		return ImmutableList.of(Enchantments.FIRE_PROTECTION, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION, Enchantments.KNOCKBACK);
+		return ImmutableList.of(FIRE_PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION, KNOCKBACK);
 	}
 	
 	public static List<Enchantment> getEnchantments() {
-		return ImmutableList.of(Enchantments.SHARPNESS, Enchantments.ALL_DAMAGE_PROTECTION, Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.PIERCING, Enchantments.SMITE, Enchantments.PUNCH_ARROWS, Enchantments.POWER_ARROWS,
-			Enchantments.FISHING_SPEED, Enchantments.BANE_OF_ARTHROPODS, XSurviveEnchantments.BLASTING.get(), XSurviveEnchantments.GROWTH.get(), XSurviveEnchantments.ENDER_SLAYER.get());
+		return ImmutableList.of(SHARPNESS, ALL_DAMAGE_PROTECTION, BLOCK_EFFICIENCY, UNBREAKING, PIERCING, SMITE, PUNCH_ARROWS, POWER_ARROWS,
+			FISHING_SPEED, BANE_OF_ARTHROPODS, BLASTING.get(), GROWTH.get(), ENDER_SLAYER.get());
 	}
 	
 	public static List<Enchantment> getRareEnchantments() {
-		return ImmutableList.of(Enchantments.FALL_PROTECTION, Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SWEEPING_EDGE, Enchantments.FISHING_LUCK, Enchantments.FIRE_ASPECT, Enchantments.QUICK_CHARGE, 
-			XSurviveEnchantments.FROST_ASPECT.get(), XSurviveEnchantments.POISON_ASPECT.get());
+		return ImmutableList.of(FALL_PROTECTION, RESPIRATION, DEPTH_STRIDER, SWEEPING_EDGE, FISHING_LUCK, FIRE_ASPECT, QUICK_CHARGE, 
+			FROST_ASPECT.get(), POISON_ASPECT.get());
 	}
 	
 	public static List<Enchantment> getVeryRareEnchantments() {
-		return ImmutableList.of(Enchantments.BLOCK_FORTUNE, Enchantments.MOB_LOOTING, Enchantments.LOYALTY, Enchantments.RIPTIDE);
+		return ImmutableList.of(BLOCK_FORTUNE, MOB_LOOTING, LOYALTY, RIPTIDE);
 	}
 	
 	public static List<Enchantment> getEndVeryRareEnchantments() {
-		return ImmutableList.<Enchantment>builder().addAll(getVeryRareEnchantments()).add(XSurviveEnchantments.VOID_PROTECTION.get()).build();
+		return ImmutableList.<Enchantment>builder().addAll(getVeryRareEnchantments()).add(VOID_PROTECTION.get()).build();
 	}
 	
 	public static List<Enchantment> getTreasureEnchantments() {
-		return Lists.newArrayList(Enchantments.SWIFT_SNEAK, XSurviveEnchantments.MULTI_DROP.get());
+		return Lists.newArrayList(SWIFT_SNEAK, MULTI_DROP.get());
 	}
 	
 	public static List<Enchantment> getNetherTreasureEnchantments() {
-		return ImmutableList.<Enchantment>builder().addAll(getTreasureEnchantments()).add(Enchantments.SOUL_SPEED).build();
+		return ImmutableList.<Enchantment>builder().addAll(getTreasureEnchantments()).add(SOUL_SPEED).build();
 	}
 	
 }

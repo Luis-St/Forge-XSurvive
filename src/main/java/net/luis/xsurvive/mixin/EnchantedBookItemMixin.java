@@ -17,6 +17,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(EnchantedBookItem.class)
 public abstract class EnchantedBookItemMixin {
 	

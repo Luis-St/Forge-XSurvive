@@ -6,6 +6,12 @@ import net.luis.xsurvive.client.capability.LocalPlayerCapabilityHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerCapabilityHandler;
 import net.minecraft.world.entity.player.Player;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class CapabilityUtil {
 	
 	public static IPlayerCapability getPlayer(Player player) {

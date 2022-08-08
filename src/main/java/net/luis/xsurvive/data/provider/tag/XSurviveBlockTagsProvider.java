@@ -9,6 +9,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveBlockTagsProvider extends BlockTagsProvider {
 
 	public XSurviveBlockTagsProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {

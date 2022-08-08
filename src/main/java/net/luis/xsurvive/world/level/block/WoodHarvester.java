@@ -14,6 +14,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class WoodHarvester {
 	
 	private final Level level;

@@ -22,6 +22,12 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingRecipeBuilder implements RecipeBuilder {
 	
 	private final Item result;

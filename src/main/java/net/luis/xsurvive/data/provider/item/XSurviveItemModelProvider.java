@@ -15,6 +15,12 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveItemModelProvider extends ItemModelProvider {
 
 	public XSurviveItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {

@@ -11,6 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 
 	public SmeltingFurnaceBlockEntity(BlockPos pos, BlockState state) {

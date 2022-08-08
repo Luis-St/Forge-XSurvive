@@ -28,6 +28,12 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPattern.BlockPatternMatch;
 import net.minecraft.world.phys.AABB;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(WitherSkullBlock.class)
 public abstract class WitherSkullBlockMixin {
 	

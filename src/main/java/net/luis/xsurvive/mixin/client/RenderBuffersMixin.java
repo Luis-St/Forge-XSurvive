@@ -12,6 +12,12 @@ import net.luis.xsurvive.client.renderer.XSurviveRenderType;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.RenderType;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(RenderBuffers.class)
 public abstract class RenderBuffersMixin {
 	

@@ -6,6 +6,12 @@ import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class WikiQuoteBuilder extends AbstractWikiBuilder<WikiQuoteBuilder> {
 
 	public WikiQuoteBuilder(WikiFileBuilder fileBuilder) {

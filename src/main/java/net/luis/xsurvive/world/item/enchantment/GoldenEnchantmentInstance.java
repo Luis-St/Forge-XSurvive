@@ -5,6 +5,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class GoldenEnchantmentInstance extends EnchantmentInstance {
 
 	public GoldenEnchantmentInstance(Enchantment enchantment, int level) {

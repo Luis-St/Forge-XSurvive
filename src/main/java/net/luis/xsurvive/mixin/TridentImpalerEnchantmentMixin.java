@@ -16,6 +16,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(TridentImpalerEnchantment.class)
 public abstract class TridentImpalerEnchantmentMixin extends Enchantment {
 

@@ -17,6 +17,12 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class EnchantmentHandler {
 	
 	public static boolean hasEnchantment(Enchantment enchantment, ItemStack stack) {

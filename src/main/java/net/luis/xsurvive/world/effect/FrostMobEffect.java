@@ -6,6 +6,12 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class FrostMobEffect extends MobEffect {
 
 	public FrostMobEffect(MobEffectCategory category, int color) {

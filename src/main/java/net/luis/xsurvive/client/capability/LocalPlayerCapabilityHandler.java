@@ -5,6 +5,12 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class LocalPlayerCapabilityHandler implements IPlayerCapability {
 	
 	private final LocalPlayer player;

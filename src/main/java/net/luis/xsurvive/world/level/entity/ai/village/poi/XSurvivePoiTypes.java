@@ -10,10 +10,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurvivePoiTypes {
 	
 	public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, XSurvive.MOD_ID);
-	
 	
 	public static final RegistryObject<PoiType> BEEKEEPER = POI_TYPES.register("beekeeper", () -> {
 		return new PoiType(Set.copyOf(Blocks.BEEHIVE.getStateDefinition().getPossibleStates()), 1, 1);

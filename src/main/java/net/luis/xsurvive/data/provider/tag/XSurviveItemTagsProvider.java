@@ -8,6 +8,12 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurviveItemTagsProvider extends ItemTagsProvider {
 
 	public XSurviveItemTagsProvider(DataGenerator generator, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {

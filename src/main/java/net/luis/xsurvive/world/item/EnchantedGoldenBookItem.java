@@ -20,6 +20,12 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class EnchantedGoldenBookItem extends Item {
 
 	public EnchantedGoldenBookItem(Properties properties) {

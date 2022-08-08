@@ -9,10 +9,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 public class XSurvivePotions {
 	
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, XSurvive.MOD_ID);
-	
 	
 	public static final RegistryObject<Potion> FORST = POTIONS.register("frost", () -> {
 		return new Potion(new MobEffectInstance(XSurviveMobEffects.FROST.get(), 3600));

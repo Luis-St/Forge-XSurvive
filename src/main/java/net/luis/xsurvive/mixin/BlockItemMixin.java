@@ -8,6 +8,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin extends Item {
 

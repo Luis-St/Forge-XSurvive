@@ -7,6 +7,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.world.item.enchantment.QuickChargeEnchantment;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(QuickChargeEnchantment.class)
 public abstract class QuickChargeEnchantmentMixin {
 	
