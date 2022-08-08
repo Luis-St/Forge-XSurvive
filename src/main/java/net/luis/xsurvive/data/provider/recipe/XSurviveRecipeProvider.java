@@ -3,9 +3,12 @@ package net.luis.xsurvive.data.provider.recipe;
 import java.util.function.Consumer;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.item.XSurviveItems;
+import net.luis.xsurvive.world.level.block.XSurviveBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -61,6 +64,13 @@ public class XSurviveRecipeProvider extends RecipeProvider {
 		this.smeltingFurnaceRecipe(consumer, Ingredient.of(Items.GRAY_TERRACOTTA), Items.GRAY_GLAZED_TERRACOTTA);
 		this.smeltingFurnaceRecipe(consumer, Ingredient.of(Items.LIGHT_BLUE_TERRACOTTA), Items.LIGHT_BLUE_GLAZED_TERRACOTTA);
 		this.smeltingFurnaceRecipe(consumer, Ingredient.of(Items.LIGHT_GRAY_TERRACOTTA), Items.LIGHT_GRAY_GLAZED_TERRACOTTA);
+		ShapelessRecipeBuilder.shapeless(XSurviveBlocks.HONEY_MELON.get()).requires(XSurviveItems.HONEY_MELON_SLICE.get(), 9).group("honey_melon")
+			.unlockedBy("has_" + getId(XSurviveItems.HONEY_MELON_SLICE.get()), has(XSurviveItems.HONEY_MELON_SLICE.get())).unlockedBy("has_" + getId(XSurviveBlocks.HONEY_MELON.get().asItem()), has(XSurviveBlocks.HONEY_MELON.get())).save(consumer);
+		ShapelessRecipeBuilder.shapeless(XSurviveItems.HONEY_MELON_SEEDS.get()).requires(XSurviveItems.HONEY_MELON_SLICE.get()).group("honey_melon")
+			.unlockedBy("has_" + getId(XSurviveItems.HONEY_MELON_SLICE.get()), has(XSurviveItems.HONEY_MELON_SLICE.get())).unlockedBy("has_" + getId(XSurviveItems.HONEY_MELON_SEEDS.get()), has(XSurviveItems.HONEY_MELON_SEEDS.get())).save(consumer);
+		ShapelessRecipeBuilder.shapeless(XSurviveItems.HONEY_MELON_SLICE.get()).requires(Items.MELON_SLICE).requires(Items.HONEY_BOTTLE).group("honey_melon")
+			.unlockedBy("has_" + getId(Items.HONEY_BOTTLE), has(Items.HONEY_BOTTLE)).unlockedBy("has_" + getId(Items.MELON_SLICE), has(Items.MELON_SLICE))
+			.unlockedBy("has_" + getId(XSurviveBlocks.HONEY_MELON.get().asItem()), has(XSurviveBlocks.HONEY_MELON.get())).save(consumer);
 	}
 	
 	private void furnaceRecipe(Consumer<FinishedRecipe> consumer, Ingredient input, Item result) {

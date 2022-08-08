@@ -1,4 +1,5 @@
 {
+  "block.xsurvive.honey_melon": "Honey Melon",
   "block.xsurvive.smelting_furnace": "Smelting Furnace",
   "death.attack.curse_of_harming": "%1$s die by his own weapon",
   "death.attack.curse_of_harming.player": "%1$s die by his own weapon whilst fighting %2$s",
@@ -67,6 +68,8 @@
   "item.xsurvive.enchanted_golden_book": "Enchanted Golden Book",
   "item.xsurvive.gray_rune": "Gray Rune",
   "item.xsurvive.green_rune": "Green Rune",
+  "item.xsurvive.honey_melon_seeds": "Honey Melon Seeds",
+  "item.xsurvive.honey_melon_slice": "Honey Melon Slice",
   "item.xsurvive.light_blue_rune": "Light Blue Rune",
   "item.xsurvive.light_gray_rune": "Light Gray Rune",
   "item.xsurvive.lime_rune": "Lime Rune",

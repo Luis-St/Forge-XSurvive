@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "xsurvive:item/honey_melon_seeds"
+  }
+}

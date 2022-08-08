@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "xsurvive:block/attached_honey_melon_stem",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "xsurvive:block/attached_honey_melon_stem",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "xsurvive:block/attached_honey_melon_stem",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "xsurvive:block/attached_honey_melon_stem"
+    }
+  }
+}

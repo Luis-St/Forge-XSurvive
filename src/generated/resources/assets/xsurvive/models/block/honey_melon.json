@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "xsurvive:block/honey_melon_top",
+    "side": "xsurvive:block/honey_melon_side"
+  }
+}

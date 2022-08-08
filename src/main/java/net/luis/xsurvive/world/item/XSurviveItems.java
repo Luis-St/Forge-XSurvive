@@ -1,7 +1,11 @@
 package net.luis.xsurvive.world.item;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.level.block.XSurviveBlocks;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -65,6 +69,12 @@ public class XSurviveItems {
 	});
 	public static final RegistryObject<RuneItem> RAINBOW_RUNE = ITEMS.register("rainbow_rune", () -> {
 		return new RuneItem(new Item.Properties().stacksTo(1).tab(XSurvive.RUNE_TAB), true, 16);
+	});
+	public static final RegistryObject<ItemNameBlockItem> HONEY_MELON_SEEDS = ITEMS.register("honey_melon_seeds", () -> {
+		return new ItemNameBlockItem(XSurviveBlocks.HONEY_MELON_STEM.get(), new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+	});
+	public static final RegistryObject<Item> HONEY_MELON_SLICE = ITEMS.register("honey_melon_slice", () -> {
+		return new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(4).saturationMod(0.7F).build()));
 	});
 	
 }

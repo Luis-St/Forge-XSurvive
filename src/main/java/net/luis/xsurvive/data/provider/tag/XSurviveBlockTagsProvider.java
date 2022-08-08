@@ -19,6 +19,7 @@ public class XSurviveBlockTagsProvider extends BlockTagsProvider {
 	protected void addTags() {
 		this.tag(XSurviveBlockTags.OCEAN_MONUMENT_BLOCKS).add(Blocks.PRISMARINE, Blocks.PRISMARINE_BRICKS, Blocks.DARK_PRISMARINE, Blocks.SEA_LANTERN);
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(XSurviveBlocks.SMELTING_FURNACE.get());
+		this.tag(BlockTags.MINEABLE_WITH_HOE).add(XSurviveBlocks.HONEY_MELON.get());
 	}
 	
 	@Override
