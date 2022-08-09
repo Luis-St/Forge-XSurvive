@@ -1,14 +1,14 @@
 modLoader="javafml"
-loaderVersion="[42,)"
+loaderVersion="[43,)"
 license="All rights reserved"
 
 [[mods]]
 modId="xsurvive"
-version="1.19.1-1.4"
+version="1.19.2-1.4"
 displayName="XSurvive"
 credits="Thanks for downloading my Mod"
 authors="Luis"
-#displayURL="https://github.com/Luis-st/Forge-XSurvive/issues"
+displayURL="https://github.com/Luis-st/Forge-XSurvive/issues"
 description='''
 XSurvive is a life balancing mod
 
@@ -19,25 +19,25 @@ XSurvive Development Team
 [[dependencies.xsurvive]]
 modId="forge"
 mandatory=true
-versionRange="[42,)"
+versionRange="[43,)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.xsurvive]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.1,1.20)"
+versionRange="[1.19.2,1.20)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.xsurvive]]
 modId="xbackpack"
 mandatory=true
-versionRange="[1.19.1-2.1,)"
+versionRange="[1.19.2-2.1,)"
 ordering="BEFORE"
 
 [[dependencies.xsurvive]]
 modId="xores"
 mandatory=true
-versionRange="[1.19.1-1.9,)"
+versionRange="[1.19.2-2.0,)"
 ordering="BEFORE"
