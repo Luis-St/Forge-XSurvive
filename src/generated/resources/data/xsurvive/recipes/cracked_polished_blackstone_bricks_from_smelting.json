@@ -2,7 +2,7 @@
   "type": "xsurvive:xsurvive_smelting",
   "cookingtime": 100,
   "experience": 0.5,
-  "group": "rose_quartz",
+  "group": "polished",
   "ingredient": {
     "item": "minecraft:polished_blackstone_bricks"
   },
