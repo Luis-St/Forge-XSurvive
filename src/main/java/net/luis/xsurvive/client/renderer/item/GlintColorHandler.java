@@ -5,10 +5,12 @@ import java.util.function.Supplier;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.renderer.XSurviveRenderType;
-import net.luis.xsurvive.world.item.IRuneColorProvider;
+import net.luis.xsurvive.world.capability.XSurviveCapabilities;
+import net.luis.xsurvive.world.item.IGlintColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * 
@@ -16,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
  *
  */
 
-public class RuneColorHandler {
+public class GlintColorHandler {
 	
 	private static final ThreadLocal<ItemStack> STACK = new ThreadLocal<>();
 	
@@ -31,11 +33,16 @@ public class RuneColorHandler {
 	private static int getColor() {
 		ItemStack stack = getStack();
 		if (stack != null && !stack.isEmpty()) {
-			if (stack.getItem() instanceof IRuneColorProvider provider) {
-				return provider.getRuneColor(stack);
+			LazyOptional<IGlintColor> optional = stack.getCapability(XSurviveCapabilities.GLINT_COLOR, null);
+			if (optional.isPresent()) {
+				return optional.orElseThrow(NullPointerException::new).getRuneColor(stack);
+			} else if (stack.getItem() instanceof IGlintColor glintColor) {
+				return glintColor.getRuneColor(stack);
 			} else if (stack.hasTag() && stack.getTag().contains(XSurvive.MOD_NAME)) {
 				CompoundTag tag = stack.getTag().getCompound(XSurvive.MOD_NAME);
-				if (tag.contains(XSurvive.MOD_NAME + "ItemColor")) {
+				if (tag.contains(XSurvive.MOD_NAME + "GlintColor")) {
+					return tag.getInt(XSurvive.MOD_NAME + "GlintColor");
+				} else if (tag.contains(XSurvive.MOD_NAME + "ItemColor")) {
 					return tag.getInt(XSurvive.MOD_NAME + "ItemColor");
 				}
 			}

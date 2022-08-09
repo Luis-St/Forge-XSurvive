@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.luis.xsurvive.client.renderer.item.RuneColorHandler;
+import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +23,7 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
 	
 	@Inject(method = "getArmorModelHook", at = @At("HEAD"), remap = false)
 	private void getArmorModelHook(T entity, ItemStack stack, EquipmentSlot slot, A model, CallbackInfoReturnable<A> callback) {
-		RuneColorHandler.setStack(stack);
+		GlintColorHandler.setStack(stack);
 	}
 	
 }

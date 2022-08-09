@@ -1,8 +1,8 @@
-package net.luis.xsurvive.event.level;
+package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.IRuneColorProvider;
+import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.item.enchantment.EnchantedItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.nbt.CompoundTag;
@@ -41,19 +41,19 @@ public class OnAnvilEvent {
 			} else {
 				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			}
-		} else if (left.isEnchanted() && right.getItem() instanceof IRuneColorProvider rune) {
+		} else if (left.isEnchanted() && right.getItem() instanceof IGlintColor glintColor) {
 			ItemStack result = left.copy();
-			int color = rune.getRuneColor(right);
+			int color = glintColor.getRuneColor(right);
 			if (17 >= color && color >= 0) {
 				CompoundTag tag = result.getOrCreateTag();
 				if (tag.contains(XSurvive.MOD_NAME)) {
 					CompoundTag modTag = tag.getCompound(XSurvive.MOD_NAME);
 					tag.remove(XSurvive.MOD_NAME);
-					modTag.putInt(XSurvive.MOD_NAME + "ItemColor", color);
+					modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
 					tag.put(XSurvive.MOD_NAME, modTag);
 				} else {
 					CompoundTag modTag = new CompoundTag();
-					modTag.putInt(XSurvive.MOD_NAME + "ItemColor", color);
+					modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
 					tag.put(XSurvive.MOD_NAME, modTag);
 				}
 				result.setTag(tag);

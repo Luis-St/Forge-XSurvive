@@ -60,7 +60,7 @@ public class RuneItemModifier extends LootModifier {
 	}
 	
 	private ItemStack getRandomRune() {
-		int i = RNG.nextInt(4);
+		int i = RNG.nextInt(10);
 		if (i > 0) {
 			return new ItemStack(this.coloredRunes.get(RNG.nextInt(this.coloredRunes.size())));
 		}

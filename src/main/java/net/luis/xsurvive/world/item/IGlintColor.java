@@ -8,7 +8,14 @@ import net.minecraft.world.item.ItemStack;
  *
  */
 
-public interface IRuneColorProvider {
+@FunctionalInterface
+public interface IGlintColor {
+	
+	public static IGlintColor simple(int glintColor) {
+		return (stack) -> {
+			return glintColor;
+		};
+	}
 	
 	int getRuneColor(ItemStack stack);
 	

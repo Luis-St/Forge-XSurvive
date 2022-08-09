@@ -25,7 +25,7 @@ public class PlayerCapabilityProvider implements ICapabilitySerializable<Compoun
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		return capability == XSurviveCapabilities.PLAYER ? this.optional.cast() : LazyOptional.empty();
+		return XSurviveCapabilities.PLAYER.orEmpty(capability, this.optional);
 	}
 
 	@Override

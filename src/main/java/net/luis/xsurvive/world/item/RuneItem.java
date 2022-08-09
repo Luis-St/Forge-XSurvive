@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
  *
  */
 
-public class RuneItem extends Item implements IRuneColorProvider {
+public class RuneItem extends Item implements IGlintColor {
 	
 	private final boolean foil;
 	private final int color;
