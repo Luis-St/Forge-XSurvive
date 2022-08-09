@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_sea_pickle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:sea_pickle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:lime_dye_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_sea_pickle",
       "has_lime_dye",
       "has_the_recipe"
     ]

@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_nether_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:nether_bricks"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:cracked_nether_bricks_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_nether_bricks",
       "has_cracked_nether_bricks",
       "has_the_recipe"
     ]

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "honey_melon",
+  "group": "honey",
   "ingredients": [
     {
       "item": "minecraft:melon_slice"

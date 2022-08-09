@@ -2,6 +2,7 @@
   "type": "xsurvive:xsurvive_smelting",
   "cookingtime": 100,
   "experience": 0.5,
+  "group": "stone",
   "ingredient": {
     "item": "minecraft:stone_bricks"
   },

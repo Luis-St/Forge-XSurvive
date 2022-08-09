@@ -2,6 +2,7 @@
   "type": "xsurvive:xsurvive_smelting",
   "cookingtime": 100,
   "experience": 0.5,
+  "group": "brown",
   "ingredient": {
     "item": "minecraft:brown_terracotta"
   },

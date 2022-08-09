@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_blue_terracotta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:blue_terracotta"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:blue_glazed_terracotta_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_blue_terracotta",
       "has_blue_glazed_terracotta",
       "has_the_recipe"
     ]

@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_netherrack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherrack"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:nether_brick_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_netherrack",
       "has_nether_brick",
       "has_the_recipe"
     ]

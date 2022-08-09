@@ -18,10 +18,23 @@
         "recipe": "xsurvive:sponge_from_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wet_sponge": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:wet_sponge"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [
     [
+      "has_wet_sponge",
       "has_sponge",
       "has_the_recipe"
     ]

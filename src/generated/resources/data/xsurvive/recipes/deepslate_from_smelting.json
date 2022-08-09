@@ -2,6 +2,7 @@
   "type": "xsurvive:xsurvive_smelting",
   "cookingtime": 100,
   "experience": 0.5,
+  "group": "cobbled",
   "ingredient": {
     "item": "minecraft:cobbled_deepslate"
   },

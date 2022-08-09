@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_clay_ball": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:clay_ball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:brick_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_clay_ball",
       "has_brick",
       "has_the_recipe"
     ]

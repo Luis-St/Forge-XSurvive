@@ -13,6 +13,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "has_pink_terracotta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:pink_terracotta"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "xsurvive:pink_glazed_terracotta_from_smelting"
@@ -22,6 +34,7 @@
   },
   "requirements": [
     [
+      "has_pink_terracotta",
       "has_pink_glazed_terracotta",
       "has_the_recipe"
     ]
