@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.capability;
+package net.luis.xsurvive.world.level.entity.player;
 
 import javax.annotation.Nullable;
 

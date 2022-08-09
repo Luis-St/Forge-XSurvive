@@ -2,7 +2,7 @@ package net.luis.xsurvive.event.capability;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.capability.LocalPlayerCapabilityHandler;
-import net.luis.xsurvive.world.capability.PlayerCapabilityProvider;
+import net.luis.xsurvive.world.level.entity.player.PlayerCapabilityProvider;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

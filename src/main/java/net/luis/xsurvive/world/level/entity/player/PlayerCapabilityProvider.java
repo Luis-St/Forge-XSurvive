@@ -1,5 +1,6 @@
-package net.luis.xsurvive.world.capability;
+package net.luis.xsurvive.world.level.entity.player;
 
+import net.luis.xsurvive.world.capability.XSurviveCapabilities;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;

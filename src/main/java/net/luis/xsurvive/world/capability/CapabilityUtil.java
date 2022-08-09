@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import net.luis.xsurvive.client.capability.LocalPlayerCapabilityHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerCapabilityHandler;
+import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
 import net.minecraft.world.entity.player.Player;
 
 /**

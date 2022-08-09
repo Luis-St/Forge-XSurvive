@@ -2,8 +2,8 @@ package net.luis.xsurvive.server.capability;
 
 import net.luis.xsurvive.network.XSurviveNetworkHandler;
 import net.luis.xsurvive.network.packet.LocalPlayerCapabilityUpdatePacket;
-import net.luis.xsurvive.world.capability.IPlayerCapability;
 import net.luis.xsurvive.world.effect.XSurviveMobEffects;
+import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.registry;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.capability.IPlayerCapability;
+import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
