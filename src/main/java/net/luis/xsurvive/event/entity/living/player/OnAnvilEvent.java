@@ -43,7 +43,7 @@ public class OnAnvilEvent {
 			}
 		} else if (left.isEnchanted() && right.getItem() instanceof IGlintColor glintColor) {
 			ItemStack result = left.copy();
-			int color = glintColor.getRuneColor(right);
+			int color = glintColor.getGlintColor(right);
 			if (17 >= color && color >= 0) {
 				CompoundTag tag = result.getOrCreateTag();
 				if (tag.contains(XSurvive.MOD_NAME)) {

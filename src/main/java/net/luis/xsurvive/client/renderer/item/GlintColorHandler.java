@@ -35,9 +35,9 @@ public class GlintColorHandler {
 		if (stack != null && !stack.isEmpty()) {
 			LazyOptional<IGlintColor> optional = stack.getCapability(XSurviveCapabilities.GLINT_COLOR, null);
 			if (optional.isPresent()) {
-				return optional.orElseThrow(NullPointerException::new).getRuneColor(stack);
+				return optional.orElseThrow(NullPointerException::new).getGlintColor(stack);
 			} else if (stack.getItem() instanceof IGlintColor glintColor) {
-				return glintColor.getRuneColor(stack);
+				return glintColor.getGlintColor(stack);
 			} else if (stack.hasTag() && stack.getTag().contains(XSurvive.MOD_NAME)) {
 				CompoundTag tag = stack.getTag().getCompound(XSurvive.MOD_NAME);
 				if (tag.contains(XSurvive.MOD_NAME + "GlintColor")) {

@@ -17,6 +17,6 @@ public interface IGlintColor {
 		};
 	}
 	
-	int getRuneColor(ItemStack stack);
+	int getGlintColor(ItemStack stack);
 	
 }

@@ -15,7 +15,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.luis.xsurvive.world.item.RuneItem;
+import net.luis.xsurvive.world.item.GlintColorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -35,12 +35,10 @@ public class RuneItemModifier extends LootModifier {
 	});
 	private static final Random RNG = new Random();
 	
-	private final List<RuneItem> runes = Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get());
-	private final List<RuneItem> coloredRunes = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-		return item instanceof RuneItem runeItem && !this.runes.contains(runeItem);
-	}).map((item) -> {
-		return (RuneItem) item;
-	}).collect(Collectors.toList());
+	private final List<GlintColorItem> runes = Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get());
+	private final List<GlintColorItem> coloredRunes = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
+		return item instanceof GlintColorItem runeItem && !this.runes.contains(runeItem);
+	}).map(GlintColorItem.class::cast).collect(Collectors.toList());
 	
 	public RuneItemModifier(LootItemCondition[] conditions) {
 		super(conditions);
