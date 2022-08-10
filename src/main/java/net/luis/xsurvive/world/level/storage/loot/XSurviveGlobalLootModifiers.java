@@ -27,5 +27,8 @@ public class XSurviveGlobalLootModifiers {
 	public static final RegistryObject<Codec<GoldenBookModifier>> GOLDEN_BOOK_MODIFIER = LOOT_MODIFIERS.register("golden_book_modifier", () -> {
 		return GoldenBookModifier.CODEC;
 	});
+	public static final RegistryObject<Codec<DiamondAppleModifier>> DIAMOND_APPLE_MODIFIER = LOOT_MODIFIERS.register("diamond_apple_modifier", () -> {
+		return DiamondAppleModifier.CODEC;
+	});
 	
 }

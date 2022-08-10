@@ -3,6 +3,7 @@ package net.luis.xsurvive.data.provider.loot;
 import net.luis.xores.world.level.storage.loot.SmeltingModifier;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.level.storage.loot.DiamondAppleModifier;
 import net.luis.xsurvive.world.level.storage.loot.GoldenBookModifier;
 import net.luis.xsurvive.world.level.storage.loot.MultiDropModifier;
 import net.luis.xsurvive.world.level.storage.loot.RuneItemModifier;
@@ -43,6 +44,9 @@ public class XSurviveGlobalLootModifierProvider extends GlobalLootModifierProvid
 		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[] {
 				new LootTableIdsCondition.Builder(new ResourceLocation("chests/stronghold_library")).add("minecraft:chests/bastion_treasure").add("minecraft:chests/end_city_treasure").add("minecraft:chests/ancient_city")
 					.add("minecraft:chests/ancient_city_ice_box").build()
+		}));
+		this.add("diamond_apple_modifier", new DiamondAppleModifier(new LootItemCondition[] {
+				
 		}));
 	}
 	

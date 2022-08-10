@@ -23,7 +23,8 @@
 		"WitherSkullBlockMixin",
 		"NoiseBasedChunkGeneratorMixin",
 		"EndDragonFightMixin",
-		"PoiTypesMixin"
+		"PoiTypesMixin",
+		"LootTablesMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

@@ -1,5 +1,6 @@
 package net.luis.xsurvive.world.item;
 
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -10,6 +11,10 @@ import net.minecraft.world.item.ItemStack;
 
 @FunctionalInterface
 public interface IGlintColor {
+	
+	public static IGlintColor simple(DyeColor color) {
+		return simple(color.getId());
+	}
 	
 	public static IGlintColor simple(int glintColor) {
 		return (stack) -> {

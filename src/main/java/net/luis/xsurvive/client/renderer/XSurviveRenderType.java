@@ -53,7 +53,6 @@ public abstract class XSurviveRenderType extends RenderType {
 			list.add(function.apply(color.getName()));
 		}
 		list.add(function.apply("rainbow"));
-		list.add(function.apply("blank"));
 		return list;
 	}
 

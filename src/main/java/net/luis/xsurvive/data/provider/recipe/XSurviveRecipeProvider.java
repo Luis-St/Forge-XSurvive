@@ -9,6 +9,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -79,6 +80,8 @@ public class XSurviveRecipeProvider extends RecipeProvider {
 			XSurviveItems.HONEY_MELON_SEEDS.get()).save(consumer);
 		this.groupAndUnlock(ShapelessRecipeBuilder.shapeless(XSurviveItems.HONEY_MELON_SLICE.get()).requires(Items.MELON_SLICE).requires(Items.HONEY_BOTTLE), getGroup(XSurviveBlocks.HONEY_MELON.get()), Items.MELON_SLICE, Items.HONEY_BOTTLE,
 			XSurviveItems.HONEY_MELON_SLICE.get()).save(consumer);
+		this.groupAndUnlock(ShapedRecipeBuilder.shaped(XSurviveItems.DIAMOND_APPLE.get()).define('#', Items.DIAMOND).define('?', Items.APPLE).pattern("###").pattern("#?#").pattern("###"), getGroup(XSurviveItems.DIAMOND_APPLE.get()), Items.DIAMOND,
+			Items.APPLE).save(consumer);
 	}
 	
 	private void furnaceRecipe(Consumer<FinishedRecipe> consumer, Item input, Item result) {

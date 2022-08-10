@@ -3,7 +3,8 @@
     "xsurvive:multi_drop_modifier",
     "xsurvive:golden_book_modifier",
     "xsurvive:rune_item_modifier",
-    "xsurvive:smelting_modifier"
+    "xsurvive:smelting_modifier",
+    "xsurvive:diamond_apple_modifier"
   ],
   "replace": false
 }
