@@ -1,12 +1,13 @@
 package net.luis.xsurvive.util;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Random;
-import java.util.TreeMap;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -31,12 +32,12 @@ public class WeightCollection<T> {
 		this.random = random;
 	}
 	
-	private WeightCollection(Map<Integer, T> map) {
-		this.map = new TreeMap<>();
+	private WeightCollection(List<Pair<Integer, T>> list) {
+		this.map = Maps.newTreeMap();
 		this.random = new Random();
-		for (Entry<Integer, T> entry : map.entrySet()) {
-			this.add(entry.getKey(), entry.getValue());
-		}
+		list.forEach((pair) -> {
+			this.add(pair.getFirst(), pair.getSecond());
+		});
 	}
 
 	public void add(int weight, T value) {
@@ -52,11 +53,17 @@ public class WeightCollection<T> {
 		return this.map.higherEntry(value).getValue();
 	}
 	
+	private List<Pair<Integer, T>> asList() {
+		List<Pair<Integer, T>> list = Lists.newArrayList();
+		for (Entry<Integer, T> entry : this.map.entrySet()) {
+			list.add(Pair.of(entry.getKey(), entry.getValue()));
+		}
+		return list;
+	}
+	
 	public static <E> Codec<WeightCollection<E>> codec(Codec<E> codec) {
 		return RecordCodecBuilder.create((instance) -> {
-			return instance.group(Codec.unboundedMap(Codec.INT, codec).fieldOf("weights").forGetter((collection) -> {
-				return collection.map;
-			})).apply(instance, WeightCollection::new);
+			return instance.group(Codec.pair(Codec.INT, codec).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
 		});
 	}
 	
