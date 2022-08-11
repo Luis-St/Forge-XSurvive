@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.client.OptionInstance;
+import net.minecraft.util.Mth;
 
 /**
  * 
@@ -34,12 +35,12 @@ public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Doub
 
 	@Override
 	public double toSliderValue(Double value) {
-		return value;
+		return Mth.clamp(value, 0.0, 1.0);
 	}
 
 	@Override
 	public Double fromSliderValue(double value) {
-		return value;
+		return 1.0 > value ? value : 20.0;
 	}
 
 }

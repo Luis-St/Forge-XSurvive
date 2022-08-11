@@ -38,13 +38,17 @@ public class OnClientSetupEvent {
 
 	private static void replaceGammaOption(Minecraft minecraft) {
 		minecraft.options.gamma = new OptionInstance<Double>("options.gamma", OptionInstance.noTooltip(), (component, value) -> {
-			int i = (int) (value * 100.0D);
-			if (i == 0) {
+			int gamma = (int) (value * 100.0);
+			if (gamma == 0) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.min"));
-			} else if (i == 50) {
+			} else if (gamma == 50) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.default"));
+			} else if (100 > gamma && gamma >= 99) {
+				return Options.genericValueLabel(component, Component.translatable("options.gamma.max"));
+			} else if (gamma >= 100) {
+				return Options.genericValueLabel(component, Component.translatable("options.gamma.infinite"));
 			} else {
-				return i == 100 ? Options.genericValueLabel(component, Component.translatable("options.gamma.max")) : Options.genericValueLabel(component, i);
+				return Options.genericValueLabel(component, gamma);
 			}
 		}, new DoubleRangeOption(0.0, 100.0), 0.5, (value) -> {
 			
