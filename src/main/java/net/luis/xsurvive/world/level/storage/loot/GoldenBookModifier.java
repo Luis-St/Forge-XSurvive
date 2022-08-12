@@ -1,6 +1,5 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import java.util.List;
 import java.util.Random;
 
 import com.mojang.serialization.Codec;
@@ -8,6 +7,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.util.RarityList;
+import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.XSurviveItems;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -29,40 +31,57 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class GoldenBookModifier extends LootModifier {
 	
 	public static final Codec<GoldenBookModifier> CODEC = RecordCodecBuilder.create((instance) -> {
-		return LootModifier.codecStart(instance).apply(instance, GoldenBookModifier::new);
+		return instance.group(IGlobalLootModifier.LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter((modifier) -> {
+			return modifier.conditions;
+		}), Codec.INT.fieldOf("golden_book_count").forGetter((modifier) -> {
+			return modifier.goldenBookCount;
+		}), WeightCollection.codec(RarityList.codec(ForgeRegistries.ENCHANTMENTS.getCodec())).fieldOf("enchantments").forGetter((modifier) -> {
+			return modifier.enchantmentWeights;
+		}), RarityList.codec(ForgeRegistries.ENCHANTMENTS.getCodec()).fieldOf("extra_overworld_treasure").forGetter((modifier) -> {
+			return modifier.extraOverworldTreasure;
+		}), RarityList.codec(ForgeRegistries.ENCHANTMENTS.getCodec()).fieldOf("extra_nether_treasure").forGetter((modifier) -> {
+			return modifier.extraNetherTreasure;
+		}), RarityList.codec(ForgeRegistries.ENCHANTMENTS.getCodec()).fieldOf("extra_end_treasure").forGetter((modifier) -> {
+			return modifier.extraEndTreasure;
+		})).apply(instance, GoldenBookModifier::new);
 	});
 	private static final Random RNG = new Random();
-
-	private final List<Enchantment> trashEnchantments = LootModifierHelper.getTrashEnchantments();
-	private final List<Enchantment> enchantments = LootModifierHelper.getEnchantments();
-	private final List<Enchantment> rareEnchantments = LootModifierHelper.getRareEnchantments();
-	private final List<Enchantment> veryRareEnchantments = LootModifierHelper.getVeryRareEnchantments();
-	private final List<Enchantment> endVeryRareEnchantments = LootModifierHelper.getEndVeryRareEnchantments();
-	private final List<Enchantment> treasureEnchantments = LootModifierHelper.getTreasureEnchantments();
-	private final List<Enchantment> netherTreasureEnchantments = LootModifierHelper.getNetherTreasureEnchantments();
 	
-	public GoldenBookModifier(LootItemCondition[] conditions) {
+	private final int goldenBookCount;
+	private final WeightCollection<RarityList<Enchantment>> enchantmentWeights;
+	private final RarityList<Enchantment> extraOverworldTreasure;
+	private final RarityList<Enchantment> extraNetherTreasure;
+	private final RarityList<Enchantment> extraEndTreasure;
+	
+	public GoldenBookModifier(LootItemCondition[] conditions, int goldenBookCount, WeightCollection<RarityList<Enchantment>> enchantmentWeights, RarityList<Enchantment> extraOverworldTreasure, RarityList<Enchantment> extraNetherTreasure,
+		RarityList<Enchantment> extraEndTreasure) {
 		super(conditions);
+		this.goldenBookCount = goldenBookCount;
+		this.enchantmentWeights = enchantmentWeights;
+		this.extraOverworldTreasure = extraOverworldTreasure;
+		this.extraNetherTreasure = extraNetherTreasure;
+		this.extraEndTreasure = extraEndTreasure;
 	}
 	
 	@Override
 	public Codec<GoldenBookModifier> codec() {
 		return XSurviveGlobalLootModifiers.GOLDEN_BOOK_MODIFIER.get();
 	}
-
+	
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		generatedLoot.add(this.getGoldenBook(context));
+		for (int i = 0; i < this.goldenBookCount; i++) {
+			generatedLoot.add(this.getGoldenBook(context));
+		}
+		
 		return generatedLoot;
 	}
 	
 	private ItemStack getGoldenBook(LootContext context) {
 		ItemStack stack = new ItemStack(XSurviveItems.ENCHANTED_GOLDEN_BOOK.get());
 		Enchantment enchantment = this.getRandomEnchantment(context.getQueriedLootTableId());
-		if (enchantment != null) {
-			if (stack.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
-				goldenBook.setEnchantment(stack, enchantment);
-			}
+		if (enchantment != null && stack.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
+			goldenBook.setEnchantment(stack, enchantment);
 			return stack;
 		}
 		XSurvive.LOGGER.error("Fail to get a golden enchantment for the enchanted golden book in loot table {}", context.getQueriedLootTableId());
@@ -70,27 +89,16 @@ public class GoldenBookModifier extends LootModifier {
 	}
 	
 	private Enchantment getRandomEnchantment(ResourceLocation location) {
-		Enchantment enchantment;
-		int i = RNG.nextInt(29);
-		if (i == 0) {
-			enchantment = this.trashEnchantments.get(RNG.nextInt(this.trashEnchantments.size()));
-		} else if (10 >= i) {
-			enchantment = this.enchantments.get(RNG.nextInt(this.enchantments.size()));
-		} else if (18 >= i) {
-			enchantment = this.rareEnchantments.get(RNG.nextInt(this.rareEnchantments.size()));
-		} else if (24 >= i) {
-			if (location.equals(BuiltInLootTables.END_CITY_TREASURE)) {
-				enchantment = this.endVeryRareEnchantments.get(RNG.nextInt(this.endVeryRareEnchantments.size()));
-			} else {
-				enchantment = this.veryRareEnchantments.get(RNG.nextInt(this.veryRareEnchantments.size()));
-			}
-		} else {
-			if (location.equals(BuiltInLootTables.BASTION_TREASURE)) {
-				enchantment = this.netherTreasureEnchantments.get(RNG.nextInt(this.netherTreasureEnchantments.size()));
-			} else {
-				enchantment = this.treasureEnchantments.get(RNG.nextInt(this.treasureEnchantments.size()));
-			}
+		RarityList<Enchantment> enchantments = RarityList.copy(this.enchantmentWeights.next());
+		if (enchantments.getRarity() == this.extraNetherTreasure.getRarity() && location.equals(BuiltInLootTables.BASTION_TREASURE)) {
+			enchantments.addAll(this.extraNetherTreasure);
+		} else if (enchantments.getRarity() == this.extraEndTreasure.getRarity() && location.equals(BuiltInLootTables.END_CITY_TREASURE)) {
+			enchantments.addAll(this.extraEndTreasure);
+		} else if (enchantments.getRarity() == this.extraOverworldTreasure.getRarity()) {
+			enchantments.addAll(this.extraOverworldTreasure);
 		}
+		
+		Enchantment enchantment = enchantments.get(RNG.nextInt(enchantments.size()));
 		if (enchantment instanceof IEnchantment ench) {
 			if (ench.isAllowedOnGoldenBooks()) {
 				return enchantment;
@@ -102,5 +110,5 @@ public class GoldenBookModifier extends LootModifier {
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 		return null;
 	}
-
+	
 }

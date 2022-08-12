@@ -19,7 +19,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class WeightCollection<T> {
 	
-	private final NavigableMap<Integer, T> map;
+	private final NavigableMap<Integer, Pair<Integer, T>> map;
 	private final Random random;
 	private int total = 0;
 	
@@ -45,25 +45,25 @@ public class WeightCollection<T> {
 			throw new IllegalArgumentException("The weight must be larger that 0 but it is " + weight);
 		}
 		this.total += weight;
-		this.map.put(this.total, value);
+		this.map.put(this.total, Pair.of(weight, value));
 	}
 	
 	public T next() {
 		int value = (int) (this.random.nextDouble() * this.total);
-		return this.map.higherEntry(value).getValue();
+		return this.map.higherEntry(value).getValue().getSecond();
 	}
 	
 	private List<Pair<Integer, T>> asList() {
 		List<Pair<Integer, T>> list = Lists.newArrayList();
-		for (Entry<Integer, T> entry : this.map.entrySet()) {
-			list.add(Pair.of(entry.getKey(), entry.getValue()));
+		for (Entry<Integer, Pair<Integer, T>> entry : this.map.entrySet()) {
+			list.add(Pair.of(entry.getValue().getFirst(), entry.getValue().getSecond()));
 		}
 		return list;
 	}
 	
 	public static <E> Codec<WeightCollection<E>> codec(Codec<E> codec) {
 		return RecordCodecBuilder.create((instance) -> {
-			return instance.group(Codec.pair(Codec.INT, codec).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
+			return instance.group(Codec.pair(Codec.INT.fieldOf("weight").codec(), codec.fieldOf("value").codec()).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
 		});
 	}
 	

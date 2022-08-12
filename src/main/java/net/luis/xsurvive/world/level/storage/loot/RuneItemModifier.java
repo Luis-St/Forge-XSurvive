@@ -1,21 +1,14 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import static net.luis.xsurvive.world.item.XSurviveItems.BLACK_RUNE;
-import static net.luis.xsurvive.world.item.XSurviveItems.BROWN_RUNE;
-import static net.luis.xsurvive.world.item.XSurviveItems.GRAY_RUNE;
-import static net.luis.xsurvive.world.item.XSurviveItems.LIGHT_GRAY_RUNE;
-import static net.luis.xsurvive.world.item.XSurviveItems.WHITE_RUNE;
-
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.luis.xsurvive.world.item.GlintColorItem;
+import net.luis.xsurvive.util.RarityList;
+import net.luis.xsurvive.util.WeightCollection;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -31,17 +24,21 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class RuneItemModifier extends LootModifier {
 	
 	public static final Codec<RuneItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {
-		return LootModifier.codecStart(instance).apply(instance, RuneItemModifier::new);
+		return LootModifier.codecStart(instance).and(instance.group(Codec.INT.fieldOf("rune_count").forGetter((modifier) -> {
+			return modifier.runeCount;
+		}), WeightCollection.codec(RarityList.codec(ForgeRegistries.ITEMS.getCodec())).fieldOf("runes").forGetter((modifier) -> {
+			return modifier.runeWeights;
+		}))).apply(instance, RuneItemModifier::new);
 	});
 	private static final Random RNG = new Random();
 	
-	private final List<GlintColorItem> runes = Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get());
-	private final List<GlintColorItem> coloredRunes = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-		return item instanceof GlintColorItem runeItem && !this.runes.contains(runeItem);
-	}).map(GlintColorItem.class::cast).collect(Collectors.toList());
+	private final int runeCount;
+	private final WeightCollection<RarityList<Item>> runeWeights;
 	
-	public RuneItemModifier(LootItemCondition[] conditions) {
+	public RuneItemModifier(LootItemCondition[] conditions, int runeCount, WeightCollection<RarityList<Item>> runeWeights) {
 		super(conditions);
+		this.runeCount = runeCount;
+		this.runeWeights = runeWeights;
 	}
 	
 	@Override
@@ -51,17 +48,15 @@ public class RuneItemModifier extends LootModifier {
 	
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < this.runeCount; i++) {
 			generatedLoot.add(this.getRandomRune());
 		}
 		return generatedLoot;
 	}
 	
 	private ItemStack getRandomRune() {
-		if (RNG.nextInt(10) > 0) {
-			return new ItemStack(this.coloredRunes.get(RNG.nextInt(this.coloredRunes.size())));
-		}
-		return new ItemStack(this.runes.get(RNG.nextInt(this.runes.size())));
+		RarityList<Item> runes = RarityList.copy(this.runeWeights.next());
+		return new ItemStack(runes.get(RNG.nextInt(runes.size())));
 	}
 	
 }

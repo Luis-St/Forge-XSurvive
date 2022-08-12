@@ -57,6 +57,7 @@ public class XSurviveLanguageProvider extends LanguageProvider {
 		this.add("death.attack.curse_of_harming.player", "%1$s die by his own weapon whilst fighting %2$s");
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");
 		this.add(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable", "Showing Smeltable");
+		this.add("options.gamma.infinite", "Infinite");
 	}
 	
 	private void add(Potion potion) {

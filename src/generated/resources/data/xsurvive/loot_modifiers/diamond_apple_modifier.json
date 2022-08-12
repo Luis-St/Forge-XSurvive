@@ -1,4 +1,7 @@
 {
-  "type": "xsurvive:diamond_apple_modifier",
-  "conditions": []
+  "type": "xsurvive:additional_chance_item_modifier",
+  "additional_item": "xsurvive:diamond_apple",
+  "chance": 0.07,
+  "conditions": [],
+  "table_item": "minecraft:golden_apple"
 }

@@ -16,5 +16,51 @@
         "minecraft:chests/ancient_city_ice_box"
       ]
     }
-  ]
+  ],
+  "rune_count": 2,
+  "runes": {
+    "weights": [
+      {
+        "value": {
+          "rarity": "common",
+          "values": [
+            "xsurvive:white_rune",
+            "xsurvive:gray_rune",
+            "xsurvive:light_gray_rune",
+            "xsurvive:brown_rune",
+            "xsurvive:black_rune"
+          ]
+        },
+        "weight": 10
+      },
+      {
+        "value": {
+          "rarity": "rare",
+          "values": [
+            "xsurvive:orange_rune",
+            "xsurvive:magenta_rune",
+            "xsurvive:light_blue_rune",
+            "xsurvive:yellow_rune",
+            "xsurvive:lime_rune",
+            "xsurvive:pink_rune",
+            "xsurvive:cyan_rune",
+            "xsurvive:purple_rune",
+            "xsurvive:blue_rune",
+            "xsurvive:green_rune",
+            "xsurvive:red_rune"
+          ]
+        },
+        "weight": 70
+      },
+      {
+        "value": {
+          "rarity": "treasure",
+          "values": [
+            "xsurvive:rainbow_rune"
+          ]
+        },
+        "weight": 20
+      }
+    ]
+  }
 }

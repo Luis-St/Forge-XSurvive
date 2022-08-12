@@ -3,8 +3,11 @@ package net.luis.xsurvive.util;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 
@@ -25,6 +28,14 @@ public class Util {
 		Collections.shuffle(remainingValues);
 		values.addAll(remainingValues);
 		return values;
+	}
+	
+	public static <K, T, V> Map<T, V> mapKey(Map<K, V> map, Function<K, T> function) {
+		Map<T, V> mapped = Maps.newHashMap();
+		for (Entry<K, V> entry : map.entrySet()) {
+			mapped.put(function.apply(entry.getKey()), entry.getValue());
+		}
+		return mapped;
 	}
 	
 }
