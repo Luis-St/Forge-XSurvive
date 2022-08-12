@@ -24,7 +24,9 @@
 		"NoiseBasedChunkGeneratorMixin",
 		"EndDragonFightMixin",
 		"PoiTypesMixin",
-		"LootTablesMixin"
+		"LootTablesMixin",
+		"BlazeAttackGoalMixin",
+		"BlazeMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",
