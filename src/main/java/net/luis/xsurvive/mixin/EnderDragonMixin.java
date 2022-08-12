@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.Lists;
 
@@ -22,8 +21,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
@@ -57,11 +54,6 @@ public abstract class EnderDragonMixin extends Mob {
 	
 	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
 		super(entityType, level);
-	}
-	
-	@Inject(method = "createAttributes", at = @At("HEAD"), cancellable = true)
-	private static void createAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> callback) {
-		callback.setReturnValue(Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 400.0));
 	}
 	
 	@Inject(method = "tickDeath", at = @At("HEAD"), cancellable = true)

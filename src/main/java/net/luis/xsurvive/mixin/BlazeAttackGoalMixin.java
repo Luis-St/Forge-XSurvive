@@ -13,6 +13,12 @@ import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Blaze.BlazeAttackGoal;
 import net.minecraft.world.entity.projectile.SmallFireball;
 
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
 @Mixin(BlazeAttackGoal.class)
 public abstract class BlazeAttackGoalMixin extends Goal {
 	

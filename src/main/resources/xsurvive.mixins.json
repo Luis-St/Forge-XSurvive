@@ -13,8 +13,6 @@
 		"ThornsEnchantmentMixin",
 		"ItemStackMixin",
 		"ProtectionEnchantmentMixin",
-		"GuardianMixin",
-		"ElderGuardianMixin",
 		"EnderDragonMixin",
 		"EndCrystalMixin",
 		"WitherBossMixin",
@@ -25,8 +23,7 @@
 		"EndDragonFightMixin",
 		"PoiTypesMixin",
 		"LootTablesMixin",
-		"BlazeAttackGoalMixin",
-		"BlazeMixin"
+		"BlazeAttackGoalMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",
