@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.ai.village.poi;
+package net.luis.xsurvive.world.level.entity.ai.village;
 
 import java.util.Set;
 

@@ -1,8 +1,8 @@
 package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.capability.CapabilityUtil;
 import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
+import net.luis.xsurvive.world.level.entity.player.PlayerCapabilityProvider;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,8 +21,8 @@ public class OnPlayerCloneEvent {
 	public static void playerClone(PlayerEvent.Clone event) {
 		if (event.getOriginal() instanceof ServerPlayer original && event.getEntity() instanceof ServerPlayer player) {
 			original.reviveCaps();
-			IPlayerCapability originalHandler = CapabilityUtil.getPlayer(original);
-			IPlayerCapability handler = CapabilityUtil.getPlayer(player);
+			IPlayerCapability originalHandler = PlayerCapabilityProvider.get(original);
+			IPlayerCapability handler = PlayerCapabilityProvider.get(player);
 			if (event.isWasDeath()) {
 				handler.deserializePersistent(originalHandler.serializePersistent());
 			} else {

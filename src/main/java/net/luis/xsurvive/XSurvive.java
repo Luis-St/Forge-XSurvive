@@ -15,7 +15,7 @@ import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
 import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
 import net.luis.xsurvive.world.level.block.XSurviveBlocks;
 import net.luis.xsurvive.world.level.block.entity.XSurviveBlockEntityTypes;
-import net.luis.xsurvive.world.level.entity.ai.village.poi.XSurvivePoiTypes;
+import net.luis.xsurvive.world.level.entity.ai.village.XSurvivePoiTypes;
 import net.luis.xsurvive.world.level.entity.npc.XSurviveVillagerProfessions;
 import net.luis.xsurvive.world.level.storage.loot.XSurviveGlobalLootModifiers;
 import net.luis.xsurvive.world.level.storage.loot.predicates.XSurviveLootItemConditions;

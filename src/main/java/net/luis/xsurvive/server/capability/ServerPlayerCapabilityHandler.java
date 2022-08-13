@@ -1,7 +1,7 @@
 package net.luis.xsurvive.server.capability;
 
 import net.luis.xsurvive.network.XSurviveNetworkHandler;
-import net.luis.xsurvive.network.packet.LocalPlayerCapabilityUpdatePacket;
+import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSurviveMobEffects;
 import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
 import net.minecraft.nbt.CompoundTag;
@@ -92,7 +92,7 @@ public class ServerPlayerCapabilityHandler implements IPlayerCapability {
 
 	@Override
 	public void broadcastChanges() {
-		XSurviveNetworkHandler.sendToPlayer(this.player, new LocalPlayerCapabilityUpdatePacket(this.serializeNetwork()));
+		XSurviveNetworkHandler.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
 	}
 	
 	@Override

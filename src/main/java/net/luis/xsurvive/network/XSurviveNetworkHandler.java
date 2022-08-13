@@ -6,8 +6,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.network.packet.LocalPlayerCapabilityUpdatePacket;
-import net.luis.xsurvive.network.packet.ServerPlayerCapabilityUpdatePacket;
+import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -32,10 +31,8 @@ public class XSurviveNetworkHandler {
 	public static void init() {
 		XSurvive.LOGGER.info("Register {} Network Channel", XSurvive.MOD_NAME);
 		simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_chnanel"), () -> VERSION, VERSION::equals, VERSION::equals);
-		simpleChannel.messageBuilder(LocalPlayerCapabilityUpdatePacket.class, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(LocalPlayerCapabilityUpdatePacket::encode).decoder(LocalPlayerCapabilityUpdatePacket::new)
-				.consumerMainThread(LocalPlayerCapabilityUpdatePacket.Handler::handle).add();
-		simpleChannel.messageBuilder(ServerPlayerCapabilityUpdatePacket.class, id++, NetworkDirection.PLAY_TO_SERVER).encoder(ServerPlayerCapabilityUpdatePacket::encode).decoder(ServerPlayerCapabilityUpdatePacket::new)
-				.consumerMainThread(ServerPlayerCapabilityUpdatePacket.Handler::handle).add();
+		simpleChannel.messageBuilder(UpdatePlayerCapabilityPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(UpdatePlayerCapabilityPacket::encode).decoder(UpdatePlayerCapabilityPacket::new)
+				.consumerMainThread(UpdatePlayerCapabilityPacket.Handler::handle).add();
 	}
 	
 	public static SimpleChannel getChannel() {

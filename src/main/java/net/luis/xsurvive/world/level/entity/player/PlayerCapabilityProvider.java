@@ -1,8 +1,11 @@
 package net.luis.xsurvive.world.level.entity.player;
 
-import net.luis.xsurvive.world.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSurviveCapabilities;
+import net.luis.xsurvive.client.capability.LocalPlayerCapabilityHandler;
+import net.luis.xsurvive.server.capability.ServerPlayerCapabilityHandler;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -37,5 +40,29 @@ public class PlayerCapabilityProvider implements ICapabilitySerializable<Compoun
 	public void deserializeNBT(CompoundTag tag) {
 		this.playerCapability.deserializeDisk(tag);
 	}
-
+	
+	public static IPlayerCapability get(Player player) {
+		return player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+	}
+	
+	public static LocalPlayerCapabilityHandler getLocal(Player player) {
+		IPlayerCapability capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		if (capability instanceof LocalPlayerCapabilityHandler handler) {
+			return handler;
+		} else if (capability instanceof ServerPlayerCapabilityHandler handler) {
+			throw new RuntimeException("Fail to get LocalPlayerCapabilityHandler from server");
+		}
+		throw new IllegalStateException("Unknown network side");
+	}
+	
+	public static ServerPlayerCapabilityHandler getServer(Player player) {
+		IPlayerCapability capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		if (capability instanceof LocalPlayerCapabilityHandler handler) {
+			throw new RuntimeException("Fail to get ServerPlayerCapabilityHandler from client");
+		} else if (capability instanceof ServerPlayerCapabilityHandler handler) {
+			return handler;
+		}
+		throw new IllegalStateException("Unknown network side");
+	}
+	
 }

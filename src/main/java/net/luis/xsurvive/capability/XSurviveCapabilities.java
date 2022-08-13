@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.capability;
+package net.luis.xsurvive.capability;
 
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;

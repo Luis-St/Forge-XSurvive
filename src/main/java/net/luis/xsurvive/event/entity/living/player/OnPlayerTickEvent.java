@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSurviveCapabilities;
 import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;

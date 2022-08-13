@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.capability.XSurviveCapabilities;
 import net.luis.xsurvive.client.renderer.XSurviveRenderType;
-import net.luis.xsurvive.world.capability.XSurviveCapabilities;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;

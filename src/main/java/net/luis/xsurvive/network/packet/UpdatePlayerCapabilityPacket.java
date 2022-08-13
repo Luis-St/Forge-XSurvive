@@ -15,15 +15,15 @@ import net.minecraftforge.network.NetworkEvent.Context;
  *
  */
 
-public class LocalPlayerCapabilityUpdatePacket {
+public class UpdatePlayerCapabilityPacket {
 	
 	private final CompoundTag tag;
 	
-	public LocalPlayerCapabilityUpdatePacket(CompoundTag tag) {
+	public UpdatePlayerCapabilityPacket(CompoundTag tag) {
 		this.tag = tag;
 	}
 	
-	public LocalPlayerCapabilityUpdatePacket(FriendlyByteBuf byteBuf) {
+	public UpdatePlayerCapabilityPacket(FriendlyByteBuf byteBuf) {
 		this.tag = byteBuf.readNbt();
 	}
 	
@@ -33,7 +33,7 @@ public class LocalPlayerCapabilityUpdatePacket {
 	
 	public static class Handler {
 		
-		public static void handle(LocalPlayerCapabilityUpdatePacket packet, Supplier<Context> context) {
+		public static void handle(UpdatePlayerCapabilityPacket packet, Supplier<Context> context) {
 			context.get().enqueueWork(() -> {
 				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> XSurviveClientNetworkHandler.handleCapabilityUpdate(packet.tag));
 			});

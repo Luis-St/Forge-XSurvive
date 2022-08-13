@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.item;
 
-import net.luis.xsurvive.world.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSurviveCapabilities;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
