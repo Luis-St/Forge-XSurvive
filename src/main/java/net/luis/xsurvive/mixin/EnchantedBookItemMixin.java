@@ -66,7 +66,7 @@ public abstract class EnchantedBookItemMixin {
 		callback.cancel();
 	}
 	
-	protected boolean isTabForCategory(CreativeModeTab tab, Enchantment enchantment) {
+	private boolean isTabForCategory(CreativeModeTab tab, Enchantment enchantment) {
 		if (enchantment.category == XSurviveEnchantmentCategory.TOOLS && (tab == CreativeModeTab.TAB_COMBAT || tab == CreativeModeTab.TAB_TOOLS)) {
 			return true;
 		} else if (enchantment.category == XSurviveEnchantmentCategory.WEAPONS && tab == CreativeModeTab.TAB_COMBAT) {

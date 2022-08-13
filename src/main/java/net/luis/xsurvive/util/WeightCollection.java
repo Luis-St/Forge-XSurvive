@@ -53,6 +53,10 @@ public class WeightCollection<T> {
 		return this.map.higherEntry(value).getValue().getSecond();
 	}
 	
+	public boolean isEmpty() {
+		return this.map.isEmpty();
+	}
+	
 	private List<Pair<Integer, T>> asList() {
 		List<Pair<Integer, T>> list = Lists.newArrayList();
 		for (Entry<Integer, Pair<Integer, T>> entry : this.map.entrySet()) {

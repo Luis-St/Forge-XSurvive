@@ -2,7 +2,6 @@ package net.luis.xsurvive.mixin;
 
 import java.util.List;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,7 +44,6 @@ public abstract class EnderDragonMixin extends Mob {
 	@Shadow
 	public EndCrystal nearestCrystal;
 	@Shadow
-	@Final
 	private EndDragonFight dragonFight;
 	@Shadow
 	public int dragonDeathTime;

@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -21,7 +20,6 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 public abstract class ProtectionEnchantmentMixin extends Enchantment {
 	
 	@Shadow
-	@Final
 	public ProtectionEnchantment.Type type;
 	
 	private ProtectionEnchantmentMixin(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
