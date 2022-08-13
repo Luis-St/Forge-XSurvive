@@ -1,0 +1,68 @@
+package net.luis.xsurvive.world.level.entity.player;
+
+import net.luis.xsurvive.capability.XSurviveCapabilities;
+import net.luis.xsurvive.client.capability.LocalPlayerHandler;
+import net.luis.xsurvive.server.capability.ServerPlayerHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
+
+/**
+ * 
+ * @author Luis-st
+ *
+ */
+
+public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
+	
+	private final IPlayer playerCapability;
+	private final LazyOptional<IPlayer> optional;
+	
+	public PlayerProvider(IPlayer playerCapability) {
+		this.playerCapability = playerCapability;
+		this.optional = LazyOptional.of(() -> this.playerCapability);
+	}
+	
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+		return XSurviveCapabilities.PLAYER.orEmpty(capability, this.optional);
+	}
+
+	@Override
+	public CompoundTag serializeNBT() {
+		return this.playerCapability.serializeDisk();
+	}
+
+	@Override
+	public void deserializeNBT(CompoundTag tag) {
+		this.playerCapability.deserializeDisk(tag);
+	}
+	
+	public static IPlayer get(Player player) {
+		return player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+	}
+	
+	public static LocalPlayerHandler getLocal(Player player) {
+		IPlayer capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		if (capability instanceof LocalPlayerHandler handler) {
+			return handler;
+		} else if (capability instanceof ServerPlayerHandler handler) {
+			throw new RuntimeException("Fail to get LocalPlayerHandler from server");
+		}
+		throw new IllegalStateException("Unknown network side");
+	}
+	
+	public static ServerPlayerHandler getServer(Player player) {
+		IPlayer capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		if (capability instanceof LocalPlayerHandler handler) {
+			throw new RuntimeException("Fail to get ServerPlayerHandler from client");
+		} else if (capability instanceof ServerPlayerHandler handler) {
+			return handler;
+		}
+		throw new IllegalStateException("Unknown network side");
+	}
+	
+}

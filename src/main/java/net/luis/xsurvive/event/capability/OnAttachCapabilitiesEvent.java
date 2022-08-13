@@ -1,10 +1,10 @@
 package net.luis.xsurvive.event.capability;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.server.capability.ServerPlayerCapabilityHandler;
+import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.luis.xsurvive.world.item.GlintColorProvider;
 import net.luis.xsurvive.world.item.IGlintColor;
-import net.luis.xsurvive.world.level.entity.player.PlayerCapabilityProvider;
+import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +28,7 @@ public class OnAttachCapabilitiesEvent {
 	public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		if (entity instanceof ServerPlayer player) {
-			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_player_capability"), new PlayerCapabilityProvider(new ServerPlayerCapabilityHandler(player)));
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_player_capability"), new PlayerProvider(new ServerPlayerHandler(player)));
 		}
 	}
 	

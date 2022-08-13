@@ -6,6 +6,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -45,6 +47,10 @@ public class OnLivingTickEvent {
 						}
 					}
 				}
+			}
+		} else if (event.getEntity() instanceof EnderMan enderMan) {
+			if (enderMan.getTarget() != null && enderMan.getTarget() instanceof Player target) {
+				
 			}
 		}
 	}

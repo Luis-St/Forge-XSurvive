@@ -3,7 +3,7 @@ package net.luis.xsurvive.server.capability;
 import net.luis.xsurvive.network.XSurviveNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSurviveMobEffects;
-import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
+import net.luis.xsurvive.world.level.entity.player.IPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
  *
  */
 
-public class ServerPlayerCapabilityHandler implements IPlayerCapability {
+public class ServerPlayerHandler implements IPlayer {
 	
 	private final ServerPlayer player;
 	private int tick;
@@ -23,7 +23,7 @@ public class ServerPlayerCapabilityHandler implements IPlayerCapability {
 	private int lastSync;
 	private boolean changed = false;
 	
-	public ServerPlayerCapabilityHandler(ServerPlayer player) {
+	public ServerPlayerHandler(ServerPlayer player) {
 		this.player = player;
 	}
 	

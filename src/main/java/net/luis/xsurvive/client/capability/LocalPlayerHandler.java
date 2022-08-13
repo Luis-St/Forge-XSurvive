@@ -1,6 +1,6 @@
 package net.luis.xsurvive.client.capability;
 
-import net.luis.xsurvive.world.level.entity.player.IPlayerCapability;
+import net.luis.xsurvive.world.level.entity.player.IPlayer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -11,14 +11,14 @@ import net.minecraft.nbt.CompoundTag;
  *
  */
 
-public class LocalPlayerCapabilityHandler implements IPlayerCapability {
+public class LocalPlayerHandler implements IPlayer {
 	
 	private final LocalPlayer player;
 	private int tick;
 	private int frostTime;
 	private int startFrostTime;
 	
-	public LocalPlayerCapabilityHandler(LocalPlayer player) {
+	public LocalPlayerHandler(LocalPlayer player) {
 		this.player = player;
 	}
 	

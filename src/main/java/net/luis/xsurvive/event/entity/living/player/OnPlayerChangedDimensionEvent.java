@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.level.entity.player.PlayerCapabilityProvider;
+import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,7 +19,7 @@ public class OnPlayerChangedDimensionEvent {
 	@SubscribeEvent
 	public static void playerChangedDimension(PlayerChangedDimensionEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player) {
-			PlayerCapabilityProvider.getServer(player).setChanged();
+			PlayerProvider.getServer(player).setChanged();
 		}
 	}
 	

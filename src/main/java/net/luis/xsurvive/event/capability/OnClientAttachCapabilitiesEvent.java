@@ -1,8 +1,8 @@
 package net.luis.xsurvive.event.capability;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.client.capability.LocalPlayerCapabilityHandler;
-import net.luis.xsurvive.world.level.entity.player.PlayerCapabilityProvider;
+import net.luis.xsurvive.client.capability.LocalPlayerHandler;
+import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +24,7 @@ public class OnClientAttachCapabilitiesEvent {
 	public static void AttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		if (entity instanceof LocalPlayer player) {
-			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "local_player_capability"), new PlayerCapabilityProvider(new LocalPlayerCapabilityHandler(player)));
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "local_player_capability"), new PlayerProvider(new LocalPlayerHandler(player)));
 		}
 	}
 	

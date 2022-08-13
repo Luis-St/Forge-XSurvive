@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
  *
  */
 
-public interface IPlayerCapability {
+public interface IPlayer {
 	
 	@Nullable
 	Player getPlayer();
