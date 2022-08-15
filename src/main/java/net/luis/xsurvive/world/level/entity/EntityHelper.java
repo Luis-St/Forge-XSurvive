@@ -9,8 +9,8 @@ import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.ItemHelper;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.Util;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
@@ -69,9 +69,9 @@ public class EntityHelper {
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
 				if (equipmentSlot == slot) {
-					growth += stack.getEnchantmentLevel(XSurviveEnchantments.GROWTH.get());
+					growth += stack.getEnchantmentLevel(XSEnchantments.GROWTH.get());
 				} else {
-					growth += entity.getItemBySlot(equipmentSlot).getEnchantmentLevel(XSurviveEnchantments.GROWTH.get());
+					growth += entity.getItemBySlot(equipmentSlot).getEnchantmentLevel(XSEnchantments.GROWTH.get());
 				}
 			}
 		}
@@ -182,7 +182,7 @@ public class EntityHelper {
 		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, treasure);
 		Consumer<? super EnchantmentInstance> action = (instance) -> {
 			if (golden) {
-				instances.add(EnchantmentHandler.increaseEnchantment(instance, golden));
+				instances.add(XSEnchantmentHelper.increaseEnchantment(instance, golden));
 			} else {
 				instances.add(instance);
 			}

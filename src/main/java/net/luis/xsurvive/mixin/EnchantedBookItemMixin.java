@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantmentCategory;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentCategory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
@@ -67,9 +67,9 @@ public abstract class EnchantedBookItemMixin {
 	}
 	
 	private boolean isTabForCategory(CreativeModeTab tab, Enchantment enchantment) {
-		if (enchantment.category == XSurviveEnchantmentCategory.TOOLS && (tab == CreativeModeTab.TAB_COMBAT || tab == CreativeModeTab.TAB_TOOLS)) {
+		if (enchantment.category == XSEnchantmentCategory.TOOLS && (tab == CreativeModeTab.TAB_COMBAT || tab == CreativeModeTab.TAB_TOOLS)) {
 			return true;
-		} else if (enchantment.category == XSurviveEnchantmentCategory.WEAPONS && tab == CreativeModeTab.TAB_COMBAT) {
+		} else if (enchantment.category == XSEnchantmentCategory.WEAPONS && tab == CreativeModeTab.TAB_COMBAT) {
 			return true;
 		}
 		return tab.hasEnchantmentCategory(enchantment.category);

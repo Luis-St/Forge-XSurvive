@@ -1,8 +1,8 @@
 package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.capability.XSurviveCapabilities;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.capability.XSCapabilities;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -26,16 +26,16 @@ public class OnPlayerTickEvent {
 		Player player = event.player;
 		if (event.phase == TickEvent.Phase.START) {
 			if (player instanceof ServerPlayer serverPlayer) {
-				serverPlayer.getCapability(XSurviveCapabilities.PLAYER, null).ifPresent((handler) -> {
+				serverPlayer.getCapability(XSCapabilities.PLAYER, null).ifPresent((handler) -> {
 					handler.tick();
 				});
 			} else if (player instanceof LocalPlayer localPlayer) {
-				localPlayer.getCapability(XSurviveCapabilities.PLAYER, null).ifPresent((handler) -> {
+				localPlayer.getCapability(XSCapabilities.PLAYER, null).ifPresent((handler) -> {
 					handler.tick();
 				});
 			}
 		}
-		boolean hasVoidWalker = player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSurviveEnchantments.VOID_WALKER.get()) > 0;
+		boolean hasVoidWalker = player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0;
 		BlockPos pos = new BlockPos(player.getX(), player.getY(), player.getZ());
 		if (hasVoidWalker) {
 			player.fallDistance = 0.0F;

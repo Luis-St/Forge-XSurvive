@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public abstract class ItemStackMixin {
 	@Inject(method = "inventoryTick", at = @At("TAIL"))
 	public void inventoryTick(Level level, Entity entity, int slot, boolean selected, CallbackInfo callback) {
 		if (entity instanceof LivingEntity livingEntity) {
-			int breakingCurse = ((ItemStack) (Object) this).getEnchantmentLevel(XSurviveEnchantments.CURSE_OF_BREAKING.get());
+			int breakingCurse = ((ItemStack) (Object) this).getEnchantmentLevel(XSEnchantments.CURSE_OF_BREAKING.get());
 			if (breakingCurse > 0 && level.getGameTime() % 100 == 0) {
 				this.hurtAndBreak(breakingCurse * 2, livingEntity, (e) -> {
 					

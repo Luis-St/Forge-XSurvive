@@ -95,7 +95,7 @@ public class EnchantedGoldenBookItem extends Item {
 	}
 	
 	public static ItemStack createForEnchantment(Enchantment enchantment) {
-		ItemStack stack = new ItemStack(XSurviveItems.ENCHANTED_GOLDEN_BOOK.get());
+		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
 		return stack;
 	}

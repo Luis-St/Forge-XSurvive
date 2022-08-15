@@ -2,7 +2,7 @@ package net.luis.xsurvive.network.packet;
 
 import java.util.function.Supplier;
 
-import net.luis.xsurvive.client.XSurviveClientNetworkHandler;
+import net.luis.xsurvive.client.XSClientNetworkHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,7 +35,7 @@ public class UpdatePlayerCapabilityPacket {
 		
 		public static void handle(UpdatePlayerCapabilityPacket packet, Supplier<Context> context) {
 			context.get().enqueueWork(() -> {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> XSurviveClientNetworkHandler.handleCapabilityUpdate(packet.tag));
+				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> XSClientNetworkHandler.handleCapabilityUpdate(packet.tag));
 			});
 			context.get().setPacketHandled(true);
 		}

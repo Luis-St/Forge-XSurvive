@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.util.Util;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -95,7 +95,7 @@ public abstract class EnderDragonMixin extends Mob {
 	private void addDragonExperience(List<Player> players, int experience) {
 		for (Player player : players) {
 			int xp = experience;
-			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, EnchantmentHandler.getItemsWith(Enchantments.MENDING, player, ItemStack::isDamaged))) {
+			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, XSEnchantmentHelper.getItemsWith(Enchantments.MENDING, player, ItemStack::isDamaged))) {
 		         int repair = (int) Math.min(experience * stack.getXpRepairRatio(), stack.getDamageValue());
 		         stack.setDamageValue(stack.getDamageValue() - repair);
 		         xp -= repair / 2;

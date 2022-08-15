@@ -18,12 +18,12 @@ public class HoneyMelonBlock extends StemGrownBlock {
 
 	@Override
 	public StemBlock getStem() {
-		return XSurviveBlocks.HONEY_MELON_STEM.get();
+		return XSBlocks.HONEY_MELON_STEM.get();
 	}
 
 	@Override
 	public AttachedStemBlock getAttachedStem() {
-		return XSurviveBlocks.ATTACHED_HONEY_MELON_STEM.get();
+		return XSBlocks.ATTACHED_HONEY_MELON_STEM.get();
 	}
 
 }

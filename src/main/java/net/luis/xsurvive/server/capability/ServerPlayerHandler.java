@@ -1,8 +1,8 @@
 package net.luis.xsurvive.server.capability;
 
-import net.luis.xsurvive.network.XSurviveNetworkHandler;
+import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
-import net.luis.xsurvive.world.effect.XSurviveMobEffects;
+import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.level.entity.player.IPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +41,7 @@ public class ServerPlayerHandler implements IPlayer {
 	public void tick() {
 		this.tick++;
 		if (this.player.getRemainingFireTicks() > 0 || this.getLevel().dimensionType().ultraWarm()) {
-			if (this.player.removeEffect(XSurviveMobEffects.FROST.get())) {
+			if (this.player.removeEffect(XSMobEffects.FROST.get())) {
 				this.frostTime = 0;
 				this.setChanged();
 			}
@@ -92,7 +92,7 @@ public class ServerPlayerHandler implements IPlayer {
 
 	@Override
 	public void broadcastChanges() {
-		XSurviveNetworkHandler.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
+		XSNetworkHandler.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
 	}
 	
 	@Override

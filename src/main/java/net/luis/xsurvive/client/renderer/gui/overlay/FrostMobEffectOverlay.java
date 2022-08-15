@@ -7,7 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
-import net.luis.xsurvive.world.effect.XSurviveMobEffects;
+import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -35,7 +35,7 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 	@Override
 	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
 		Player player = this.minecraft.player;
-		if (!this.minecraft.options.hideGui && player.hasEffect(XSurviveMobEffects.FROST.get()) && 0 >= player.getPercentFrozen()) {
+		if (!this.minecraft.options.hideGui && player.hasEffect(XSMobEffects.FROST.get()) && 0 >= player.getPercentFrozen()) {
 			gui.setupOverlayRenderState(true, false);
 			this.renderFrostMobEffectOverlay(width, height, PlayerProvider.getLocal(player).getFrostPercent());
 		}

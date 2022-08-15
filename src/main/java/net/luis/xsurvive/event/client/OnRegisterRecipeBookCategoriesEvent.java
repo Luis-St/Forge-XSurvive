@@ -1,14 +1,14 @@
 package net.luis.xsurvive.event.client;
 
-import static net.luis.xsurvive.client.XSurviveRecipeBookCategories.SMELTING_FURNACE_BLOCKS;
-import static net.luis.xsurvive.client.XSurviveRecipeBookCategories.SMELTING_FURNACE_MISC;
-import static net.luis.xsurvive.client.XSurviveRecipeBookCategories.SMELTING_FURNACE_SEARCH;
+import static net.luis.xsurvive.client.XSRecipeBookCategories.SMELTING_FURNACE_BLOCKS;
+import static net.luis.xsurvive.client.XSRecipeBookCategories.SMELTING_FURNACE_MISC;
+import static net.luis.xsurvive.client.XSRecipeBookCategories.SMELTING_FURNACE_SEARCH;
 
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.inventory.XSurviveRecipeBookTypes;
-import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
+import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
@@ -27,9 +27,9 @@ public class OnRegisterRecipeBookCategoriesEvent {
 	
 	@SubscribeEvent
 	public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-		event.registerBookCategories(XSurviveRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
+		event.registerBookCategories(XSRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
 		event.registerAggregateCategory(SMELTING_FURNACE_SEARCH, Lists.newArrayList(SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
-		event.registerRecipeCategoryFinder(XSurviveRecipeTypes.SMELTING.get(), (recipe) -> {
+		event.registerRecipeCategoryFinder(XSRecipeTypes.SMELTING.get(), (recipe) -> {
 			if (recipe.getResultItem().getItem() instanceof BlockItem) {
 				return SMELTING_FURNACE_BLOCKS;
 			}

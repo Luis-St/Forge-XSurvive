@@ -1,7 +1,7 @@
 package net.luis.xsurvive.world.level.block;
 
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
-import net.luis.xsurvive.world.level.block.entity.XSurviveBlockEntityTypes;
+import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -35,7 +35,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 	
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return createFurnaceTicker(level, type, XSurviveBlockEntityTypes.SMELTING_FURNACE.get());
+		return createFurnaceTicker(level, type, XSBlockEntityTypes.SMELTING_FURNACE.get());
 	}
 
 	@Override

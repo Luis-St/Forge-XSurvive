@@ -1,8 +1,8 @@
 package net.luis.xsurvive.event.entity.living;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -29,8 +29,8 @@ public class OnLivingDamageEvent {
 		float amount = event.getAmount();
 		float newAmount = amount;
 		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof Player player) {
-			int enderSlayer = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.ENDER_SLAYER.get(), player);
-			int impaling = EnchantmentHandler.getEnchantmentLevel(Enchantments.IMPALING, player);
+			int enderSlayer = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.ENDER_SLAYER.get(), player);
+			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player);
 			if (enderSlayer > 0 && EntityHelper.isAffectedByEnderSlayer(target)) {
 				newAmount = (float) (amount * 2.5);
 			}
@@ -39,7 +39,7 @@ public class OnLivingDamageEvent {
 			}
 		}
 		if (target instanceof Player player && source == DamageSource.OUT_OF_WORLD && amount > 0) {
-			int voidProtection = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.VOID_PROTECTION.get(), player);
+			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get(), player);
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
 					case 1 -> 0.8F;

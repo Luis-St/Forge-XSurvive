@@ -8,11 +8,11 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.luis.xores.world.item.XOresItems;
 import net.luis.xores.world.level.block.XOresBlocks;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.item.trading.AdvancedTradeBuilder;
 import net.luis.xsurvive.world.item.trading.DynamicTrades;
 import net.luis.xsurvive.world.item.trading.SimpleTradeBuilder;
-import net.luis.xsurvive.world.level.entity.npc.XSurviveVillagerProfessions;
+import net.luis.xsurvive.world.level.entity.npc.XSVillagerProfessions;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -36,7 +36,7 @@ public class OnVillagerTradesEvent {
 		List<ItemListing> trade3 = Lists.newArrayList();
 		List<ItemListing> trade4 = Lists.newArrayList();
 		List<ItemListing> trade5 = Lists.newArrayList();
-		if (event.getType() == XSurviveVillagerProfessions.BEEKEEPER.get()) {
+		if (event.getType() == XSVillagerProfessions.BEEKEEPER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.DANDELION, 10, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.POPPY, 10, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.OXEYE_DAISY, 7, 1).defaultBuild(1));
@@ -61,7 +61,7 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.emerald(Items.HONEY_BOTTLE, 1, 3).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(4, Items.HONEYCOMB_BLOCK, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(6, Items.HONEY_BLOCK, 1).defaultBuild(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.ENCHANTER.get()) {
+		} else if (event.getType() == XSVillagerProfessions.ENCHANTER.get()) {
 			trade1.add(SimpleTradeBuilder.item(1, Items.LAPIS_LAZULI, 2).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.LAPIS_LAZULI, 2, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.BOOK, 4, 1).defaultBuild(1));
@@ -77,7 +77,7 @@ public class OnVillagerTradesEvent {
 			trade4.add(DynamicTrades.randomEnchantedBook(4));
 			
 			trade5.add(DynamicTrades.randomEnchantedGoldenBook(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.END_TRADER.get()) {
+		} else if (event.getType() == XSVillagerProfessions.END_TRADER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.END_STONE, 12, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.CHORUS_FRUIT, 10, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.item(3, Items.CHORUS_FLOWER, 1).defaultBuild(1));
@@ -96,11 +96,11 @@ public class OnVillagerTradesEvent {
 			
 			trade5.add(SimpleTradeBuilder.item(4, Items.ENDER_EYE, 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.enchantedBook(XSurviveEnchantments.VOID_WALKER.get(), 1).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSurviveEnchantments.VOID_PROTECTION.get()).defaultBuild(5));
+			trade5.add(AdvancedTradeBuilder.enchantedBook(XSEnchantments.VOID_WALKER.get(), 1).defaultBuild(5));
+			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSEnchantments.VOID_PROTECTION.get()).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(XOresItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.LUMBERJACK.get()) {
+		} else if (event.getType() == XSVillagerProfessions.LUMBERJACK.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.STICK, 32, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.item(4, Items.APPLE, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.OAK_SAPLING, 8, 1).defaultBuild(1));
@@ -134,7 +134,7 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.emerald(Items.WARPED_FUNGUS, 4, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(Items.WARPED_STEM, 8, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(1, Items.WARPED_STEM, 4).defaultBuild(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.MINER.get()) {
+		} else if (event.getType() == XSVillagerProfessions.MINER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.COBBLESTONE, 16, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.COBBLED_DEEPSLATE, 16, 1).defaultBuild(1));
 			trade1.add(AdvancedTradeBuilder.processItem(Items.RAW_GOLD, 1, 1, Items.GOLD_INGOT, 2).defaultBuild(1));
@@ -157,7 +157,7 @@ public class OnVillagerTradesEvent {
 			trade5.add(AdvancedTradeBuilder.processItem(XOresBlocks.DEEPSLATE_SAPHIRE_ORE.get(), 1, 2, XOresItems.SAPHIRE_INGOT.get(), 2).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(XOresItems.SAPHIRE_INGOT.get(), 1, 2).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(32, XOresItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.MOB_HUNTER.get()) {
+		} else if (event.getType() == XSVillagerProfessions.MOB_HUNTER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.ROTTEN_FLESH, 8, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.item(1, Items.BONE, 4).defaultBuild(1));
 			
@@ -174,7 +174,7 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.item(64, Items.ZOMBIE_HEAD, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(64, Items.CREEPER_HEAD, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(Items.TOTEM_OF_UNDYING, 1, 32).defaultBuild(5));
-		} else if (event.getType() == XSurviveVillagerProfessions.NETHER_TRADER.get()) {
+		} else if (event.getType() == XSVillagerProfessions.NETHER_TRADER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.NETHERRACK, 16, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.NETHER_BRICKS, 8, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.BLACKSTONE, 8, 1).defaultBuild(1));

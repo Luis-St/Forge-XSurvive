@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.level.entity.player;
 
-import net.luis.xsurvive.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.minecraft.core.Direction;
@@ -28,7 +28,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		return XSurviveCapabilities.PLAYER.orEmpty(capability, this.optional);
+		return XSCapabilities.PLAYER.orEmpty(capability, this.optional);
 	}
 
 	@Override
@@ -42,11 +42,11 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	public static IPlayer get(Player player) {
-		return player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		return player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 	}
 	
 	public static LocalPlayerHandler getLocal(Player player) {
-		IPlayer capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof LocalPlayerHandler handler) {
 			return handler;
 		} else if (capability instanceof ServerPlayerHandler handler) {
@@ -56,7 +56,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	public static ServerPlayerHandler getServer(Player player) {
-		IPlayer capability = player.getCapability(XSurviveCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof LocalPlayerHandler handler) {
 			throw new RuntimeException("Fail to get ServerPlayerHandler from client");
 		} else if (capability instanceof ServerPlayerHandler handler) {

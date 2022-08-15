@@ -1,9 +1,9 @@
 package net.luis.xsurvive.event.entity.living;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.effect.XSurviveMobEffects;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.effect.XSMobEffects;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,13 +28,13 @@ public class OnLivingHurtEvent {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
 		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof LivingEntity livingAttacker && target instanceof LivingEntity livingTarget) {
-			int poisonAspect = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.POISON_ASPECT.get(), livingAttacker);
-			int frostAspect = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.FROST_ASPECT.get(), livingAttacker);
+			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT.get(), livingAttacker);
+			int frostAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.FROST_ASPECT.get(), livingAttacker);
 			if (poisonAspect > 0) {
 				livingTarget.addEffect(new MobEffectInstance(MobEffects.POISON, 100 * poisonAspect), livingAttacker);
 			}
 			if (frostAspect > 0) {
-				livingTarget.addEffect(new MobEffectInstance(XSurviveMobEffects.FROST.get(), 100 * frostAspect), livingAttacker);
+				livingTarget.addEffect(new MobEffectInstance(XSMobEffects.FROST.get(), 100 * frostAspect), livingAttacker);
 			}
 		}
 	}

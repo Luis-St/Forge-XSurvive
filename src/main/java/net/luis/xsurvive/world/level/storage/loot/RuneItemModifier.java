@@ -43,7 +43,7 @@ public class RuneItemModifier extends LootModifier {
 	
 	@Override
 	public Codec<RuneItemModifier> codec() {
-		return XSurviveGlobalLootModifiers.RUNE_ITEM_MODIFIER.get();
+		return XSGlobalLootModifiers.RUNE_ITEM_MODIFIER.get();
 	}
 	
 	@Override

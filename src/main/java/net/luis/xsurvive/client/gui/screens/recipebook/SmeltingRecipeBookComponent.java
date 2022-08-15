@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -29,7 +29,7 @@ public class SmeltingRecipeBookComponent extends AbstractFurnaceRecipeBookCompon
 	@Override
 	protected Set<Item> getFuelItems() {
 		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-			return item.getBurnTime(new ItemStack(item), XSurviveRecipeTypes.SMELTING.get()) > 0;
+			return item.getBurnTime(new ItemStack(item), XSRecipeTypes.SMELTING.get()) > 0;
 		}).collect(Collectors.toSet());
 	}
 

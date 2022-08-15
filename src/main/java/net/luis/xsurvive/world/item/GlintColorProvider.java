@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.item;
 
-import net.luis.xsurvive.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSCapabilities;
 import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -16,7 +16,7 @@ public class GlintColorProvider implements ICapabilityProvider {
 	
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
-		return XSurviveCapabilities.GLINT_COLOR.orEmpty(capability, this.optional);
+		return XSCapabilities.GLINT_COLOR.orEmpty(capability, this.optional);
 	}
 	
 }

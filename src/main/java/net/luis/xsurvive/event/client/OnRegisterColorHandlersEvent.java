@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.client;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.level.block.XSurviveBlocks;
+import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -26,10 +26,10 @@ public class OnRegisterColorHandlersEvent {
 			int green = 255 - age * 8;
 			int blue = age * 4;
 			return red << 16 | green << 8 | blue;
-		}, XSurviveBlocks.HONEY_MELON_STEM.get());
+		}, XSBlocks.HONEY_MELON_STEM.get());
 		event.register((state, blockGetter, pos, i) -> {
 			return 14731036;
-		}, XSurviveBlocks.ATTACHED_HONEY_MELON_STEM.get());
+		}, XSBlocks.ATTACHED_HONEY_MELON_STEM.get());
 	}
 	
 }

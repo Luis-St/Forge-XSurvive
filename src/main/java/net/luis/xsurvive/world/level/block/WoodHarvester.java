@@ -3,7 +3,7 @@ package net.luis.xsurvive.world.level.block;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.tags.BlockTags;
@@ -86,9 +86,9 @@ public class WoodHarvester {
 	private ItemStack getUsedStack() {
 		ItemStack mainStack = this.player.getMainHandItem();
 		ItemStack offStack = this.player.getOffhandItem();
-		if (mainStack.getEnchantmentLevel(XSurviveEnchantments.HARVESTING.get()) > 0) {
+		if (mainStack.getEnchantmentLevel(XSEnchantments.HARVESTING.get()) > 0) {
 			return mainStack;
-		} else if (offStack.getEnchantmentLevel(XSurviveEnchantments.HARVESTING.get()) > 0) {
+		} else if (offStack.getEnchantmentLevel(XSEnchantments.HARVESTING.get()) > 0) {
 			return offStack;
 		} else if (!mainStack.isEmpty()) {
 			return mainStack;

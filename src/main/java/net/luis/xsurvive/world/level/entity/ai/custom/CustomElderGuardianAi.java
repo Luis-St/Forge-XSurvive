@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.level.entity.ai.custom;
 
-import net.luis.xsurvive.tag.XSurviveBlockTags;
+import net.luis.xsurvive.tag.XSBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -42,7 +42,7 @@ public class CustomElderGuardianAi implements CustomAi {
 				for (int z = Mth.floor(boundingBox.minZ); z <= Mth.floor(boundingBox.maxZ); ++z) {
 					BlockPos pos = new BlockPos(x, y, z);
 					BlockState state = level.getBlockState(pos);
-					if (!state.isAir() && !state.is(Blocks.WATER) && !state.is(XSurviveBlockTags.OCEAN_MONUMENT_BLOCKS)) {
+					if (!state.isAir() && !state.is(Blocks.WATER) && !state.is(XSBlockTags.OCEAN_MONUMENT_BLOCKS)) {
 						this.level.destroyBlock(pos, true, this.elderGuardian);
 						this.level.setBlock(pos, Blocks.WATER.defaultBlockState(), Block.UPDATE_CLIENTS);
 					}

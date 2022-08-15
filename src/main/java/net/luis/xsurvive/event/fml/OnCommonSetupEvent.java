@@ -9,9 +9,9 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.wiki.file.EffectsWikiFile;
 import net.luis.xsurvive.wiki.file.EnchantmentWikiFile;
 import net.luis.xsurvive.wiki.file.PotionsWikiFile;
-import net.luis.xsurvive.world.item.alchemy.XSurviveBrewingRecipe;
-import net.luis.xsurvive.world.item.alchemy.XSurvivePotions;
-import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
+import net.luis.xsurvive.world.item.alchemy.XSBrewingRecipe;
+import net.luis.xsurvive.world.item.alchemy.XSPotions;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.level.entity.ai.custom.CustomAiManager;
 import net.luis.xsurvive.world.level.entity.ai.custom.CustomElderGuardianAi;
 import net.luis.xsurvive.world.level.entity.ai.custom.CustomEnderManAi;
@@ -37,19 +37,19 @@ public class OnCommonSetupEvent {
 	
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) throws IOException {
-		BackpackConstans.FURNACE_RECIPE_TYPES.add(XSurviveRecipeTypes.SMELTING.get());
+		BackpackConstans.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.SMELTING.get());
 		registerBrewingRecipies();
 		registerCustomAis();
 		createWikis(new File("D:/Git Repositories/Forge-XSurvive").toPath().resolve("wiki files"));
 	}
 	
 	private static void registerBrewingRecipies() {
-		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.SNOWBALL, XSurvivePotions.FORST.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_FORST.get())
-			.addPowerUpgrade(XSurvivePotions.STRONG_FORST.get()).build());
-		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.WITHER_ROSE, XSurvivePotions.WITHER.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_WITHER.get())
-			.addPowerUpgrade(XSurvivePotions.STRONG_WITHER.get()).build());
-		BrewingRecipeRegistry.addRecipe(new XSurviveBrewingRecipe.Builder(Items.IRON_PICKAXE, XSurvivePotions.DIG_SPEED.get()).useDefaultInput().addTimeUpgrade(XSurvivePotions.LONG_DIG_SPEED.get())
-			.addPowerUpgrade(XSurvivePotions.STRONG_DIG_SPEED.get()).build());
+		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.SNOWBALL, XSPotions.FORST.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_FORST.get())
+			.addPowerUpgrade(XSPotions.STRONG_FORST.get()).build());
+		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.WITHER_ROSE, XSPotions.WITHER.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_WITHER.get())
+			.addPowerUpgrade(XSPotions.STRONG_WITHER.get()).build());
+		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_DIG_SPEED.get())
+			.addPowerUpgrade(XSPotions.STRONG_DIG_SPEED.get()).build());
 	}
 	
 	private static void registerCustomAis() {

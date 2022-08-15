@@ -3,8 +3,8 @@ package net.luis.xsurvive.event.entity.living;
 import java.util.Random;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -40,8 +40,8 @@ public class OnLivingAttackEvent {
 		float amount = event.getAmount();
 		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof Player player) {
 			if (target instanceof LivingEntity livingTarget && amount > 0.0F) {
-				int harmingCurse = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.CURSE_OF_HARMING.get(), player);
-				int thunderbolt = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.THUNDERBOLT.get(), player);
+				int harmingCurse = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.CURSE_OF_HARMING.get(), player);
+				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT.get(), player);
 				if (harmingCurse > 0) {
 					float damage = (amount / 2.0F) * (float) harmingCurse;
 					if (player.hurt(new EntityDamageSource("curse_of_harming", livingTarget), damage)) {
@@ -60,7 +60,7 @@ public class OnLivingAttackEvent {
 			}
 		}
 		if (target instanceof Player player && source == DamageSource.OUT_OF_WORLD && amount > 0) {
-			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSurviveEnchantments.VOID_PROTECTION.get());
+			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get());
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
 					case 1 -> 1.0F;

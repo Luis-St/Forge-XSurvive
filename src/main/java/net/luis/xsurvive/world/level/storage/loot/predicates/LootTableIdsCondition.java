@@ -35,7 +35,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return XSurviveLootItemConditions.LOOT_TABLE_IDS.get();
+		return XSLootItemConditions.LOOT_TABLE_IDS.get();
 	}
 	
 	public static class Builder implements LootItemCondition.Builder {

@@ -1,8 +1,8 @@
 package net.luis.xsurvive.event.level;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.WoodHarvester;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -28,11 +28,11 @@ public class OnBlockBreakEvent {
 		Player player = event.getPlayer();
 		BlockPos pos = new BlockPos(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 		int xp = event.getExpToDrop();
-		int experience = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.EXPERIENCE.get(), player);
-		int multiDrop = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.MULTI_DROP.get(), player);
-		int fortune = EnchantmentHandler.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player);
-		int blasting = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.BLASTING.get(), player);
-		int harvesting = EnchantmentHandler.getEnchantmentLevel(XSurviveEnchantments.HARVESTING.get(), player);
+		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
+		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP.get(), player);
+		int fortune = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player);
+		int blasting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.BLASTING.get(), player);
+		int harvesting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.HARVESTING.get(), player);
 		if (xp > 0 && experience > 0) {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}

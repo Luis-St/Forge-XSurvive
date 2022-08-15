@@ -39,7 +39,7 @@ public class BlastingEnchantment extends Enchantment implements WikiFileEntry {
 	protected boolean checkCompatibility(Enchantment enchantment) {
 		if (enchantment == Enchantments.SILK_TOUCH) {
 			return false;
-		} else if (enchantment == XSurviveEnchantments.SMELTING.get()) {
+		} else if (enchantment == XSEnchantments.SMELTING.get()) {
 			return false;
 		}
 		return super.checkCompatibility(enchantment);

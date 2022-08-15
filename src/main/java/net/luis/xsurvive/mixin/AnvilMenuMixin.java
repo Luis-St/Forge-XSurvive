@@ -14,7 +14,7 @@ import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -214,8 +214,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
 				List<Enchantment> enchantments = Lists.newArrayList();
-				enchantments.addAll(EnchantmentHandler.getGoldenEnchantments(leftStack));
-				enchantments.addAll(EnchantmentHandler.getGoldenEnchantments(rightStack));
+				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
+				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
 				if (!enchantments.isEmpty()) {
 					int cost = enchantments.size() * 10;
 					if (renameCost > 0) {

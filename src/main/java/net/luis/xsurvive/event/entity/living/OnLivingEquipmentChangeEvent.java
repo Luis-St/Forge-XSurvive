@@ -3,7 +3,7 @@ package net.luis.xsurvive.event.entity.living;
 import java.util.UUID;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -33,8 +33,8 @@ public class OnLivingEquipmentChangeEvent {
 			ItemStack toStack = event.getTo();
 			ItemStack fromStack = event.getFrom();
 			if (event.getSlot() == EquipmentSlot.FEET) {
-				int voidWalkerTo = toStack.getEnchantmentLevel(XSurviveEnchantments.VOID_WALKER.get());
-				int voidWalkerFrom = fromStack.getEnchantmentLevel(XSurviveEnchantments.VOID_WALKER.get());
+				int voidWalkerTo = toStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
+				int voidWalkerFrom = fromStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
 				EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_GRAVITY.get(), Operation.MULTIPLY_TOTAL, GRAVITY_MODIFIER_UUID, "EntityGravity", voidWalkerTo, voidWalkerFrom);
 			}
 			int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);

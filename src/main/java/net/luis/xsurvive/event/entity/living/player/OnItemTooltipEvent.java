@@ -3,7 +3,7 @@ package net.luis.xsurvive.event.entity.living.player;
 import java.util.List;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.alchemy.XSurvivePotions;
+import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,7 +29,7 @@ public class OnItemTooltipEvent {
 		ItemStack stack = event.getItemStack();
 		if (stack.getItem() instanceof PotionItem) {
 			Potion potion = PotionUtils.getPotion(stack);
-			if (potion == XSurvivePotions.DIG_SPEED.get() || potion == XSurvivePotions.LONG_DIG_SPEED.get() || potion == XSurvivePotions.STRONG_DIG_SPEED.get()) {
+			if (potion == XSPotions.DIG_SPEED.get() || potion == XSPotions.LONG_DIG_SPEED.get() || potion == XSPotions.STRONG_DIG_SPEED.get()) {
 				List<MobEffectInstance> effects = potion.getEffects();
 				if (effects.size() == 1) {
 					List<Component> components = event.getToolTip();

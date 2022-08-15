@@ -8,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.XSurviveEnchantments;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -33,7 +33,7 @@ public class MultiDropModifier extends LootModifier {
 	
 	@Override
 	public Codec<MultiDropModifier> codec() {
-		return XSurviveGlobalLootModifiers.MULTI_DROP_MODIFIER.get();
+		return XSGlobalLootModifiers.MULTI_DROP_MODIFIER.get();
 	}
 	
 	@Override
@@ -41,7 +41,7 @@ public class MultiDropModifier extends LootModifier {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
 		generatedLoot.forEach((stack) -> {
 			if (context.hasParam(LootContextParams.TOOL)) {
-				loot.addAll(MultiDropModifier.this.multiplyItem(stack, context.getParam(LootContextParams.TOOL).getEnchantmentLevel(XSurviveEnchantments.MULTI_DROP.get())));
+				loot.addAll(MultiDropModifier.this.multiplyItem(stack, context.getParam(LootContextParams.TOOL).getEnchantmentLevel(XSEnchantments.MULTI_DROP.get())));
 			} else {
 				XSurvive.LOGGER.error("Could not apply the MultiDrop logic on LootTable {}, since there is no Tool in the LootContext present", context.getQueriedLootTableId());
 			}

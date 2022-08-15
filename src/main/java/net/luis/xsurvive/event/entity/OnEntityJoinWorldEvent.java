@@ -2,9 +2,9 @@ package net.luis.xsurvive.event.entity;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
-import net.luis.xsurvive.world.level.entity.ai.goal.XSurviveBlazeAttackGoal;
-import net.luis.xsurvive.world.level.entity.ai.goal.XSurviveSpiderAttackGoal;
-import net.luis.xsurvive.world.level.entity.ai.goal.XSurviveZombifiedPiglinAttackGoal;
+import net.luis.xsurvive.world.level.entity.ai.goal.XSBlazeAttackGoal;
+import net.luis.xsurvive.world.level.entity.ai.goal.XSSpiderAttackGoal;
+import net.luis.xsurvive.world.level.entity.ai.goal.XSZombifiedPiglinAttackGoal;
 import net.luis.xsurvive.world.level.entity.monster.ICreeper;
 import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.minecraft.util.RandomSource;
@@ -49,7 +49,7 @@ public class OnEntityJoinWorldEvent {
 			PlayerProvider.get(player).setChanged();
 		} else if (entity instanceof Blaze blaze) {
 			blaze.goalSelector.removeAllGoals();
-			blaze.goalSelector.addGoal(4, new XSurviveBlazeAttackGoal(blaze));
+			blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
 			blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0D));
 			blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0D, 0.0F));
 			blaze.goalSelector.addGoal(8, new LookAtPlayerGoal(blaze, Player.class, 8.0F));
@@ -72,7 +72,7 @@ public class OnEntityJoinWorldEvent {
 			spider.goalSelector.removeAllGoals();
 			spider.goalSelector.addGoal(1, new FloatGoal(spider));
 			spider.goalSelector.addGoal(3, new LeapAtTargetGoal(spider, 0.4F));
-			spider.goalSelector.addGoal(4, new XSurviveSpiderAttackGoal(spider));
+			spider.goalSelector.addGoal(4, new XSSpiderAttackGoal(spider));
 			spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8D));
 			spider.goalSelector.addGoal(6, new LookAtPlayerGoal(spider, Player.class, 8.0F));
 			spider.goalSelector.addGoal(6, new RandomLookAroundGoal(spider));
@@ -88,7 +88,7 @@ public class OnEntityJoinWorldEvent {
 		} else if (entity instanceof ZombifiedPiglin zombifiedPiglin) {
 			zombifiedPiglin.targetSelector.removeAllGoals();
 			zombifiedPiglin.targetSelector.addGoal(1, new HurtByTargetGoal(zombifiedPiglin).setAlertOthers());
-			zombifiedPiglin.targetSelector.addGoal(2, new XSurviveZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
+			zombifiedPiglin.targetSelector.addGoal(2, new XSZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
 			zombifiedPiglin.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(zombifiedPiglin, true));
 			DifficultyInstance instance = zombifiedPiglin.level.getCurrentDifficultyAt(zombifiedPiglin.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {

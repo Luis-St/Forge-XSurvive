@@ -49,7 +49,7 @@ public class AdditionalChanceItemModifier extends LootModifier {
 	
 	@Override
 	public Codec<AdditionalChanceItemModifier> codec() {
-		return XSurviveGlobalLootModifiers.ADDITIONAL_CHANCE_ITEM_MODIFIER.get();
+		return XSGlobalLootModifiers.ADDITIONAL_CHANCE_ITEM_MODIFIER.get();
 	}
 
 	@Override

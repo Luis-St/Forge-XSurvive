@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.EnchantmentHandler;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -61,7 +61,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	@Inject(method = "populateDefaultEquipmentEnchantments", at = @At("HEAD"))
 	protected void populateDefaultEquipmentEnchantments(RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {
 		ItemStack stack = EntityHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, Lists.newArrayList(this.getItemInHand(InteractionHand.MAIN_HAND).getItem()), instance.getSpecialMultiplier());
-		EnchantmentHandler.removeEnchantment(Enchantments.FLAMING_ARROWS, stack);
+		XSEnchantmentHelper.removeEnchantment(Enchantments.FLAMING_ARROWS, stack);
 		this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 	}
 	

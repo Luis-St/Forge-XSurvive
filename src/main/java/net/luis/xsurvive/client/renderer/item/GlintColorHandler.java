@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.capability.XSurviveCapabilities;
+import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.renderer.XSurviveRenderType;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.minecraft.client.renderer.RenderType;
@@ -33,7 +33,7 @@ public class GlintColorHandler {
 	private static int getColor() {
 		ItemStack stack = getStack();
 		if (stack != null && !stack.isEmpty()) {
-			LazyOptional<IGlintColor> optional = stack.getCapability(XSurviveCapabilities.GLINT_COLOR, null);
+			LazyOptional<IGlintColor> optional = stack.getCapability(XSCapabilities.GLINT_COLOR, null);
 			if (optional.isPresent()) {
 				return optional.orElseThrow(NullPointerException::new).getGlintColor(stack);
 			} else if (stack.getItem() instanceof IGlintColor glintColor) {

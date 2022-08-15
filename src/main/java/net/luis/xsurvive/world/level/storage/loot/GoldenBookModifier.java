@@ -10,7 +10,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.RarityList;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.XSurviveItems;
+import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -65,7 +65,7 @@ public class GoldenBookModifier extends LootModifier {
 	
 	@Override
 	public Codec<GoldenBookModifier> codec() {
-		return XSurviveGlobalLootModifiers.GOLDEN_BOOK_MODIFIER.get();
+		return XSGlobalLootModifiers.GOLDEN_BOOK_MODIFIER.get();
 	}
 	
 	@Override
@@ -78,7 +78,7 @@ public class GoldenBookModifier extends LootModifier {
 	}
 	
 	private ItemStack getGoldenBook(LootContext context) {
-		ItemStack stack = new ItemStack(XSurviveItems.ENCHANTED_GOLDEN_BOOK.get());
+		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		Enchantment enchantment = this.getRandomEnchantment(context.getQueriedLootTableId());
 		if (enchantment != null && stack.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 			goldenBook.setEnchantment(stack, enchantment);

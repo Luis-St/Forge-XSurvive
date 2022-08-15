@@ -2,7 +2,7 @@ package net.luis.xsurvive.world.level.block.entity;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.inventory.SmeltingFurnaceMenu;
-import net.luis.xsurvive.world.item.crafting.XSurviveRecipeTypes;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 
 	public SmeltingFurnaceBlockEntity(BlockPos pos, BlockState state) {
-		super(XSurviveBlockEntityTypes.SMELTING_FURNACE.get(), pos, state, XSurviveRecipeTypes.SMELTING.get());
+		super(XSBlockEntityTypes.SMELTING_FURNACE.get(), pos, state, XSRecipeTypes.SMELTING.get());
 	}
 
 	@Override

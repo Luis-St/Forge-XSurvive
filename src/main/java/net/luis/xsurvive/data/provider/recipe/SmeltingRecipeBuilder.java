@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.crafting.XSurviveRecipeSerializers;
+import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -119,7 +119,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		
 		@Override
 		public RecipeSerializer<?> getType() {
-			return XSurviveRecipeSerializers.SMELTING_RECIPE.get();
+			return XSRecipeSerializers.SMELTING_RECIPE.get();
 		}
 		
 		@Override

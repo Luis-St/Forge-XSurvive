@@ -61,20 +61,20 @@ public interface IEnchantment {
 			if (enchantment instanceof IEnchantment ench) {
 				int level = result.getEnchantmentLevel(enchantment);
 				GoldenEnchantmentInstance instance = ench.createGoldenInstance(level + 1);
-				if (!EnchantmentHandler.hasEnchantment(enchantment, result)) {
-					if (EnchantmentHandler.isEnchantmentCompatible(result, enchantment)) {
-						EnchantmentHandler.addEnchantment(new EnchantmentInstance(enchantment, 1), result, false);
+				if (!XSEnchantmentHelper.hasEnchantment(enchantment, result)) {
+					if (XSEnchantmentHelper.isEnchantmentCompatible(result, enchantment)) {
+						XSEnchantmentHelper.addEnchantment(new EnchantmentInstance(enchantment, 1), result, false);
 						return new EnchantedItem(result, 10);
 					}
 					return EnchantedItem.EMPTY;
 				} else if (instance.isGolden() && instance.level > enchantment.getMaxLevel() && level >= enchantment.getMaxLevel()) {
 					if (ench.getMaxGoldenBookLevel() > level) {
-						EnchantmentHandler.replaceEnchantment(instance, result);
+						XSEnchantmentHelper.replaceEnchantment(instance, result);
 						return new EnchantedItem(result, ench.getAnvilCost(level));
 					}
 					return EnchantedItem.EMPTY;
 				} else {
-					EnchantmentHandler.increaseEnchantment(enchantment, result, false);
+					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
 					return new EnchantedItem(result, 10);
 				}
 			}
@@ -92,7 +92,7 @@ public interface IEnchantment {
 			if (enchantment instanceof IEnchantment ench) {
 				int level = result.getEnchantmentLevel(enchantment);
 				if (ench.isUpgrade() && ench.getUpgradeLevel() > level) {
-					EnchantmentHandler.increaseEnchantment(enchantment, result, false);
+					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
 					return new EnchantedItem(result, 30);
 				} else {
 					return merge(left, right);

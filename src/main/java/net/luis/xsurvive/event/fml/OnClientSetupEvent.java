@@ -3,7 +3,7 @@ package net.luis.xsurvive.event.fml;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.SmeltingFurnaceScreen;
-import net.luis.xsurvive.world.inventory.XSurviveMenuTypes;
+import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
@@ -28,7 +28,7 @@ public class OnClientSetupEvent {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		event.enqueueWork(() -> {
-			MenuScreens.register(XSurviveMenuTypes.SMELTING_FURNACE.get(), SmeltingFurnaceScreen::new);
+			MenuScreens.register(XSMenuTypes.SMELTING_FURNACE.get(), SmeltingFurnaceScreen::new);
 		});
 		replaceGammaOption(minecraft);
 		XSurvive.LOGGER.info("Replace gamma option and reload options");
