@@ -1,15 +1,11 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.world.level.entity.ai.goal;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.EnumSet;
 
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Blaze.BlazeAttackGoal;
 import net.minecraft.world.entity.projectile.SmallFireball;
 
 /**
@@ -18,23 +14,42 @@ import net.minecraft.world.entity.projectile.SmallFireball;
  *
  */
 
-@Mixin(BlazeAttackGoal.class)
-public abstract class BlazeAttackGoalMixin extends Goal {
+public class XSurviveBlazeAttackGoal extends Goal {
 	
-	@Shadow
-	private Blaze blaze;
-	@Shadow
+	private final Blaze blaze;
 	private int attackStep;
-	@Shadow
 	private int attackTime;
-	@Shadow
 	private int lastSeen;
 	
-	@Shadow
-	protected abstract double getFollowDistance();
+	public XSurviveBlazeAttackGoal(Blaze blaze) {
+		this.blaze = blaze;
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+	}
 	
-	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-	public void tick(CallbackInfo callback) {
+	@Override
+	public boolean canUse() {
+		LivingEntity livingentity = this.blaze.getTarget();
+		return livingentity != null && livingentity.isAlive() && this.blaze.canAttack(livingentity);
+	}
+	
+	@Override
+	public void start() {
+		this.attackStep = 0;
+	}
+	
+	@Override
+	public void stop() {
+		this.blaze.setCharged(false);
+		this.lastSeen = 0;
+	}
+	
+	@Override
+	public boolean requiresUpdateEveryTick() {
+		return true;
+	}
+	
+	@Override
+	public void tick() {
 		--this.attackTime;
 		LivingEntity target = this.blaze.getTarget();
 		if (target != null) {
@@ -87,7 +102,9 @@ public abstract class BlazeAttackGoalMixin extends Goal {
 			}
 			super.tick();
 		}
-		callback.cancel();
 	}
 	
+	private double getFollowDistance() {
+		return this.blaze.getAttributeValue(Attributes.FOLLOW_RANGE);
+	}
 }

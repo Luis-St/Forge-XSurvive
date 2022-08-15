@@ -48,6 +48,17 @@ public class EnchantmentHandler {
 		return false;
 	}
 	
+	public static boolean hasMaxGoldenEnchantment(Enchantment enchantment, ItemStack stack) {
+		if (hasEnchantment(enchantment, stack)) {
+			if (enchantment instanceof IEnchantment ench) {
+				return stack.getEnchantmentLevel(enchantment) == ench.getMaxGoldenBookLevel();
+			} else {
+				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			}
+		}
+		return false;
+	}
+	
 	public static boolean isEnchantmentCompatible(ItemStack stack, Enchantment enchantment) {
 		return EnchantmentHelper.isEnchantmentCompatible(EnchantmentHelper.getEnchantments(stack).keySet(), enchantment);
 	}
@@ -98,15 +109,11 @@ public class EnchantmentHandler {
 		}
 	}
 	
-	public static void increaseEnchantment(Enchantment enchantment, int count, ItemStack stack, boolean golden) {
-		for (int i = 0; i < count; i++) {
-			increaseEnchantment(enchantment, stack, golden);
-		}
-	}
-	
 	public static void increaseEnchantment(Enchantment enchantment, ItemStack stack, boolean golden) {
 		if (hasEnchantment(enchantment, stack)) {
-			if (!hasMaxEnchantment(enchantment, stack) || golden) {
+			if (!hasMaxEnchantment(enchantment, stack)) {
+				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) + 1), stack);
+			} else if (golden && !hasMaxGoldenEnchantment(enchantment, stack)) {
 				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) + 1), stack);
 			}
 		} else {
@@ -114,10 +121,19 @@ public class EnchantmentHandler {
 		}
 	}
 	
-	public static void decreaseEnchantment(Enchantment enchantment, int count, ItemStack stack) {
-		for (int i = 0; i < count; i++) {
-			decreaseEnchantment(enchantment, stack);
+	public static EnchantmentInstance increaseEnchantment(EnchantmentInstance instance, boolean golden) {
+		if (instance.level != instance.enchantment.getMaxLevel()) {
+			return new EnchantmentInstance(instance.enchantment, instance.level + 1);
+		} else if (golden) {
+			if (instance.enchantment instanceof IEnchantment ench) {
+				if (instance.level != ench.getMaxGoldenBookLevel()) {
+					return new EnchantmentInstance(instance.enchantment, instance.level + 1);
+				}
+			} else {
+				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(instance.enchantment));
+			}
 		}
+		return instance;
 	}
 	
 	public static void decreaseEnchantment(Enchantment enchantment, ItemStack stack) {

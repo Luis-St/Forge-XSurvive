@@ -23,7 +23,11 @@
 		"EndDragonFightMixin",
 		"PoiTypesMixin",
 		"LootTablesMixin",
-		"BlazeAttackGoalMixin"
+		"CreeperMixin",
+		"LivingEntityMixin",
+		"PhantomMixin",
+		"PhantomSpawnerMixin",
+		"WitherSkeletonMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import net.luis.xsurvive.network.XSurviveNetworkHandler;
 import net.luis.xsurvive.world.effect.XSurviveMobEffects;
 import net.luis.xsurvive.world.inventory.XSurviveMenuTypes;
 import net.luis.xsurvive.world.inventory.XSurviveRecipeBookTypes;
@@ -56,6 +57,7 @@ public class XSurvive {
 		XSurviveRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSurviveRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSurviveRecipeBookTypes.register();
+		XSurviveNetworkHandler.register();
 	}
 	
 }

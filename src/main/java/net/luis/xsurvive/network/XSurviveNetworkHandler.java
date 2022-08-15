@@ -28,7 +28,7 @@ public class XSurviveNetworkHandler {
 	private static int id = 0;
 	private static SimpleChannel simpleChannel;
 	
-	public static void init() {
+	public static void register() {
 		XSurvive.LOGGER.info("Register {} Network Channel", XSurvive.MOD_NAME);
 		simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_chnanel"), () -> VERSION, VERSION::equals, VERSION::equals);
 		simpleChannel.messageBuilder(UpdatePlayerCapabilityPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(UpdatePlayerCapabilityPacket::encode).decoder(UpdatePlayerCapabilityPacket::new)
