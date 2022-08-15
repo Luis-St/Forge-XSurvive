@@ -60,6 +60,7 @@ public class OnEntityJoinWorldEvent {
 				if (instance.getEffectiveDifficulty() > 0.0) {
 					EntityHelper.equipEntityForDifficulty(zombie, instance);
 				}
+				zombie.setCanBreakDoors(true);
 			}
 		} else if (entity instanceof ICreeper creeper) {
 			DifficultyInstance instance = entity.level.getCurrentDifficultyAt(entity.blockPosition());
