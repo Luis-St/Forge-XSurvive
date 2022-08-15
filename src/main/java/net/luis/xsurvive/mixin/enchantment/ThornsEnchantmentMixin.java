@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.enchantment;
 
 import java.util.List;
 import java.util.Map.Entry;

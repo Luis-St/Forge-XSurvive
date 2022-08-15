@@ -1,11 +1,11 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.enchantment;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.world.item.enchantment.QuickChargeEnchantment;
+import net.minecraft.world.item.enchantment.ArrowKnockbackEnchantment;
 
 /**
  * 
@@ -13,8 +13,8 @@ import net.minecraft.world.item.enchantment.QuickChargeEnchantment;
  *
  */
 
-@Mixin(QuickChargeEnchantment.class)
-public abstract class QuickChargeEnchantmentMixin {
+@Mixin(ArrowKnockbackEnchantment.class)
+public abstract class ArrowKnockbackEnchantmentMixin {
 	
 	@Inject(method = "getMaxLevel", at = @At("HEAD"), cancellable = true)
 	public void getMaxLevel(CallbackInfoReturnable<Integer> callback) {
