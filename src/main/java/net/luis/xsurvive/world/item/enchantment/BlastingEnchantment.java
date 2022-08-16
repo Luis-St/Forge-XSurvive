@@ -14,7 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
  *
  */
 
-public class BlastingEnchantment extends Enchantment implements WikiFileEntry {
+public class BlastingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 
 	public BlastingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -43,6 +43,11 @@ public class BlastingEnchantment extends Enchantment implements WikiFileEntry {
 			return false;
 		}
 		return super.checkCompatibility(enchantment);
+	}
+	
+	@Override
+	public boolean isAllowedOnGoldenBooks() {
+		return true;
 	}
 	
 	@Override

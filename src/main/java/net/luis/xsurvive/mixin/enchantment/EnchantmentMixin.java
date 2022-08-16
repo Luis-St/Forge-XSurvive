@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -74,7 +73,7 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		Enchantment enchantment = (Enchantment) (Object) this;
 		List<Enchantment> goldenEnchantments = Lists.newArrayList(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE,
 			Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY, 
-			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK, XSEnchantments.GROWTH.get(), XSEnchantments.BLASTING.get(), XSEnchantments.HARVESTING.get());
+			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);
 		if (enchantment instanceof ProtectionEnchantment) {
 			return true;
 		} else if (enchantment instanceof DamageEnchantment) {

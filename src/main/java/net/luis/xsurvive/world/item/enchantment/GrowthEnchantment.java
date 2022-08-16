@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
  *
  */
 
-public class GrowthEnchantment extends Enchantment implements WikiFileEntry {
+public class GrowthEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 
 	public GrowthEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -31,6 +31,11 @@ public class GrowthEnchantment extends Enchantment implements WikiFileEntry {
 	@Override
 	public int getMaxCost(int level) {
 		return this.getMinCost(level) + 50;
+	}
+	
+	@Override
+	public boolean isAllowedOnGoldenBooks() {
+		return true;
 	}
 	
 	@Override

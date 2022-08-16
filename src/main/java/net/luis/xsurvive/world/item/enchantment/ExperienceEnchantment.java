@@ -13,7 +13,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
  *
  */
 
-public class ExperienceEnchantment extends Enchantment implements WikiFileEntry {
+public class ExperienceEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
 
 	public ExperienceEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -32,6 +32,11 @@ public class ExperienceEnchantment extends Enchantment implements WikiFileEntry 
 		return this.getMinCost(level) + 50;
 	}
 	
+	@Override
+	public boolean isAllowedOnGoldenBooks() {
+		return true;
+	}
+
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
