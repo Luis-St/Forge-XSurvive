@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -27,6 +28,7 @@ public class OnBlockBreakEvent {
 	public static void blockBreak(BlockEvent.BreakEvent event) {
 		Player player = event.getPlayer();
 		BlockPos pos = new BlockPos(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
+		BlockState state = event.getState();
 		int xp = event.getExpToDrop();
 		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
 		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP.get(), player);
@@ -40,8 +42,8 @@ public class OnBlockBreakEvent {
 			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Explosion.BlockInteraction.BREAK);
 		}
 		if (harvesting > 0) {
-			if (event.getLevel().getBlockState(pos).is(BlockTags.LOGS)) {
-				WoodHarvester harvester = new WoodHarvester((Level) event.getLevel(), pos, event.getLevel().getBlockState(pos), harvesting, player);
+			if (event.getState().is(BlockTags.LOGS)) {
+				WoodHarvester harvester = new WoodHarvester((Level) event.getLevel(), pos, state, harvesting, player);
 				harvester.harvest();
 			}
 		}

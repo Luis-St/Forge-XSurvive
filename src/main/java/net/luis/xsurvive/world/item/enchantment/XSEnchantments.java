@@ -64,5 +64,8 @@ public class XSEnchantments {
 	public static final RegistryObject<HarvestingEnchantment> HARVESTING = ENCHANTMENTS.register("harvesting", () -> { 
 		return new HarvestingEnchantment(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
 	});
+	public static final RegistryObject<ReplantingEnchantment> REPLANTING = ENCHANTMENTS.register("replanting", () -> { 
+		return new ReplantingEnchantment(Rarity.RARE, XSEnchantmentCategory.HOE, EquipmentSlot.MAINHAND);
+	});
 	
 }

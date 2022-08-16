@@ -25,7 +25,7 @@ public class XSBlockTagsProvider extends BlockTagsProvider {
 	protected void addTags() {
 		this.tag(XSBlockTags.OCEAN_MONUMENT_BLOCKS).add(Blocks.PRISMARINE, Blocks.PRISMARINE_BRICKS, Blocks.DARK_PRISMARINE, Blocks.SEA_LANTERN);
 		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(XSBlocks.SMELTING_FURNACE.get());
-		this.tag(BlockTags.MINEABLE_WITH_HOE).add(XSBlocks.HONEY_MELON.get());
+		this.tag(BlockTags.MINEABLE_WITH_AXE).add(XSBlocks.HONEY_MELON.get());
 	}
 	
 	@Override

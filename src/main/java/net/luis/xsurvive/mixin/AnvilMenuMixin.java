@@ -36,6 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  */
 
+// REWORK
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	

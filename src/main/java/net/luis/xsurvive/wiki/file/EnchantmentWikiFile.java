@@ -74,7 +74,7 @@ public class EnchantmentWikiFile {
 			if (enchantment.isTreasureOnly()) {
 				builder.append("Treasure:").append(true).endLine(); 
 			}
-			if (enchantment instanceof IEnchantment ench) {
+			if (enchantment instanceof IEnchantment ench && ench.isAllowedOnGoldenBooks()) {
 				builder.append("Golden book level:").append(ench.getMaxGoldenBookLevel()).endLine();
 				if (ench.isUpgrade()) {
 					builder.append("Upgradeable:").append(true).endLine();
@@ -234,7 +234,7 @@ public class EnchantmentWikiFile {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When an Water Entity is hit by an Item with this Enchantment,").endLine();
 			builder.append("the damage will be multiplied by 2.5.").endLine();
-			builder.append("Water Entities:").append("All fish types,").append("Squid,").append("Glow Squid,").append("Guardian,").append("Elder Guardian,").append("Drowned and").append("Turtle").endLine();
+			builder.append("Water Entities:").append("All Fish types,").append("Squid,").append("Glow Squid,").append("Guardian,").append("Elder Guardian,").append("Drowned and").append("Turtle").endLine();
 		});
 	}
 	

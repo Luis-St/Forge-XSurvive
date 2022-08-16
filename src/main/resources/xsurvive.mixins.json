@@ -29,7 +29,8 @@
 		"EndDragonFightMixin",
 		"PoiTypesMixin",
 		"LootTablesMixin",
-		"PhantomSpawnerMixin"
+		"PhantomSpawnerMixin",
+		"ServerPlayerGameModeMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

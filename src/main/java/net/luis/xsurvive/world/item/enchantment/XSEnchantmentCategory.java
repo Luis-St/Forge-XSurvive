@@ -7,6 +7,7 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
@@ -18,6 +19,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class XSEnchantmentCategory {
 	
+	public static final EnchantmentCategory HOE = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "elytra").toString(), (item) -> {
+		return item instanceof HoeItem;
+	});
 	public static final EnchantmentCategory TOOLS = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "tools").toString(), (item) -> {
 		return item instanceof DiggerItem || item instanceof SwordItem || item instanceof BowItem || item instanceof CrossbowItem;
 	});

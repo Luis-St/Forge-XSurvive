@@ -43,7 +43,6 @@ public class OnEntityJoinWorldEvent {
 	@SubscribeEvent
 	public static void entityJoinWorld(EntityJoinLevelEvent event) {
 		Entity entity = event.getEntity();
-		XSurvive.LOGGER.debug("Entity joined world: {}", entity.getType());
 		RandomSource rng = RandomSource.create();
 		if (entity instanceof Player player) {
 			PlayerProvider.get(player).setChanged();
