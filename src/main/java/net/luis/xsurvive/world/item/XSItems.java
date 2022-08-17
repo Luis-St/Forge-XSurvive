@@ -85,7 +85,7 @@ public class XSItems {
 		return new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(4).saturationMod(0.7F).build()));
 	});
 	public static final RegistryObject<Item> DIAMOND_APPLE = ITEMS.register("diamond_apple", () -> {
-		return new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).effect(() -> {
+		return new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(8).saturationMod(1.2F).effect(() -> {
 			return new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 3000, 0);
 		}, 1.0F).effect(() -> {
 			return new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 3000, 0);
@@ -96,7 +96,7 @@ public class XSItems {
 		}, 1.0F).alwaysEat().build()));
 	});
 	public static final RegistryObject<GlintColorItem> ENCHANTED_DIAMOND_APPLE = ITEMS.register("enchanted_diamond_apple", () -> {
-		return new GlintColorItem(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).effect(() -> {
+		return new GlintColorItem(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(10).saturationMod(1.2F).effect(() -> {
 			return new MobEffectInstance(MobEffects.REGENERATION, 800, 1);
 		}, 1.0F).effect(() -> {
 			return new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 12000, 1);

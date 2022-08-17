@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
@@ -26,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  */
 
-public class EnchantedGoldenBookItem extends Item {
+public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 
 	public EnchantedGoldenBookItem(Properties properties) {
 		super(properties);
@@ -98,6 +100,23 @@ public class EnchantedGoldenBookItem extends Item {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
 		return stack;
+	}
+
+	@Override
+	public void add(WikiFileBuilder wikiBuilder) {
+		wikiBuilder.lines((builder) -> {
+			builder.append("Add enchantment:").endLine();
+			builder.append("The Golden Book can be used to add the Enchantment for a cost of 10 xp to the Item in the Anvil.").endLine();
+			builder.append("Note: This is not recommend use case").endLine();
+			builder.emptyLine();
+			builder.append("Increase enchantment level:").endLine();
+			builder.append("The Golden Book can be used to increase the Enchantment level on the Item for a cost of 10 xp in the Anvil.").endLine();
+			builder.append("Note: This can be helpful for very rare enchantments but this is still not recommend use case").endLine();
+			builder.emptyLine();
+			builder.append("Increase max enchantment level:").endLine();
+			builder.append("The Golden Book can be used to increase the max Enchantment level on a Item.").endLine();
+			builder.append("Apply the Golden Book in the Anvil to an Item which has the max vanilla Enchantment level.").endLine();
+		});
 	}
 
 }

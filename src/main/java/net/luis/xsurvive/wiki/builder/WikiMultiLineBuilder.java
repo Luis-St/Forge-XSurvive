@@ -17,6 +17,10 @@ public class WikiMultiLineBuilder extends AbstractWikiLineBuilder<WikiMultiLineB
 		super(fileBuilder);
 	}
 	
+	public void emptyLine() {
+		this.append("").endLine();
+	}
+	
 	@Override
 	protected List<String> modifyLines(List<String> lines) {
 		List<String> newLines = new ArrayList<>();

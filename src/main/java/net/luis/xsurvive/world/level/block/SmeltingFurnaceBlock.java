@@ -1,5 +1,14 @@
 package net.luis.xsurvive.world.level.block;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
+import net.luis.xsurvive.wiki.WikiList;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
+import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -15,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 /**
  * 
@@ -22,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
  *
  */
 
-public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
+public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFileEntry {
 
 	public SmeltingFurnaceBlock(Properties properties) {
 		super(properties);
@@ -61,6 +71,25 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 			double zOffset = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : offset;
 			level.addParticle(ParticleTypes.SMOKE, x + xOffset, y + yOffset, z + zOffset, 0.0D, 0.0D, 0.0D);
 		}
+	}
+
+	@Override
+	public void add(WikiFileBuilder wikiBuilder) {
+		wikiBuilder.lines((builder) -> {
+			builder.append("The Smelting Furnace works similar to the vanilla Blast Furnace or the Smoker.").endLine();
+			builder.append("The Smelting Furnace provides faster recipes for the following Blocks:").endLine();
+		});
+		wikiBuilder.list(WikiList.POINT, (builder) -> {
+			for (String recipe : this.getRecipes()) {
+				builder.append(recipe).endLine();
+			}
+		});
+	}
+	
+	private List<String> getRecipes() {
+		return ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(XSRecipeTypes.SMELTING.get()).stream().map(SmeltingRecipe::getId).map(XSLanguageProvider::getName).map((name) -> {
+			return name.replace("From Smelting", "").trim();
+		}).collect(Collectors.toList());
 	}
 
 }

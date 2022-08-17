@@ -69,7 +69,7 @@ public class XSLanguageProvider extends LanguageProvider {
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
 	}
 	
-	private static String getName(ResourceLocation location) { 
+	public static String getName(ResourceLocation location) { 
 		String[] nameParts = location.getPath().split("_");
 		String name = "";
 		for (String namePart : nameParts) {
