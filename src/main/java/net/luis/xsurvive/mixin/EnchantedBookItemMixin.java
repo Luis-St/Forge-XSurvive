@@ -33,7 +33,7 @@ public abstract class EnchantedBookItemMixin {
 			for (Enchantment enchantment : Registry.ENCHANTMENT) {
 				if (enchantment.category != null && enchantment.isAllowedOnBooks()) {
 					if (enchantment instanceof IEnchantment ench) {
-						if (!ench.isUpgrade()) {
+						if (!ench.isUpgradeEnchantment()) {
 							for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
 								stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)));
 							}
@@ -52,7 +52,7 @@ public abstract class EnchantedBookItemMixin {
 			for (Enchantment enchantment : Registry.ENCHANTMENT) {
 				if (enchantment.isAllowedOnBooks()) {
 					if (enchantment instanceof IEnchantment ench) {
-						if (this.isTabForCategory(tab, enchantment) && !ench.isUpgrade()) {
+						if (this.isTabForCategory(tab, enchantment) && !ench.isUpgradeEnchantment()) {
 							stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
 						}
 					} else {

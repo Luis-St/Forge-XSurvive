@@ -71,8 +71,13 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public int getUpgradeLevel() {
-		return 4;
+	public int getMinUpgradeLevel() {
+		return this.getMinLevel();
+	}
+	
+	@Override
+	public int getMaxUpgradeLevel() {
+		return this.getMaxLevel();
 	}
 	
 	@Override

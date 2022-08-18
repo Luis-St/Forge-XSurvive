@@ -76,9 +76,9 @@ public class EnchantmentWikiFile {
 			}
 			if (enchantment instanceof IEnchantment ench && ench.isAllowedOnGoldenBooks()) {
 				builder.append("Golden book level:").append(ench.getMaxGoldenBookLevel()).endLine();
-				if (ench.isUpgrade()) {
+				if (ench.isUpgradeEnchantment()) {
 					builder.append("Upgradeable:").append(true).endLine();
-					builder.append("Upgrade level:").append(ench.getUpgradeLevel()).endLine();
+					builder.append("Upgrade level:").append(ench.getMaxUpgradeLevel()).endLine();
 				}
 			}
 		});

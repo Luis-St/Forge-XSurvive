@@ -19,7 +19,7 @@ public class GoldenEnchantmentInstance extends EnchantmentInstance {
 	
 	public boolean isGolden() {
 		if (this.enchantment instanceof IEnchantment ench) {
-			return ench.isAllowedOnGoldenBooks() && ench.isGolden(this.level);
+			return ench.isAllowedOnGoldenBooks() && ench.isGoldenLevel(this.level);
 		}
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(this.enchantment));
 		return false;

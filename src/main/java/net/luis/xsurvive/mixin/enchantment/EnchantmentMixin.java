@@ -56,10 +56,10 @@ public abstract class EnchantmentMixin implements IEnchantment {
 	@Inject(method = "getFullname", at = @At("RETURN"), cancellable = true)
 	public void getFullname(int level, CallbackInfoReturnable<Component> callback) {
 		if (this.isAllowedOnGoldenBooks()) {
-			if ((this.getMaxGoldenBookLevel() >= level && level >= this.getMinGoldenBookLevel()) || this.isUpgrade()) {
+			if ((this.getMaxGoldenBookLevel() >= level && level >= this.getMinGoldenBookLevel()) || this.isUpgradeEnchantment()) {
 				MutableComponent component = Component.translatable(this.getDescriptionId());
 				component.append(" ").append(Component.translatable("enchantment.level." + level));
-				if (this.getUpgradeLevel() >= level && level > 0) {
+				if (this.getMaxUpgradeLevel() >= level && level > 0) {
 					callback.setReturnValue(component.withStyle(ChatFormatting.BLUE));
 				} else {
 					callback.setReturnValue(component.withStyle(ChatFormatting.DARK_PURPLE));

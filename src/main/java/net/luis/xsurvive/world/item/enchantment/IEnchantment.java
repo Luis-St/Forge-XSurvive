@@ -29,20 +29,39 @@ public interface IEnchantment {
 		return this.getMinGoldenBookLevel();
 	}
 	
-	default int getAnvilCost(int level) {
-		return Math.max(0, level - this.self().getMaxLevel()) * 10 + 50;
+	default boolean isGoldenEnchantment() {
+		return this.isAllowedOnGoldenBooks() && this.getMinGoldenBookLevel() > this.self().getMaxLevel() && this.getMaxGoldenBookLevel() > this.self().getMaxLevel();
 	}
 	
-	default boolean isGolden(int level) {
+	default boolean isGoldenLevel(int level) {
+		if (!this.isGoldenEnchantment()) {
+			return false;
+		}
 		return this.getMaxGoldenBookLevel() >= level && level >= this.getMinGoldenBookLevel();
 	}
 	
-	default int getUpgradeLevel() {
+	default int getGoldenCost(int level) {
+		return Math.max(0, level - this.self().getMaxLevel()) * 10 + 50;
+	}
+	
+	default int getMinUpgradeLevel() {
 		return -1;
 	}
 	
-	default boolean isUpgrade() {
-		return this.isAllowedOnGoldenBooks() && this.getUpgradeLevel() > 0;
+	default int getMaxUpgradeLevel() {
+		return -1;
+	}
+	
+	default boolean isUpgradeEnchantment() {
+		return this.isAllowedOnGoldenBooks() && this.getMinUpgradeLevel() > 0 && this.getMaxUpgradeLevel() > 0;
+	}
+	
+	default boolean isUpgradeLevel(int level) {
+		return this.isUpgradeEnchantment() && this.getMaxGoldenBookLevel() >= level && level >= this.getMinGoldenBookLevel();
+	}
+	
+	default int getUpgradeCost(int level) {
+		return 30;
 	}
 	
 	default GoldenEnchantmentInstance createGoldenInstance(int level) {
@@ -52,15 +71,6 @@ public interface IEnchantment {
 			return new GoldenEnchantmentInstance(this.self(), this.getMaxGoldenBookLevel());
 		}
 		return new GoldenEnchantmentInstance(this.self(), level);
-	}
-	
-	static boolean isGolden(Enchantment enchantment, int level) {
-		if (enchantment instanceof IEnchantment ench) {
-			return ench.isGolden(level);
-		}
-		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-		return false;
-		
 	}
 	
 	static EnchantedItem merge(ItemStack left, ItemStack right) {
@@ -79,7 +89,7 @@ public interface IEnchantment {
 				} else if (instance.isGolden() && instance.level > enchantment.getMaxLevel() && level >= enchantment.getMaxLevel()) {
 					if (ench.getMaxGoldenBookLevel() > level) {
 						XSEnchantmentHelper.replaceEnchantment(instance, result);
-						return new EnchantedItem(result, ench.getAnvilCost(level));
+						return new EnchantedItem(result, ench.getGoldenCost(level));
 					}
 					return EnchantedItem.EMPTY;
 				} else {
@@ -100,9 +110,9 @@ public interface IEnchantment {
 			Enchantment enchantment = goldenBook.getEnchantment(right);
 			if (enchantment instanceof IEnchantment ench) {
 				int level = result.getEnchantmentLevel(enchantment);
-				if (ench.isUpgrade() && ench.getUpgradeLevel() > level) {
+				if (ench.isUpgradeEnchantment() && ench.getMaxUpgradeLevel() > level) {
 					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
-					return new EnchantedItem(result, 30);
+					return new EnchantedItem(result, ench.getUpgradeCost(level));
 				} else {
 					return merge(left, right);
 				}

@@ -14,8 +14,8 @@ import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -36,7 +36,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  */
 
-// REWORK
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
@@ -74,13 +73,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			this.repairItemCountCost = 0;
 			boolean enchantedBook = false;
 			boolean decreaseRepairCost = false;
-			if (rightStack.isEmpty()) {
-				if ((leftStack.isDamageableItem() || leftStack.isEnchantable() || leftStack.isEnchanted()) && leftStack.getBaseRepairCost() > 0) {
-					this.cost.set(1);
-					resultStack.setRepairCost(resultStack.getBaseRepairCost() / 2);
-					decreaseRepairCost = true;
-				}
-			} else if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
+			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.resultSlots.setItem(0, ItemStack.EMPTY);
 				this.cost.set(0);
 			} else {
@@ -132,7 +125,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 							int rightLevel = rightEnchantments.get(rightEnchantment);
 							if (rightEnchantment instanceof IEnchantment ench) {
 								if (resultLevel == rightLevel) {
-									if (!ench.isGolden(resultLevel) && rightEnchantment.getMaxLevel() > rightLevel) {
+									if (!ench.isGoldenLevel(resultLevel) && rightEnchantment.getMaxLevel() > rightLevel) {
 										rightLevel++;
 									}
 								} else {
@@ -213,7 +206,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			if (renameCost == enchantCost && renameCost > 0 && this.cost.get() >= 60) {
 				this.cost.set(59);
 			}
-			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
+			if (!rightStack.isEmpty() && !resultStack.isEmpty()) { // golden enchantment calc
 				List<Enchantment> enchantments = Lists.newArrayList();
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
