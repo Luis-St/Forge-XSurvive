@@ -1,6 +1,7 @@
 package net.luis.xsurvive.event.entity;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.level.LevelHelper;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.luis.xsurvive.world.level.entity.ai.goal.XSBlazeAttackGoal;
 import net.luis.xsurvive.world.level.entity.ai.goal.XSSpiderAttackGoal;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
@@ -38,10 +40,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
-public class OnEntityJoinWorldEvent {
+public class OnEntityJoinLevelEvent {
 	
 	@SubscribeEvent
-	public static void entityJoinWorld(EntityJoinLevelEvent event) {
+	public static void entityJoinLevel(EntityJoinLevelEvent event) {
 		Entity entity = event.getEntity();
 		RandomSource rng = RandomSource.create();
 		if (entity instanceof Player player) {
@@ -55,17 +57,17 @@ public class OnEntityJoinWorldEvent {
 			blaze.goalSelector.addGoal(8, new RandomLookAroundGoal(blaze));
 		} else if (entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.DROWNED || entity.getType() == EntityType.HUSK) {
 			if (entity instanceof Zombie zombie) {
-				DifficultyInstance instance = zombie.level.getCurrentDifficultyAt(zombie.blockPosition());
+				DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombie.level, zombie.blockPosition());
 				if (instance.getEffectiveDifficulty() > 0.0) {
 					EntityHelper.equipEntityForDifficulty(zombie, instance);
 				}
 				zombie.setCanBreakDoors(true);
 			}
-		} else if (entity instanceof ICreeper creeper) {
-			DifficultyInstance instance = entity.level.getCurrentDifficultyAt(entity.blockPosition());
-			creeper.setExplosionRadius((int) Math.max(3.0, instance.getEffectiveDifficulty()));
+		} else if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(creeper.level, creeper.blockPosition());
+			iCreeper.setExplosionRadius((int) Math.max(3.0, instance.getEffectiveDifficulty()));
 			if (instance.getSpecialMultiplier() >= 1.0 &&  0.5 > rng.nextDouble()) {
-				creeper.setPowered(true);
+				iCreeper.setPowered(true);
 			}
 		} else if (entity instanceof Spider spider) {
 			spider.goalSelector.removeAllGoals();
@@ -80,7 +82,7 @@ public class OnEntityJoinWorldEvent {
 			spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
 			spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
 		} else if (entity instanceof Skeleton skeleton) {
-			DifficultyInstance instance = skeleton.level.getCurrentDifficultyAt(skeleton.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(skeleton.level, skeleton.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(skeleton, instance);
 			}

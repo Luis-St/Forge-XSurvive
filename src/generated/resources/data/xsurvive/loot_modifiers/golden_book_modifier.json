@@ -82,7 +82,8 @@
   "extra_end_treasure": {
     "rarity": "treasure",
     "values": [
-      "xsurvive:void_protection"
+      "xsurvive:void_protection",
+      "xsurvive:aspect_of_the_end"
     ]
   },
   "extra_nether_treasure": {

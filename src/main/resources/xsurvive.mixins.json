@@ -29,7 +29,7 @@
 		"EndDragonFightMixin",
 		"PoiTypesMixin",
 		"LootTablesMixin",
-		"PhantomSpawnerMixin",
+#		"PhantomSpawnerMixin",
 		"ServerPlayerGameModeMixin"
 	],
 	"client": [

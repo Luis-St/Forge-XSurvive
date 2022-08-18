@@ -17,6 +17,7 @@ import static net.luis.xsurvive.world.item.XSItems.RAINBOW_RUNE;
 import static net.luis.xsurvive.world.item.XSItems.RED_RUNE;
 import static net.luis.xsurvive.world.item.XSItems.WHITE_RUNE;
 import static net.luis.xsurvive.world.item.XSItems.YELLOW_RUNE;
+import static net.luis.xsurvive.world.item.enchantment.XSEnchantments.ASPECT_OF_THE_END;
 import static net.luis.xsurvive.world.item.enchantment.XSEnchantments.BLASTING;
 import static net.luis.xsurvive.world.item.enchantment.XSEnchantments.ENDER_SLAYER;
 import static net.luis.xsurvive.world.item.enchantment.XSEnchantments.FROST_ASPECT;
@@ -92,7 +93,7 @@ public class LootModifierHelper {
 	}
 	
 	public static RarityList<Enchantment> getExtraEndTreasure() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_PROTECTION.get()));
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_PROTECTION.get(), ASPECT_OF_THE_END.get()));
 	}
 	
 	public static RarityList<Item> getCommonRunes() {

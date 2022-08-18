@@ -84,6 +84,9 @@ public class XSLanguageProvider extends LanguageProvider {
 		if (name.contains(" Of ")) {
 			return name.replace(" Of ", " of ");
 		}
+		if (name.contains(" The ")) {
+			return name.replace(" The ", " the ");
+		}
 		return name;
 	}
 	

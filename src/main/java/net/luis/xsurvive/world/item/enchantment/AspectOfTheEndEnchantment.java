@@ -3,26 +3,26 @@ package net.luis.xsurvive.world.item.enchantment;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
-public class MultiDropEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-	
-	public MultiDropEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
+public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+
+	public AspectOfTheEndEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
 	
 	@Override
 	public int getMaxLevel() {
-		return 1;
+		return 4;
 	}
 	
 	@Override
@@ -37,9 +37,9 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	
 	@Override
 	public boolean canEnchant(ItemStack stack) {
-		return stack.getItem() instanceof DiggerItem;
+		return stack.getItem() instanceof SwordItem;
 	}
-	
+
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
 		return false;
@@ -69,7 +69,12 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
 	}
-
+	
+	@Override
+	public int getUpgradeLevel() {
+		return 4;
+	}
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

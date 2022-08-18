@@ -54,6 +54,15 @@ public interface IEnchantment {
 		return new GoldenEnchantmentInstance(this.self(), level);
 	}
 	
+	static boolean isGolden(Enchantment enchantment, int level) {
+		if (enchantment instanceof IEnchantment ench) {
+			return ench.isGolden(level);
+		}
+		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+		return false;
+		
+	}
+	
 	static EnchantedItem merge(ItemStack left, ItemStack right) {
 		ItemStack result = left.copy();
 		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
