@@ -31,7 +31,7 @@ public abstract class EnchantedBookItemMixin {
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks, CallbackInfo callback) {
 		if (tab == CreativeModeTab.TAB_SEARCH) {
 			for (Enchantment enchantment : Registry.ENCHANTMENT) {
-				if (enchantment.category != null) {
+				if (enchantment.category != null && enchantment.isAllowedOnBooks()) {
 					if (enchantment instanceof IEnchantment ench) {
 						if (!ench.isUpgrade()) {
 							for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
@@ -50,15 +50,17 @@ public abstract class EnchantedBookItemMixin {
 			}
 		} else if (tab.getEnchantmentCategories().length != 0) {
 			for (Enchantment enchantment : Registry.ENCHANTMENT) {
-				if (enchantment instanceof IEnchantment ench) {
-					if (this.isTabForCategory(tab, enchantment) && !ench.isUpgrade()) {
-						stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
-					}
-				} else {
-					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-					XSurvive.LOGGER.info("A deprecate vanilla logic is called");
-					if (this.isTabForCategory(tab, enchantment)) {
-						stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
+				if (enchantment.isAllowedOnBooks()) {
+					if (enchantment instanceof IEnchantment ench) {
+						if (this.isTabForCategory(tab, enchantment) && !ench.isUpgrade()) {
+							stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
+						}
+					} else {
+						XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+						XSurvive.LOGGER.info("A deprecate vanilla logic is called");
+						if (this.isTabForCategory(tab, enchantment)) {
+							stacks.add(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
+						}
 					}
 				}
 			}
