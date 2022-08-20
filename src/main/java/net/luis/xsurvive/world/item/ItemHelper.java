@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.luis.xores.world.item.XOresItems;
+import net.luis.xores.world.item.XOItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -41,7 +41,7 @@ public class ItemHelper {
 	}
 	
 	public static List<Item> getEnderiteArmor() {
-		return Lists.newArrayList(XOresItems.ENDERITE_HELMET.get(), XOresItems.ENDERITE_CHESTPLATE.get(), XOresItems.ENDERITE_LEGGINGS.get(), XOresItems.ENDERITE_BOOTS.get());
+		return Lists.newArrayList(XOItems.ENDERITE_HELMET.get(), XOItems.ENDERITE_CHESTPLATE.get(), XOItems.ENDERITE_LEGGINGS.get(), XOItems.ENDERITE_BOOTS.get());
 	}
 	
 	public static List<Item> getWoodWeapons() {
@@ -69,7 +69,7 @@ public class ItemHelper {
 	}
 	
 	public static List<Item> getEnderiteWeapons() {
-		return Lists.newArrayList(XOresItems.ENDERITE_SWORD.get(), XOresItems.ENDERITE_AXE.get());
+		return Lists.newArrayList(XOItems.ENDERITE_SWORD.get(), XOItems.ENDERITE_AXE.get());
 	}
 	
 }

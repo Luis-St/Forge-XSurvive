@@ -1,92 +1,155 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.world.inventory.extension;
 
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.function.Consumer;
 
 import com.google.common.collect.Lists;
 
+import net.luis.xbackpack.network.XBNetworkHandler;
+import net.luis.xbackpack.network.packet.extension.UpdateAnvilExtension;
+import net.luis.xbackpack.world.capability.BackpackProvider;
+import net.luis.xbackpack.world.inventory.BackpackMenu;
+import net.luis.xbackpack.world.inventory.extension.AnvilExtensionMenu;
+import net.luis.xbackpack.world.inventory.extension.slot.ExtensionSlot;
+import net.luis.xbackpack.world.inventory.handler.CraftingHandler;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.ItemCombinerMenu;
-import net.minecraft.world.inventory.MenuType;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
-@Mixin(AnvilMenu.class)
-public abstract class AnvilMenuMixin extends ItemCombinerMenu {
+public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	
-	private AnvilMenuMixin(MenuType<?> menuType, int id, Inventory inventory, ContainerLevelAccess levelAccess) {
-		super(menuType, id, inventory, levelAccess);
+	private final CraftingHandler handler;
+	private int repairItemCountCost;
+	private int cost;
+	
+	public XSAnvilExtensionMenu(BackpackMenu menu, Player player) {
+		super(menu, player);
+		this.handler = BackpackProvider.get(this.player).getAnvilHandler();
 	}
 	
-	@Shadow
-	public int repairItemCountCost;
-	@Shadow
-	private String itemName;
-	@Shadow
-	private DataSlot cost;
-	
-	@Shadow
-	public static int calculateIncreasedRepairCost(int cost) {
-		return 0;
+	@Override
+	public void open() {
+		if (!this.handler.getInputHandler().getStackInSlot(0).isEmpty() && !this.handler.getInputHandler().getStackInSlot(1).isEmpty()) {
+			this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+			this.createResult();
+		}
 	}
 	
-	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
-	public void createResult(CallbackInfo callback) {
-		ItemStack leftStack = this.inputSlots.getItem(0);
-		this.cost.set(1);
+	@Override
+	public void addSlots(Consumer<Slot> consumer) {
+		consumer.accept(new ExtensionSlot(this, this.handler.getInputHandler(), 0, 225, 73));
+		consumer.accept(new ExtensionSlot(this, this.handler.getInputHandler(), 1, 260, 73));
+		consumer.accept(new ExtensionSlot(this, this.handler.getResultHandler(), 0, 304, 73) {
+			@Override
+			public boolean mayPlace(ItemStack stack) {
+				return false;
+			}
+			
+			@Override
+			public boolean mayPickup(Player player) {
+				return XSAnvilExtensionMenu.this.mayPickup(player);
+			}
+			
+			@Override
+			public void onTake(Player player, ItemStack stack) {
+				XSAnvilExtensionMenu.this.onTake(player, stack);
+				super.onTake(player, stack);
+			}
+		});
+	}
+	
+	public boolean mayPickup(Player player) {
+		return (player.getAbilities().instabuild || player.experienceLevel >= this.cost) && this.cost > 0;
+	}
+	
+	private void onTake(Player player, ItemStack stack) {
+		if (player instanceof ServerPlayer serverPlayer) {
+			if (!serverPlayer.getAbilities().instabuild) {
+				serverPlayer.giveExperienceLevels(-this.cost);
+			}
+			this.handler.getInputHandler().setStackInSlot(0, ItemStack.EMPTY);
+			if (this.repairItemCountCost > 0) {
+				ItemStack rigthStack = this.handler.getInputHandler().getStackInSlot(1);
+				if (!rigthStack.isEmpty() && rigthStack.getCount() > this.repairItemCountCost) {
+					rigthStack.shrink(this.repairItemCountCost);
+					this.handler.getInputHandler().setStackInSlot(1, rigthStack);
+				} else {
+					this.handler.getInputHandler().setStackInSlot(1, ItemStack.EMPTY);
+				}
+			} else {
+				this.handler.getInputHandler().setStackInSlot(1, ItemStack.EMPTY);
+			}
+			this.cost = 0;
+			this.playSound(serverPlayer, serverPlayer.getLevel());
+		}
+		this.menu.broadcastChanges();
+		this.broadcastChanges();
+		this.createResult();
+	}
+	
+	private void playSound(ServerPlayer player, ServerLevel level) {
+		player.connection.send(new ClientboundSoundPacket(SoundEvents.ANVIL_USE, SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
+	}
+	
+	@Override
+	public void slotsChanged() {
+		this.createResult();
+	}
+	
+	private void createResult() {
+		ItemStack leftStack = this.handler.getInputHandler().getStackInSlot(0);
+		this.cost = 1;
 		int enchantCost = 0;
 		int repairCost = 0;
 		int renameCost = 0;
 		if (leftStack.isEmpty()) {
-			this.resultSlots.setItem(0, ItemStack.EMPTY);
-			this.cost.set(0);
+			this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+			this.cost = 0;
 		} else {
 			ItemStack resultStack = leftStack.copy();
-			ItemStack rightStack = this.inputSlots.getItem(1);
+			ItemStack rightStack = this.handler.getInputHandler().getStackInSlot(1);
 			Map<Enchantment, Integer> resultEnchantments = EnchantmentHelper.getEnchantments(resultStack);
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
 			boolean enchantedBook = false;
 			boolean decreaseRepairCost = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
-				this.resultSlots.setItem(0, ItemStack.EMPTY);
-				this.cost.set(0);
+				this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+				this.cost = 0;
 				return;
 			} else {
-				if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, leftStack, rightStack, this.resultSlots, this.itemName, repairCost, this.player)) {
+				if (!this.onAnvilUpdate(leftStack, rightStack, repairCost)) {
 					return;
 				}
 				enchantedBook = rightStack.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(rightStack).isEmpty();
 				if (resultStack.isDamageableItem() && resultStack.getItem().isValidRepairItem(leftStack, rightStack)) {
 					int damage = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (damage <= 0) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
+						this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+						this.cost = 0;
 						return;
 					}
 					int currentRepairCost;
@@ -99,8 +162,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					this.repairItemCountCost = currentRepairCost;
 				} else {
 					if (!enchantedBook && (!resultStack.is(rightStack.getItem()) || !resultStack.isDamageableItem())) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
+						this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+						this.cost = 0;
 						return;
 					}
 					if (resultStack.isDamageableItem() && !enchantedBook) {
@@ -177,35 +240,24 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 						}
 					}
 					if (survival && !canEnchant) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
+						this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+						this.cost = 0;
 						return;
 					}
 					
 				}
 			}
-			if (StringUtils.isBlank(this.itemName)) {
-				if (leftStack.hasCustomHoverName()) {
-					renameCost = 1;
-					enchantCost += renameCost;
-					resultStack.resetHoverName();
-				}
-			} else if (!this.itemName.equals(leftStack.getHoverName().getString())) {
-				renameCost = 1;
-				enchantCost += renameCost;
-				resultStack.setHoverName(Component.literal(this.itemName));
-			}
 			if (enchantedBook && !resultStack.isBookEnchantable(rightStack)) {
 				resultStack = ItemStack.EMPTY;
 			}
 			if (!decreaseRepairCost) {
-				this.cost.set(repairCost + enchantCost);
+				this.cost = repairCost + enchantCost;
 			}
 			if (enchantCost <= 0 && !decreaseRepairCost) {
 				resultStack = ItemStack.EMPTY;
 			}
-			if (renameCost == enchantCost && renameCost > 0 && this.cost.get() >= 60) {
-				this.cost.set(59);
+			if (renameCost == enchantCost && renameCost > 0 && this.cost >= 60) {
+				this.cost = 59;
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
 				List<Enchantment> enchantments = Lists.newArrayList();
@@ -216,7 +268,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					if (renameCost > 0) {
 						cost += renameCost;
 					}
-					this.cost.set(cost);
+					this.cost = cost;
 				}
 			}
 			if (!resultStack.isEmpty()) {
@@ -232,10 +284,41 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				}
 				EnchantmentHelper.setEnchantments(resultEnchantments, resultStack);
 			}
-			this.resultSlots.setItem(0, resultStack);
+			this.handler.getResultHandler().setStackInSlot(0, resultStack);
 			this.broadcastChanges();
 		}
-		callback.cancel();
 	}
 	
+	private void broadcastChanges() {
+		if (this.player instanceof ServerPlayer player) {
+			XBNetworkHandler.sendToPlayer(player, new UpdateAnvilExtension(this.cost));
+		}
+	}
+	
+	private static int calculateIncreasedRepairCost(int cost) {
+		return cost * 2 + 1;
+	}
+
+	public int getCost() {
+		return this.cost;
+	}
+	
+	private boolean onAnvilUpdate(ItemStack leftStack, ItemStack rightStack, int repairCost) {
+		AnvilUpdateEvent event = new AnvilUpdateEvent(leftStack, rightStack, leftStack.getDisplayName().getString(), repairCost, this.player);
+		if (MinecraftForge.EVENT_BUS.post(event)) {
+			return false;
+		} else if (event.getOutput().isEmpty()) {
+			return true;
+		}
+		this.handler.getResultHandler().setStackInSlot(0, event.getOutput());
+		this.cost = event.getCost();
+		this.repairItemCountCost = event.getMaterialCost();
+		this.broadcastChanges();
+		return false;
+	}
+	
+	@Override
+	public void close() {
+		this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
+	}
 }

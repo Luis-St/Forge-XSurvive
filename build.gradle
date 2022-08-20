@@ -17,7 +17,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.19.2-1.4'
+version = '1.19.2-1.5'
 group = 'net.luis.xsurvive'
 archivesBaseName = 'XSurvive'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -123,15 +123,15 @@ dependencies {
 	
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 	
-	implementation fg.deobf('net.luis.xbackpack:Forge-XBackpack:1.19.2-2.1')
-	implementation fg.deobf('net.luis.xores:Forge-XOres:1.19.2-2.0')
+	implementation fg.deobf('net.luis.xbackpack:Forge-XBackpack:1.19.2-2.6')
+	implementation fg.deobf('net.luis.xores:Forge-XOres:1.19.2-2.1')
 }
 
 jar {
 	manifest {
 		attributes([
 			"Specification-Title"     : "XSurvive",
-			"Specification-Version"   : "1.19.2-1.4",
+			"Specification-Version"   : "1.19.2-1.5",
 			"Implementation-Title"    : project.name,
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
 		])

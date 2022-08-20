@@ -1,7 +1,10 @@
 package net.luis.xsurvive.event.fml;
 
 import net.luis.xbackpack.BackpackConstans;
+import net.luis.xbackpack.world.extension.BackpackExtensions;
+import net.luis.xbackpack.world.inventory.extension.ExtensionMenuRegistry;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.inventory.extension.XSAnvilExtensionMenu;
 import net.luis.xsurvive.world.item.alchemy.XSBrewingRecipe;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
@@ -31,6 +34,7 @@ public class OnCommonSetupEvent {
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) {
 		BackpackConstans.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.SMELTING.get());
+		ExtensionMenuRegistry.registerOverride(BackpackExtensions.ANVIL.get(), XSurvive.MOD_NAME, XSAnvilExtensionMenu::new);
 		registerBrewingRecipies();
 		registerCustomAis();
 	}

@@ -53,8 +53,8 @@ public class XSLanguageProvider extends LanguageProvider {
 		}
 		this.add(XSurvive.GOLDEN_BOOK_TAB.getDisplayName().getString(), "Golden Books");
 		this.add(XSurvive.RUNE_TAB.getDisplayName().getString(), "Runes");
-		this.add("death.attack.curse_of_harming", "%1$s die by his own weapon");
-		this.add("death.attack.curse_of_harming.player", "%1$s die by his own weapon whilst fighting %2$s");
+		this.add("death.attack.curse_of_harming", "{0} die by his own weapon");
+		this.add("death.attack.curse_of_harming.player", "{0} die by his own weapon whilst fighting {1}");
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");
 		this.add(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable", "Showing Smeltable");
 		this.add("options.gamma.infinite", "Infinite");
