@@ -68,7 +68,10 @@ public class XSEnchantments {
 		return new ReplantingEnchantment(Rarity.RARE, XSEnchantmentCategory.HOE, EquipmentSlot.MAINHAND);
 	});
 	public static final RegistryObject<AspectOfTheEndEnchantment> ASPECT_OF_THE_END = ENCHANTMENTS.register("aspect_of_the_end", () -> { 
-		return new AspectOfTheEndEnchantment(Rarity.RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
+		return new AspectOfTheEndEnchantment(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
+	});
+	public static final RegistryObject<ExplosionEnchantment> EXPLOSION = ENCHANTMENTS.register("explosion", () -> { 
+		return new ExplosionEnchantment(Rarity.RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND);
 	});
 	
 }

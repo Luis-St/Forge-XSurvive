@@ -1,8 +1,8 @@
 {
   "block.xsurvive.honey_melon": "Honey Melon",
   "block.xsurvive.smelting_furnace": "Smelting Furnace",
-  "death.attack.curse_of_harming": "%1$s die by his own weapon",
-  "death.attack.curse_of_harming.player": "%1$s die by his own weapon whilst fighting %2$s",
+  "death.attack.curse_of_harming": "{0} die by his own weapon",
+  "death.attack.curse_of_harming.player": "{0} die by his own weapon whilst fighting {1}",
   "effect.xsurvive.frost": "Frost",
   "enchantment.xsurvive.aspect_of_the_end": "Aspect of The End",
   "enchantment.xsurvive.blasting": "Blasting",
@@ -10,6 +10,7 @@
   "enchantment.xsurvive.curse_of_harming": "Curse of Harming",
   "enchantment.xsurvive.ender_slayer": "Ender Slayer",
   "enchantment.xsurvive.experience": "Experience",
+  "enchantment.xsurvive.explosion": "Explosion",
   "enchantment.xsurvive.frost_aspect": "Frost Aspect",
   "enchantment.xsurvive.growth": "Growth",
   "enchantment.xsurvive.harvesting": "Harvesting",

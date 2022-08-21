@@ -30,7 +30,7 @@ public class OnAnvilEvent {
 		if (!left.isEmpty()) {
 			ItemStack result = left.copy();
 			if (right.isEmpty()) {
-				if ((left.isDamageableItem() || left.isEnchantable() || left.isEnchanted()) && left.getBaseRepairCost() > 0) { // TEST
+				if ((left.isDamageableItem() || left.isEnchantable() || left.isEnchanted()) && left.getBaseRepairCost() > 0) {
 					event.setCost(1);
 					result.setRepairCost(result.getBaseRepairCost() / 2);
 					event.setOutput(result);

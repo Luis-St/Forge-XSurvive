@@ -30,7 +30,9 @@
 		"PoiTypesMixin",
 		"LootTablesMixin",
 		"PhantomSpawnerMixin",
-		"ServerPlayerGameModeMixin"
+		"ServerPlayerGameModeMixin",
+		"ArrowMixin",
+		"BowItemMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

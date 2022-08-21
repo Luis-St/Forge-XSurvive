@@ -20,6 +20,11 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	}
 	
 	@Override
+	public int getMaxLevel() {
+		return 1;
+	}
+	
+	@Override
 	public int getMinCost(int level) {
 		return 20;
 	}
@@ -27,11 +32,6 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	@Override
 	public int getMaxCost(int level) {
 		return 50;
-	}
-	
-	@Override
-	public int getMaxLevel() {
-		return 1;
 	}
 	
 	@Override
