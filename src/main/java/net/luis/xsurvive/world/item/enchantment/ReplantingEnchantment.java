@@ -40,6 +40,11 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	public boolean canEnchant(ItemStack stack) {
 		return stack.getItem() instanceof HoeItem;
 	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return false;
+	}
 
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {

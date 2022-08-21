@@ -69,9 +69,15 @@ public abstract class EnchantedBookItemMixin {
 	}
 	
 	private boolean isTabForCategory(CreativeModeTab tab, Enchantment enchantment) {
-		if (enchantment.category == XSEnchantmentCategory.TOOLS && (tab == CreativeModeTab.TAB_COMBAT || tab == CreativeModeTab.TAB_TOOLS)) {
+		if (enchantment.category == XSEnchantmentCategory.HOE && tab == CreativeModeTab.TAB_TOOLS) {
+			return true;
+		} else if (enchantment.category == XSEnchantmentCategory.TOOLS && tab == CreativeModeTab.TAB_TOOLS) {
 			return true;
 		} else if (enchantment.category == XSEnchantmentCategory.WEAPONS && tab == CreativeModeTab.TAB_COMBAT) {
+			return true;
+		} else if (enchantment.category == XSEnchantmentCategory.TOOLS_AND_WEAPONS && (tab == CreativeModeTab.TAB_COMBAT || tab == CreativeModeTab.TAB_TOOLS)) {
+			return true;
+		} else if (enchantment.category == XSEnchantmentCategory.ELYTRA && tab == CreativeModeTab.TAB_COMBAT) {
 			return true;
 		}
 		return tab.hasEnchantmentCategory(enchantment.category);

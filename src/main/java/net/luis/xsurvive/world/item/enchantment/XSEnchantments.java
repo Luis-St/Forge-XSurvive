@@ -35,7 +35,7 @@ public class XSEnchantments {
 		return new PoisonAspectEnchantment(Rarity.RARE, EquipmentSlot.MAINHAND);
 	});
 	public static final RegistryObject<ExperienceEnchantment> EXPERIENCE = ENCHANTMENTS.register("experience", () -> {
-		return new ExperienceEnchantment(Rarity.UNCOMMON, XSEnchantmentCategory.TOOLS, EquipmentSlot.MAINHAND);
+		return new ExperienceEnchantment(Rarity.UNCOMMON, XSEnchantmentCategory.TOOLS_AND_WEAPONS, EquipmentSlot.MAINHAND);
 	});
 	public static final RegistryObject<SmeltingEnchantment> SMELTING = ENCHANTMENTS.register("smelting", () -> {
 		return new SmeltingEnchantment(Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
@@ -72,6 +72,9 @@ public class XSEnchantments {
 	});
 	public static final RegistryObject<ExplosionEnchantment> EXPLOSION = ENCHANTMENTS.register("explosion", () -> { 
 		return new ExplosionEnchantment(Rarity.RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND);
+	});
+	public static final RegistryObject<ReachingEnchantment> REACHING = ENCHANTMENTS.register("reaching", () -> { 
+		return new ReachingEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.TOOLS, EquipmentSlot.MAINHAND);
 	});
 	
 }
