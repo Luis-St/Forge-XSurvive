@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xores.world.item.ElytraChestplateItem;
+import net.luis.xsurvive.dependency.DependencyHelper;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
@@ -53,7 +53,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	public boolean canEnchant(ItemStack stack) {
 		if (stack.getItem() instanceof ElytraItem) {
 			return true;
-		} else if (stack.getItem() instanceof ElytraChestplateItem) {
+		} else if (DependencyHelper.isInstanceOf("net.luis.xores.world.item.ElytraChestplateItem", stack.getItem())) {
 			return true;
 		}
 		return super.canEnchant(stack);

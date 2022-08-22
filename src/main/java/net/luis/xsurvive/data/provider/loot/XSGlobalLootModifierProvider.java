@@ -1,6 +1,5 @@
 package net.luis.xsurvive.data.provider.loot;
 
-import net.luis.xores.world.level.storage.loot.SmeltingModifier;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.Chance;
 import net.luis.xsurvive.util.WeightCollection;
@@ -11,6 +10,7 @@ import net.luis.xsurvive.world.level.storage.loot.GoldenBookModifier;
 import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
 import net.luis.xsurvive.world.level.storage.loot.MultiDropModifier;
 import net.luis.xsurvive.world.level.storage.loot.RuneItemModifier;
+import net.luis.xsurvive.world.level.storage.loot.SmeltingModifier;
 import net.luis.xsurvive.world.level.storage.loot.predicates.LootTableIdsCondition;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;

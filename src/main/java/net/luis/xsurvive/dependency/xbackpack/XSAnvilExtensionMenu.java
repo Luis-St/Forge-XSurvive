@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.inventory.extension;
+package net.luis.xsurvive.dependency.xbackpack;
 
 import java.util.List;
 import java.util.Map;

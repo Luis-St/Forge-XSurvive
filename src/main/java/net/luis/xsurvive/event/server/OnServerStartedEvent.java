@@ -14,6 +14,7 @@ import net.luis.xsurvive.wiki.file.PotionsWikiFile;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  *
@@ -25,7 +26,9 @@ public class OnServerStartedEvent {
 	
 	@SubscribeEvent
 	public static void serverStarted(ServerStartedEvent event) throws IOException {
-		createWikis(new File("D:/Git Repositories/Forge-XSurvive").toPath().resolve("wiki files"));
+		if (!FMLEnvironment.production) {
+			createWikis(new File("D:/Git Repositories/Forge-XSurvive").toPath().resolve("wiki files"));
+		}
 	}
 	
 	private static void createWikis(Path path) throws IOException {

@@ -5,9 +5,9 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.luis.xores.world.item.XOItems;
-import net.luis.xores.world.level.block.XOBlocks;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.dependency.DependencyBlocks;
+import net.luis.xsurvive.dependency.DependencyItems;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.item.trading.AdvancedTradeBuilder;
 import net.luis.xsurvive.world.item.trading.DynamicTrades;
@@ -98,7 +98,9 @@ public class OnVillagerTradesEvent {
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.enchantedBook(XSEnchantments.VOID_WALKER.get(), 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSEnchantments.VOID_PROTECTION.get()).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.emerald(XOItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
+			if (DependencyItems.ENDERITE_SCRAP.isPresent()) {
+				trade5.add(SimpleTradeBuilder.emerald(DependencyItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
+			}
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
 		} else if (event.getType() == XSVillagerProfessions.LUMBERJACK.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.STICK, 32, 1).defaultBuild(1));
@@ -153,10 +155,16 @@ public class OnVillagerTradesEvent {
 			trade4.add(SimpleTradeBuilder.emerald(Items.DIAMOND, 1, 1).defaultBuild(4));
 			trade4.add(SimpleTradeBuilder.item(16, Items.DIAMOND, 1).defaultBuild(4));
 			
-			trade5.add(AdvancedTradeBuilder.processItem(XOBlocks.SAPHIRE_ORE.get(), 1, 1, XOItems.SAPHIRE_INGOT.get(), 2).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.processItem(XOBlocks.DEEPSLATE_SAPHIRE_ORE.get(), 1, 2, XOItems.SAPHIRE_INGOT.get(), 2).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.emerald(XOItems.SAPHIRE_INGOT.get(), 1, 2).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.item(32, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
+			if (DependencyItems.SAPHIRE_INGOT.isPresent()) {
+				if (DependencyBlocks.SAPHIRE_ORE.isPresent()) {
+					trade5.add(AdvancedTradeBuilder.processItem(DependencyBlocks.SAPHIRE_ORE.get(), 1, 1, DependencyItems.SAPHIRE_INGOT.get(), 2).defaultBuild(5));
+				}
+				if (DependencyBlocks.DEEPSLATE_SAPHIRE_ORE.isPresent()) {
+					trade5.add(AdvancedTradeBuilder.processItem(DependencyBlocks.DEEPSLATE_SAPHIRE_ORE.get(), 1, 2, DependencyItems.SAPHIRE_INGOT.get(), 2).defaultBuild(5));
+				}
+				trade5.add(SimpleTradeBuilder.emerald(DependencyItems.SAPHIRE_INGOT.get(), 1, 2).defaultBuild(5));
+				trade5.add(SimpleTradeBuilder.item(32, DependencyItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
+			}
 		} else if (event.getType() == XSVillagerProfessions.MOB_HUNTER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.ROTTEN_FLESH, 8, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.item(1, Items.BONE, 4).defaultBuild(1));
@@ -188,7 +196,9 @@ public class OnVillagerTradesEvent {
 			trade3.add(SimpleTradeBuilder.emerald(Items.OBSIDIAN, 4, 1).defaultBuild(3));
 			trade3.add(SimpleTradeBuilder.item(4, Items.CRYING_OBSIDIAN, 1).defaultBuild(3));
 			trade3.add(AdvancedTradeBuilder.processItem(Items.OBSIDIAN, 1, 1, Items.CRYING_OBSIDIAN, 2).defaultBuild(3));
-			trade3.add(SimpleTradeBuilder.emerald(XOItems.POLISHED_ROSE_QUARTZ.get(), 1, 1).defaultBuild(3));
+			if (DependencyItems.POLISHED_ROSE_QUARTZ.isPresent()) {
+				trade3.add(SimpleTradeBuilder.emerald(DependencyItems.POLISHED_ROSE_QUARTZ.get(), 1, 1).defaultBuild(3));
+			}
 			trade3.add(SimpleTradeBuilder.emerald(Items.NETHER_WART, 4, 1).defaultBuild(3));
 			
 			trade4.add(SimpleTradeBuilder.item(1, Items.NETHER_WART, 1).defaultBuild(4));
@@ -199,7 +209,9 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.item(6, Items.GHAST_TEAR, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(4, Items.BLAZE_ROD, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(24, Items.MUSIC_DISC_PIGSTEP, 1).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.emerald(XOItems.BLAZING_INGOT.get(), 1, 18).defaultBuild(5));
+			if (DependencyItems.BLAZING_INGOT.isPresent()) {
+				trade5.add(SimpleTradeBuilder.emerald(DependencyItems.BLAZING_INGOT.get(), 1, 18).defaultBuild(5));
+			}
 			trade5.add(DynamicTrades.randomPotion(5));
 			trade5.add(DynamicTrades.randomPotion(5));
 			trade5.add(DynamicTrades.randomPotion(5));

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import net.luis.xsurvive.dependency.DependencyItems;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
@@ -48,6 +49,7 @@ public class XSurvive {
 		XSBlocks.BLOCKS.register(eventBus);
 		XSBlocks.ITEMS.register(eventBus);
 		XSItems.ITEMS.register(eventBus);
+		DependencyItems.register();
 		XSMobEffects.MOB_EFFECTS.register(eventBus);
 		XSPotions.POTIONS.register(eventBus);
 		XSPoiTypes.POI_TYPES.register(eventBus);

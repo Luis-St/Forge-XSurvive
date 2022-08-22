@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import net.luis.xores.world.item.ElytraChestplateItem;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
+import net.luis.xsurvive.dependency.DependencyHelper;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
@@ -118,28 +118,30 @@ public class EnchantmentWikiFile {
 			}
 		}
 		if (containsArmorItem(items, EquipmentSlot.HEAD) && containsArmorItem(items, EquipmentSlot.CHEST) && containsArmorItem(items, EquipmentSlot.LEGS) && containsArmorItem(items, EquipmentSlot.FEET)) {
-			if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class) && containsItem(items, ElytraChestplateItem.class)) {
+			Class<?> clazz = DependencyHelper.getDependencyClass("net.luis.xores.world.item.ElytraChestplateItem");
+			if (containsItem(items, ElytraItem.class, clazz) && containsItem(items, clazz)) {
 				enchantableItems.add("all Armor pieces");
-			} else if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class)) {
+			} else if (containsItem(items, ElytraItem.class, clazz)) {
 				enchantableItems.add("vanilla Armor pieces");
 				enchantableItems.add("Elytra");
-			} else if (containsItem(items, ElytraChestplateItem.class)) {
+			} else if (containsItem(items, clazz)) {
 				enchantableItems.add("vanilla Armor pieces");
 				enchantableItems.add("Elytra Chestplate");
 			} else {
 				enchantableItems.add("vanilla Armor pieces");
 			}
 		} else {
+			Class<?> clazz = DependencyHelper.getDependencyClass("net.luis.xores.world.item.ElytraChestplateItem");
 			if (containsArmorItem(items, EquipmentSlot.HEAD)) {
 				enchantableItems.add("Helmet");
 			}
 			if (containsArmorItem(items, EquipmentSlot.CHEST)) {
 				enchantableItems.add("Chestplate");
 			}
-			if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class)) {
+			if (containsItem(items, ElytraItem.class, clazz)) {
 				enchantableItems.add("Elytra");
 			}
-			if (containsItem(items, ElytraChestplateItem.class)) {
+			if (containsItem(items, clazz)) {
 				enchantableItems.add("Elytra Chestplate");
 			}
 			if (containsArmorItem(items, EquipmentSlot.LEGS)) {
@@ -160,18 +162,18 @@ public class EnchantmentWikiFile {
 		return false;
 	}
 	
-	private static boolean containsItem(List<Item> items, Class<? extends Item> clazz, Class<? extends Item> excludeClazz) {
+	private static boolean containsItem(List<Item> items, Class<?> clazz, Class<?> excludeClazz) {
 		for (Item item : items) {
-			if (clazz.isInstance(item) && !excludeClazz.isInstance(item)) {
+			if (clazz != null && clazz.isInstance(item) && excludeClazz != null && !excludeClazz.isInstance(item)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	private static boolean containsItem(List<Item> items, Class<? extends Item> clazz) {
+	private static boolean containsItem(List<Item> items, Class<?> clazz) {
 		for (Item item : items) {
-			if (clazz.isInstance(item)) {
+			if (clazz != null && clazz.isInstance(item)) {
 				return true;
 			}
 		}
