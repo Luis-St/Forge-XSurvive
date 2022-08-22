@@ -32,7 +32,8 @@
 		"PhantomSpawnerMixin",
 		"ServerPlayerGameModeMixin",
 		"ArrowMixin",
-		"BowItemMixin"
+		"BowItemMixin",
+		"ServerEntityMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

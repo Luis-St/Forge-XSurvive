@@ -9,7 +9,6 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentCategory;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
@@ -26,11 +25,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mixin(EnchantedBookItem.class)
 public abstract class EnchantedBookItemMixin {
 	
-	@SuppressWarnings("deprecation")
 	@Inject(method = "fillItemCategory", at = @At("HEAD"), cancellable = true)
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks, CallbackInfo callback) {
 		if (tab == CreativeModeTab.TAB_SEARCH) {
-			for (Enchantment enchantment : Registry.ENCHANTMENT) {
+			for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 				if (enchantment.category != null && enchantment.isAllowedOnBooks()) {
 					if (enchantment instanceof IEnchantment ench) {
 						if (!ench.isUpgradeEnchantment()) {
@@ -49,7 +47,7 @@ public abstract class EnchantedBookItemMixin {
 				}
 			}
 		} else if (tab.getEnchantmentCategories().length != 0) {
-			for (Enchantment enchantment : Registry.ENCHANTMENT) {
+			for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 				if (enchantment.isAllowedOnBooks()) {
 					if (enchantment instanceof IEnchantment ench) {
 						if (this.isTabForCategory(tab, enchantment) && !ench.isUpgradeEnchantment()) {

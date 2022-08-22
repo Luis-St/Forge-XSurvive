@@ -40,7 +40,7 @@ public abstract class BlockMixin extends BlockBehaviour implements IForgeBlock {
 	}
 	
 	@Override
-	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean canHarvest, FluidState fluid) { // damage item
+	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean canHarvest, FluidState fluid) {
 		BlockState belowState = level.getBlockState(pos.below());
 		int replanting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.REPLANTING.get(), player);
 		if (replanting > 0) {

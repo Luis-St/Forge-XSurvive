@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
+import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
 import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -33,6 +34,8 @@ public class XSNetworkHandler {
 		simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_chnanel"), () -> VERSION, VERSION::equals, VERSION::equals);
 		simpleChannel.messageBuilder(UpdatePlayerCapabilityPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(UpdatePlayerCapabilityPacket::encode).decoder(UpdatePlayerCapabilityPacket::new)
 				.consumerMainThread(UpdatePlayerCapabilityPacket.Handler::handle).add();
+		simpleChannel.messageBuilder(UpdateTridentGlintColorPacket.class, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(UpdateTridentGlintColorPacket::encode).decoder(UpdateTridentGlintColorPacket::new)
+		.consumerMainThread(UpdateTridentGlintColorPacket.Handler::handle).add();
 	}
 	
 	public static SimpleChannel getChannel() {
