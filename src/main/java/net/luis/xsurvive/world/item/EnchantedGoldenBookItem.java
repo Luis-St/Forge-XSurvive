@@ -76,7 +76,10 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 	
 	@Override
 	public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-		return 1;
+		if (this.getEnchantment(stack) == enchantment) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	@Nullable
