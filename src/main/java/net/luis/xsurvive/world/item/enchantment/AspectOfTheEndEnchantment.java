@@ -1,5 +1,6 @@
 package net.luis.xsurvive.world.item.enchantment;
 
+import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -83,8 +84,11 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Block is destroyed by an Item with this Enchantment,").endLine();
-			builder.append("the Block's loot will be multiplied by the enchantment level.").endLine();
+			builder.append("When a Item with this Enchantment is right clicked,").endLine();
+			builder.append("the Player will be teleported in it's looking direction.").endLine();
+			builder.append("After the teleport all Items with this Enchantment have a 1 second cooldown.").endLine();
+			builder.append("The teleport distance is calculated as follows:").endLine();
+			builder.appendFormatted("6.0 * aspectOfTheEnd", WikiFormat.CODE);
 		});
 	}
 	
