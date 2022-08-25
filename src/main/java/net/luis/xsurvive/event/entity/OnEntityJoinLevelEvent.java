@@ -1,5 +1,7 @@
 package net.luis.xsurvive.event.entity;
 
+import java.util.UUID;
+
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.LevelHelper;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
@@ -12,6 +14,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -22,12 +28,17 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,8 +53,36 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class OnEntityJoinLevelEvent {
 	
+	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
+	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
+	public static final UUID ARMOR_UUID = UUID.fromString("5C22132F-8448-438A-B060-99B748897CC4");
+	public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("AECD8D90-4DF7-4EA3-9AE3-D50C1A9FB9F4");
+	public static final UUID FLYING_SPEED_UUID = UUID.fromString("1D536AB7-6764-44B6-A8E5-0F83A2D77A62");
+	
 	@SubscribeEvent
 	public static void entityJoinLevel(EntityJoinLevelEvent event) {
+		if (event.getEntity() instanceof LivingEntity entity) {
+			if (entity instanceof EnderDragon) {
+				entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+			} else if (!(entity instanceof Player)) {
+				if (entity instanceof WitherBoss) {
+					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+				} else if (entity instanceof ElderGuardian) {
+					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+				} else if (entity instanceof Warden) {
+					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+				} else if (entity instanceof Enemy) {
+					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
+					EntityHelper.addAttributeModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_UUID, "IncreaseMovementSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
+					EntityHelper.addAttributeModifier(entity, Attributes.FLYING_SPEED, new AttributeModifier(FLYING_SPEED_UUID, "IncreaseFlyingSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
+					entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(128.0);
+				} else {
+					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
+				}
+				EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
+				EntityHelper.addAttributeModifier(entity, Attributes.ARMOR, new AttributeModifier(ARMOR_UUID, "IncreaseArmorAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2
+			}
+		}
 		Entity entity = event.getEntity();
 		RandomSource rng = RandomSource.create();
 		if (entity instanceof Player player) {
