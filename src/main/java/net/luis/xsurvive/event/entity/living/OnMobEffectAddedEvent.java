@@ -17,10 +17,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
-public class OnPotionAddedEvent {
+public class OnMobEffectAddedEvent {
 	
 	@SubscribeEvent
-	public static void potionAdded(MobEffectEvent.Added event) {
+	public static void mobEffectAdded(MobEffectEvent.Added event) {
 		MobEffectInstance instance = event.getEffectInstance();
 		if (event.getEntity() instanceof ServerPlayer player && instance.getEffect() == XSMobEffects.FROST.get()) {
 			ServerPlayerHandler handler = PlayerProvider.getServer(player);

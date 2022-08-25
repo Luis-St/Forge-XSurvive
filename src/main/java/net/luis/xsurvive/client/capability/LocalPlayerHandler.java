@@ -4,6 +4,7 @@ import net.luis.xsurvive.world.level.entity.player.IPlayer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 
 /**
  * 
@@ -17,6 +18,8 @@ public class LocalPlayerHandler implements IPlayer {
 	private int tick;
 	private int frostTime;
 	private int startFrostTime;
+	private int endAspectCooldown;
+	private int startEndAspectCooldown;
 	
 	public LocalPlayerHandler(LocalPlayer player) {
 		this.player = player;
@@ -38,6 +41,9 @@ public class LocalPlayerHandler implements IPlayer {
 		if (this.frostTime > 0) {
 			this.frostTime--;
 		}
+		if (this.endAspectCooldown > 0) {
+			this.endAspectCooldown--;
+		}
 	}
 	
 	@Override
@@ -46,13 +52,7 @@ public class LocalPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public void setFrostTime(int frostTime) {
-		this.frostTime = frostTime;
-		this.startFrostTime = frostTime;
-	}
-	
-	@Override
-	public float getFrostPercent() {
+	public double getFrostPercent() {
 		double showStartTime = ((double) this.startFrostTime - (double) this.frostTime) / 20.0;
 		double showEndTime = ((double) this.frostTime) / 20.0;
 		if (showStartTime > 5.0 && showEndTime > 5.0) {
@@ -66,11 +66,23 @@ public class LocalPlayerHandler implements IPlayer {
 	}
 	
 	@Override
+	public int getEndAspectCooldown() {
+		return this.endAspectCooldown;
+	}
+	
+	@Override
+	public double getEndAspectPercent() {
+		return Mth.clamp((double) this.endAspectCooldown / (double) this.startEndAspectCooldown, 0.0, 1.0);
+	}
+	
+	@Override
 	public CompoundTag serializeDisk() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
 		tag.putInt("frost_time", this.frostTime);
 		tag.putInt("start_frost_time", this.startFrostTime);
+		tag.putInt("end_aspect_cooldown", this.endAspectCooldown);
+		tag.putInt("start_end_aspect_cooldown", this.startEndAspectCooldown);
 		return tag;
 	}
 	
@@ -79,6 +91,8 @@ public class LocalPlayerHandler implements IPlayer {
 		this.tick = tag.getInt("tick");
 		this.frostTime = tag.getInt("frost_time");
 		this.startFrostTime = tag.getInt("start_frost_time");
+		this.endAspectCooldown = tag.getInt("end_aspect_cooldown");
+		this.startEndAspectCooldown = tag.getInt("start_end_aspect_cooldown");
 	}
 	
 	@Override
@@ -91,22 +105,20 @@ public class LocalPlayerHandler implements IPlayer {
 		this.tick = tag.getInt("tick");
 		this.frostTime = tag.getInt("frost_time");
 		this.startFrostTime = tag.getInt("start_frost_time");
+		this.endAspectCooldown = tag.getInt("end_aspect_cooldown");
+		this.startEndAspectCooldown = tag.getInt("start_end_aspect_cooldown");
 	}
 	
 	@Override
 	public CompoundTag serializePersistent() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
-		tag.putInt("frost_time", this.frostTime);
-		tag.putInt("start_frost_time", this.startFrostTime);
 		return tag;
 	}
 	
 	@Override
 	public void deserializePersistent(CompoundTag tag) {
 		this.tick = tag.getInt("tick");
-		this.frostTime = tag.getInt("frost_time");
-		this.startFrostTime = tag.getInt("start_frost_time");
 	}
 
 }

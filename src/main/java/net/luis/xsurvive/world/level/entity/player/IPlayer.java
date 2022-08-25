@@ -26,9 +26,19 @@ public interface IPlayer {
 	
 	int getFrostTime();
 	
-	void setFrostTime(int frostTime);
+	default void setFrostTime(int frostTime) {
+		
+	}
 	
-	float getFrostPercent();
+	double getFrostPercent();
+	
+	int getEndAspectCooldown();
+	
+	double getEndAspectPercent();
+	
+	default void setEndAspectCooldown(int endAspectCooldown) {
+		
+	}
 	
 	default void setChanged() {
 		

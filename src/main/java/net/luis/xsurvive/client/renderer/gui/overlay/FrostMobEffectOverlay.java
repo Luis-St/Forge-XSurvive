@@ -37,7 +37,7 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 		Player player = this.minecraft.player;
 		if (!this.minecraft.options.hideGui && player.hasEffect(XSMobEffects.FROST.get()) && 0 >= player.getPercentFrozen()) {
 			gui.setupOverlayRenderState(true, false);
-			this.renderFrostMobEffectOverlay(width, height, PlayerProvider.getLocal(player).getFrostPercent());
+			this.renderFrostMobEffectOverlay(width, height, (float) PlayerProvider.getLocal(player).getFrostPercent());
 		}
 	}
 	
