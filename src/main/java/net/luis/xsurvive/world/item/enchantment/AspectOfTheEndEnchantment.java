@@ -88,7 +88,7 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 			builder.append("the Player will be teleported in it's looking direction.").endLine();
 			builder.append("After the teleport all Items with this Enchantment have a 1 second cooldown.").endLine();
 			builder.append("The teleport distance is calculated as follows:").endLine();
-			builder.appendFormatted("6.0 * aspectOfTheEnd", WikiFormat.CODE);
+			builder.appendFormatted("6.0 * aspectOfTheEndLevel", WikiFormat.CODE).endLine();
 		});
 	}
 	
