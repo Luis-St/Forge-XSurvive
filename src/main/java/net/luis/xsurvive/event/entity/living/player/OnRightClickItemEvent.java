@@ -35,7 +35,7 @@ public class OnRightClickItemEvent {
 				entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> {
 					p.broadcastBreakEvent(entry.getKey());
 				});
-				PlayerProvider.getServer(player).setEndAspectCooldown(30);
+				PlayerProvider.getServer(player).setEndAspectCooldown(20);
 				player.getCooldowns();
 			}
 		}
