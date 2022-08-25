@@ -21,6 +21,7 @@ import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -212,6 +213,16 @@ public class EntityHelper {
 		double vecY = Math.sin(-player.getXRot() * (Math.PI / 180.0));
 		double vecZ = Math.cos(-player.getYRot() * (Math.PI / 180.0) - Math.PI) * -Math.cos(-player.getXRot() * (Math.PI / 180.0));
 		return level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(vecX * clipDistance, vecY * clipDistance, vecZ * clipDistance), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getLocation();
+	}
+	
+	public static void addAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+		AttributeMap attributes = entity.getAttributes();
+		if (attributes.hasAttribute(attribute)) {
+			AttributeInstance instance = attributes.getInstance(attribute);
+			if (instance.getModifier(modifier.getId()) == null) {
+				instance.addTransientModifier(modifier);
+			}
+		}
 	}
 	
 }
