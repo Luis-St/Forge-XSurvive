@@ -58,6 +58,7 @@ public class OnEntityJoinLevelEvent {
 	public static final UUID ARMOR_UUID = UUID.fromString("5C22132F-8448-438A-B060-99B748897CC4");
 	public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("AECD8D90-4DF7-4EA3-9AE3-D50C1A9FB9F4");
 	public static final UUID FLYING_SPEED_UUID = UUID.fromString("1D536AB7-6764-44B6-A8E5-0F83A2D77A62");
+	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
 	
 	@SubscribeEvent
 	public static void entityJoinLevel(EntityJoinLevelEvent event) {
@@ -75,7 +76,7 @@ public class OnEntityJoinLevelEvent {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
 					EntityHelper.addAttributeModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_UUID, "IncreaseMovementSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
 					EntityHelper.addAttributeModifier(entity, Attributes.FLYING_SPEED, new AttributeModifier(FLYING_SPEED_UUID, "IncreaseFlyingSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
-					entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(128.0);
+					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				} else {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				}
