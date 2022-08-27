@@ -25,7 +25,7 @@ public class GammaCommand {
 		})).then(Commands.literal("default").executes((command) -> {
 			return setGamma(command.getSource(), Minecraft.getInstance(), 0.5);
 		})).then(Commands.literal("max").executes((command) -> {
-			return setGamma(command.getSource(), Minecraft.getInstance(), 0.99);
+			return setGamma(command.getSource(), Minecraft.getInstance(), 1.0);
 		})).then(Commands.literal("infinite").executes((command) -> {
 			return setGamma(command.getSource(), Minecraft.getInstance(), 20.0);
 		})));
@@ -34,10 +34,10 @@ public class GammaCommand {
 	private static int setGamma(CommandSourceStack source, Minecraft minecraft, double value) {
 		minecraft.options.gamma.set(value);
 		if (minecraft.options.gamma.get() == value) {
-			source.sendSuccess(Component.translatable(XSurvive.MOD_ID + "commands.gamma.failure", minecraft.options.gamma.get()), false);
+			source.sendSuccess(Component.translatable(XSurvive.MOD_ID + "commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
 			return 1;
 		} else {
-			source.sendFailure(Component.translatable(XSurvive.MOD_ID + "commands.gamma.success", minecraft.options.gamma.get()));
+			source.sendFailure(Component.translatable(XSurvive.MOD_ID + "commands.gamma.failure", Double.toString(value)));
 			return 0;
 		}
 		
