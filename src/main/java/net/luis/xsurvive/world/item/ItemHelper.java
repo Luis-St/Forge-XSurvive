@@ -1,12 +1,34 @@
 package net.luis.xsurvive.world.item;
 
+import static net.luis.xsurvive.world.item.XSItems.BLACK_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.BLUE_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.BROWN_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.CYAN_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.GRAY_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.GREEN_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.LIGHT_BLUE_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.LIGHT_GRAY_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.LIME_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.MAGENTA_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.ORANGE_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.PINK_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.PURPLE_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.RAINBOW_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.RED_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.WHITE_RUNE;
+import static net.luis.xsurvive.world.item.XSItems.YELLOW_RUNE;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.dependency.DependencyItems;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * 
@@ -15,6 +37,11 @@ import net.minecraft.world.item.Items;
  */
 
 public class ItemHelper {
+	
+	public static List<GlintColorItem> getRunes() {
+		return Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get(), ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(), PINK_RUNE.get(),
+			CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(), RED_RUNE.get(), RAINBOW_RUNE.get());
+	}
 	
 	public static List<Item> getLeatherArmor() {
 		return Lists.newArrayList(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
@@ -100,4 +127,10 @@ public class ItemHelper {
 		}
 	}
 	
+	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
+		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
+			return enchantment.canEnchant(new ItemStack(item));
+		}).map(ItemStack::new).collect(Collectors.toList());
+	}
+		
 }

@@ -7,6 +7,7 @@ import net.luis.xsurvive.world.item.enchantment.EnchantedItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
@@ -51,23 +52,25 @@ public class OnAnvilEvent {
 				} else {
 					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				}
-			} else if (left.isEnchanted() && right.getItem() instanceof IGlintColor glintColor) {
-				int color = glintColor.getGlintColor(right);
-				if (17 >= color && color >= 0) {
-					CompoundTag tag = result.getOrCreateTag();
-					if (tag.contains(XSurvive.MOD_NAME)) {
-						CompoundTag modTag = tag.getCompound(XSurvive.MOD_NAME);
-						tag.remove(XSurvive.MOD_NAME);
-						modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-						tag.put(XSurvive.MOD_NAME, modTag);
-					} else {
-						CompoundTag modTag = new CompoundTag();
-						modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-						tag.put(XSurvive.MOD_NAME, modTag);
+			} else if (left.isEnchanted() || left.getItem().isFoil(left)) {
+				if (right.getItem() instanceof IGlintColor glintColor && !left.is(Items.ENCHANTED_BOOK)) {
+					int color = glintColor.getGlintColor(right);
+					if (17 >= color && color >= 0) {
+						CompoundTag tag = result.getOrCreateTag();
+						if (tag.contains(XSurvive.MOD_NAME)) {
+							CompoundTag modTag = tag.getCompound(XSurvive.MOD_NAME);
+							tag.remove(XSurvive.MOD_NAME);
+							modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
+							tag.put(XSurvive.MOD_NAME, modTag);
+						} else {
+							CompoundTag modTag = new CompoundTag();
+							modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
+							tag.put(XSurvive.MOD_NAME, modTag);
+						}
+						result.setTag(tag);
+						event.setOutput(result);
+						event.setCost(5);
 					}
-					result.setTag(tag);
-					event.setOutput(result);
-					event.setCost(10);
 				}
 			}
 		}

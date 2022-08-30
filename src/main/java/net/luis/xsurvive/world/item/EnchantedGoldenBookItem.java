@@ -11,7 +11,6 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -57,10 +56,9 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 	}
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> stacks) {
 		if (tab == XSurvive.GOLDEN_BOOK_TAB || tab == CreativeModeTab.TAB_SEARCH) {
-			for (Enchantment enchantment : Registry.ENCHANTMENT.stream().toList()) {
+			for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
 				if (enchantment instanceof IEnchantment ench) {
 					if (ench.isAllowedOnGoldenBooks()) {
 						ItemStack stack = new ItemStack(this);
