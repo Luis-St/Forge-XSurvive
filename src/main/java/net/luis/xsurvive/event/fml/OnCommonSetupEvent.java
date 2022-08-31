@@ -2,7 +2,7 @@ package net.luis.xsurvive.event.fml;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.dependency.DependencyCallWrapper;
-import net.luis.xsurvive.world.item.alchemy.XSBrewingRecipe;
+import net.luis.xsurvive.world.item.alchemy.BrewingRecipeUtils;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.level.entity.ai.custom.CustomAiManager;
 import net.luis.xsurvive.world.level.entity.ai.custom.CustomElderGuardianAi;
@@ -12,7 +12,6 @@ import net.minecraft.world.entity.monster.ElderGuardian;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -35,9 +34,9 @@ public class OnCommonSetupEvent {
 	}
 	
 	private static void registerBrewingRecipies() {
-		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.SNOWBALL, XSPotions.FORST.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_FORST.get()).addPowerUpgrade(XSPotions.STRONG_FORST.get()).build());
-		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.WITHER_ROSE, XSPotions.WITHER.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_WITHER.get()).addPowerUpgrade(XSPotions.STRONG_WITHER.get()).build());
-		BrewingRecipeRegistry.addRecipe(new XSBrewingRecipe.Builder(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get()).useDefaultInput().addTimeUpgrade(XSPotions.LONG_DIG_SPEED.get()).addPowerUpgrade(XSPotions.STRONG_DIG_SPEED.get()).build());
+		BrewingRecipeUtils.addRecipes(Items.SNOWBALL, XSPotions.FORST.get(), XSPotions.LONG_FORST.get(), XSPotions.STRONG_FORST.get());
+		BrewingRecipeUtils.addRecipes(Items.WITHER_ROSE, XSPotions.WITHER.get(), XSPotions.LONG_WITHER.get(), XSPotions.STRONG_WITHER.get());
+		BrewingRecipeUtils.addRecipes(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get(), XSPotions.LONG_DIG_SPEED.get(), XSPotions.STRONG_DIG_SPEED.get());
 	}
 	
 	private static void registerCustomAis() {
