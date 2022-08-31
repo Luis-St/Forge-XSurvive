@@ -81,7 +81,8 @@ public class OnEntityJoinLevelEvent {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				}
 				EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
-				EntityHelper.addAttributeModifier(entity, Attributes.ARMOR, new AttributeModifier(ARMOR_UUID, "IncreaseArmorAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2
+				EntityHelper.addAttributeModifier(entity, Attributes.ARMOR, new AttributeModifier(ARMOR_UUID, "IncreaseArmorAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
+				entity.setHealth(entity.getMaxHealth());
 			}
 		}
 		Entity entity = event.getEntity();
