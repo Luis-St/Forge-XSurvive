@@ -218,11 +218,21 @@ public class OnVillagerTradesEvent {
 			trade5.add(SimpleTradeBuilder.item(16, Items.WITHER_ROSE, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(64, Items.WITHER_SKELETON_SKULL, 1).defaultBuild(5));
 		}
-		trades.put(1, trade1);
-		trades.put(2, trade2);
-		trades.put(3, trade3);
-		trades.put(4, trade4);
-		trades.put(5, trade5);
+		if (!trade1.isEmpty()) {
+			trades.put(1, trade1);
+		}
+		if (!trade2.isEmpty()) {
+			trades.put(2, trade2);
+		}
+		if (!trade3.isEmpty()) {
+			trades.put(3, trade3);
+		}
+		if (!trade4.isEmpty()) {
+			trades.put(4, trade4);
+		}
+		if (!trade5.isEmpty()) {
+			trades.put(5, trade5);
+		}
 	}
 	
 }
