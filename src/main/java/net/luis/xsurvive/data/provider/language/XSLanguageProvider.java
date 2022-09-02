@@ -33,10 +33,10 @@ public class XSLanguageProvider extends LanguageProvider {
 	@Override
 	protected void addTranslations() {
 		for (Enchantment enchantment : XSEnchantments.ENCHANTMENTS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(enchantment, getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
+			this.add(enchantment, getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
 		}
 		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(item, getName(ForgeRegistries.ITEMS.getKey(item)));
+			this.add(item, getLocalizedName(ForgeRegistries.ITEMS.getKey(item)));
 		}
 		for (Item item : XSBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
 			this.add(item, getName(ForgeRegistries.ITEMS.getKey(item)));
@@ -81,7 +81,7 @@ public class XSLanguageProvider extends LanguageProvider {
 		return name.trim();
 	}
 	
-	public static String getEnchantmentName(ResourceLocation location) {
+	public static String getLocalizedName(ResourceLocation location) {
 		String name = getName(location);
 		if (name.contains(" Of ")) {
 			return name.replace(" Of ", " of ");

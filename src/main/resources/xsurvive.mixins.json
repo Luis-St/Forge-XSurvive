@@ -20,6 +20,7 @@
 		"entity.PhantomMixin",
 		"entity.WitherSkeletonMixin",
 		"entity.EnderManMixin",
+		"entity.EyeOfEnderMixin",
 		"AnvilMenuMixin",
 		"EnchantedBookItemMixin",
 		"ItemStackMixin",
@@ -33,7 +34,8 @@
 		"ServerPlayerGameModeMixin",
 		"ArrowMixin",
 		"BowItemMixin",
-		"ServerEntityMixin"
+		"ServerEntityMixin",
+		"EnderEyeItemMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

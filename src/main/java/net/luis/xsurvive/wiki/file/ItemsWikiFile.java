@@ -76,7 +76,7 @@ public class ItemsWikiFile {
 	}
 	
 	private static void addItem(WikiFileBuilder builder, Item item, @Nullable WikiFileEntry wikiEntry) {
-		builder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ITEMS.getKey(item)));
+		builder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ITEMS.getKey(item)));
 		builder.header3("Properties");
 		addItemProperties(builder, item);
 		if (item.foodProperties != null) {

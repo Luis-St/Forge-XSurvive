@@ -110,5 +110,8 @@ public class XSItems {
 			return new MobEffectInstance(MobEffects.DIG_SPEED, 2400, 1);
 		}, 1.0F).alwaysEat().build()), DyeColor.LIGHT_BLUE.getId());
 	});
+	public static final RegistryObject<Item> CURSED_ENDER_EYE = ITEMS.register("cursed_eye_of_ender", () -> {
+		return new Item(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+	});
 	
 }

@@ -17,6 +17,7 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
+import net.luis.xsurvive.world.level.entity.XSEntityTypes;
 import net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes;
 import net.luis.xsurvive.world.level.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.level.storage.loot.XSGlobalLootModifiers;
@@ -58,6 +59,7 @@ public class XSurvive {
 		XSMenuTypes.MENU_TYPES.register(eventBus);
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
+		XSEntityTypes.ENTITY_TYPES.register(eventBus);
 		XSRecipeBookTypes.register();
 		XSNetworkHandler.register();
 	}

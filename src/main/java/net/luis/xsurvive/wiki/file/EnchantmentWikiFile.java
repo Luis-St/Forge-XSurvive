@@ -48,7 +48,7 @@ public class EnchantmentWikiFile {
 	
 	private static void addEnchantments(WikiFileBuilder builder, List<Enchantment> enchantments) {
 		for (Enchantment enchantment : enchantments) {
-			builder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
+			builder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
 			builder.header3("Properties");
 			addEnchantmentProperties(builder, enchantment);
 			if (enchantment instanceof WikiFileEntry wikiEntry) {
@@ -193,11 +193,11 @@ public class EnchantmentWikiFile {
 				enchantments.add(ench);
 			}
 		}
-		return enchantments.stream().map(ForgeRegistries.ENCHANTMENTS::getKey).map(XSLanguageProvider::getEnchantmentName).toList().toString().replace("[", "").replace("]", "").trim();
+		return enchantments.stream().map(ForgeRegistries.ENCHANTMENTS::getKey).map(XSLanguageProvider::getLocalizedName).toList().toString().replace("[", "").replace("]", "").trim();
 	}
 	
 	private static void addVanillaEnchantments(WikiFileBuilder wikiBuilder) {
-		wikiBuilder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.PUNCH_ARROWS)));
+		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.PUNCH_ARROWS)));
 		wikiBuilder.header3("Modified Properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.PUNCH_ARROWS.getMaxLevel()).endLine();
@@ -206,12 +206,12 @@ public class EnchantmentWikiFile {
 		addProtectionEnchantments(wikiBuilder, (ProtectionEnchantment) Enchantments.FIRE_PROTECTION);
 		addProtectionEnchantments(wikiBuilder, (ProtectionEnchantment) Enchantments.BLAST_PROTECTION);
 		addProtectionEnchantments(wikiBuilder, (ProtectionEnchantment) Enchantments.PROJECTILE_PROTECTION);
-		wikiBuilder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.QUICK_CHARGE)));
+		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.QUICK_CHARGE)));
 		wikiBuilder.header3("Modified Properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.QUICK_CHARGE.getMaxLevel()).endLine();
 		});
-		wikiBuilder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.THORNS)));
+		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.THORNS)));
 		wikiBuilder.header3("Modified Properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.THORNS.getMaxLevel()).endLine();
@@ -223,7 +223,7 @@ public class EnchantmentWikiFile {
 			builder.append("The damage is calculated as follows:").endLine();
 			builder.appendFormatted("(0.2 * pieceThornsLevel) * armorThornsLevel", WikiFormat.CODE).endLine();
 		});
-		wikiBuilder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.IMPALING)));
+		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.IMPALING)));
 		wikiBuilder.header3("Modified Properties");
 		wikiBuilder.lines((builder) -> {
 			builder.append("Enchantable items:").append(getEnchantableItems(Enchantments.IMPALING)).endLine();
@@ -241,7 +241,7 @@ public class EnchantmentWikiFile {
 	}
 	
 	private static void addProtectionEnchantments(WikiFileBuilder wikiBuilder, ProtectionEnchantment enchantment) {
-		wikiBuilder.header2(XSLanguageProvider.getEnchantmentName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
+		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
 		wikiBuilder.header3("Modified Properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Enchantable items:").append(getEnchantableItems(enchantment)).endLine();
