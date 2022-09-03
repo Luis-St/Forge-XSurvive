@@ -35,7 +35,8 @@
 		"ArrowMixin",
 		"BowItemMixin",
 		"ServerEntityMixin",
-		"EnderEyeItemMixin"
+		"EnderEyeItemMixin",
+		"SpawnerBlockEntityMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",
