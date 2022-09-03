@@ -24,7 +24,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Bus.MOD)
-public class OnCommonSetupEvent {
+public class CommonSetupEventHandler {
 	
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) {

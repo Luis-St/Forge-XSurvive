@@ -23,7 +23,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  *
  */
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
-public class OnServerStartedEvent {
+public class ServerStartedEventHandler {
 	
 	@SubscribeEvent
 	public static void serverStarted(ServerStartedEvent event) throws IOException {

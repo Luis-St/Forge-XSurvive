@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID, value = Dist.CLIENT)
-public class OnScreenInitEvent {
+public class ClientEventHandler {
 	
 	@SubscribeEvent
 	public static void screenInit(ScreenEvent.Init.Post event) {

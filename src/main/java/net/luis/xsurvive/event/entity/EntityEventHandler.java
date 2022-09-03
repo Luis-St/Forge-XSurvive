@@ -10,14 +10,15 @@ import net.luis.xsurvive.world.level.entity.ai.goal.XSSpiderAttackGoal;
 import net.luis.xsurvive.world.level.entity.ai.goal.XSZombifiedPiglinAttackGoal;
 import net.luis.xsurvive.world.level.entity.monster.ICreeper;
 import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
+import net.luis.xsurvive.world.level.entity.projectile.IArrow;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -40,18 +41,23 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
-public class OnEntityJoinLevelEvent {
+public class EntityEventHandler {
 	
 	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
 	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
@@ -135,6 +141,22 @@ public class OnEntityJoinLevelEvent {
 			DifficultyInstance instance = zombifiedPiglin.level.getCurrentDifficultyAt(zombifiedPiglin.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(zombifiedPiglin, instance);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void projectileImpact(EnderPearl event) {
+		event.setAttackDamage(event.getAttackDamage() * 1.5F);
+	}
+	
+	@SubscribeEvent
+	public static void projectileImpact(ProjectileImpactEvent event) {
+		if (event.getProjectile() instanceof IArrow arrow) {
+			int explosionLevel = arrow.getExplosionLevel();
+			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {
+				Vec3 location = hitResult.getLocation();
+				event.getProjectile().level.explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Explosion.BlockInteraction.BREAK);
 			}
 		}
 	}
