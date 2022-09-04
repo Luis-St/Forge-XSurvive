@@ -23,9 +23,8 @@ public class DependencyHelper {
 		try {
 			return getDependencyClass(className).isInstance(object);
 		} catch (Exception e) {
-			
+			return false;
 		}
-		return false;
 	}
 	
 }
