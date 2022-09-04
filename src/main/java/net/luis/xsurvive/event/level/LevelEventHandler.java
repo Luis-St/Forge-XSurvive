@@ -8,6 +8,9 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.WoodHarvester;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.Structures;
 import net.minecraft.server.level.PlayerRespawnLogic;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -16,14 +19,13 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.CreateFluidSourceEvent;
 import net.minecraftforge.event.level.LevelEvent.CreateSpawnPosition;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 /**
@@ -70,9 +72,7 @@ public class LevelEventHandler {
 	@SubscribeEvent
 	public static void createSpawnPosition(CreateSpawnPosition event) {
 		if (event.getLevel() instanceof ServerLevel level) {
-			Pair<BlockPos, Holder<Biome>> pair = level.findClosestBiome3d((holder) -> {
-				return holder.is(Biomes.SPARSE_JUNGLE);
-			}, BlockPos.ZERO, 6400, 32, 64);
+			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY)), BlockPos.ZERO, 100, false);
 			if (pair != null) {
 				ChunkPos pos = level.getChunk(pair.getFirst()).getPos();
 				BlockPos spawnPos = getSpawnPos(level, pos);
@@ -83,6 +83,10 @@ public class LevelEventHandler {
 				}
 			}
 		}
+	}
+	
+	private static HolderSet<Structure> getHolderSet(Registry<Structure> registry) {
+		return Structures.VILLAGE_PLAINS.unwrap().left().map(registry::getHolderOrThrow).map(HolderSet::direct).orElseThrow();
 	}
 	
 	private static BlockPos getSpawnPos(ServerLevel level, ChunkPos pos) {
