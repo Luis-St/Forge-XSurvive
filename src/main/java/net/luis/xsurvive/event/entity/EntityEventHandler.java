@@ -34,6 +34,7 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
@@ -41,10 +42,14 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -141,6 +146,23 @@ public class EntityEventHandler {
 			DifficultyInstance instance = zombifiedPiglin.level.getCurrentDifficultyAt(zombifiedPiglin.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(zombifiedPiglin, instance);
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void entityMount(EntityMountEvent event) {
+		Entity entity = event.getEntity();
+		Entity vehicle = event.getEntityBeingMounted();
+		if (event.isMounting()) {
+			if (entity instanceof EnderMan enderMan) {
+				if (vehicle instanceof Boat || vehicle instanceof AbstractMinecart) {
+					event.setCanceled(true);
+				}
+			} else if (entity instanceof Raider raider && raider.hasActiveRaid()) {
+				if (vehicle instanceof Boat || vehicle instanceof AbstractMinecart) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}

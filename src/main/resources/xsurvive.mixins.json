@@ -19,7 +19,6 @@
 		"entity.LivingEntityMixin",
 		"entity.PhantomMixin",
 		"entity.WitherSkeletonMixin",
-		"entity.EnderManMixin",
 		"entity.EyeOfEnderMixin",
 		"AnvilMenuMixin",
 		"EnchantedBookItemMixin",
