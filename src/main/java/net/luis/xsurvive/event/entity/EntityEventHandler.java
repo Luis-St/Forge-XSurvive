@@ -13,8 +13,10 @@ import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.level.entity.projectile.IArrow;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -36,8 +38,11 @@ import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.ElderGuardian;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
@@ -142,6 +147,21 @@ public class EntityEventHandler {
 			DifficultyInstance instance = zombifiedPiglin.level.getCurrentDifficultyAt(zombifiedPiglin.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(zombifiedPiglin, instance);
+			}
+		} else if (entity instanceof Vex vex) {
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vex.level, vex.blockPosition());
+			if (instance.getEffectiveDifficulty() > 0.0) {
+				vex.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(vex, EquipmentSlot.MAINHAND, EntityHelper.getSwordForDifficulty(vex, instance), instance.getSpecialMultiplier()));
+			}
+		} else if (entity instanceof Pillager pillager) {
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level, pillager.blockPosition());
+			if (instance.getEffectiveDifficulty() > 0.0) {
+				pillager.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, EntityHelper.getCrossbowForDifficulty(pillager, instance), instance.getSpecialMultiplier()));
+			}
+		} else if (entity instanceof Vindicator vindicator) {
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level, vindicator.blockPosition());
+			if (instance.getEffectiveDifficulty() > 0.0) {
+				vindicator.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, EntityHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
 		}
 	}

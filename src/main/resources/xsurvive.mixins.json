@@ -35,7 +35,9 @@
 		"BowItemMixin",
 		"ServerEntityMixin",
 		"EnderEyeItemMixin",
-		"SpawnerBlockEntityMixin"
+		"SpawnerBlockEntityMixin",
+		"RaidMixin",
+		"EvokerSummonSpellGoalMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",
