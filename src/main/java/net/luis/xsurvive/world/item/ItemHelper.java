@@ -19,16 +19,13 @@ import static net.luis.xsurvive.world.item.XSItems.WHITE_RUNE;
 import static net.luis.xsurvive.world.item.XSItems.YELLOW_RUNE;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.dependency.DependencyItems;
+import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * 
@@ -127,10 +124,68 @@ public class ItemHelper {
 		}
 	}
 	
-	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
-		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-			return enchantment.canEnchant(new ItemStack(item));
-		}).map(ItemStack::new).collect(Collectors.toList());
+	public static WeightCollection<List<Item>> getWeaponWeightsForDifficulty(double difficulty) {
+		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
+		if (difficulty >= 5.5) {
+			itemWeights.add(1, getEnderiteWeapons());
+		}
+		if (difficulty >= 4.5) {
+			itemWeights.add(10, getNetheriteWeapons());
+		}
+		if (difficulty >= 3.5) {
+			itemWeights.add(40, getDiamondWeapons());
+		}
+		if (difficulty >= 2.75) {
+			itemWeights.add(30, getIronWeapons());
+		} 
+		if (3.5 >= difficulty && difficulty >= 1.75) {
+			itemWeights.add(20, getStoneWeapons());
+		} 
+		if (2.75 >= difficulty && difficulty >= 1.0) {
+			itemWeights.add(10, getGoldWeapons());
+		}
+		if (1.75 >= difficulty) {
+			itemWeights.add(5, getWoodWeapons());
+		}
+		return itemWeights;
+	}
+	
+	public static WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
+		WeightCollection<Item> itemWeights = new WeightCollection<>();
+		if (difficulty >= 5.0 && DependencyItems.NIGHT_CROSSBOW.isPresent()) {
+			itemWeights.add(10, DependencyItems.NIGHT_CROSSBOW.get());
+		}
+		if (difficulty >= 2.75 && DependencyItems.ENDERITE_CROSSBOW.isPresent()) {
+			itemWeights.add(30, DependencyItems.ENDERITE_CROSSBOW.get());
+		} 
+		itemWeights.add(60, Items.CROSSBOW);
+		return itemWeights;
+	}
+	
+	public static WeightCollection<List<Item>> getArmorWeightsForDifficulty(double difficulty) {
+		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
+		if (difficulty >= 5.5) {
+			itemWeights.add(1, getEnderiteArmor());
+		}
+		if (difficulty >= 4.5) {
+			itemWeights.add(10, getNetheriteArmor());
+		}
+		if (difficulty >= 3.5) {
+			itemWeights.add(40, getDiamondArmor());
+		}
+		if (difficulty >= 2.75) {
+			itemWeights.add(30, getIronArmor());
+		} 
+		if (3.5 >= difficulty && difficulty >= 1.75) {
+			itemWeights.add(20, getChainArmor());
+		} 
+		if (2.75 >= difficulty && difficulty >= 1.0) {
+			itemWeights.add(10, getGoldArmor());
+		}
+		if (1.75 >= difficulty) {
+			itemWeights.add(5, getLeatherArmor());
+		}
+		return itemWeights;
 	}
 		
 }

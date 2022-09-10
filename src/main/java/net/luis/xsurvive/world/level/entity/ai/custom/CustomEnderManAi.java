@@ -15,31 +15,27 @@ import net.minecraftforge.event.ForgeEventFactory;
  *
  */
 
-public class CustomEnderManAi implements CustomAi {
+public class CustomEnderManAi extends AbstractCustomAi<EnderMan> {
 	
-	private final EnderMan enderMan;
-	private final ServerLevel level;
-	
-	public CustomEnderManAi(EnderMan enderMan, ServerLevel level) {
-		this.enderMan = enderMan;
-		this.level = level;
+	public CustomEnderManAi(EnderMan entity, ServerLevel level) {
+		super(entity, level);
 	}
 	
 	@Override
 	public boolean canUse() {
-		return this.enderMan.getTarget() != null && this.enderMan.getTarget() instanceof Player;
+		return this.entity.getTarget() != null && this.entity.getTarget() instanceof Player;
 	}
 	
 	@Override
 	public void tick() {
-		if (this.enderMan.tickCount % 50 == 0 && !this.enderMan.isInWater() && ForgeEventFactory.getMobGriefingEvent(this.level, this.enderMan)) {
+		if (this.entity.tickCount % 50 == 0 && !this.entity.isInWater() && ForgeEventFactory.getMobGriefingEvent(this.level, this.entity)) {
 			this.freezeNearbyWater();
 		}
 	}
 	
 	private void freezeNearbyWater() {
-		BlockPos.betweenClosedStream(this.enderMan.getBoundingBox().inflate(5.0, 1.0, 5.0).setMaxY(this.enderMan.getY() + 1.0)).map(this::immutable).filter((pos) -> {
-			return this.level.getBlockState(pos).is(Blocks.WATER) && 0.75 > this.enderMan.getRandom().nextDouble();
+		BlockPos.betweenClosedStream(this.entity.getBoundingBox().inflate(5.0, 1.0, 5.0).setMaxY(this.entity.getY() + 1.0)).map(this::immutable).filter((pos) -> {
+			return this.level.getBlockState(pos).is(Blocks.WATER) && 0.75 > this.entity.getRandom().nextDouble();
 		}).toList().forEach((pos) -> {
 			this.level.setBlock(pos, Blocks.FROSTED_ICE.defaultBlockState(), Block.UPDATE_ALL);
 		});

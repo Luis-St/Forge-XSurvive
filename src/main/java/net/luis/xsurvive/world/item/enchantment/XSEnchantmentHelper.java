@@ -3,7 +3,9 @@ package net.luis.xsurvive.world.item.enchantment;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
@@ -11,6 +13,9 @@ import com.google.common.collect.Maps;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.SimpleEntry;
+import net.minecraft.Util;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -166,6 +171,39 @@ public class XSEnchantmentHelper {
 			}
 		}
 		return items;
+	}
+	
+	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
+		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
+			return enchantment.canEnchant(new ItemStack(item));
+		}).map(ItemStack::new).collect(Collectors.toList());
+	}
+	
+	public static void enchantItem(RandomSource rng, ItemStack stack, int count, int cost, boolean treasure, boolean golden) {
+		List<EnchantmentInstance> instances = Lists.newArrayList();
+		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, treasure);
+		Consumer<? super EnchantmentInstance> action = (instance) -> {
+			if (golden) {
+				instances.add(increaseEnchantment(instance, golden));
+			} else {
+				instances.add(instance);
+			}
+		};
+		if (!availableInstances.isEmpty()) {
+			WeightedRandom.getRandomItem(rng, availableInstances).ifPresent(action);
+			for (int i = 0; i < count - 1; i++) {
+				if (!instances.isEmpty()) {
+					EnchantmentHelper.filterCompatibleEnchantments(availableInstances, Util.lastOf(instances));
+				}
+				if (availableInstances.isEmpty()) {
+					break;
+				}
+				WeightedRandom.getRandomItem(rng, availableInstances).ifPresent(action);
+			}
+		}
+		for (EnchantmentInstance instance : instances) {
+			stack.enchant(instance.enchantment, instance.level);
+		}
 	}
 	
 }

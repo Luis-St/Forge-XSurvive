@@ -23,6 +23,7 @@ import net.luis.xsurvive.world.item.GlintColorItem;
 import net.luis.xsurvive.world.item.ItemHelper;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -78,7 +79,7 @@ public class XSJeiPlugin implements IModPlugin {
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
 			if (enchantment instanceof IEnchantment ench) {
 				if (ench.isAllowedOnGoldenBooks()) {
-					for (ItemStack stack : ItemHelper.getItemsForEnchantment(enchantment)) {
+					for (ItemStack stack : XSEnchantmentHelper.getItemsForEnchantment(enchantment)) {
 						if (ench.isUpgradeEnchantment()) {
 							for (int i = ench.getMinUpgradeLevel(); i < ench.getMaxUpgradeLevel(); i++) {
 								ItemStack enchantedStack = this.enchantItem(stack, enchantment, i);

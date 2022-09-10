@@ -19,34 +19,30 @@ import net.minecraftforge.event.ForgeEventFactory;
  *
  */
 
-public class CustomElderGuardianAi implements CustomAi {
+public class CustomElderGuardianAi extends AbstractCustomAi<ElderGuardian> {
 	
-	private final ElderGuardian elderGuardian;
-	private final ServerLevel level;
-	
-	public CustomElderGuardianAi(ElderGuardian elderGuardian, ServerLevel level) {
-		this.elderGuardian = elderGuardian;
-		this.level = level;
+	public CustomElderGuardianAi(ElderGuardian entity, ServerLevel level) {
+		super(entity, level);
 	}
-
+	
 	@Override
 	public boolean canUse() {
 		StructureManager manager = this.level.structureManager();
-		BlockPos pos = this.elderGuardian.blockPosition();
+		BlockPos pos = this.entity.blockPosition();
 		return manager.structureHasPieceAt(pos, manager.getStructureWithPieceAt(pos, BuiltinStructures.OCEAN_MONUMENT));
 	}
-
+	
 	@Override
 	public void tick() {
-		if (ForgeEventFactory.getMobGriefingEvent(this.level, this.elderGuardian)) {
-			AABB boundingBox = this.elderGuardian.getBoundingBox().inflate(1.5);
+		if (ForgeEventFactory.getMobGriefingEvent(this.level, this.entity)) {
+			AABB boundingBox = this.entity.getBoundingBox().inflate(1.5);
 			for (int x = Mth.floor(boundingBox.minX); x <= Mth.floor(boundingBox.maxX); ++x) {
 				for (int y = Mth.floor(boundingBox.minY); y <= Mth.floor(boundingBox.maxY); ++y) {
 					for (int z = Mth.floor(boundingBox.minZ); z <= Mth.floor(boundingBox.maxZ); ++z) {
 						BlockPos pos = new BlockPos(x, y, z);
 						BlockState state = level.getBlockState(pos);
 						if (!state.isAir() && !state.is(Blocks.WATER) && !state.is(XSBlockTags.OCEAN_MONUMENT_BLOCKS)) {
-							this.level.destroyBlock(pos, true, this.elderGuardian);
+							this.level.destroyBlock(pos, true, this.entity);
 							this.level.setBlock(pos, Blocks.WATER.defaultBlockState(), Block.UPDATE_CLIENTS);
 						}
 					}

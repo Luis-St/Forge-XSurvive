@@ -3,6 +3,7 @@ package net.luis.xsurvive.event.entity;
 import java.util.UUID;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.level.LevelHelper;
 import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.luis.xsurvive.world.level.entity.ai.goal.XSBlazeAttackGoal;
@@ -78,10 +79,10 @@ public class EntityEventHandler {
 	@SubscribeEvent
 	public static void entityJoinLevel(EntityJoinLevelEvent event) {
 		if (event.getEntity() instanceof LivingEntity entity) {
-			if (entity instanceof EnderDragon) {
-				entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
-			} else if (!(entity instanceof Player)) {
-				if (entity instanceof WitherBoss) {
+			if (!(entity instanceof Player)) {
+				if (entity instanceof EnderDragon) {
+					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+				} else if (entity instanceof WitherBoss) {
 					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
 				} else if (entity instanceof ElderGuardian) {
 					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
@@ -154,17 +155,17 @@ public class EntityEventHandler {
 		} else if (entity instanceof Vex vex) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vex.level, vex.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
-				vex.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(vex, EquipmentSlot.MAINHAND, EntityHelper.getSwordForDifficulty(vex, instance), instance.getSpecialMultiplier()));
+				vex.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vex, EquipmentSlot.MAINHAND, ItemStackHelper.getSwordForDifficulty(vex, instance), instance.getSpecialMultiplier()));
 			}
 		} else if (entity instanceof Pillager pillager) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level, pillager.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
-				pillager.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, EntityHelper.getCrossbowForDifficulty(pillager, instance), instance.getSpecialMultiplier()));
+				pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, ItemStackHelper.getCrossbowForDifficulty(pillager, instance), instance.getSpecialMultiplier()));
 			}
 		} else if (entity instanceof Vindicator vindicator) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level, vindicator.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
-				vindicator.setItemInHand(InteractionHand.MAIN_HAND, EntityHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, EntityHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
+				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
 		}
 	}

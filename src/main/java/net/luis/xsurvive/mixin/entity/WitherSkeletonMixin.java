@@ -7,8 +7,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.item.ItemHelper;
+import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
-import net.luis.xsurvive.world.level.entity.EntityHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -45,7 +46,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 		if (0.25 > rng.nextDouble()) {
 			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
 		} else {
-			Item weapon = EntityHelper.getWeaponWeightsForDifficulty(Math.max(2.75, instance.getEffectiveDifficulty())).next().get(0);
+			Item weapon = ItemHelper.getWeaponWeightsForDifficulty(Math.max(2.75, instance.getEffectiveDifficulty())).next().get(0);
 			if (weapon instanceof SwordItem) {
 				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(weapon));
 			} else {
@@ -58,7 +59,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	
 	@Inject(method = "populateDefaultEquipmentEnchantments", at = @At("HEAD"))
 	protected void populateDefaultEquipmentEnchantments(RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {
-		ItemStack stack = EntityHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
+		ItemStack stack = ItemStackHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
 		XSEnchantmentHelper.removeEnchantment(Enchantments.FLAMING_ARROWS, stack);
 		this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 	}

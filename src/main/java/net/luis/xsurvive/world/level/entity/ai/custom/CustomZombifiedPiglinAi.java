@@ -10,24 +10,22 @@ import net.minecraft.world.entity.player.Player;
  *
  */
 
-public class CustomZombifiedPiglinAi implements CustomAi {
+public class CustomZombifiedPiglinAi extends AbstractCustomAi<ZombifiedPiglin> {
 	
-	private final ZombifiedPiglin zombifiedPiglin;
-	
-	public CustomZombifiedPiglinAi(ZombifiedPiglin zombifiedPiglin, ServerLevel level) {
-		this.zombifiedPiglin = zombifiedPiglin;
+	public CustomZombifiedPiglinAi(ZombifiedPiglin entity, ServerLevel level) {
+		super(entity, level);
 	}
-	
+
 	@Override
 	public boolean canUse() {
-		return this.zombifiedPiglin.getTarget() instanceof Player && this.zombifiedPiglin.isAngry();
+		return this.entity.getTarget() instanceof Player && this.entity.isAngry();
 	}
 
 	@Override
 	public void tick() {
-		if (this.zombifiedPiglin.getTarget() instanceof Player player) {
+		if (this.entity.getTarget() instanceof Player player) {
 			if (player.isCreative() || player.isSpectator()) {
-				this.zombifiedPiglin.stopBeingAngry();
+				this.entity.stopBeingAngry();
 			}
 		}
 	}
