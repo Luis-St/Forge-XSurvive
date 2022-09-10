@@ -17,8 +17,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -50,8 +50,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -67,8 +67,6 @@ public class EntityEventHandler {
 	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
 	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
 	public static final UUID ARMOR_UUID = UUID.fromString("5C22132F-8448-438A-B060-99B748897CC4");
-	public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("AECD8D90-4DF7-4EA3-9AE3-D50C1A9FB9F4");
-	public static final UUID FLYING_SPEED_UUID = UUID.fromString("1D536AB7-6764-44B6-A8E5-0F83A2D77A62");
 	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
 	
 	@SubscribeEvent
@@ -85,8 +83,6 @@ public class EntityEventHandler {
 					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
 				} else if (entity instanceof Enemy) {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
-					EntityHelper.addAttributeModifier(entity, Attributes.MOVEMENT_SPEED, new AttributeModifier(MOVEMENT_SPEED_UUID, "IncreaseMovementSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
-					EntityHelper.addAttributeModifier(entity, Attributes.FLYING_SPEED, new AttributeModifier(FLYING_SPEED_UUID, "IncreaseFlyingSpeedAttribute", 0.05, Operation.ADDITION)); // += 0.05
 					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				} else {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0

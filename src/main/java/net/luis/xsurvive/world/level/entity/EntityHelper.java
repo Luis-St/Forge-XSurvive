@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.dependency.DependencyItems;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.ItemHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
@@ -40,8 +41,11 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.entity.monster.Strider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ClipContext;
@@ -104,7 +108,7 @@ public class EntityHelper {
 			if (slot != EquipmentSlot.OFFHAND && entity.getItemBySlot(slot).isEmpty() && (entity.getRandom().nextDouble() / 2.0) + 0.5 * instance.getSpecialMultiplier() > entity.getRandom().nextDouble()) {
 				WeightCollection<List<Item>> itemWeights = slot == EquipmentSlot.MAINHAND ? getWeaponWeightsForDifficulty(difficulty) : getArmorWeightsForDifficulty(difficulty);
 				if (!itemWeights.isEmpty()) {
-					entity.setItemSlot(slot, setupItemForSlot(entity, slot, Lists.newArrayList(itemWeights.next()), instance.getSpecialMultiplier()));
+					entity.setItemSlot(slot, setupRandomItemForSlot(entity, slot, Lists.newArrayList(itemWeights.next()), instance.getSpecialMultiplier()));
 					if (entity instanceof Monster monster) {
 						monster.setDropChance(slot, slot.getType() == Type.HAND ? 0.04F : 0.02F);
 					}
@@ -165,19 +169,38 @@ public class EntityHelper {
 		return itemWeights;
 	}
 	
-	public static ItemStack setupItemForSlot(LivingEntity entity, EquipmentSlot slot, List<Item> items, double specialMultiplier) {
+	private static WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
+		WeightCollection<Item> itemWeights = new WeightCollection<>();
+		if (difficulty >= 5.0 && DependencyItems.NIGHT_CROSSBOW.isPresent()) {
+			itemWeights.add(10, DependencyItems.NIGHT_CROSSBOW.get());
+		}
+		if (difficulty >= 2.75 && DependencyItems.ENDERITE_CROSSBOW.isPresent()) {
+			itemWeights.add(30, DependencyItems.ENDERITE_CROSSBOW.get());
+		} 
+		itemWeights.add(60, Items.CROSSBOW);
+		return itemWeights;
+	}
+	
+	public static ItemStack setupRandomItemForSlot(LivingEntity entity, EquipmentSlot slot, List<Item> items, double specialMultiplier) {
 		RandomSource rng = entity.getRandom();
 		ItemStack stack = ItemStack.EMPTY;
 		int tries = 0;
 		do {
-			ItemStack tempStack = new ItemStack(items.get(rng.nextInt(items.size())));
+			ItemStack tempStack = setupItemForSlot(entity, slot, new ItemStack(items.get(rng.nextInt(items.size()))), specialMultiplier);
 			if (tempStack.canEquip(slot, entity)) {
-				enchantItem(rng, tempStack, (int) (2 + (specialMultiplier * 2.0)), (int) (20 + specialMultiplier * rng.nextInt(18)), false, false);
 				stack = tempStack;
 				break;
 			}
 			++tries;
 		} while (stack.isEmpty() && 10 > tries);
+		return stack;
+	}
+	
+	public static ItemStack setupItemForSlot(LivingEntity entity, EquipmentSlot slot, ItemStack stack, double specialMultiplier) {
+		RandomSource rng = entity.getRandom();
+		if (stack.canEquip(slot, entity)) {
+			enchantItem(rng, stack, (int) (2 + (specialMultiplier * 2.0)), (int) (20 + specialMultiplier * rng.nextInt(18)), false, false);
+		}
 		return stack;
 	}
 	
@@ -223,6 +246,48 @@ public class EntityHelper {
 				instance.addTransientModifier(modifier);
 			}
 		}
+	}
+	
+	public static ItemStack getSwordForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+		WeightCollection<List<Item>> itemWeights = getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
+		if (!itemWeights.isEmpty()) {
+			List<Item> weapons = itemWeights.next();
+			weapons.removeAll(ItemHelper.getWoodWeapons());
+			weapons.removeAll(ItemHelper.getGoldWeapons());
+			weapons.removeAll(ItemHelper.getStoneWeapons());
+			weapons.removeIf((item) -> {
+				return !(item instanceof SwordItem);
+			});
+			if (!weapons.isEmpty()) {
+				return new ItemStack(weapons.get(entity.getRandom().nextInt(weapons.size())));
+			}
+		}
+		return new ItemStack(Items.IRON_SWORD);
+	}
+	
+	public static ItemStack getCrossbowForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+		WeightCollection<Item> itemWeights = getCrossbowWeightsForDifficulty(instance.getEffectiveDifficulty());
+		if (!itemWeights.isEmpty()) {
+			return new ItemStack(itemWeights.next());
+		}
+		return new ItemStack(Items.CROSSBOW);
+	}
+	
+	public static ItemStack getAxeForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+		WeightCollection<List<Item>> itemWeights = getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
+		if (!itemWeights.isEmpty()) {
+			List<Item> weapons = itemWeights.next();
+			weapons.removeAll(ItemHelper.getWoodWeapons());
+			weapons.removeAll(ItemHelper.getGoldWeapons());
+			weapons.removeAll(ItemHelper.getStoneWeapons());
+			weapons.removeIf((item) -> {
+				return !(item instanceof AxeItem);
+			});
+			if (!weapons.isEmpty()) {
+				return new ItemStack(weapons.get(entity.getRandom().nextInt(weapons.size())));
+			}
+		}
+		return new ItemStack(Items.IRON_AXE);
 	}
 	
 }

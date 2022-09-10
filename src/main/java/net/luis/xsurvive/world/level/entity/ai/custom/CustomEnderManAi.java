@@ -7,6 +7,7 @@ import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  *
@@ -31,7 +32,7 @@ public class CustomEnderManAi implements CustomAi {
 	
 	@Override
 	public void tick() {
-		if (this.enderMan.tickCount % 50 == 0 && !this.enderMan.isInWater()) {
+		if (this.enderMan.tickCount % 50 == 0 && !this.enderMan.isInWater() && ForgeEventFactory.getMobGriefingEvent(this.level, this.enderMan)) {
 			this.freezeNearbyWater();
 		}
 	}

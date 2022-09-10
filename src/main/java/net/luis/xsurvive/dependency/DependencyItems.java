@@ -13,6 +13,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class DependencyItems {
 	
+	public static final RegistryObject<Item> NETHERITE_CROSSBOW = RegistryObject.create(new ResourceLocation("xores", "netherite_crossbow"), ForgeRegistries.ITEMS);
+	
 	public static final RegistryObject<Item> SAPHIRE_INGOT = RegistryObject.create(new ResourceLocation("xores", "saphire_ingot"), ForgeRegistries.ITEMS);
 	
 	public static final RegistryObject<Item> BLAZING_INGOT = RegistryObject.create(new ResourceLocation("xores", "blazing_ingot"), ForgeRegistries.ITEMS);
@@ -25,7 +27,10 @@ public class DependencyItems {
 	public static final RegistryObject<Item> ENDERITE_LEGGINGS = RegistryObject.create(new ResourceLocation("xores", "enderite_leggings"), ForgeRegistries.ITEMS);
 	public static final RegistryObject<Item> ENDERITE_BOOTS = RegistryObject.create(new ResourceLocation("xores", "enderite_boots"), ForgeRegistries.ITEMS);
 	public static final RegistryObject<Item> ENDERITE_SWORD = RegistryObject.create(new ResourceLocation("xores", "enderite_sword"), ForgeRegistries.ITEMS);
+	public static final RegistryObject<Item> ENDERITE_CROSSBOW = RegistryObject.create(new ResourceLocation("xores", "enderite_crossbow"), ForgeRegistries.ITEMS);
 	public static final RegistryObject<Item> ENDERITE_AXE = RegistryObject.create(new ResourceLocation("xores", "enderite_axe"), ForgeRegistries.ITEMS);
+	
+	public static final RegistryObject<Item> NIGHT_CROSSBOW = RegistryObject.create(new ResourceLocation("xores", "night_crossbow"), ForgeRegistries.ITEMS);
 	
 	public static void register() {
 		
