@@ -7,8 +7,8 @@ import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.WeightCollection;
-import net.luis.xsurvive.world.item.ItemHelper;
 import net.luis.xsurvive.world.item.ItemStackHelper;
+import net.luis.xsurvive.world.item.ItemWeightHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
@@ -96,7 +96,7 @@ public class EntityHelper {
 		double difficulty = instance.getEffectiveDifficulty();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot != EquipmentSlot.OFFHAND && entity.getItemBySlot(slot).isEmpty() && (entity.getRandom().nextDouble() / 2.0) + 0.5 * instance.getSpecialMultiplier() > entity.getRandom().nextDouble()) {
-				WeightCollection<List<Item>> itemWeights = slot == EquipmentSlot.MAINHAND ? ItemHelper.getWeaponWeightsForDifficulty(difficulty) : ItemHelper.getArmorWeightsForDifficulty(difficulty);
+				WeightCollection<List<Item>> itemWeights = slot == EquipmentSlot.MAINHAND ? ItemWeightHelper.getWeaponWeightsForDifficulty(difficulty) : ItemWeightHelper.getArmorWeightsForDifficulty(difficulty);
 				if (!itemWeights.isEmpty()) {
 					entity.setItemSlot(slot, ItemStackHelper.setupRandomItemForSlot(entity, slot, Lists.newArrayList(itemWeights.next()), instance.getSpecialMultiplier()));
 					if (entity instanceof Monster monster) {

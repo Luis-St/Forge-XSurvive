@@ -46,7 +46,7 @@ public class ItemStackHelper {
 	}
 	
 	public static ItemStack getSwordForDifficulty(LivingEntity entity, DifficultyInstance instance) {
-		WeightCollection<List<Item>> itemWeights = ItemHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
+		WeightCollection<List<Item>> itemWeights = ItemWeightHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			List<Item> weapons = itemWeights.next();
 			weapons.removeAll(ItemHelper.getWoodWeapons());
@@ -63,7 +63,7 @@ public class ItemStackHelper {
 	}
 	
 	public static ItemStack getCrossbowForDifficulty(LivingEntity entity, DifficultyInstance instance) {
-		WeightCollection<Item> itemWeights = ItemHelper.getCrossbowWeightsForDifficulty(instance.getEffectiveDifficulty());
+		WeightCollection<Item> itemWeights = ItemWeightHelper.getCrossbowWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			return new ItemStack(itemWeights.next());
 		}
@@ -71,7 +71,7 @@ public class ItemStackHelper {
 	}
 	
 	public static ItemStack getAxeForDifficulty(LivingEntity entity, DifficultyInstance instance) {
-		WeightCollection<List<Item>> itemWeights = ItemHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
+		WeightCollection<List<Item>> itemWeights = ItemWeightHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			List<Item> weapons = itemWeights.next();
 			weapons.removeAll(ItemHelper.getWoodWeapons());
