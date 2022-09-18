@@ -62,7 +62,7 @@ public class BlocksWikiFile {
 			builder.append("Destroy time:").append(properties.destroyTime).endLine();
 			builder.append("Explosion resistance:").append(properties.explosionResistance).endLine();
 			builder.append("Tool:").append(getToolForBlock(block)).endLine();
-			int toolLevel = DependencyCallWrapper.wrapperXOresBlockLevel(block);
+			int toolLevel = DependencyCallWrapper.wrapBlockLevel(block);
 			builder.append("Required tool level:").append(toolLevel == Integer.MAX_VALUE ? 0 : toolLevel).endLine();
 			if (properties.requiresCorrectToolForDrops) {
 				builder.append("Requires correct tool for drops:").append(true).endLine();

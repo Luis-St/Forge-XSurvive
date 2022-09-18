@@ -24,7 +24,7 @@ import net.minecraft.world.inventory.AnvilMenu;
  */
 
 @Mixin(AnvilScreen.class)
-public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
+public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	
 	@Shadow
 	private Player player;

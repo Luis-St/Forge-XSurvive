@@ -28,7 +28,7 @@ public class CommonSetupEventHandler {
 	
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) {
-		DependencyCallWrapper.wrapperXBackpackCommonSetup();
+		DependencyCallWrapper.wrapCommonSetup();
 		registerBrewingRecipies();
 		registerCustomAis();
 	}

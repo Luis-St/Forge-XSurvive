@@ -14,15 +14,19 @@ import net.minecraft.data.worldgen.Structures;
 import net.minecraft.server.level.PlayerRespawnLogic;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.CreateFluidSourceEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.event.level.LevelEvent.CreateSpawnPosition;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -100,6 +104,19 @@ public class LevelEventHandler {
 			}
 		}
 		return null;
+	}
+	
+	@SubscribeEvent
+	public static void explosionDetonate(ExplosionEvent.Detonate event) {
+		Explosion explosion = event.getExplosion();
+		if (event.getLevel() instanceof ServerLevel level) {
+			if (level.dimension().equals(Level.NETHER) && explosion.getExploder() instanceof PrimedTnt) {
+				BlockPos pos = new BlockPos(explosion.getPosition());
+				if (pos.getY() >= 124 && level.getBlockState(pos.below()).is(Blocks.BEDROCK)) {
+					level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+				}
+			}
+		}
 	}
 	
 }
