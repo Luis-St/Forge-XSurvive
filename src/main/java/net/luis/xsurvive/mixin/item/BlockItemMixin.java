@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.item;
 
 import java.util.List;
 import java.util.Optional;
