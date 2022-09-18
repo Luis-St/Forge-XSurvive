@@ -82,6 +82,7 @@ public class XSRecipeProvider extends RecipeProvider {
 			XSItems.HONEY_MELON_SLICE.get()).save(consumer);
 		this.groupAndUnlock(ShapedRecipeBuilder.shaped(XSItems.DIAMOND_APPLE.get()).define('#', Items.DIAMOND).define('?', Items.APPLE).pattern("###").pattern("#?#").pattern("###"), getGroup(XSItems.DIAMOND_APPLE.get()), Items.DIAMOND,
 			Items.APPLE).save(consumer);
+		this.groupAndUnlock(ShapelessRecipeBuilder.shapeless(Items.NETHERITE_INGOT).requires(Items.NETHERITE_SCRAP, 9), getGroup(Items.NETHERITE_INGOT), Items.NETHERITE_SCRAP, Items.NETHERITE_INGOT).save(consumer);
 	}
 	
 	private void furnaceRecipe(Consumer<FinishedRecipe> consumer, Item input, Item result) {
