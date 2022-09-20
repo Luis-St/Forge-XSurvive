@@ -37,7 +37,8 @@
 		"ServerEntityMixin",
 		"SpawnerBlockEntityMixin",
 		"RaidMixin",
-		"EvokerSummonSpellGoalMixin"
+		"EvokerSummonSpellGoalMixin",
+		"OreFeatureMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",
