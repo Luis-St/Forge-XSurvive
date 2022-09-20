@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#is_badlands",
+  "features": "xsurvive:gold_ore_extra",
+  "step": "underground_ores"
+}

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import net.luis.xsurvive.dependency.DependencyBlocks;
 import net.luis.xsurvive.dependency.DependencyItems;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -15,11 +16,14 @@ import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
+import net.luis.xsurvive.world.level.biome.XSBiomeModifiers;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
 import net.luis.xsurvive.world.level.entity.XSEntityTypes;
 import net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes;
 import net.luis.xsurvive.world.level.entity.npc.XSVillagerProfessions;
+import net.luis.xsurvive.world.level.levelgen.feature.XSOreFeatures;
+import net.luis.xsurvive.world.level.levelgen.placement.XSOrePlacements;
 import net.luis.xsurvive.world.level.storage.loot.XSGlobalLootModifiers;
 import net.luis.xsurvive.world.level.storage.loot.predicates.XSLootItemConditions;
 import net.minecraft.world.item.CreativeModeTab;
@@ -48,6 +52,7 @@ public class XSurvive {
 		XSLootItemConditions.LOOT_ITEM_CONDITIONS.register(eventBus);
 		XSGlobalLootModifiers.LOOT_MODIFIERS.register(eventBus);
 		XSBlocks.BLOCKS.register(eventBus);
+		DependencyBlocks.register();
 		XSBlocks.ITEMS.register(eventBus);
 		XSItems.ITEMS.register(eventBus);
 		DependencyItems.register();
@@ -60,6 +65,9 @@ public class XSurvive {
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSEntityTypes.ENTITY_TYPES.register(eventBus);
+		XSOreFeatures.CONFIGURED_FEATURES.register(eventBus);
+		XSOrePlacements.PLACED_FEATURES.register(eventBus);
+		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSRecipeBookTypes.register();
 		XSNetworkHandler.register();
 	}

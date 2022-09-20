@@ -25,11 +25,11 @@ import net.minecraftforge.registries.RegistryObject;
  */
 
 public class XSLanguageProvider extends LanguageProvider {
-
+	
 	public XSLanguageProvider(DataGenerator generator) {
 		super(generator, XSurvive.MOD_ID, "en_us");
 	}
-
+	
 	@Override
 	protected void addTranslations() {
 		for (Enchantment enchantment : XSEnchantments.ENCHANTMENTS.getEntries().stream().map(RegistryObject::get).toList()) {
@@ -71,12 +71,14 @@ public class XSLanguageProvider extends LanguageProvider {
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
 	}
 	
-	public static String getName(ResourceLocation location) { 
-		String[] nameParts = location.getPath().split("_");
+	public static String getName(ResourceLocation location) {
 		String name = "";
-		for (String namePart : nameParts) {
-			String startChar = namePart.substring(0, 1).toUpperCase();
-			name += startChar + namePart.substring(1, namePart.length()) + " ";
+		if (location != null) {
+			String[] nameParts = location.getPath().split("_");
+			for (String namePart : nameParts) {
+				String startChar = namePart.substring(0, 1).toUpperCase();
+				name += startChar + namePart.substring(1, namePart.length()) + " ";
+			}
 		}
 		return name.trim();
 	}
@@ -107,6 +109,5 @@ public class XSLanguageProvider extends LanguageProvider {
 	public String getName() {
 		return "XSurvive Languages";
 	}
-
+	
 }
-

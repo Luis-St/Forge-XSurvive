@@ -1,0 +1,7 @@
+{
+  "type": "xsurvive:mod_based_biome_modifier",
+  "mod_id": "xores",
+  "biomes": "#is_overworld",
+  "features_to_add": ["xsurvive:jade_ore_middle", "xsurvive:saphire_ore", "xsurvive:saphire_ore_buried", "xsurvive:limonite_ore_buried", "xsurvive:limonite_ore_deep_buried", "xsurvive:rosite_ore_rare", "xsurvive:rosite_ore_buried"],
+  "features_to_remove": ["xores:jade_ore_middle", "xores:saphire_ore", "xores:saphire_ore_buried", "xores:limonite_ore_buried", "xores:limonite_ore_deep_buried", "xores:rosite_ore_rare", "xores:rosite_ore_buried"]
+}

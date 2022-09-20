@@ -1,0 +1,6 @@
+{
+  "type": "forge:remove_features",
+  "biomes": "#is_nether",
+  "features": ["ore_gold_nether", "ore_quartz_nether", "ore_debris_small", "ore_ancient_debris_large"],
+  "steps": "underground_ores"
+}

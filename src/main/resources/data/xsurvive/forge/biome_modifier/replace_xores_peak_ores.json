@@ -1,0 +1,7 @@
+{
+  "type": "xsurvive:mod_based_biome_modifier",
+  "mod_id": "xores",
+  "biomes": "#forge:is_peak",
+  "features_to_add": ["xsurvive:jade_ore_upper", "xsurvive:saphire_ore_rare_upper"],
+  "features_to_remove": ["xores:jade_ore_upper", "xores:saphire_ore_rare_upper"]
+}

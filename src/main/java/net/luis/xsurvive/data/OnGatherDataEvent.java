@@ -7,6 +7,7 @@ import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.data.provider.loot.XSGlobalLootModifierProvider;
 import net.luis.xsurvive.data.provider.loottable.XSLootTableProvider;
 import net.luis.xsurvive.data.provider.recipe.XSRecipeProvider;
+import net.luis.xsurvive.data.provider.tag.XSBiomeTagsProvider;
 import net.luis.xsurvive.data.provider.tag.XSBlockTagsProvider;
 import net.luis.xsurvive.data.provider.tag.XSItemTagsProvider;
 import net.luis.xsurvive.data.provider.tag.XSPoiTypeTagsProvider;
@@ -38,6 +39,7 @@ public class OnGatherDataEvent {
 			generator.addProvider(event.includeServer(), blockTagsProvider);
 			generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, blockTagsProvider, event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator));
 		}
 	}

@@ -1,0 +1,6 @@
+{
+  "type": "xsurvive:if_else_biome_modifier",
+  "biomes": ["dripstone_caves", "deep_dark"],
+  "if_features": "xsurvive:copper_ore_large",
+  "else_features": "xsurvive:copper_ore"
+}

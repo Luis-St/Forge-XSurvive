@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#is_overworld",
+  "features": ["xsurvive:coal_ore_upper", "xsurvive:coal_ore_lower", "xsurvive:iron_ore_upper", "xsurvive:iron_ore_middle", "xsurvive:iron_ore_small", "xsurvive:gold_ore", "xsurvive:gold_ore_lower", "xsurvive:lapis_ore", "xsurvive:lapis_ore_buried", "xsurvive:redstone_ore", "xsurvive:redstone_ore_lower", "xsurvive:diamond_ore", "xsurvive:diamond_ore_large", "xsurvive:diamond_ore_buried"],
+  "step": "underground_ores"
+}
