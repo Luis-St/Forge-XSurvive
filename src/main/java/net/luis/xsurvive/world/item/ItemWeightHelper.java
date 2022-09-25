@@ -2,7 +2,7 @@ package net.luis.xsurvive.world.item;
 
 import java.util.List;
 
-import net.luis.xsurvive.dependency.DependencyItems;
+import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -43,12 +43,8 @@ public class ItemWeightHelper {
 	
 	public static WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
 		WeightCollection<Item> itemWeights = new WeightCollection<>();
-		if (difficulty >= 5.0 && DependencyItems.NIGHT_CROSSBOW.isPresent()) {
-			itemWeights.add(10, DependencyItems.NIGHT_CROSSBOW.get());
-		}
-		if (difficulty >= 2.75 && DependencyItems.ENDERITE_CROSSBOW.isPresent()) {
-			itemWeights.add(30, DependencyItems.ENDERITE_CROSSBOW.get());
-		} 
+		itemWeights.add(10, XOItems.NIGHT_CROSSBOW.get());
+		itemWeights.add(30, XOItems.ENDERITE_CROSSBOW.get());
 		itemWeights.add(60, Items.CROSSBOW);
 		return itemWeights;
 	}

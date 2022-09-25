@@ -31,5 +31,10 @@ public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
 		this.tag(PoiTypeTags.ACQUIRABLE_JOB_SITE).add(BEEKEEPER.get(), ENCHANTER.get(), END_TRADER.get(), LUMBERJACK.get(), MINER.get(), MOB_HUNTER.get(), NETHER_TRADER.get());
 		this.tag(PoiTypeTags.BEE_HOME).add(BEEKEEPER.get());
 	}
+	
+	@Override
+	public String getName() {
+		return "XSurvive Poi Tags";
+	}
 
 }

@@ -4,12 +4,11 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.luis.xsurvive.dependency.DependencyBlocks;
-import net.luis.xsurvive.dependency.DependencyItems;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
+import net.luis.xsurvive.world.item.ItemCategories;
 import net.luis.xsurvive.world.item.XSCreativeModeTab;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
@@ -52,10 +51,8 @@ public class XSurvive {
 		XSLootItemConditions.LOOT_ITEM_CONDITIONS.register(eventBus);
 		XSGlobalLootModifiers.LOOT_MODIFIERS.register(eventBus);
 		XSBlocks.BLOCKS.register(eventBus);
-		DependencyBlocks.register();
 		XSBlocks.ITEMS.register(eventBus);
 		XSItems.ITEMS.register(eventBus);
-		DependencyItems.register();
 		XSMobEffects.MOB_EFFECTS.register(eventBus);
 		XSPotions.POTIONS.register(eventBus);
 		XSPoiTypes.POI_TYPES.register(eventBus);
@@ -70,6 +67,8 @@ public class XSurvive {
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSRecipeBookTypes.register();
 		XSNetworkHandler.register();
+		ItemCategories.ITEM_CATEGORIES.register(eventBus);
+		ItemCategories.XORES_ITEM_CATEGORIES.register(eventBus);
 	}
 	
 }

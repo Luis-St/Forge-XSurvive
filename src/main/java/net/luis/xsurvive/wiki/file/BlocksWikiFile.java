@@ -6,8 +6,8 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
 
+import net.luis.xores.world.fixer.ToolFixer;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.dependency.DependencyCallWrapper;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -62,8 +62,8 @@ public class BlocksWikiFile {
 			builder.append("Destroy time:").append(properties.destroyTime).endLine();
 			builder.append("Explosion resistance:").append(properties.explosionResistance).endLine();
 			builder.append("Tool:").append(getToolForBlock(block)).endLine();
-			int toolLevel = DependencyCallWrapper.wrapBlockLevel(block);
-			builder.append("Required tool level:").append(toolLevel == Integer.MAX_VALUE ? 0 : toolLevel).endLine();
+			int blockLevel = ToolFixer.INSTANCE.getLevelForBlock(block);
+			builder.append("Required tool level:").append(blockLevel == Integer.MAX_VALUE ? 0 : blockLevel).endLine();
 			if (properties.requiresCorrectToolForDrops) {
 				builder.append("Requires correct tool for drops:").append(true).endLine();
 			}

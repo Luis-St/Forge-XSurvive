@@ -1,7 +1,7 @@
 package net.luis.xsurvive.world.item.enchantment;
 
+import net.luis.xores.world.item.ElytraChestplateItem;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.dependency.DependencyHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.CrossbowItem;
@@ -32,7 +32,7 @@ public class XSEnchantmentCategory {
 		return TOOLS.canEnchant(item) || WEAPONS.canEnchant(item);
 	});
 	public static final EnchantmentCategory ELYTRA = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "elytra").toString(), (item) -> {
-		return item instanceof ElytraItem || DependencyHelper.isInstanceOf("net.luis.xores.world.item.ElytraChestplateItem", item);
+		return item instanceof ElytraItem || item instanceof ElytraChestplateItem;
 	});
 	
 }
