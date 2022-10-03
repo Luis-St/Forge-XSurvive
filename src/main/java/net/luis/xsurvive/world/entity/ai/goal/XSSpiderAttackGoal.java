@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.ai.goal;
+package net.luis.xsurvive.world.entity.ai.goal;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;

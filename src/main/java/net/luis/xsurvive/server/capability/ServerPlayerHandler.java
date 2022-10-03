@@ -3,7 +3,7 @@ package net.luis.xsurvive.server.capability;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
-import net.luis.xsurvive.world.level.entity.player.IPlayer;
+import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

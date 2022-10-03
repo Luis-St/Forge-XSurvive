@@ -1,12 +1,12 @@
 package net.luis.xsurvive.data.provider.tag;
 
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.BEEKEEPER;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.ENCHANTER;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.END_TRADER;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.LUMBERJACK;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.MINER;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.MOB_HUNTER;
-import static net.luis.xsurvive.world.level.entity.ai.village.XSPoiTypes.NETHER_TRADER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.BEEKEEPER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.ENCHANTER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.END_TRADER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.LUMBERJACK;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.MINER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.MOB_HUNTER;
+import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.NETHER_TRADER;
 
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.data.DataGenerator;

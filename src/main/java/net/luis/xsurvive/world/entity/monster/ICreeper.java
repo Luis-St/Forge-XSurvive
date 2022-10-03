@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.monster;
+package net.luis.xsurvive.world.entity.monster;
 
 /**
  * 

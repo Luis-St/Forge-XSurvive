@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.luis.xsurvive.world.entity.projectile.CursedEyeOfEnder;
 import net.luis.xsurvive.world.item.XSItems;
-import net.luis.xsurvive.world.level.entity.projectile.CursedEyeOfEnder;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

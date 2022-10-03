@@ -2,11 +2,11 @@ package net.luis.xsurvive.data.provider.language;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.effect.XSMobEffects;
+import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
-import net.luis.xsurvive.world.level.entity.npc.XSVillagerProfessions;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;

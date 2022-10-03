@@ -1,7 +1,7 @@
-package net.luis.xsurvive.world.level.entity;
+package net.luis.xsurvive.world.entity;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.level.entity.projectile.CursedEyeOfEnder;
+import net.luis.xsurvive.world.entity.projectile.CursedEyeOfEnder;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;

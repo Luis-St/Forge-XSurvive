@@ -1,7 +1,7 @@
 package net.luis.xsurvive.client;
 
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
-import net.luis.xsurvive.world.level.entity.player.PlayerProvider;
+import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;

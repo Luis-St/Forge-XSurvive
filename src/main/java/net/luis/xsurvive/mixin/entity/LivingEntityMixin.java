@@ -5,9 +5,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.luis.xsurvive.world.level.entity.ILivingEntity;
-import net.luis.xsurvive.world.level.entity.ai.custom.CustomAi;
-import net.luis.xsurvive.world.level.entity.ai.custom.CustomAiManager;
+import net.luis.xsurvive.world.entity.ILivingEntity;
+import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
+import net.luis.xsurvive.world.entity.ai.custom.CustomAiManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.effect;
 
-import net.luis.xsurvive.world.level.entity.EntityHelper;
+import net.luis.xsurvive.world.entity.EntityHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;

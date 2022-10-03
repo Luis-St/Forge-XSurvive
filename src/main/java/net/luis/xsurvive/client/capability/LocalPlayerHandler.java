@@ -1,6 +1,6 @@
 package net.luis.xsurvive.client.capability;
 
-import net.luis.xsurvive.world.level.entity.player.IPlayer;
+import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;

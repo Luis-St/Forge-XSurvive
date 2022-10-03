@@ -2,7 +2,7 @@ package net.luis.xsurvive.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import net.luis.xsurvive.world.level.entity.projectile.IArrow;
+import net.luis.xsurvive.world.entity.projectile.IArrow;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;

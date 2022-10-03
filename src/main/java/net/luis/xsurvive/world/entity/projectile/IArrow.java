@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.projectile;
+package net.luis.xsurvive.world.entity.projectile;
 
 /**
  *

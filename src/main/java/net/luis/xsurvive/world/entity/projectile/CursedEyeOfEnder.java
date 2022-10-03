@@ -1,6 +1,6 @@
-package net.luis.xsurvive.world.level.entity.projectile;
+package net.luis.xsurvive.world.entity.projectile;
 
-import net.luis.xsurvive.world.level.entity.XSEntityTypes;
+import net.luis.xsurvive.world.entity.XSEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;

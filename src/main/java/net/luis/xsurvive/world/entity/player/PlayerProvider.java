@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.player;
+package net.luis.xsurvive.world.entity.player;
 
 import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;

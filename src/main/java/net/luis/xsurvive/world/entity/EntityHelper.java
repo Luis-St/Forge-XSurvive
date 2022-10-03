@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity;
+package net.luis.xsurvive.world.entity;
 
 import java.util.List;
 import java.util.UUID;

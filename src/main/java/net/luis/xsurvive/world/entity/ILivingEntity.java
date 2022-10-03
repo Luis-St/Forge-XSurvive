@@ -1,8 +1,8 @@
-package net.luis.xsurvive.world.level.entity;
+package net.luis.xsurvive.world.entity;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.luis.xsurvive.world.level.entity.ai.custom.CustomAi;
+import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
 
 /**
  *

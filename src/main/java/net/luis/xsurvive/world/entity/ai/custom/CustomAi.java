@@ -1,4 +1,4 @@
-package net.luis.xsurvive.world.level.entity.ai.custom;
+package net.luis.xsurvive.world.entity.ai.custom;
 
 /**
  * 
