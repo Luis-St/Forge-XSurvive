@@ -22,7 +22,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import net.luis.xsurvive.dependency.DependencyItems;
+import net.luis.xores.world.item.XOItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -65,23 +65,11 @@ public class ItemHelper {
 	
 	public static List<Item> getEnderiteArmor() {
 		List<Item> items = Lists.newArrayList();
-		if (DependencyItems.ENDERITE_HELMET.isPresent()) {
-			items.add(DependencyItems.ENDERITE_HELMET.get());
-		}
-		if (DependencyItems.ENDERITE_CHESTPLATE.isPresent()) {
-			items.add(DependencyItems.ENDERITE_CHESTPLATE.get());
-		}
-		if (DependencyItems.ENDERITE_LEGGINGS.isPresent()) {
-			items.add(DependencyItems.ENDERITE_LEGGINGS.get());
-		}
-		if (DependencyItems.ENDERITE_BOOTS.isPresent()) {
-			items.add(DependencyItems.ENDERITE_BOOTS.get());
-		}
-		if (!items.isEmpty()) {
-			return items;
-		} else {
-			return getNetheriteArmor();
-		}
+		items.add(XOItems.ENDERITE_HELMET.get());
+		items.add(XOItems.ENDERITE_CHESTPLATE.get());
+		items.add(XOItems.ENDERITE_LEGGINGS.get());
+		items.add(XOItems.ENDERITE_BOOTS.get());
+		return items;
 	}
 	
 	public static List<Item> getWoodWeapons() {
@@ -110,17 +98,9 @@ public class ItemHelper {
 	
 	public static List<Item> getEnderiteWeapons() {
 		List<Item> items = Lists.newArrayList();
-		if (DependencyItems.ENDERITE_SWORD.isPresent()) {
-			items.add(DependencyItems.ENDERITE_SWORD.get());
-		}
-		if (DependencyItems.ENDERITE_AXE.isPresent()) {
-			items.add(DependencyItems.ENDERITE_AXE.get());
-		}
-		if (!items.isEmpty()) {
-			return items;
-		} else {
-			return getNetheriteWeapons();
-		}
+		items.add(XOItems.ENDERITE_SWORD.get());
+		items.add(XOItems.ENDERITE_AXE.get());
+		return items;
 	}
 	
 }

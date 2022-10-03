@@ -8,7 +8,6 @@ import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
-import net.luis.xsurvive.world.item.ItemCategories;
 import net.luis.xsurvive.world.item.XSCreativeModeTab;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
@@ -67,8 +66,6 @@ public class XSurvive {
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSRecipeBookTypes.register();
 		XSNetworkHandler.register();
-		ItemCategories.ITEM_CATEGORIES.register(eventBus);
-		ItemCategories.XORES_ITEM_CATEGORIES.register(eventBus);
 	}
 	
 }
