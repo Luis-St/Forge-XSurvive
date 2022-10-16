@@ -119,12 +119,6 @@ public class XSOrePlacements {
 	public static final RegistryObject<PlacedFeature> LIMONITE_ORE_DEEP_BURIED = PLACED_FEATURES.register("limonite_ore_deep_buried", () -> {
 		return new PlacedFeature(XSOreFeatures.LIMONITE_ORE_DEEP_BURIED.getHolder().orElseThrow(NullPointerException::new), buriedOrePlacement(1, -48)); // 2, -48
 	});
-	public static final RegistryObject<PlacedFeature> ROSITE_ORE_RARE = PLACED_FEATURES.register("rosite_ore_rare", () -> {
-		return new PlacedFeature(XSOreFeatures.ROSITE_ORE_RARE.getHolder().orElseThrow(NullPointerException::new), triangleOrePlacement(4, -16, 128)); // 5, -16, 128
-	});
-	public static final RegistryObject<PlacedFeature> ROSITE_ORE_BURIED = PLACED_FEATURES.register("rosite_ore_buried", () -> {
-		return new PlacedFeature(XSOreFeatures.ROSITE_ORE_BURIED.getHolder().orElseThrow(NullPointerException::new), buriedOrePlacement(4, -32)); // 7, -32
-	});
 	public static final RegistryObject<PlacedFeature> ENDERITE_ORE_RARE = PLACED_FEATURES.register("enderite_ore_rare", () -> {
 		return new PlacedFeature(XSOreFeatures.ENDERITE_ORE_RARE.getHolder().orElseThrow(NullPointerException::new), uniformOrePlacement(1, 0, 128)); // 2, 0, 128
 	});

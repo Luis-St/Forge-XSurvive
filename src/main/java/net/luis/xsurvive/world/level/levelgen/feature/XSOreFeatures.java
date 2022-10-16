@@ -64,9 +64,6 @@ public class XSOreFeatures {
 	private static final Supplier<List<TargetBlockState>> SAPHIRE_ORE_TARGETS = () -> {
 		return List.of(OreConfiguration.target(STONE_ORE_REPLACEABLES, XOBlocks.SAPHIRE_ORE.get().defaultBlockState()), OreConfiguration.target(DEEPSLATE_ORE_REPLACEABLES, XOBlocks.DEEPSLATE_SAPHIRE_ORE.get().defaultBlockState()));
 	};
-	private static final Supplier<List<TargetBlockState>> ROSITE_ORE_TARGETS = () -> {
-		return List.of(OreConfiguration.target(STONE_ORE_REPLACEABLES, XOBlocks.ROSITE_ORE.get().defaultBlockState()), OreConfiguration.target(DEEPSLATE_ORE_REPLACEABLES, XOBlocks.DEEPSLATE_ROSITE_ORE.get().defaultBlockState()));
-	};
 	private static final Supplier<List<TargetBlockState>> ENDERITE_ORE_TARGETS = () -> {
 		return List.of(OreConfiguration.target(new TagMatchTest(Tags.Blocks.END_STONES), XOBlocks.ENDERITE_ORE.get().defaultBlockState()));
 	};
@@ -148,12 +145,6 @@ public class XSOreFeatures {
 	});
 	public static final RegistryObject<ConfiguredFeature<?, ?>> LIMONITE_ORE_DEEP_BURIED = CONFIGURED_FEATURES.register("limonite_ore_deep_buried", () -> {
 		return new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(LIMONITE_ORE_TARGETS.get(), 5, 1.0F)); // 10, 1.0
-	});
-	public static final RegistryObject<ConfiguredFeature<?, ?>> ROSITE_ORE_RARE = CONFIGURED_FEATURES.register("rosite_ore_rare", () -> {
-		return new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ROSITE_ORE_TARGETS.get(), 2, 0.8F)); // 2, 0.2
-	});
-	public static final RegistryObject<ConfiguredFeature<?, ?>> ROSITE_ORE_BURIED = CONFIGURED_FEATURES.register("rosite_ore_buried", () -> {
-		return new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(ROSITE_ORE_TARGETS.get(), 2)); // 4
 	});
 	public static final RegistryObject<ConfiguredFeature<?, ?>> ENDERITE_ORE_RARE = CONFIGURED_FEATURES.register("enderite_ore_rare", () -> {
 		return new ConfiguredFeature<>(Feature.SCATTERED_ORE, new OreConfiguration(ENDERITE_ORE_TARGETS.get(), 1, 0.4F)); // 1, 0.0
