@@ -94,5 +94,6 @@
   "xsurvive.container.smelting_furnace": "Smelting Furnace",
   "xsurvive.gui.recipebook.toggleRecipes.smeltable": "Showing Smeltable",
   "xsurvivecommands.gamma.failure": "Fail to set gamma value to {0}",
+  "xsurvivecommands.gamma.get": "Gamma value is set to {0}",
   "xsurvivecommands.gamma.success": "Successfully sets the gamma value to {0}"
 }

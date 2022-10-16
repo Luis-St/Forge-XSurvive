@@ -18,7 +18,9 @@ import net.minecraft.network.chat.Component;
 public class GammaCommand {
 	
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-		dispatcher.register(Commands.literal("gamma").then(Commands.argument("value", DoubleArgumentType.doubleArg(0.0, 100.0)).executes((command) -> {
+		dispatcher.register(Commands.literal("gamma").executes((command) -> {
+			return getGamma(command.getSource(), Minecraft.getInstance());
+		}).then(Commands.argument("value", DoubleArgumentType.doubleArg(0.0, 100.0)).executes((command) -> {
 			return setGamma(command.getSource(), Minecraft.getInstance(), DoubleArgumentType.getDouble(command, "value"));
 		})).then(Commands.literal("min").executes((command) -> {
 			return setGamma(command.getSource(), Minecraft.getInstance(), 0.0);
@@ -29,6 +31,11 @@ public class GammaCommand {
 		})).then(Commands.literal("infinite").executes((command) -> {
 			return setGamma(command.getSource(), Minecraft.getInstance(), 20.0);
 		})));
+	}
+	
+	private static int getGamma(CommandSourceStack source, Minecraft minecraft) {
+		source.sendSuccess(Component.translatable(XSurvive.MOD_ID + "commands.gamma.get", minecraft.options.gamma.get() + ""), false);
+		return 1;
 	}
 	
 	private static int setGamma(CommandSourceStack source, Minecraft minecraft, double value) {
