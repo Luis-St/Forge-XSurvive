@@ -60,7 +60,7 @@ public class RegisterClientEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void registerGuiOverlays(RegisterColorHandlersEvent.Block event) {
+	public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
 		event.register((state, blockGetter, pos, i) -> {
 			int age = state.getValue(StemBlock.AGE);
 			int red = age * 32;
