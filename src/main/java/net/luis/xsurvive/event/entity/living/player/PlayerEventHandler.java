@@ -23,10 +23,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.TippedArrowItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -54,6 +56,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class PlayerEventHandler {
+	
+	private static final String ATTACK_SPEED_TRANSLATION_KEY = Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()).getString();
 	
 	@SubscribeEvent
 	public static void anvilUpdate(AnvilUpdateEvent event) {
@@ -126,14 +130,23 @@ public class PlayerEventHandler {
 	@SubscribeEvent
 	public static void itemTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
-		if (stack.getItem() instanceof PotionItem) {
+		if (stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem) {
 			Potion potion = PotionUtils.getPotion(stack);
 			if (potion == XSPotions.DIG_SPEED.get() || potion == XSPotions.LONG_DIG_SPEED.get() || potion == XSPotions.STRONG_DIG_SPEED.get()) {
 				List<MobEffectInstance> effects = potion.getEffects();
 				if (effects.size() == 1) {
 					List<Component> components = event.getToolTip();
-					components.remove(4);
-					components.add(4, Component.literal(String.format("+%d", (effects.get(0).getAmplifier() + 1) * 20) + "% Dig Speed").withStyle(ChatFormatting.BLUE));
+					int index = -1;
+					for (int i = 0; i < components.size(); i++) {
+						String string = components.get(i).getString();
+						if (string.contains(ATTACK_SPEED_TRANSLATION_KEY)) {
+							index = i;
+							break;
+						}
+					}
+					if (index >= 0) {
+						components.set(index, Component.literal(String.format("+%d", (effects.get(0).getAmplifier() + 1) * 20) + "% Dig Speed").withStyle(ChatFormatting.BLUE));
+					}
 				}
 			}
 		}
