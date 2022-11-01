@@ -122,7 +122,7 @@ public class ServerPlayerHandler implements IPlayer {
 
 	@Override
 	public void broadcastChanges() {
-		XSNetworkHandler.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
+		XSNetworkHandler.INSTANCE.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
 	}
 	
 	@Override

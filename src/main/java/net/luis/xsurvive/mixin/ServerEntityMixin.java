@@ -54,7 +54,7 @@ public abstract class ServerEntityMixin {
 		ItemStack tridentStack = trident.tridentItem.copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
 		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
-			this.broadcastAndSend(XSNetworkHandler.getChannel().toVanillaPacket(new UpdateTridentGlintColorPacket(trident.getId(), tridentStack), NetworkDirection.PLAY_TO_CLIENT));
+			this.broadcastAndSend(XSNetworkHandler.INSTANCE.getChannel().toVanillaPacket(new UpdateTridentGlintColorPacket(trident.getId(), tridentStack), NetworkDirection.PLAY_TO_CLIENT));
 		}
 		TRIDENT_STACK_REFERENCES.put(trident, tridentStack);
 	}

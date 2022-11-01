@@ -3,6 +3,7 @@ package net.luis.xsurvive.network.packet;
 import java.util.function.Supplier;
 
 import net.luis.xsurvive.client.XSClientNetworkHandler;
+import net.luis.xsurvive.network.NetworkPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,7 +16,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
  *
  */
 
-public class UpdatePlayerCapabilityPacket {
+public class UpdatePlayerCapabilityPacket implements NetworkPacket {
 	
 	private final CompoundTag tag;
 	
@@ -27,19 +28,18 @@ public class UpdatePlayerCapabilityPacket {
 		this.tag = byteBuf.readNbt();
 	}
 	
+	@Override
 	public void encode(FriendlyByteBuf byteBuf) {
 		byteBuf.writeNbt(this.tag);
 	}
 	
-	public static class Handler {
-		
-		public static void handle(UpdatePlayerCapabilityPacket packet, Supplier<Context> context) {
-			context.get().enqueueWork(() -> {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> XSClientNetworkHandler.handleCapabilityUpdate(packet.tag));
+	@Override
+	public void handle(Supplier<Context> context) {
+		context.get().enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				XSClientNetworkHandler.handleCapabilityUpdate(this.tag);
 			});
-			context.get().setPacketHandled(true);
-		}
-		
+		});
 	}
 	
 }

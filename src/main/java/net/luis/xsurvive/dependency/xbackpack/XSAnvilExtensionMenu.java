@@ -7,9 +7,9 @@ import java.util.function.Consumer;
 import com.google.common.collect.Lists;
 
 import net.luis.xbackpack.network.XBNetworkHandler;
-import net.luis.xbackpack.network.packet.extension.UpdateAnvilExtension;
+import net.luis.xbackpack.network.packet.extension.UpdateAnvilPacket;
 import net.luis.xbackpack.world.capability.BackpackProvider;
-import net.luis.xbackpack.world.inventory.BackpackMenu;
+import net.luis.xbackpack.world.inventory.AbstractExtensionContainerMenu;
 import net.luis.xbackpack.world.inventory.extension.AnvilExtensionMenu;
 import net.luis.xbackpack.world.inventory.extension.slot.ExtensionSlot;
 import net.luis.xbackpack.world.inventory.handler.CraftingHandler;
@@ -45,7 +45,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	private int repairItemCountCost;
 	private int cost;
 	
-	public XSAnvilExtensionMenu(BackpackMenu menu, Player player) {
+	public XSAnvilExtensionMenu(AbstractExtensionContainerMenu menu, Player player) {
 		super(menu, player);
 		this.handler = BackpackProvider.get(this.player).getAnvilHandler();
 	}
@@ -290,9 +290,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	}
 	
 	private void broadcastChanges() {
-		if (this.player instanceof ServerPlayer player) {
-			XBNetworkHandler.sendToPlayer(player, new UpdateAnvilExtension(this.cost));
-		}
+		XBNetworkHandler.INSTANCE.sendToPlayer(player, new UpdateAnvilPacket(this.cost));
 	}
 	
 	private static int calculateIncreasedRepairCost(int cost) {

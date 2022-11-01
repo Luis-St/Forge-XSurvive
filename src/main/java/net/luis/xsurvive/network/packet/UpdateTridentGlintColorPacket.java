@@ -3,6 +3,7 @@ package net.luis.xsurvive.network.packet;
 import java.util.function.Supplier;
 
 import net.luis.xsurvive.client.XSClientNetworkHandler;
+import net.luis.xsurvive.network.NetworkPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,7 +16,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
  *
  */
 
-public class UpdateTridentGlintColorPacket {
+public class UpdateTridentGlintColorPacket implements NetworkPacket {
 	
 	private final int tridentEntityId;
 	private final ItemStack tridentStack;
@@ -30,20 +31,19 @@ public class UpdateTridentGlintColorPacket {
 		this.tridentStack = byteBuf.readItem();
 	}
 	
+	@Override
 	public void encode(FriendlyByteBuf byteBuf) {
 		byteBuf.writeInt(this.tridentEntityId);
 		byteBuf.writeItem(this.tridentStack);
 	}
 	
-	public static class Handler {
-		
-		public static void handle(UpdateTridentGlintColorPacket packet, Supplier<Context> context) {
-			context.get().enqueueWork(() -> {
-				DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> XSClientNetworkHandler.handleTridentGlintColorUpdate(packet.tridentEntityId, packet.tridentStack));
+	@Override
+	public void handle(Supplier<Context> context) {
+		context.get().enqueueWork(() -> {
+			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+				XSClientNetworkHandler.handleTridentGlintColorUpdate(this.tridentEntityId, this.tridentStack);
 			});
-			context.get().setPacketHandled(true);
-		}
-		
+		});
 	}
 	
 }

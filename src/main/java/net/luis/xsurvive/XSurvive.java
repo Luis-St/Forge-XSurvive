@@ -65,7 +65,8 @@ public class XSurvive {
 		XSOrePlacements.PLACED_FEATURES.register(eventBus);
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSRecipeBookTypes.register();
-		XSNetworkHandler.register();
+		XSNetworkHandler.INSTANCE.initChannel();
+		XSNetworkHandler.INSTANCE.registerPackets();
 	}
 	
 }
