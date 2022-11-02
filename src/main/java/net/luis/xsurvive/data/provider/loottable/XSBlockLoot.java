@@ -40,6 +40,7 @@ public class XSBlockLoot extends BlockLoot {
 		this.add(XSBlocks.ATTACHED_HONEY_MELON_STEM.get(), (block) -> {
 			return createAttachedStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());
 		});
+		this.add(XSBlocks.MYSTIC_FIRE.get(), XSBlockLoot.noDrop());
 	}
 	
 	@Override

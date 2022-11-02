@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Lists;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.level.block.MysticFireBlock;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
@@ -18,7 +19,6 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,7 +31,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 
 public class XSBlockStateProvider extends BlockStateProvider {
-
+	
 	protected final ExistingFileHelper existingFileHelper;
 	
 	public XSBlockStateProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
@@ -45,6 +45,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		this.cubeColumnBlock(XSBlocks.HONEY_MELON.get());
 		this.stemAgeBlock(XSBlocks.HONEY_MELON_STEM.get(), 7);
 		this.attachedStemBlock(XSBlocks.ATTACHED_HONEY_MELON_STEM.get());
+		this.floorAndSideFireBlock(XSBlocks.MYSTIC_FIRE.get());
 		
 		for (BlockItem item : XSBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).filter(BlockItem.class::isInstance).map(BlockItem.class::cast).collect(Collectors.toList())) {
 			this.simpleBlockItem(item.getBlock(), this.blockModel(item.getBlock()));
@@ -70,22 +71,105 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	private void stemAgeBlock(Block block, int maxAge) {
 		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
 		for (int age = 0; age <= maxAge; age++) {
-			this.models().getBuilder(name + "_stage" + age).parent(new ExistingModelFile(new ResourceLocation("block/stem_growth" + age), this.existingFileHelper)).texture("stem", new ResourceLocation("block/melon_stem")).renderType("cutout");
+			this.models().getBuilder(name + "_stage" + age).parent(new ExistingModelFile(this.mcLoc("block/stem_growth" + age), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).renderType("cutout");
 		}
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (int age = 0; age <= maxAge; age++) {
-			builder.partialState().with(StemBlock.AGE, age).modelForState().modelFile(this.blockModel(block, "stage" + age)).addModel();;
+			builder.partialState().with(StemBlock.AGE, age).modelForState().modelFile(this.blockModel(block, "stage" + age)).addModel();
+			;
 		}
 	}
 	
 	private void attachedStemBlock(Block block) {
 		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
-		this.models().getBuilder(name).parent(new ExistingModelFile(new ResourceLocation("block/stem_fruit"), this.existingFileHelper)).texture("stem", "minecraft:block/melon_stem").texture("upperstem", "minecraft:block/attached_melon_stem")
-				.renderType("cutout");
+		this.models().getBuilder(name).parent(new ExistingModelFile(this.mcLoc("block/stem_fruit"), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).texture("upperstem", this.mcLoc("block/attached_melon_stem"))
+			.renderType("cutout");
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (Direction direction : Lists.newArrayList(Direction.Plane.HORIZONTAL.iterator())) {
 			builder.partialState().with(AttachedStemBlock.FACING, direction).modelForState().modelFile(this.blockModel(block)).rotationY((this.getYRotation(direction) + 90) % 360).addModel();
 		}
+	}
+	
+	private void floorAndSideFireBlock(Block block) {
+		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		this.models().getBuilder(name + "_floor0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_floor1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_side0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_side1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_side_alt0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_side_alt1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_up0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_up1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_up_alt0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_up_alt1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		// @formatter:off
+		this.getMultipartBuilder(block)
+			.part().modelFile(this.blockModel(block, "floor0")).nextModel()
+				.modelFile(this.blockModel(block, "floor1")).addModel()
+					.condition(MysticFireBlock.NORTH, false)
+					.condition(MysticFireBlock.SOUTH, false)
+					.condition(MysticFireBlock.EAST, false)
+					.condition(MysticFireBlock.WEST, false)
+					.condition(MysticFireBlock.UP, false)
+			.end().part().modelFile(this.blockModel(block, "side0")).nextModel()
+				.modelFile(this.blockModel(block, "side1")).nextModel()
+				.modelFile(this.blockModel(block, "side_alt0")).nextModel()
+				.modelFile(this.blockModel(block, "side_alt1")).addModel()
+					.useOr().nestedGroup()
+						.condition(MysticFireBlock.NORTH, true)
+					.end().nestedGroup()
+						.condition(MysticFireBlock.NORTH, false)
+						.condition(MysticFireBlock.SOUTH, false)
+						.condition(MysticFireBlock.EAST, false)
+						.condition(MysticFireBlock.WEST, false)
+						.condition(MysticFireBlock.UP, false)
+					.end()
+			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(180).nextModel()
+				.modelFile(this.blockModel(block, "side1")).rotationY(180).nextModel()
+				.modelFile(this.blockModel(block, "side_alt0")).rotationY(180).nextModel()
+				.modelFile(this.blockModel(block, "side_alt1")).rotationY(180).addModel()
+					.useOr().nestedGroup()
+						.condition(MysticFireBlock.SOUTH, true)
+					.end().nestedGroup()
+						.condition(MysticFireBlock.NORTH, false)
+						.condition(MysticFireBlock.SOUTH, false)
+						.condition(MysticFireBlock.EAST, false)
+						.condition(MysticFireBlock.WEST, false)
+						.condition(MysticFireBlock.UP, false)
+					.end()
+			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(90).nextModel()
+				.modelFile(this.blockModel(block, "side1")).rotationY(90).nextModel()
+				.modelFile(this.blockModel(block, "side_alt0")).rotationY(90).nextModel()
+				.modelFile(this.blockModel(block, "side_alt1")).rotationY(90).addModel()
+					.useOr().nestedGroup()
+						.condition(MysticFireBlock.EAST, true)
+					.end().nestedGroup()
+						.condition(MysticFireBlock.NORTH, false)
+						.condition(MysticFireBlock.SOUTH, false)
+						.condition(MysticFireBlock.EAST, false)
+						.condition(MysticFireBlock.WEST, false)
+						.condition(MysticFireBlock.UP, false)
+					.end()
+			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "side1")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "side_alt0")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "side_alt1")).rotationY(270).addModel()
+					.useOr().nestedGroup()
+						.condition(MysticFireBlock.WEST, true)
+					.end().nestedGroup()
+						.condition(MysticFireBlock.NORTH, false)
+						.condition(MysticFireBlock.SOUTH, false)
+						.condition(MysticFireBlock.EAST, false)
+						.condition(MysticFireBlock.WEST, false)
+						.condition(MysticFireBlock.UP, false)
+					.end()
+			.end().part().modelFile(this.blockModel(block, "up0")).rotationY(270).nextModel()
+					.modelFile(this.blockModel(block, "up1")).rotationY(270).nextModel()
+					.modelFile(this.blockModel(block, "up_alt0")).rotationY(270).nextModel()
+					.modelFile(this.blockModel(block, "up_alt1")).rotationY(270).addModel()
+						.condition(MysticFireBlock.UP, true)
+					.end();
+		// @formatter:on
 	}
 	
 	private int getYRotation(Direction direction) {
@@ -99,16 +183,16 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 	private ModelFile blockModel(Block block) {
-        return this.blockModel(block, null);
-    }
+		return this.blockModel(block, null);
+	}
 	
 	private ModelFile blockModel(Block block, String addition) {
-        ResourceLocation name = ForgeRegistries.BLOCKS.getKey(block);
-        if (addition == null || addition.isEmpty()) {
-        	return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + name.getPath()));
-        }
-        return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + name.getPath() + "_" + addition));
-    }
+		ResourceLocation name = ForgeRegistries.BLOCKS.getKey(block);
+		if (addition == null || addition.isEmpty()) {
+			return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), "block/" + name.getPath()));
+		}
+		return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), "block/" + name.getPath() + "_" + addition));
+	}
 	
 	@Override
 	public String getName() {
@@ -116,4 +200,3 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 }
-

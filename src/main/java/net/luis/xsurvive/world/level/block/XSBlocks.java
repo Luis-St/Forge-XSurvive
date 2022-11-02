@@ -50,6 +50,11 @@ public class XSBlocks {
 			return XSItems.HONEY_MELON_SEEDS.get();
 		}, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WOOD));
 	});
+	public static final RegistryObject<MysticFireBlock> MYSTIC_FIRE = register("mystic_fire", () ->  {
+		return new MysticFireBlock(BlockBehaviour.Properties.of(Material.FIRE, MaterialColor.FIRE).noCollission().instabreak().lightLevel((state) -> {
+			return 15;
+		}).sound(SoundType.WOOL));
+	});
 	
 	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier) {
 		return register(name, blockSupplier, false, null);

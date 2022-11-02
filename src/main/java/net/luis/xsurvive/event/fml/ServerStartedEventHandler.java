@@ -32,7 +32,7 @@ public class ServerStartedEventHandler {
 			server.setFlightAllowed(true);
 		}
 		if (!FMLEnvironment.production) {
-			createWikis(new File("D:/Git Repositories/Forge-XSurvive").toPath().resolve("wiki files"));
+			createWikis(new File("D:/Programmieren/Git Repositories/Forge-XSurvive").toPath().resolve("wiki files"));
 		}
 	}
 	
