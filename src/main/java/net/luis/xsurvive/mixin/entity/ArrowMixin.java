@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.entity;
 
 import org.spongepowered.asm.mixin.Mixin;
 

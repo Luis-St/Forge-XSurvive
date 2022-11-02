@@ -4,6 +4,8 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "mixins.xsurvive.refmap.json",
 	"mixins": [
+		"block.BlockMixin",
+		"block.BaseFireBlockMixin",
 		"enchantment.EnchantmentMixin",
 		"enchantment.EnchantmentHelperMixin",
 		"enchantment.QuickChargeEnchantmentMixin",
@@ -19,6 +21,8 @@
 		"entity.LivingEntityMixin",
 		"entity.PhantomMixin",
 		"entity.WitherSkeletonMixin",
+		"entity.ServerEntityMixin",
+		"entity.ArrowMixin",
 		"entity.EyeOfEnderMixin",
 		"item.BlockItemMixin",
 		"item.BowItemMixin",
@@ -33,13 +37,10 @@
 		"LootTablesMixin",
 		"PhantomSpawnerMixin",
 		"ServerPlayerGameModeMixin",
-		"ArrowMixin",
-		"ServerEntityMixin",
 		"SpawnerBlockEntityMixin",
 		"RaidMixin",
 		"EvokerSummonSpellGoalMixin",
-		"OreFeatureMixin",
-		"BaseFireBlockMixin"
+		"OreFeatureMixin"
 	],
 	"client": [
 		"client.ItemRendererMixin",

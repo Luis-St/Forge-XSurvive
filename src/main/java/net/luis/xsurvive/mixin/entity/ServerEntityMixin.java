@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.entity;
 
 import java.util.Map;
 import java.util.WeakHashMap;
