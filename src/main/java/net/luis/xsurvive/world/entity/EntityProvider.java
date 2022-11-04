@@ -45,6 +45,10 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 		return entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 	}
 	
+	public static LazyOptional<IEntity> getSafe(Entity entity) {
+		return entity.getCapability(XSCapabilities.ENTITY, null);
+	}
+	
 	public static ClientEntityHandler getClient(Entity entity) {
 		IEntity capability = entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof ClientEntityHandler handler) {

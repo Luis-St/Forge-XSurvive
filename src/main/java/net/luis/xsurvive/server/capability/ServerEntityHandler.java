@@ -1,5 +1,7 @@
 package net.luis.xsurvive.server.capability;
 
+import java.util.function.Supplier;
+
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.world.entity.EntityFireType;
@@ -71,8 +73,22 @@ public class ServerEntityHandler implements IEntity {
 	}
 	
 	@Override
+	public void doAndBroadcast(Runnable action) {
+		action.run();
+		this.broadcastChanges();
+	}
+	
+	@Override
+	public <T> T doAndBroadcast(Supplier<T> action) {
+		T value = action.get();
+		this.broadcastChanges();
+		return value;
+	}
+	
+	@Override
 	public void broadcastChanges() {
 		XSNetworkHandler.INSTANCE.sendToPlayersInLevel(this.getLevel(), new UpdateEntityCapabilityPacket(this.entity.getId(), this.serializeNetwork()));
+		this.changed = false;
 	}
 	
 	@Override

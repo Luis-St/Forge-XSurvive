@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.EntityProvider;
-import net.luis.xsurvive.world.entity.IEntity;
 import net.luis.xsurvive.world.level.block.MysticFireBlock;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.core.BlockPos;
@@ -38,14 +37,21 @@ public abstract class BaseFireBlockMixin {
 	@Inject(method = "entityInside", at = @At("TAIL"))
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo callback) {
 		if (!level.isClientSide) {
-			IEntity iEntity = EntityProvider.get(entity);
-			if (state.getBlock() instanceof SoulFireBlock) {
-				iEntity.setFireType(EntityFireType.SOUL_FIRE);
-			} else if (state.getBlock() instanceof MysticFireBlock) {
-				iEntity.setFireType(EntityFireType.MYSTIC_FIRE);
-			} else {
-				iEntity.setFireType(EntityFireType.FIRE);
-			}
+			EntityProvider.getSafe(entity).ifPresent((handler) -> {
+				if (state.getBlock() instanceof SoulFireBlock) {
+					handler.doAndBroadcast(() -> {
+						handler.setFireType(EntityFireType.SOUL_FIRE);
+					});
+				} else if (state.getBlock() instanceof MysticFireBlock) {
+					handler.doAndBroadcast(() -> {
+						handler.setFireType(EntityFireType.MYSTIC_FIRE);
+					});
+				} else {
+					handler.doAndBroadcast(() -> {
+						handler.setFireType(EntityFireType.FIRE);
+					});
+				}
+			});
 		}
 	}
 	

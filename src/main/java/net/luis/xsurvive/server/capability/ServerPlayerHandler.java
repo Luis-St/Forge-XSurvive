@@ -1,5 +1,7 @@
 package net.luis.xsurvive.server.capability;
 
+import java.util.function.Supplier;
+
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -119,10 +121,24 @@ public class ServerPlayerHandler implements IPlayer {
 	public void setChanged() {
 		this.changed = true;
 	}
-
+	
+	@Override
+	public void doAndBroadcast(Runnable action) {
+		action.run();
+		this.broadcastChanges();
+	}
+	
+	@Override
+	public <T> T doAndBroadcast(Supplier<T> action) {
+		T value = action.get();
+		this.broadcastChanges();
+		return value;
+	}
+	
 	@Override
 	public void broadcastChanges() {
 		XSNetworkHandler.INSTANCE.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
+		this.changed = false;
 	}
 	
 	@Override

@@ -5,6 +5,11 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import net.luis.xsurvive.world.level.block.MysticFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.SoulFireBlock;
+
 /**
  *
  * @author Luis-st
@@ -31,6 +36,17 @@ public enum EntityFireType {
 			}
 		}
 		return Objects.requireNonNull(fallback);
+	}
+	
+	public static EntityFireType byBlock(Block fireBlock) {
+		if (fireBlock instanceof FireBlock) {
+			return FIRE;
+		} else if (fireBlock instanceof SoulFireBlock) {
+			return SOUL_FIRE;
+		} else if (fireBlock instanceof MysticFireBlock) {
+			return MYSTIC_FIRE;
+		}
+		return NONE;
 	}
 	
 }

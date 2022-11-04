@@ -105,7 +105,7 @@ public class EntityEventHandler {
 		Entity entity = event.getEntity();
 		RandomSource rng = RandomSource.create();
 		if (entity instanceof Player player) {
-			PlayerProvider.get(player).setChanged();
+			PlayerProvider.get(player).broadcastChanges();
 		} else if (entity instanceof Blaze blaze) {
 			blaze.goalSelector.removeAllGoals();
 			blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
@@ -169,7 +169,7 @@ public class EntityEventHandler {
 				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
 		}
-		EntityProvider.get(entity).setChanged();
+		EntityProvider.get(entity).broadcastChanges();
 	}
 	
 	@SubscribeEvent

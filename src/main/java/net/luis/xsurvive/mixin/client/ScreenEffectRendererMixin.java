@@ -25,6 +25,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
 
 /**
@@ -49,7 +50,7 @@ public abstract class ScreenEffectRendererMixin {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableTexture();
-		TextureAtlasSprite textureSprite = getFireTextureSprite1(EntityProvider.get(minecraft.player).getFireType());
+		TextureAtlasSprite textureSprite = getFireTextureSprite1(minecraft.player, EntityProvider.get(minecraft.player).getFireType());
 		RenderSystem.setShaderTexture(0, textureSprite.atlas().location());
 		float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;
 		float textureSpriteV = (textureSprite.getV0() + textureSprite.getV1()) / 2.0F;
@@ -70,19 +71,27 @@ public abstract class ScreenEffectRendererMixin {
 			BufferUploader.drawWithShader(bufferBuilder.end());
 			stack.popPose();
 		}
-		
 		RenderSystem.disableBlend();
 		RenderSystem.depthMask(true);
 		RenderSystem.depthFunc(515);
 		callback.cancel();
 	}
 	
-	private static TextureAtlasSprite getFireTextureSprite1(EntityFireType fireType) {
-		return  switch (fireType) {
-			case SOUL_FIRE -> SOUL_FIRE_1.sprite();
-			case MYSTIC_FIRE -> MYSTIC_FIRE_1.sprite();
-			default -> FIRE_1.sprite();
-		};
+	private static TextureAtlasSprite getFireTextureSprite1(Entity entity, EntityFireType entityFireType) {
+		EntityFireType blockFireType = EntityFireType.byBlock(entity.getFeetBlockState().getBlock());
+		if (blockFireType == EntityFireType.NONE || blockFireType == entityFireType) {
+			return switch (entityFireType) {
+				case SOUL_FIRE -> SOUL_FIRE_1.sprite();
+				case MYSTIC_FIRE -> MYSTIC_FIRE_1.sprite();
+				default -> FIRE_1.sprite();
+			};
+		} else {
+			return switch (blockFireType) {
+				case SOUL_FIRE -> SOUL_FIRE_1.sprite();
+				case MYSTIC_FIRE -> MYSTIC_FIRE_1.sprite();
+				default -> FIRE_1.sprite();
+			};
+		}
 	}
 	
 }

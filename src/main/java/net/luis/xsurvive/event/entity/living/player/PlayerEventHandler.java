@@ -167,7 +167,7 @@ public class PlayerEventHandler {
 	@SubscribeEvent
 	public static void playerChangedDimension(PlayerChangedDimensionEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player) {
-			PlayerProvider.getServer(player).setChanged();
+			PlayerProvider.getServer(player).broadcastChanges();
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class PlayerEventHandler {
 	
 	@SubscribeEvent
 	public static void playerRespawn(PlayerRespawnEvent event) {
-		PlayerProvider.get(event.getEntity()).setChanged();
+		PlayerProvider.get(event.getEntity()).broadcastChanges();
 	}
 	
 	@SubscribeEvent
