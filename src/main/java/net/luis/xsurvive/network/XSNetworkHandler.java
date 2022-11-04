@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import net.luis.xbackpack.network.NetworkPacket;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;

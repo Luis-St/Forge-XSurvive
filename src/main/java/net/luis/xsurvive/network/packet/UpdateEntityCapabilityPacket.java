@@ -2,8 +2,8 @@ package net.luis.xsurvive.network.packet;
 
 import java.util.function.Supplier;
 
-import net.luis.xbackpack.network.NetworkPacket;
 import net.luis.xsurvive.client.XSClientPacketHandler;
+import net.luis.xsurvive.network.NetworkPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
