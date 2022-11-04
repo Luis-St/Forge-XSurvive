@@ -14,10 +14,10 @@ import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkDirection;
 
 /**
  *
@@ -54,7 +54,9 @@ public abstract class ServerEntityMixin {
 		ItemStack tridentStack = trident.tridentItem.copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
 		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
-			this.broadcastAndSend(XSNetworkHandler.INSTANCE.getChannel().toVanillaPacket(new UpdateTridentGlintColorPacket(trident.getId(), tridentStack), NetworkDirection.PLAY_TO_CLIENT));
+			if (trident.level instanceof ServerLevel level) {
+				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack));
+			}
 		}
 		TRIDENT_STACK_REFERENCES.put(trident, tridentStack);
 	}

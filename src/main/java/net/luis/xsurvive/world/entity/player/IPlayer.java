@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.entity.player;
 
-import javax.annotation.Nullable;
-
+import net.luis.xsurvive.capability.ICapability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -14,12 +13,10 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
  */
 
 @AutoRegisterCapability
-public interface IPlayer {
+public interface IPlayer extends ICapability {
 	
-	@Nullable
 	Player getPlayer();
 	
-	@Nullable
 	Level getLevel();
 	
 	void tick();
@@ -40,24 +37,8 @@ public interface IPlayer {
 		
 	}
 	
-	default void setChanged() {
-		
-	}
-	
-	default void broadcastChanges() {
-		
-	}
-	
-	CompoundTag serializeDisk();
-	
-	void deserializeDisk(CompoundTag tag);
-	
-	CompoundTag serializeNetwork();
-	
-	void deserializeNetwork(CompoundTag tag);
-	
 	CompoundTag serializePersistent();
 	
 	void deserializePersistent(CompoundTag tag);
-    
+	
 }
