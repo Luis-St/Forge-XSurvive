@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityHelper;
+import net.luis.xsurvive.world.entity.EntityProvider;
 import net.luis.xsurvive.world.entity.ai.goal.XSBlazeAttackGoal;
 import net.luis.xsurvive.world.entity.ai.goal.XSSpiderAttackGoal;
 import net.luis.xsurvive.world.entity.ai.goal.XSZombifiedPiglinAttackGoal;
@@ -168,6 +169,7 @@ public class EntityEventHandler {
 				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
 		}
+		EntityProvider.get(entity).setChanged();
 	}
 	
 	@SubscribeEvent

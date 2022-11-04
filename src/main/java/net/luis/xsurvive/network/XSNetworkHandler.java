@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 
 import net.luis.xbackpack.network.NetworkPacket;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
 import net.minecraft.network.Connection;
@@ -45,6 +46,7 @@ public enum XSNetworkHandler {
 	public void registerPackets() {
 		this.registerPacket(UpdatePlayerCapabilityPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdatePlayerCapabilityPacket::encode, UpdatePlayerCapabilityPacket::new, UpdatePlayerCapabilityPacket::handle);
 		this.registerPacket(UpdateTridentGlintColorPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdateTridentGlintColorPacket::encode, UpdateTridentGlintColorPacket::new, UpdateTridentGlintColorPacket::handle);
+		this.registerPacket(UpdateEntityCapabilityPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdateEntityCapabilityPacket::encode, UpdateEntityCapabilityPacket::new, UpdateEntityCapabilityPacket::handle);
 	}
 	
 	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, NetworkDirection direction, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {

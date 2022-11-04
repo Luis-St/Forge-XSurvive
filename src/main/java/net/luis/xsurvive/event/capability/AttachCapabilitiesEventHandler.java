@@ -1,8 +1,11 @@
 package net.luis.xsurvive.event.capability;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.client.capability.ClientEntityHandler;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
+import net.luis.xsurvive.server.capability.ServerEntityHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
+import net.luis.xsurvive.world.entity.EntityProvider;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.GlintColorProvider;
 import net.luis.xsurvive.world.item.IGlintColor;
@@ -33,6 +36,9 @@ public class AttachCapabilitiesEventHandler {
 		if (entity instanceof ServerPlayer player) {
 			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_player_capability"), new PlayerProvider(new ServerPlayerHandler(player)));
 		}
+		if (!entity.level.isClientSide) {
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_entity_capability"), new EntityProvider(new ServerEntityHandler(entity)));
+		}
 	}
 	
 	@SubscribeEvent
@@ -51,6 +57,9 @@ public class AttachCapabilitiesEventHandler {
 			Entity entity = event.getObject();
 			if (entity instanceof LocalPlayer player) {
 				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "local_player_capability"), new PlayerProvider(new LocalPlayerHandler(player)));
+			}
+			if (entity.level.isClientSide) {
+				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "client_entity_capability"), new EntityProvider(new ClientEntityHandler(entity)));
 			}
 		}
 		

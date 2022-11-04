@@ -24,6 +24,7 @@
 		"entity.ServerEntityMixin",
 		"entity.ArrowMixin",
 		"entity.EyeOfEnderMixin",
+		"entity.EntityMixin",
 		"item.BlockItemMixin",
 		"item.BowItemMixin",
 		"item.EnchantedBookItemMixin",
@@ -49,7 +50,9 @@
 		"client.HumanoidArmorLayerMixin",
 		"client.ThrownTridentRendererMixin",
 		"client.AnvilScreenMixin",
-		"client.ChatReportScreenMixin"
+		"client.ChatReportScreenMixin",
+		"client.EntityRenderDispatcherMixin",
+		"client.ScreenEffectRendererMixin"
 	],
 	"server": [
 			
