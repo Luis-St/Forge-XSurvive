@@ -97,7 +97,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	public BlockState getStateForPlacement(BlockGetter blockGetter, BlockPos pos) {
-		if (!this.canCatchFire(blockGetter, pos, Direction.UP) && !this.canCatchFire(blockGetter, pos, Direction.DOWN)) {
+		if (!this.canCatchFire(blockGetter, pos, Direction.DOWN)) {
 			BlockState state = this.defaultBlockState();
 			for (Direction direction : Direction.values()) {
 				BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
