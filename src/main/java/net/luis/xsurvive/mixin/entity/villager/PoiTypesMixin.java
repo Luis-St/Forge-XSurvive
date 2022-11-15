@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.entity.villager;
 
 import java.util.Set;
 
