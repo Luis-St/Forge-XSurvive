@@ -134,7 +134,7 @@ dependencies {
 	
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 	
-	implementation /*compileOnly*/ fg.deobf('net.luis.xbackpack:Forge-XBackpack:1.19.2-3.0')
+	implementation /*compileOnly*/ fg.deobf('net.luis.xbackpack:Forge-XBackpack:1.19.2-3.2')
 	implementation /*compileOnly*/ fg.deobf('net.luis.xores:Forge-XOres:1.19.2-2.4')
 	
 	compileOnly fg.deobf('mezz.jei:jei-1.19.2-common-api:11.2.0.256')
