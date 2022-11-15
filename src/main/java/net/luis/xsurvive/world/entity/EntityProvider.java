@@ -21,8 +21,8 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	private final IEntity entityCapability;
 	private final LazyOptional<IEntity> optional;
 	
-	public EntityProvider(IEntity playerCapability) {
-		this.entityCapability = playerCapability;
+	public EntityProvider(IEntity entityCapability) {
+		this.entityCapability = entityCapability;
 		this.optional = LazyOptional.of(() -> this.entityCapability);
 	}
 	

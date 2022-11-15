@@ -5,7 +5,9 @@ import net.luis.xsurvive.client.capability.ClientEntityHandler;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
 import net.luis.xsurvive.server.capability.ServerEntityHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
+import net.luis.xsurvive.server.capability.ServerVillagerHandler;
 import net.luis.xsurvive.world.entity.EntityProvider;
+import net.luis.xsurvive.world.entity.npc.VillagerProvider;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.GlintColorProvider;
 import net.luis.xsurvive.world.item.IGlintColor;
@@ -13,6 +15,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,6 +41,9 @@ public class AttachCapabilitiesEventHandler {
 		}
 		if (!entity.level.isClientSide) {
 			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_entity_capability"), new EntityProvider(new ServerEntityHandler(entity)));
+			if (entity instanceof Villager) {
+				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_villager_capability"), new VillagerProvider(new ServerVillagerHandler()));
+			}
 		}
 	}
 	

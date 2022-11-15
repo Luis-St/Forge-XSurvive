@@ -1,6 +1,6 @@
 package net.luis.xsurvive.world.entity;
 
-import net.luis.xsurvive.capability.ICapability;
+import net.luis.xsurvive.capability.INetworkCapability;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
  *
  */
 
-public interface IEntity extends ICapability {
+public interface IEntity extends INetworkCapability {
 	
 	Entity getEntity();
 	
