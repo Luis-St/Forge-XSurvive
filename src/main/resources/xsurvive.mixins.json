@@ -20,6 +20,7 @@
 		"entity.villager.PoiTypesMixin",
 		"entity.villager.VillagerDataMixin",
 		"entity.villager.VillagerMixin",
+		"entity.villager.MerchantOfferMixin",
 		"entity.EnderDragonMixin",
 		"entity.EndCrystalMixin",
 		"entity.WitherBossMixin",

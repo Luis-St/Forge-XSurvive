@@ -6,6 +6,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.luis.xsurvive.world.entity.npc.VillagerProvider;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -45,6 +47,9 @@ public abstract class VillagerMixin extends AbstractVillager {
 				stack.shrink(1);
 			}
 			this.setVillagerData(this.getVillagerData().setProfession(VillagerProfession.NONE));
+			if (this.level instanceof ServerLevel) {
+				VillagerProvider.get((Villager) (Object) this).resetResetCount();
+			}
 			callback.setReturnValue(InteractionResult.SUCCESS);
 		}
 	}

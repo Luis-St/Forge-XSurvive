@@ -12,12 +12,17 @@ import net.minecraft.nbt.CompoundTag;
 public class ServerVillagerHandler implements IVillager {
 	
 	private int resetCount;
-
+	
 	@Override
 	public int getResetCount() {
 		return this.resetCount;
 	}
-
+	
+	@Override
+	public void resetResetCount() {
+		this.resetCount = 0;
+	}
+	
 	@Override
 	public void increaseResetCount() {
 		this.resetCount++;
@@ -29,7 +34,7 @@ public class ServerVillagerHandler implements IVillager {
 		tag.putInt("reset_count", this.resetCount);
 		return tag;
 	}
-
+	
 	@Override
 	public void deserializeDisk(CompoundTag tag) {
 		this.resetCount = tag.getInt("reset_count");

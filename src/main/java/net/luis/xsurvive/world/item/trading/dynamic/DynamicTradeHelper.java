@@ -44,13 +44,12 @@ class DynamicTradeHelper {
 	}
 	
 	static int clampLevel(RandomSource rng, Enchantment enchantment, int minLevel, int maxLevel) {
-		int level = Mth.randomBetweenInclusive(rng, minLevel, maxLevel);
-		if (level > enchantment.getMaxLevel()) {
-			return enchantment.getMaxLevel();
-		} else if (enchantment.getMinLevel() > level) {
-			return enchantment.getMinLevel();
+		int min = Math.max(minLevel, enchantment.getMinLevel());
+		int max = Math.min(maxLevel, enchantment.getMaxLevel());
+		if (min == max) {
+			return min;
 		}
-		return level;
+		return Mth.randomBetweenInclusive(rng, min, max);
 	}
 	
 	static int modifyLevel(RandomSource rng, Enchantment enchantment, int level, int villagerLevel) {
