@@ -39,5 +39,5 @@ ordering="BEFORE"
 [[dependencies.xsurvive]]
 modId="xores"
 mandatory=true
-versionRange="[1.19.3-2.4,)"
+versionRange="[1.19.3-2.5,)"
 ordering="BEFORE"

@@ -67,7 +67,7 @@ public class RegisterModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public void buildContents(CreativeModeTabEvent.BuildContents event) {
+	public static void buildContents(CreativeModeTabEvent.BuildContents event) {
 		if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
 			event.accept(XSItems.HONEY_MELON_SLICE);
 			event.accept(XSItems.DIAMOND_APPLE);
