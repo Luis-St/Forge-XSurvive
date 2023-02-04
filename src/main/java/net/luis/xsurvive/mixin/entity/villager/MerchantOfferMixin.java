@@ -30,13 +30,13 @@ public abstract class MerchantOfferMixin {
 	
 	@Inject(method = "getMaxUses", at = @At("HEAD"), cancellable = true)
 	public void getMaxUses(CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(/*this.maxUses * 5*/Integer.MAX_VALUE); // testing only
-	} // TODO
+		callback.setReturnValue(this.maxUses * 5);
+	}
 	
 	@Inject(method = "getXp", at = @At("HEAD"), cancellable = true)
 	public void getXp(CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(/*Math.max(1, (int) (this.xp * 0.5))*/Integer.MAX_VALUE); // testing only
-	} // TODO
+		callback.setReturnValue(Math.max(1, (int) (this.xp * 0.5)));
+	}
 	
 	@Inject(method = "isOutOfStock", at = @At("HEAD"), cancellable = true)
 	public void isOutOfStock(CallbackInfoReturnable<Boolean> callback) {
