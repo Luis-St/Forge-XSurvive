@@ -24,14 +24,13 @@ import java.util.Objects;
 @Mixin(targets = "net.minecraft.world.entity.monster.Evoker$EvokerSummonSpellGoal")
 public abstract class EvokerSummonSpellGoalMixin {
 	
-/*	@Shadow
-	private Evoker this$0;*/
+	@Shadow
+	private Evoker this$0;
 	
 	@Inject(method = "performSpellCasting", at = @At("HEAD"), cancellable = true)
 	protected void performSpellCasting(CallbackInfo callback) {
-		System.out.println("This is a test");
-/*		if (this.this$0.level instanceof ServerLevel level) {
-			int i = this.this$0.getRandom().nextInt(4);
+		if (this.this$0.level instanceof ServerLevel level) {
+			int i = this.this$0.getRandom().nextInt(5);
 			for (int j = 0; j < 3 + i; ++j) {
 				BlockPos pos = this.this$0.blockPosition().offset(-2 + this.this$0.getRandom().nextInt(5), 1, -2 + this.this$0.getRandom().nextInt(5));
 				Vex vex = Objects.requireNonNull(EntityType.VEX.create(level));
@@ -41,7 +40,7 @@ public abstract class EvokerSummonSpellGoalMixin {
 				vex.setBoundOrigin(pos);
 				level.addFreshEntityWithPassengers(vex);
 			}
-		}*/
+		}
 		callback.cancel();
 	}
 	
