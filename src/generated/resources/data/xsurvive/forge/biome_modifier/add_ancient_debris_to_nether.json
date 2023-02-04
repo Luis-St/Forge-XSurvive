@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": [
+    "xsurvive:ancient_debris_ore_small",
+    "xsurvive:ancient_debris_ore_large"
+  ],
+  "step": "underground_ores"
+}

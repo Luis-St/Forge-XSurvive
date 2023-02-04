@@ -45,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  */
 
-@EventBusSubscriber(modid = XBackpack.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = XBackpack.MOD_ID, value = Dist.CLIENT)
 public class RegisterClientEventHandler {
 	
 	@SubscribeEvent
@@ -53,50 +53,6 @@ public class RegisterClientEventHandler {
 		GammaCommand.register(event.getDispatcher());
 	}
 	
-	@SubscribeEvent
-	public static void registerClientTooltipComponentFactories(RegisterClientTooltipComponentFactoriesEvent event) {
-		event.register(ShulkerBoxTooltip.class, ClientShulkerBoxTooltip::new);
-	}
-	
-	@SubscribeEvent
-	public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
-		event.register((state, blockGetter, pos, i) -> {
-			int age = state.getValue(StemBlock.AGE);
-			int red = age * 32;
-			int green = 255 - age * 8;
-			int blue = age * 4;
-			return red << 16 | green << 8 | blue;
-		}, XSBlocks.HONEY_MELON_STEM.get());
-		event.register((state, blockGetter, pos, i) -> 14731036, XSBlocks.ATTACHED_HONEY_MELON_STEM.get());
-	}
-	
-	@SubscribeEvent
-	public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), "frost_mob_effect_overlay", new FrostMobEffectOverlay(Minecraft.getInstance()));
-	}
-	
-	@SubscribeEvent
-	public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
-		for (Item item : ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new).filter(XSEnchantments.ASPECT_OF_THE_END.get()::canEnchant).map(ItemStack::getItem).toList()) {
-			event.register(item, new XSItemDecorator(Minecraft.getInstance()));
-		}
-	}
-	
-	@SubscribeEvent
-	public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-		event.registerBookCategories(XSRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
-		event.registerAggregateCategory(SMELTING_FURNACE_SEARCH, Lists.newArrayList(SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
-		event.registerRecipeCategoryFinder(XSRecipeTypes.SMELTING.get(), (recipe) -> {
-			if (recipe.getResultItem().getItem() instanceof BlockItem) {
-				return SMELTING_FURNACE_BLOCKS;
-			}
-			return SMELTING_FURNACE_MISC;
-		});
-	}
-	
-	@SubscribeEvent
-	public static void registerClientCommands(RegisterRenderers event) {
-		event.registerEntityRenderer(XSEntityTypes.CURSED_ENDER_EYE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
-	}
+
 	
 }

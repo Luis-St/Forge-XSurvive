@@ -1,9 +1,9 @@
 {
-  "feature": "xsurvive:jade_ore_upper",
+  "feature": "xsurvive:nether_gold_ore",
   "placement": [
     {
       "type": "minecraft:count",
-      "count": 10
+      "count": 14
     },
     {
       "type": "minecraft:in_square"
@@ -11,12 +11,12 @@
     {
       "type": "minecraft:height_range",
       "height": {
-        "type": "minecraft:trapezoid",
+        "type": "minecraft:uniform",
         "max_inclusive": {
-          "absolute": 512
+          "below_top": 10
         },
         "min_inclusive": {
-          "absolute": 128
+          "above_bottom": 10
         }
       }
     },

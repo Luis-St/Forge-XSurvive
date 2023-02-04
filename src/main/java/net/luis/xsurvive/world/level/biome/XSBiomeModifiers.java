@@ -33,6 +33,7 @@ public class XSBiomeModifiers {
 		public static final ResourceKey<BiomeModifier> ADD_COPPER_TO_OVERWORLD = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "add_copper_to_overworld"));
 		public static final ResourceKey<BiomeModifier> ADD_TO_MOUNTAINS = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "add_to_mountains"));
 		public static final ResourceKey<BiomeModifier> ADD_TO_NETHER = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "add_to_nether"));
+		public static final ResourceKey<BiomeModifier> ADD_ANCIENT_DEBRIS_TO_NETHER = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "add_ancient_debris_to_nether"));
 		public static final ResourceKey<BiomeModifier> ADD_TO_OVERWORLD = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "add_to_overworld"));
 		
 		public static final ResourceKey<BiomeModifier> REMOVE_FROM_NETHER = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(XSurvive.MOD_ID, "remove_from_nether"));

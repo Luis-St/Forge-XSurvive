@@ -4,6 +4,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -20,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  *
  */
 
-@Mod.EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegisterModEventHandler {
 	
 	@SubscribeEvent
@@ -30,21 +31,21 @@ public class RegisterModEventHandler {
 			builder.icon(() -> new ItemStack(XSItems.RAINBOW_RUNE.get()));
 			builder.displayItems((enabledFlags, populator, hasPermissions) -> {
 				populator.accept(XSItems.WHITE_RUNE.get());
+				populator.accept(XSItems.LIGHT_GRAY_RUNE.get());
+				populator.accept(XSItems.GRAY_RUNE.get());
+				populator.accept(XSItems.BLACK_RUNE.get());
+				populator.accept(XSItems.BROWN_RUNE.get());
+				populator.accept(XSItems.RED_RUNE.get());
 				populator.accept(XSItems.ORANGE_RUNE.get());
-				populator.accept(XSItems.MAGENTA_RUNE.get());
-				populator.accept(XSItems.LIGHT_BLUE_RUNE.get());
 				populator.accept(XSItems.YELLOW_RUNE.get());
 				populator.accept(XSItems.LIME_RUNE.get());
-				populator.accept(XSItems.PINK_RUNE.get());
-				populator.accept(XSItems.GRAY_RUNE.get());
-				populator.accept(XSItems.LIGHT_GRAY_RUNE.get());
-				populator.accept(XSItems.CYAN_RUNE.get());
-				populator.accept(XSItems.PURPLE_RUNE.get());
-				populator.accept(XSItems.BLUE_RUNE.get());
-				populator.accept(XSItems.BROWN_RUNE.get());
 				populator.accept(XSItems.GREEN_RUNE.get());
-				populator.accept(XSItems.RED_RUNE.get());
-				populator.accept(XSItems.BLACK_RUNE.get());
+				populator.accept(XSItems.CYAN_RUNE.get());
+				populator.accept(XSItems.LIGHT_BLUE_RUNE.get());
+				populator.accept(XSItems.BLUE_RUNE.get());
+				populator.accept(XSItems.PURPLE_RUNE.get());
+				populator.accept(XSItems.MAGENTA_RUNE.get());
+				populator.accept(XSItems.PINK_RUNE.get());
 				populator.accept(XSItems.RAINBOW_RUNE.get());
 			});
 		});
@@ -71,6 +72,12 @@ public class RegisterModEventHandler {
 			event.accept(XSItems.HONEY_MELON_SLICE);
 			event.accept(XSItems.DIAMOND_APPLE);
 			event.accept(XSItems.ENCHANTED_DIAMOND_APPLE);
+		} else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+			event.accept(XSItems.CURSED_ENDER_EYE);
+			event.accept(XSBlocks.SMELTING_FURNACE);
+		} else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+			event.accept(XSItems.HONEY_MELON_SEEDS);
+			event.accept(XSBlocks.HONEY_MELON);
 		}
 	}
 	

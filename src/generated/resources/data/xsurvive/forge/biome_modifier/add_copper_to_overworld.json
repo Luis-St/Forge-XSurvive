@@ -1,9 +1,10 @@
 {
   "type": "xsurvive:if_else_biome_modifier",
-  "biomes": [
+  "condition_biomes": [
     "minecraft:dripstone_caves",
     "minecraft:deep_dark"
   ],
   "else_features": "xsurvive:copper_ore",
-  "if_features": "xsurvive:copper_ore_large"
+  "if_features": "xsurvive:copper_ore_large",
+  "level_biomes": "#minecraft:is_overworld"
 }

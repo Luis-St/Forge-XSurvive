@@ -43,6 +43,7 @@ public class XSBiomeModifierProvider {
 		context.register(XSBiomeModifiers.Keys.ADD_COPPER_TO_OVERWORLD, createAddCopper(biomeRegistry, featureRegistry));
 		context.register(XSBiomeModifiers.Keys.ADD_TO_MOUNTAINS, createAddToMountain(biomeRegistry, featureRegistry));
 		context.register(XSBiomeModifiers.Keys.ADD_TO_NETHER, createAddToNether(biomeRegistry, featureRegistry));
+		context.register(XSBiomeModifiers.Keys.ADD_ANCIENT_DEBRIS_TO_NETHER, createAddAncientDebrisToNether(biomeRegistry, featureRegistry));
 		context.register(XSBiomeModifiers.Keys.ADD_TO_OVERWORLD, createAddToOverworld(biomeRegistry, featureRegistry));
 		context.register(XSBiomeModifiers.Keys.REMOVE_FROM_NETHER, createRemoveFromNether(biomeRegistry, featureRegistry));
 		context.register(XSBiomeModifiers.Keys.REMOVE_FROM_OVERWORLD, createRemoveFromOverworld(biomeRegistry, featureRegistry));
@@ -56,18 +57,24 @@ public class XSBiomeModifierProvider {
 	}
 	
 	private static IfElseBiomeModifier createAddCopper(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
+		HolderSet<Biome> biomes = HolderSet.direct(biomeRegistry.getOrThrow(Biomes.DRIPSTONE_CAVES), biomeRegistry.getOrThrow(Biomes.DEEP_DARK));
 		Holder<PlacedFeature> ifFeature = featureRegistry.getOrThrow(XSOrePlacements.COPPER_ORE_LARGE);
 		Holder<PlacedFeature> elseFeature = featureRegistry.getOrThrow(XSOrePlacements.COPPER_ORE);
-		return new IfElseBiomeModifier(HolderSet.direct(biomeRegistry.getOrThrow(Biomes.DRIPSTONE_CAVES), biomeRegistry.getOrThrow(Biomes.DEEP_DARK)), HolderSet.direct(ifFeature), HolderSet.direct(elseFeature));
+		return new IfElseBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_OVERWORLD), biomes, HolderSet.direct(ifFeature), HolderSet.direct(elseFeature));
 	}
 	
 	private static AddFeaturesBiomeModifier createAddToMountain(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		return new AddFeaturesBiomeModifier(biomeRegistry.getOrThrow(XSBiomeTags.IS_MOUNTAIN), HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.EMERALD_ORE)), Decoration.UNDERGROUND_ORES);
 	}
 	
-	private static AddFeaturesBiomeModifier createAddToNether(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
-		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.NETHER_GOLD_ORE), featureRegistry.getOrThrow(XSOrePlacements.QUARTZ_ORE),
-				featureRegistry.getOrThrow(XSOrePlacements.ANCIENT_DEBRIS_ORE_SMALL), featureRegistry.getOrThrow(XSOrePlacements.ANCIENT_DEBRIS_ORE_LARGE));
+	private static IfElseBiomeModifier createAddToNether(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
+		HolderSet<PlacedFeature> ifFeatures = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.NETHER_GOLD_ORE_DELTA), featureRegistry.getOrThrow(XSOrePlacements.QUARTZ_ORE_DELTA));
+		HolderSet<PlacedFeature> elseFeatures = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.NETHER_GOLD_ORE), featureRegistry.getOrThrow(XSOrePlacements.QUARTZ_ORE));
+		return new IfElseBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_NETHER), HolderSet.direct(biomeRegistry.getOrThrow(Biomes.BASALT_DELTAS)), ifFeatures, elseFeatures);
+	}
+	
+	private static AddFeaturesBiomeModifier createAddAncientDebrisToNether(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
+		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.ANCIENT_DEBRIS_ORE_SMALL), featureRegistry.getOrThrow(XSOrePlacements.ANCIENT_DEBRIS_ORE_LARGE));
 		return new AddFeaturesBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_NETHER), features, Decoration.UNDERGROUND_ORES);
 	}
 	

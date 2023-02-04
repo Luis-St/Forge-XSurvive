@@ -33,7 +33,9 @@ public class XSOrePlacements {
 	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_BURIED = createKey("diamond_ore_buried");
 	public static final ResourceKey<PlacedFeature> EMERALD_ORE = createKey("emerald_ore");
 	public static final ResourceKey<PlacedFeature> NETHER_GOLD_ORE = createKey("nether_gold_ore");
+	public static final ResourceKey<PlacedFeature> NETHER_GOLD_ORE_DELTA = createKey("nether_gold_ore_delta");
 	public static final ResourceKey<PlacedFeature> QUARTZ_ORE = createKey("quartz_ore");
+	public static final ResourceKey<PlacedFeature> QUARTZ_ORE_DELTA = createKey("quartz_ore_delta");
 	public static final ResourceKey<PlacedFeature> ANCIENT_DEBRIS_ORE_SMALL = createKey("ancient_debris_ore_small");
 	public static final ResourceKey<PlacedFeature> ANCIENT_DEBRIS_ORE_LARGE = createKey("ancient_debris_ore_large");
 	public static final ResourceKey<PlacedFeature> JADE_ORE_UPPER = createKey("jade_ore_upper");

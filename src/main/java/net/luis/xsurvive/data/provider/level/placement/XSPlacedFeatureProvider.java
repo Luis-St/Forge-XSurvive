@@ -46,13 +46,15 @@ public class XSPlacedFeatureProvider {
 		context.register(XSOrePlacements.DIAMOND_ORE_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.DIAMOND_ORE_BURIED), buriedOrePlacement(3, 16))); // 4, 16
 		context.register(XSOrePlacements.EMERALD_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.EMERALD_ORE), triangleOrePlacement(66, -16, 480))); // 100, -16, 480
 		context.register(XSOrePlacements.NETHER_GOLD_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.NETHER_GOLD_ORE), orePlacement(CountPlacement.of(7), PlacementUtils.RANGE_10_10))); // 10
+		context.register(XSOrePlacements.NETHER_GOLD_ORE_DELTA, new PlacedFeature(registry.getOrThrow(XSOreFeatures.NETHER_GOLD_ORE), orePlacement(CountPlacement.of(14), PlacementUtils.RANGE_10_10))); // 20
 		context.register(XSOrePlacements.QUARTZ_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.QUARTZ_ORE), orePlacement(CountPlacement.of(10), PlacementUtils.RANGE_10_10))); // 16
+		context.register(XSOrePlacements.QUARTZ_ORE_DELTA, new PlacedFeature(registry.getOrThrow(XSOreFeatures.QUARTZ_ORE), orePlacement(CountPlacement.of(16), PlacementUtils.RANGE_10_10))); // 32
 		context.register(XSOrePlacements.ANCIENT_DEBRIS_ORE_SMALL, new PlacedFeature(registry.getOrThrow(XSOreFeatures.ANCIENT_DEBRIS_ORE_SMALL), List.of(InSquarePlacement.spread(), PlacementUtils.RANGE_8_8, BiomeFilter.biome())));
 		context.register(XSOrePlacements.ANCIENT_DEBRIS_ORE_LARGE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.ANCIENT_DEBRIS_ORE_LARGE), List.of(InSquarePlacement.spread(), RANGE_8_24, BiomeFilter.biome())));
-		context.register(XSOrePlacements.JADE_ORE_UPPER, new PlacedFeature(registry.getOrThrow(XSOreFeatures.JADE_ORE_UPPER), upperOrePlacement(12, 128))); // 20, 128
-		context.register(XSOrePlacements.JADE_ORE_MIDDLE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.JADE_ORE_MIDDLE), uniformOrePlacement(7, -32, 96))); // 14, -32, 96
+		context.register(XSOrePlacements.JADE_ORE_UPPER, new PlacedFeature(registry.getOrThrow(XSOreFeatures.JADE_ORE_UPPER), upperOrePlacement(10, 128))); // 20, 128
+		context.register(XSOrePlacements.JADE_ORE_MIDDLE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.JADE_ORE_MIDDLE), uniformOrePlacement(6, -32, 96))); // 14, -32, 96
 		context.register(XSOrePlacements.SAPHIRE_ORE_RARE_UPPER, new PlacedFeature(registry.getOrThrow(XSOreFeatures.SAPHIRE_ORE_RARE_UPPER), upperOrePlacement(5, 256))); // 7, 256
-		context.register(XSOrePlacements.SAPHIRE_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.SAPHIRE_ORE), uniformOrePlacement(12, -64, 256))); // 18, -64, 256
+		context.register(XSOrePlacements.SAPHIRE_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.SAPHIRE_ORE), uniformOrePlacement(10, -64, 256))); // 18, -64, 256
 		context.register(XSOrePlacements.SAPHIRE_ORE_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.SAPHIRE_ORE_BURIED), buriedOrePlacement(4, -32))); // 5, -32
 		context.register(XSOrePlacements.LIMONITE_ORE_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.LIMONITE_ORE_BURIED), uniformOrePlacement(4, -48, 0))); // 5, -48, 0
 		context.register(XSOrePlacements.LIMONITE_ORE_DEEP_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.LIMONITE_ORE_DEEP_BURIED), buriedOrePlacement(1, -48))); // 2, -48

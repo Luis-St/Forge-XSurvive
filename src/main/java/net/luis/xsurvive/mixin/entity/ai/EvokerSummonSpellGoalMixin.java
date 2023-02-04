@@ -29,6 +29,7 @@ public abstract class EvokerSummonSpellGoalMixin {
 	
 	@Inject(method = "performSpellCasting", at = @At("HEAD"), cancellable = true)
 	protected void performSpellCasting(CallbackInfo callback) {
+		System.out.println("This is a test");
 /*		if (this.this$0.level instanceof ServerLevel level) {
 			int i = this.this$0.getRandom().nextInt(4);
 			for (int j = 0; j < 3 + i; ++j) {

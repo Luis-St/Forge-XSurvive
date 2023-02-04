@@ -17,11 +17,13 @@ import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
  *
  */
 
-public record IfElseBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> ifFeatures, HolderSet<PlacedFeature> elseFeatures) implements BiomeModifier {
+public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome> conditionBiomes, HolderSet<PlacedFeature> ifFeatures, HolderSet<PlacedFeature> elseFeatures) implements BiomeModifier {
 	
 	public static final Codec<IfElseBiomeModifier> CODEC = RecordCodecBuilder.create((instance) -> {
-		return instance.group(Biome.LIST_CODEC.fieldOf("biomes").forGetter((biomeModifier) -> {
-			return biomeModifier.biomes;
+		return instance.group(Biome.LIST_CODEC.fieldOf("level_biomes").forGetter((biomeModifier) -> {
+			return biomeModifier.levelBiomes;
+		}), Biome.LIST_CODEC.fieldOf("condition_biomes").forGetter((biomeModifier) -> {
+			return biomeModifier.conditionBiomes;
 		}), PlacedFeature.LIST_CODEC.fieldOf("if_features").forGetter((biomeModifier) -> {
 			return biomeModifier.ifFeatures;
 		}), PlacedFeature.LIST_CODEC.fieldOf("else_features").forGetter((biomeModifier) -> {
@@ -31,8 +33,8 @@ public record IfElseBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeatu
 	
 	@Override
 	public void modify(Holder<Biome> biome, Phase phase, Builder builder) {
-		if (phase == Phase.ADD) {
-			if (this.biomes.contains(biome)) {
+		if (phase == Phase.ADD && this.levelBiomes.contains(biome)) {
+			if (this.conditionBiomes.contains(biome)) {
 				for (Holder<PlacedFeature> holder : this.ifFeatures) {
 					builder.getGenerationSettings().getFeatures(Decoration.UNDERGROUND_ORES).add(holder);
 				}
