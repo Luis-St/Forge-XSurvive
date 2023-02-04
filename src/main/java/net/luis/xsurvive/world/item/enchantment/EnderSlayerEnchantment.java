@@ -5,6 +5,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -29,7 +30,7 @@ public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFil
 	}
 	
 	@Override
-	public float getDamageBonus(int level, MobType mobType) {
+	public float getDamageBonus(int level, @NotNull MobType mobType) {
 		return 0.0F;
 	}
 

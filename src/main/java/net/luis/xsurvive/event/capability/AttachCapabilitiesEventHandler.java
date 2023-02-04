@@ -56,7 +56,7 @@ public class AttachCapabilitiesEventHandler {
 	}
 	
 	@EventBusSubscriber(modid = XSurvive.MOD_ID, value = Dist.CLIENT)
-	public class Client {
+	public static class Client {
 		
 		@SubscribeEvent
 		public static void AttachCapabilities(AttachCapabilitiesEvent<Entity> event) {

@@ -105,7 +105,7 @@ class DynamicTradeHelper {
 		return getEmeraldCount(rng, emeralds);
 	}
 	
-	static int getEmeraldCount(RandomSource rng, ItemStack stack) {
+	static int getEmeraldCount(ItemStack stack) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 		int emeralds = enchantments.size();
 		for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {

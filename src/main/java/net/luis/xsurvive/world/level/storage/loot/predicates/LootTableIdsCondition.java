@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -34,13 +35,13 @@ public class LootTableIdsCondition implements LootItemCondition {
 	}
 
 	@Override
-	public LootItemConditionType getType() {
+	public @NotNull LootItemConditionType getType() {
 		return XSLootItemConditions.LOOT_TABLE_IDS.get();
 	}
 	
 	public static class Builder implements LootItemCondition.Builder {
 		
-		private final List<ResourceLocation> lootTables;;
+		private final List<ResourceLocation> lootTables;
 		
 		public Builder(String lootTable) {
 			this(new ResourceLocation(lootTable));
@@ -61,7 +62,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 		}
 		
 		@Override
-		public LootItemCondition build() {
+		public @NotNull LootItemCondition build() {
 			return new LootTableIdsCondition(this.lootTables);
 		}
 		
@@ -70,7 +71,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<LootTableIdsCondition> {
 		
 		@Override
-		public void serialize(JsonObject object, LootTableIdsCondition instance, JsonSerializationContext context) {
+		public void serialize(@NotNull JsonObject object, LootTableIdsCondition instance, @NotNull JsonSerializationContext context) {
 			JsonArray array = new JsonArray();
 			for (ResourceLocation location : instance.lootTables) {
 				array.add(location.toString());
@@ -79,7 +80,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 		}
 
 		@Override
-		public LootTableIdsCondition deserialize(JsonObject object, JsonDeserializationContext context) {
+		public @NotNull LootTableIdsCondition deserialize(JsonObject object, @NotNull JsonDeserializationContext context) {
 			List<ResourceLocation> lootTables = Lists.newArrayList();
 			JsonArray array = object.get("loot_table_ids").getAsJsonArray();
 			for (JsonElement jsonElement : array) {

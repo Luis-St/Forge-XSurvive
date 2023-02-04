@@ -1,16 +1,7 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.SimpleEntry;
 import net.minecraft.Util;
@@ -23,6 +14,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -85,7 +83,7 @@ public class XSEnchantmentHelper {
 	}
 	
 	public static Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(Enchantment enchantment, LivingEntity entity) {
-		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, Predicates.alwaysTrue()).entrySet()) {
+		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, itemStack -> true).entrySet()) {
 			if (entry.getKey().getType() == EquipmentSlot.Type.HAND) {
 				return entry;
 			}

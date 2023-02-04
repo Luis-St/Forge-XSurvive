@@ -1,5 +1,6 @@
 package net.luis.xsurvive.data.provider.block;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
@@ -23,6 +24,7 @@ import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -35,7 +37,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	protected final ExistingFileHelper existingFileHelper;
 	
 	public XSBlockStateProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, XSurvive.MOD_ID, existingFileHelper);
+		super(generator.getPackOutput(), XSurvive.MOD_ID, existingFileHelper);
 		this.existingFileHelper = existingFileHelper;
 	}
 	
@@ -47,13 +49,13 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		this.attachedStemBlock(XSBlocks.ATTACHED_HONEY_MELON_STEM.get());
 		this.floorAndSideFireBlock(XSBlocks.MYSTIC_FIRE.get());
 		
-		for (BlockItem item : XSBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).filter(BlockItem.class::isInstance).map(BlockItem.class::cast).collect(Collectors.toList())) {
+		for (BlockItem item : XSBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).filter(BlockItem.class::isInstance).map(BlockItem.class::cast).toList()) {
 			this.simpleBlockItem(item.getBlock(), this.blockModel(item.getBlock()));
 		}
 	}
 	
 	private void litFacingBlock(Block block) {
-		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.models().orientable(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front"), this.modLoc("block/" + name + "_top"));
 		this.models().orientable(name + "_on", this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front_on"), this.modLoc("block/" + name + "_top"));
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
@@ -64,24 +66,23 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 	private void cubeColumnBlock(Block block) {
-		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.simpleBlock(block, this.models().cubeColumn(name, this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_top")));
 	}
 	
 	private void stemAgeBlock(Block block, int maxAge) {
-		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		for (int age = 0; age <= maxAge; age++) {
 			this.models().getBuilder(name + "_stage" + age).parent(new ExistingModelFile(this.mcLoc("block/stem_growth" + age), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).renderType("cutout");
 		}
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (int age = 0; age <= maxAge; age++) {
 			builder.partialState().with(StemBlock.AGE, age).modelForState().modelFile(this.blockModel(block, "stage" + age)).addModel();
-			;
 		}
 	}
 	
 	private void attachedStemBlock(Block block) {
-		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.models().getBuilder(name).parent(new ExistingModelFile(this.mcLoc("block/stem_fruit"), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).texture("upperstem", this.mcLoc("block/attached_melon_stem"))
 			.renderType("cutout");
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
@@ -91,7 +92,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 	private void floorAndSideFireBlock(Block block) {
-		String name = ForgeRegistries.BLOCKS.getKey(block).getPath();
+		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.models().getBuilder(name + "_floor0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
 		this.models().getBuilder(name + "_floor1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
 		this.models().getBuilder(name + "_side0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
@@ -187,7 +188,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 	private ModelFile blockModel(Block block, String addition) {
-		ResourceLocation name = ForgeRegistries.BLOCKS.getKey(block);
+		ResourceLocation name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
 		if (addition == null || addition.isEmpty()) {
 			return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), "block/" + name.getPath()));
 		}
@@ -195,7 +196,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	}
 	
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "XSurvive Block States";
 	}
 	

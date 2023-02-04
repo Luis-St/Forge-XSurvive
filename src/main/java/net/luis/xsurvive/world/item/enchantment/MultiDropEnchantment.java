@@ -7,6 +7,7 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -41,7 +42,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
 	

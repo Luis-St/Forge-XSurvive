@@ -1,6 +1,7 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,7 +56,7 @@ public abstract class ConduitBlockEntityMixin {
 			blockEntity.destroyTarget = findDestroyTarget(level, pos, blockEntity.destroyTargetUUID);
 			blockEntity.destroyTargetUUID = null;
 		} else if (blockEntity.destroyTarget == null) {
-			List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, getDestroyRangeAABB(pos), (entity) -> {
+			List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, Objects.requireNonNull(getDestroyRangeAABB(pos)), (entity) -> {
 				return entity instanceof Enemy && entity.isInWaterOrRain();
 			});
 			if (!entities.isEmpty()) {

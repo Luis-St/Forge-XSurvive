@@ -70,7 +70,7 @@ public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> impl
 	protected final T append(String string, boolean space) {
 		if (string != null && !string.isEmpty()) {
 			if (this.isEnd()) {
-				throw new IllegalStateException("Can not append \"" + (string.isEmpty() ? "empty" : string) + "\", since the builder has already been end");
+				throw new IllegalStateException("Can not append \"" + string + "\", since the builder has already been end");
 			}
 			int lineToAppend = this.getLineToAppend();
 			if (this.lines.size() > lineToAppend && lineToAppend >= 0) {

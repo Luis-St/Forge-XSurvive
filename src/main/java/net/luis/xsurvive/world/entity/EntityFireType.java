@@ -23,11 +23,6 @@ public enum EntityFireType {
 	SOUL_FIRE(),
 	MYSTIC_FIRE();
 	
-	@Nullable
-	public static EntityFireType byOrdinal(int ordinal) {
-		return byOrdinal(ordinal, null);
-	}
-	
 	@NotNull
 	public static EntityFireType byOrdinal(int ordinal, EntityFireType fallback) {
 		for (EntityFireType fireType : values()) {

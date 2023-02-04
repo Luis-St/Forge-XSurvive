@@ -53,18 +53,17 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 				int duration = 0;
 				int amplifier = 0;
 				switch (this.level.getDifficulty()) {
-					case EASY: {
-						duration = 10;
-					} break;
-					case NORMAL: {
+					case EASY -> duration = 10;
+					case NORMAL -> {
 						duration = 25;
 						amplifier = 1;
-					} break;
-					case HARD: {
+					}
+					case HARD -> {
 						duration = 40;
 						amplifier = 2;
-					} break;
-					default: break;
+					}
+					default -> {
+					}
 				}
 				if (duration > 0) {
 					livingTarget.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * duration, 1 + amplifier), this.getEffectSource());
@@ -78,7 +77,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 	protected void onHit(HitResult hitResult, CallbackInfo callback) {
 		super.onHit(hitResult);
 		if (!this.level.isClientSide) {
-			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, false, ForgeEventFactory.getMobGriefingEvent(this.level, this.getOwner()) ? BlockInteraction.DESTROY : BlockInteraction.NONE);
+			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, false, Level.ExplosionInteraction.MOB);
 			this.discard();
 		}
 		callback.cancel();

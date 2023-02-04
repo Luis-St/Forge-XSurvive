@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -40,7 +41,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	protected boolean checkCompatibility(Enchantment enchantment) {
+	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment instanceof ProtectionEnchantment protectionEnchantment) {
 			return protectionEnchantment.type == ProtectionEnchantment.Type.ALL;
 		} else if (enchantment == Enchantments.THORNS) {
@@ -60,7 +61,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
 	

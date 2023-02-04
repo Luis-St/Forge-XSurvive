@@ -16,6 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
+import java.util.Objects;
+
 /**
  * 
  * @author Luis-st
@@ -34,7 +36,7 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 	
 	@Override
 	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
-		Player player = this.minecraft.player;
+		Player player = Objects.requireNonNull(this.minecraft.player);
 		if (!this.minecraft.options.hideGui && player.hasEffect(XSMobEffects.FROST.get()) && 0 >= player.getPercentFrozen()) {
 			gui.setupOverlayRenderState(true, false);
 			this.renderFrostMobEffectOverlay(width, height, (float) PlayerProvider.getLocal(player).getFrostPercent());

@@ -27,7 +27,7 @@ public class DynamicEnchantedTrades {
 	public static ItemListing randomEnchantedItem(Item item, int emeralds, int maxUses, int villagerXp, float priceMultiplier) {
 		return (villager, rng) -> {
 			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), 5 + rng.nextInt(20), false);
-			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds + getEmeraldCount(rng, stack)), stack, maxUses, villagerXp, priceMultiplier);
+			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds + getEmeraldCount(stack)), stack, maxUses, villagerXp, priceMultiplier);
 		};
 	}
 		

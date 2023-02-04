@@ -1,7 +1,5 @@
 package net.luis.xsurvive.mixin.block;
 
-import org.spongepowered.asm.mixin.Mixin;
-
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.BlockPos;
@@ -9,22 +7,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AttachedStemBlock;
-import net.minecraft.world.level.block.BambooBlock;
-import net.minecraft.world.level.block.BambooSaplingBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CactusBlock;
-import net.minecraft.world.level.block.CocoaBlock;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.NetherWartBlock;
-import net.minecraft.world.level.block.StemBlock;
-import net.minecraft.world.level.block.SugarCaneBlock;
-import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.common.extensions.IForgeBlock;
+import org.spongepowered.asm.mixin.Mixin;
 
 /**
  *
@@ -34,7 +22,7 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 
 @Mixin(Block.class)
 public abstract class BlockMixin extends BlockBehaviour implements IForgeBlock {
-
+	
 	private BlockMixin(Properties properties) {
 		super(properties);
 	}
@@ -52,15 +40,15 @@ public abstract class BlockMixin extends BlockBehaviour implements IForgeBlock {
 				return level.setBlock(pos, block.defaultBlockState(), 3);
 			} else if (state.getBlock() instanceof AttachedStemBlock block) {
 				if (block.seedSupplier.get() instanceof BlockItem blockItem && blockItem.getBlock() instanceof StemBlock stemBlock) {
-					return level.setBlock(pos, stemBlock.defaultBlockState().setValue(StemBlock.AGE, 7), 3); 
+					return level.setBlock(pos, stemBlock.defaultBlockState().setValue(StemBlock.AGE, 7), 3);
 				}
-				return level.setBlock(pos, block.defaultBlockState().setValue(AttachedStemBlock.FACING, state.getValue(AttachedStemBlock.FACING)), 3); 
+				return level.setBlock(pos, block.defaultBlockState().setValue(AttachedStemBlock.FACING, state.getValue(AttachedStemBlock.FACING)), 3);
 			} else if (state.getBlock() instanceof SweetBerryBushBlock block && state.getValue(SweetBerryBushBlock.AGE) >= 3) {
 				return level.setBlock(pos, block.defaultBlockState(), 3);
 			} else if (state.getBlock() instanceof BambooSaplingBlock block && level.getBlockState(pos.below()).is(BlockTags.BAMBOO_PLANTABLE_ON)) {
 				return level.setBlock(pos, Blocks.BAMBOO_SAPLING.defaultBlockState(), 3);
-			} else if (state.getBlock() instanceof BambooBlock block && !(belowState.getBlock() instanceof BambooBlock) && belowState.is(BlockTags.BAMBOO_PLANTABLE_ON)) {
-				if (level.getBlockState(pos.above()).getBlock() instanceof BambooBlock) {
+			} else if (state.getBlock() instanceof BambooStalkBlock block && !(belowState.getBlock() instanceof BambooStalkBlock) && belowState.is(BlockTags.BAMBOO_PLANTABLE_ON)) {
+				if (level.getBlockState(pos.above()).getBlock() instanceof BambooStalkBlock) {
 					level.destroyBlock(pos.above(), true, player);
 				}
 				return level.setBlock(pos, Blocks.BAMBOO_SAPLING.defaultBlockState(), 512);

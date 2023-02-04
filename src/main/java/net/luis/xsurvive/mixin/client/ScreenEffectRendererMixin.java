@@ -1,5 +1,7 @@
 package net.luis.xsurvive.mixin.client;
 
+import com.mojang.math.Axis;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,8 +14,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityFireType;
@@ -27,6 +27,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
+
+import java.util.Objects;
 
 /**
  *
@@ -50,8 +52,8 @@ public abstract class ScreenEffectRendererMixin {
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableTexture();
-		TextureAtlasSprite textureSprite = getFireTextureSprite1(minecraft.player, EntityProvider.get(minecraft.player).getFireType());
-		RenderSystem.setShaderTexture(0, textureSprite.atlas().location());
+		TextureAtlasSprite textureSprite = getFireTextureSprite1(Objects.requireNonNull(minecraft.player), EntityProvider.get(minecraft.player).getFireType());
+		RenderSystem.setShaderTexture(0, textureSprite.atlasLocation());
 		float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;
 		float textureSpriteV = (textureSprite.getV0() + textureSprite.getV1()) / 2.0F;
 		float innerU = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getU0(), textureSpriteU);
@@ -61,7 +63,7 @@ public abstract class ScreenEffectRendererMixin {
 		for (int i = 0; i < 2; ++i) {
 			stack.pushPose();
 			stack.translate(-(i * 2 - 1) * 0.24, -0.3, 0.0);
-			stack.mulPose(Vector3f.YP.rotationDegrees((i * 2 - 1) * 10.0F));
+			stack.mulPose(Axis.YP.rotationDegrees((i * 2 - 1) * 10.0F));
 			Matrix4f matrix = stack.last().pose();
 			bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
 			bufferBuilder.vertex(matrix, -0.5F, -0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).uv(outerU, innerV).endVertex();

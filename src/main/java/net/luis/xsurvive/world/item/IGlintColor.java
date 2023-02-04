@@ -19,9 +19,7 @@ public interface IGlintColor {
 	}
 	
 	public static IGlintColor simple(int glintColor) {
-		return (stack) -> {
-			return glintColor;
-		};
+		return (stack) -> glintColor;
 	}
 	
 	int getGlintColor(ItemStack stack);

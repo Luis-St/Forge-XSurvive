@@ -17,6 +17,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,6 +33,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -64,7 +66,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 		consumer.accept(new ExtensionSlot(this, this.handler.getInputHandler(), 1, 260, 73));
 		consumer.accept(new ExtensionSlot(this, this.handler.getResultHandler(), 0, 304, 73) {
 			@Override
-			public boolean mayPlace(ItemStack stack) {
+			public boolean mayPlace(@NotNull ItemStack stack) {
 				return false;
 			}
 			
@@ -74,7 +76,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			}
 			
 			@Override
-			public void onTake(Player player, ItemStack stack) {
+			public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
 				XSAnvilExtensionMenu.this.onTake(player, stack);
 				super.onTake(player, stack);
 			}
@@ -111,7 +113,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	}
 	
 	private void playSound(ServerPlayer player, ServerLevel level) {
-		player.connection.send(new ClientboundSoundPacket(SoundEvents.ANVIL_USE, SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
+		player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ANVIL_USE), SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
 	}
 	
 	@Override
@@ -214,21 +216,12 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 								survival = true;
 							} else {
 								resultEnchantments.put(rightEnchantment, rightLevel);
-								int rarityCost = 0;
-								switch (rightEnchantment.getRarity()) {
-									case COMMON:
-										rarityCost = 1;
-										break;
-									case UNCOMMON:
-										rarityCost = 2;
-										break;
-									case RARE:
-										rarityCost = 4;
-										break;
-									case VERY_RARE:
-										rarityCost = 8;
-										break;
-								}
+								int rarityCost = switch (rightEnchantment.getRarity()) {
+									case COMMON -> 1;
+									case UNCOMMON -> 2;
+									case RARE -> 4;
+									case VERY_RARE -> 8;
+								};
 								if (enchantedBook) {
 									rarityCost = Math.max(1, rarityCost / 2);
 								}
@@ -256,19 +249,12 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			if (enchantCost <= 0 && !decreaseRepairCost) {
 				resultStack = ItemStack.EMPTY;
 			}
-			if (renameCost == enchantCost && renameCost > 0 && this.cost >= 60) {
-				this.cost = 59;
-			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
 				List<Enchantment> enchantments = Lists.newArrayList();
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
 				if (!enchantments.isEmpty()) {
-					int cost = enchantments.size() * 10;
-					if (renameCost > 0) {
-						cost += renameCost;
-					}
-					this.cost = cost;
+					this.cost = enchantments.size() * 10;
 				}
 			}
 			if (!resultStack.isEmpty()) {
@@ -276,9 +262,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				if (!rightStack.isEmpty() && baseRepairCost < rightStack.getBaseRepairCost()) {
 					baseRepairCost = rightStack.getBaseRepairCost();
 				}
-				if (renameCost != enchantCost || renameCost == 0) {
-					baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
-				}
+				baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
 				if (!decreaseRepairCost) {
 					resultStack.setRepairCost(baseRepairCost);
 				}

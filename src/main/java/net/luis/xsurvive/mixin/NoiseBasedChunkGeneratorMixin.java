@@ -30,9 +30,9 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 
 @Mixin(NoiseBasedChunkGenerator.class)
 public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
-
-	private NoiseBasedChunkGeneratorMixin(Registry<StructureSet> structureRegistry, Optional<HolderSet<StructureSet>> structures, BiomeSource biomeSource) {
-		super(structureRegistry, structures, biomeSource);
+	
+	private NoiseBasedChunkGeneratorMixin(BiomeSource source) {
+		super(source);
 	}
 	
 	@Inject(method = "fillFromNoise", at = @At("HEAD"), cancellable = true)

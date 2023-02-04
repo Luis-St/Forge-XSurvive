@@ -68,7 +68,7 @@ public abstract class EnderDragonMixin extends Mob {
 		}
 		boolean doMobDrop = this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
 		int i = 12000;
-		if (this.level instanceof ServerLevel level) {
+		if (this.level instanceof ServerLevel) {
 			if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0 && doMobDrop) {
 				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(i * 0.08F)));
 			}
@@ -76,10 +76,10 @@ public abstract class EnderDragonMixin extends Mob {
 				this.level.globalLevelEvent(1028, this.blockPosition(), 0);
 			}
 		}
-		this.move(MoverType.SELF, new Vec3(0.0D, (double) 0.1F, 0.0D));
+		this.move(MoverType.SELF, new Vec3(0.0, 0.1, 0.0));
 		this.setYRot(this.getYRot() + 20.0F);
 		this.yBodyRot = this.getYRot();
-		if (this.dragonDeathTime == 200 && this.level instanceof ServerLevel level) {
+		if (this.dragonDeathTime == 200 && this.level instanceof ServerLevel) {
 			if (doMobDrop) {
 				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(i * 0.2F)));
 			}

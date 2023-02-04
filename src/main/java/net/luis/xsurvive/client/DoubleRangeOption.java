@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 
 import net.minecraft.client.OptionInstance;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -24,22 +25,22 @@ public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Doub
 	}
 	
 	@Override
-	public Optional<Double> validateValue(Double value) {
+	public @NotNull Optional<Double> validateValue(@NotNull Double value) {
 		return this.max >= value && value >= this.min ? Optional.of(value) : Optional.empty();
 	}
 
 	@Override
-	public Codec<Double> codec() {
+	public @NotNull Codec<Double> codec() {
 		return Codec.DOUBLE;
 	}
 
 	@Override
-	public double toSliderValue(Double value) {
+	public double toSliderValue(@NotNull Double value) {
 		return Mth.clamp(value, 0.0, 1.0);
 	}
 
 	@Override
-	public Double fromSliderValue(double value) {
+	public @NotNull Double fromSliderValue(double value) {
 		return 1.0 > value ? value : 20.0;
 	}
 

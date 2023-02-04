@@ -2,6 +2,7 @@ package net.luis.xsurvive.mixin.enchantment;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +41,7 @@ public abstract class EnchantmentHelperMixin {
 			Map<Enchantment, Integer> enchantments = Maps.newLinkedHashMap();
 			CompoundTag tag = stack.getTag() != null ? stack.getTag().getCompound(XSurvive.MOD_NAME + "GoldenEnchantments") : null;
 			if (tag != null) {
-				enchantments.put(Registry.ENCHANTMENT.get(ResourceLocation.tryParse(tag.getString("enchantment"))), 1);
+				enchantments.put(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(tag.getString("enchantment"))), 1);
 			}
 			callback.setReturnValue(enchantments);
 		}
@@ -54,7 +55,7 @@ public abstract class EnchantmentHelperMixin {
 				if (enchantment instanceof IEnchantment ench) {
 					if (ench.isAllowedOnGoldenBooks()) {
 						CompoundTag tag = new CompoundTag();
-						tag.putString("enchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
+						tag.putString("enchantment", Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)).toString());
 						stack.getOrCreateTag().put(XSurvive.MOD_NAME + "GoldenEnchantments", tag);
 					} else {
 						XSurvive.LOGGER.info("The Enchantment {} which should be set is no allowed on EnchantedGoldenBookItems", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
@@ -74,13 +75,13 @@ public abstract class EnchantmentHelperMixin {
 	@Inject(method = "enchantItem", at = @At("HEAD"), cancellable = true)
 	private static void enchantItem(RandomSource rng, ItemStack stack, int cost, boolean treasure, CallbackInfoReturnable<ItemStack> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
-			List<Enchantment> enchantments = Registry.ENCHANTMENT.stream().filter((enchantment) -> {
+			List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter((enchantment) -> {
 				if (enchantment instanceof IEnchantment ench) {
 					return ench.isAllowedOnGoldenBooks();
 				}
 				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				return false;
-			}).collect(Collectors.toList());
+			}).toList();
 			EnchantmentHelper.setEnchantments(Map.of(enchantments.get(rng.nextInt(enchantments.size())), 1), stack);
 			callback.setReturnValue(stack);
 		}

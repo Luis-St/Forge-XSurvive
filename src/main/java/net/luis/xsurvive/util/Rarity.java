@@ -3,6 +3,7 @@ package net.luis.xsurvive.util;
 import com.mojang.serialization.Codec;
 
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 public enum Rarity implements StringRepresentable {
 	
@@ -16,7 +17,7 @@ public enum Rarity implements StringRepresentable {
 	
 	private final String name;
 	
-	private Rarity(String name) {
+	Rarity(String name) {
 		this.name = name;
 	}
 	
@@ -25,7 +26,7 @@ public enum Rarity implements StringRepresentable {
 	}
 
 	@Override
-	public String getSerializedName() {
+	public @NotNull String getSerializedName() {
 		return this.name;
 	}
 	

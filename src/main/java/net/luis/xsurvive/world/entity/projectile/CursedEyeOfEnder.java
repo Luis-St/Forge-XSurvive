@@ -10,6 +10,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -29,7 +30,7 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 	}
 	
 	@Override
-	public void signalTo(BlockPos pos) {
+	public void signalTo(@NotNull BlockPos pos) {
 		super.signalTo(this.blockPosition().offset(0, 10, 0));
 		this.surviveAfterDeath = false;
 	}

@@ -1,5 +1,6 @@
 package net.luis.xsurvive.mixin.enchantment;
 
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,7 +31,7 @@ public abstract class TridentImpalerEnchantmentMixin extends Enchantment {
 	}
 	
 	@Override
-	protected boolean checkCompatibility(Enchantment enchantment) {
+	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment instanceof DamageEnchantment) {
 			return false;
 		}

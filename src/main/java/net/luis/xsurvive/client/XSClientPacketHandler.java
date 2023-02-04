@@ -11,6 +11,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Objects;
+
 /**
  * 
  * @author Luis-st
@@ -21,7 +23,7 @@ public class XSClientPacketHandler {
 	
 	@SuppressWarnings("resource")
 	public static void handlePlayerCapabilityUpdate(CompoundTag tag) {
-		LocalPlayer player = Minecraft.getInstance().player;
+		LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
 		LocalPlayerHandler handler = PlayerProvider.getLocal(player);
 		handler.deserializeNetwork(tag);
 	}

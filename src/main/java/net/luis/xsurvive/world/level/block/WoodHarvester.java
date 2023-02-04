@@ -41,7 +41,7 @@ public class WoodHarvester {
 		int height = this.getTreeHeight(positions);
 		if (height != 0) {
 			AABB aabb = this.getHarvestingArea(positions, height);
-			List<BlockPos> harvestingPositions = BlockPos.betweenClosedStream(aabb).map(this::immutable).filter(this::isTreePosition).collect(Collectors.toList());
+			List<BlockPos> harvestingPositions = BlockPos.betweenClosedStream(aabb).map(this::immutable).filter(this::isTreePosition).toList();
 			for (BlockPos pos : harvestingPositions) {
 				BlockState state = this.level.getBlockState(pos);
 				this.level.destroyBlock(pos, false);

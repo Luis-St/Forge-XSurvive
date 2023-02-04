@@ -24,6 +24,8 @@ import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
 import net.minecraftforge.common.ForgeHooks;
 
+import java.util.Objects;
+
 /**
  *
  * @author Luis-st
@@ -64,12 +66,12 @@ public class PhantomSpawnerMixin {
 										SpawnGroupData spawnGroup = null;
 										int maxSpawnCount = 2 + rng.nextInt(instance.getDifficulty().getId() + 1);
 										for (int count = 0; count < maxSpawnCount; ++count) {
-											Phantom phantom = EntityType.PHANTOM.create(level);
+											Phantom phantom = Objects.requireNonNull(EntityType.PHANTOM.create(level));
 											phantom.moveTo(spawnPos, 0.0F, 0.0F);
 											if (ForgeHooks.canEntitySpawn(phantom, level, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), null, MobSpawnType.NATURAL) == -1) {
 												callback.setReturnValue(0);
 											}
-											spawnGroup = phantom.finalizeSpawn(level, instance, MobSpawnType.NATURAL, spawnGroup, (CompoundTag) null);
+											spawnGroup = phantom.finalizeSpawn(level, instance, MobSpawnType.NATURAL, spawnGroup, null);
 											level.addFreshEntityWithPassengers(phantom);
 										}
 										spawnedPhantoms += maxSpawnCount;

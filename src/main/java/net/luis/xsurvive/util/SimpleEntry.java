@@ -14,13 +14,9 @@ import net.luis.xsurvive.XSurvive;
 
 public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 	
-	protected final K key;
-	protected V value;
-	protected boolean muted;
-	
-	public SimpleEntry(K key) {
-		this(key, null);
-	}
+	private final K key;
+	private V value;
+	private boolean muted;
 	
 	public SimpleEntry(K key, V value) {
 		this(key, value, false);

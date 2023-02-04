@@ -86,9 +86,7 @@ public class EnchantmentWikiFile {
 	
 	private static String getEnchantableItems(Enchantment enchantment) {
 		List<String> enchantableItems = Lists.newArrayList();
-		List<Item> items = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-			return canEnchant(enchantment, item);
-		}).collect(Collectors.toList());
+		List<Item> items = ForgeRegistries.ITEMS.getValues().stream().filter((item) -> canEnchant(enchantment, item)).collect(Collectors.toList());
 		if (containsItem(items, SwordItem.class)) {
 			enchantableItems.add("Sword");
 		}
@@ -154,10 +152,7 @@ public class EnchantmentWikiFile {
 	
 	private static boolean canEnchant(Enchantment enchantment, Item item) {
 		ItemStack stack = new ItemStack(item);
-		if (enchantment.canEnchant(stack) || enchantment.canApplyAtEnchantingTable(stack)) {
-			return true;
-		}
-		return false;
+		return enchantment.canEnchant(stack) || enchantment.canApplyAtEnchantingTable(stack);
 	}
 	
 	private static boolean containsItem(List<Item> items, Class<?> clazz, Class<?> excludeClazz) {
@@ -179,9 +174,7 @@ public class EnchantmentWikiFile {
 	}
 	
 	private static boolean containsArmorItem(List<Item> items, EquipmentSlot slot) {
-		return items.stream().filter(ArmorItem.class::isInstance).map(ArmorItem.class::cast).anyMatch((item) -> {
-			return item.getSlot() == slot;
-		});
+		return items.stream().filter(ArmorItem.class::isInstance).map(ArmorItem.class::cast).anyMatch((item) -> item.getSlot() == slot);
 	}
 	
 	private static String getIncompatibleEnchantments(Enchantment enchantment) {

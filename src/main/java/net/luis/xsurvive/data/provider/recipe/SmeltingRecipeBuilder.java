@@ -1,5 +1,6 @@
 package net.luis.xsurvive.data.provider.recipe;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -15,12 +16,16 @@ import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -30,6 +35,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class SmeltingRecipeBuilder implements RecipeBuilder {
 	
+	private final RecipeCategory category;
+	private final CookingBookCategory bookCategory;
 	private final Item result;
 	private final Ingredient ingredient;
 	private final float experience;
@@ -38,36 +45,46 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	@Nullable
 	private String group;
 	
-	public SmeltingRecipeBuilder(Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+	public SmeltingRecipeBuilder(RecipeCategory category, CookingBookCategory bookCategory, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+		this.category = category;
+		this.bookCategory = bookCategory;
 		this.ingredient = ingredient;
 		this.result = result.asItem();
 		this.experience = experience;
 		this.cookingTime = cookingTime;
 	}
 	
-	public static SmeltingRecipeBuilder of(Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
-		return new SmeltingRecipeBuilder(ingredient, result, experience, 100);
+	public static SmeltingRecipeBuilder of(RecipeCategory category, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+		return new SmeltingRecipeBuilder(category, determineRecipeCategory(result.asItem()), ingredient, result, experience, 100);
 	}
 	
-	public SmeltingRecipeBuilder unlockedBy(String key, CriterionTriggerInstance triggerInstance) {
+	private static CookingBookCategory determineRecipeCategory(Item result) {
+		if (result.isEdible()) {
+			return CookingBookCategory.FOOD;
+		} else {
+			return result instanceof BlockItem ? CookingBookCategory.BLOCKS : CookingBookCategory.MISC;
+		}
+	}
+	
+	public @NotNull SmeltingRecipeBuilder unlockedBy(@NotNull String key, @NotNull CriterionTriggerInstance triggerInstance) {
 		this.advancement.addCriterion(key, triggerInstance);
 		return this;
 	}
 
-	public SmeltingRecipeBuilder group(String group) {
+	public @NotNull SmeltingRecipeBuilder group(String group) {
 		this.group = group;
 		return this;
 	}
 
-	public Item getResult() {
+	public @NotNull Item getResult() {
 		return this.result;
 	}
 	
 	@Override
-	public void save(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+	public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
 		this.ensureValid(id);
 		this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-		consumer.accept(new Result(id, this.group == null ? "" : this.group, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement));
+		consumer.accept(new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
 	}
 	
 	private void ensureValid(ResourceLocation id) {
@@ -80,6 +97,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		
 		private final ResourceLocation id;
 		private final String group;
+		private final CookingBookCategory category;
 		private final Ingredient ingredient;
 		private final Item result;
 		private final float experience;
@@ -87,19 +105,20 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		private final Advancement.Builder advancement;
 		private final ResourceLocation advancementId;
 		
-		public Result(ResourceLocation id, String group, Ingredient ingredient, Item result, float experience, int cookingTime, Advancement.Builder advancement) {
+		public Result(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, Advancement.Builder advancement, ResourceLocation advancementId) {
 			this.id = id;
 			this.group = group;
+			this.category = category;
 			this.ingredient = ingredient;
 			this.result = result;
 			this.experience = experience;
 			this.cookingTime = cookingTime;
 			this.advancement = advancement;
-			this.advancementId = new ResourceLocation(this.id.getNamespace(), "recipes/" + this.result.getItemCategory().getRecipeFolderName() + "/" + this.id.getPath());
+			this.advancementId = advancementId;
 		}
 		
 		@Override
-		public JsonObject serializeRecipe() {
+		public @NotNull JsonObject serializeRecipe() {
 			JsonObject jsonobject = new JsonObject();
 			jsonobject.addProperty("type", XSurvive.MOD_ID + ":xsurvive_smelting");
 			this.serializeRecipeData(jsonobject);
@@ -107,23 +126,24 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		}
 		
 		@Override
-		public void serializeRecipeData(JsonObject object) {
+		public void serializeRecipeData(@NotNull JsonObject object) {
 			if (!this.group.isEmpty()) {
 				object.addProperty("group", this.group);
 			}
+			object.addProperty("category", this.category.getSerializedName());
 			object.add("ingredient", this.ingredient.toJson());
-			object.addProperty("result", ForgeRegistries.ITEMS.getKey(this.result).toString());
+			object.addProperty("result", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(this.result)).toString());
 			object.addProperty("experience", this.experience);
 			object.addProperty("cookingtime", this.cookingTime);
 		}
 		
 		@Override
-		public RecipeSerializer<?> getType() {
+		public @NotNull RecipeSerializer<?> getType() {
 			return XSRecipeSerializers.SMELTING_RECIPE.get();
 		}
 		
 		@Override
-		public ResourceLocation getId() {
+		public @NotNull ResourceLocation getId() {
 			return this.id;
 		}
 		

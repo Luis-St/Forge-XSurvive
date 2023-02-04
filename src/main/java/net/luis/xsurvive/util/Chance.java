@@ -12,9 +12,7 @@ import com.mojang.serialization.Codec;
 
 public class Chance {
 	
-	public static final Codec<Chance> CODEC = Codec.DOUBLE.xmap(Chance::new, (chance) -> {
-		return chance.chance;
-	});
+	public static final Codec<Chance> CODEC = Codec.DOUBLE.xmap(Chance::new, (chance) -> chance.chance);
 	
 	private final Random rng = new Random();
 	private final double chance;

@@ -8,6 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	}
 	
 	@Override
-	protected boolean checkCompatibility(Enchantment enchantment) {
+	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment == Enchantments.KNOCKBACK) {
 			return false;
 		} if (enchantment instanceof FireAspectEnchantment) {
@@ -47,7 +48,7 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
 

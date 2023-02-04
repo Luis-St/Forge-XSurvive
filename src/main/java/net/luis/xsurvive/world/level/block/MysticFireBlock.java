@@ -24,6 +24,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -38,8 +39,8 @@ public class MysticFireBlock extends BaseFireBlock {
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
 	public static final BooleanProperty WEST = PipeBlock.WEST;
 	public static final BooleanProperty UP = PipeBlock.UP;
-	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((p_53467_) -> {
-		return p_53467_.getKey() != Direction.DOWN;
+	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((direction) -> {
+		return direction.getKey() != Direction.DOWN;
 	}).collect(Util.toMap());
 	private static final VoxelShape UP_AABB = Block.box(0.0D, 15.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	private static final VoxelShape WEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 1.0D, 16.0D, 16.0D);
@@ -52,7 +53,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	public MysticFireBlock(Properties properties) {
 		super(properties, 3.0F);
 		this.registerDefaultState(
-			this.stateDefinition.any().setValue(NORTH, Boolean.valueOf(false)).setValue(EAST, Boolean.valueOf(false)).setValue(SOUTH, Boolean.valueOf(false)).setValue(WEST, Boolean.valueOf(false)).setValue(UP, Boolean.valueOf(false)));
+			this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE));
 		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
 	}
 	
@@ -77,17 +78,17 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	protected boolean canBurn(BlockState state) {
+	protected boolean canBurn(@NotNull BlockState state) {
 		return true;
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+	public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
 		return this.canSurvive(state, level, pos) ? getState(level, pos) : Blocks.AIR.defaultBlockState();
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
 		return this.shapesCache.get(state);
 	}
 	
@@ -102,7 +103,7 @@ public class MysticFireBlock extends BaseFireBlock {
 			for (Direction direction : Direction.values()) {
 				BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
 				if (property != null) {
-					state = state.setValue(property, Boolean.valueOf(this.canCatchFire(blockGetter, pos, direction)));
+					state = state.setValue(property, this.canCatchFire(blockGetter, pos, direction));
 				}
 			}
 			return state;
@@ -117,7 +118,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	public boolean canSurvive(BlockState state, LevelReader levelReader, BlockPos pos) {
+	public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader, @NotNull BlockPos pos) {
 		return this.canSurvive(levelReader, pos);
 	}
 	

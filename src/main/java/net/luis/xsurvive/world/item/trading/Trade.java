@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -59,7 +60,7 @@ public class Trade implements ItemListing {
 	}
 	
 	@Override
-	public MerchantOffer getOffer(Entity villager, RandomSource rng) {
+	public MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
 		return new MerchantOffer(this.cost, this.secondCost, this.result, this.maxUses, this.villagerXp, this.priceMultiplier);
 	}
 	

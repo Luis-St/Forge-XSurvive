@@ -52,9 +52,7 @@ public class ItemStackHelper {
 			weapons.removeAll(ItemHelper.getWoodWeapons());
 			weapons.removeAll(ItemHelper.getGoldWeapons());
 			weapons.removeAll(ItemHelper.getStoneWeapons());
-			weapons.removeIf((item) -> {
-				return !(item instanceof SwordItem);
-			});
+			weapons.removeIf((item) -> !(item instanceof SwordItem));
 			if (!weapons.isEmpty()) {
 				return new ItemStack(weapons.get(entity.getRandom().nextInt(weapons.size())));
 			}
@@ -77,9 +75,7 @@ public class ItemStackHelper {
 			weapons.removeAll(ItemHelper.getWoodWeapons());
 			weapons.removeAll(ItemHelper.getGoldWeapons());
 			weapons.removeAll(ItemHelper.getStoneWeapons());
-			weapons.removeIf((item) -> {
-				return !(item instanceof AxeItem);
-			});
+			weapons.removeIf((item) -> !(item instanceof AxeItem));
 			if (!weapons.isEmpty()) {
 				return new ItemStack(weapons.get(entity.getRandom().nextInt(weapons.size())));
 			}

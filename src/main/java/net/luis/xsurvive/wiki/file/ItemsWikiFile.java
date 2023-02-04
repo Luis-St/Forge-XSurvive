@@ -95,7 +95,7 @@ public class ItemsWikiFile {
 	
 	private static void addItemProperties(WikiFileBuilder wikiBuilder, Item item) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("Rarity:").append(XSLanguageProvider.getName(new ResourceLocation(item.rarity.name().toString().toLowerCase()))).endLine();
+			builder.append("Rarity:").append(XSLanguageProvider.getName(new ResourceLocation(item.rarity.name().toLowerCase()))).endLine();
 			builder.append("Max stack size:").append(item.maxStackSize).endLine();
 			if (item.canBeDepleted()) {
 				builder.append("Durability:").append(item.maxDamage).endLine();

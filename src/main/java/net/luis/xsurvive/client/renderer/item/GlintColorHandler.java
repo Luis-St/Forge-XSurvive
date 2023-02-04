@@ -1,6 +1,7 @@
 package net.luis.xsurvive.client.renderer.item;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import net.luis.xsurvive.XSurvive;
@@ -38,7 +39,7 @@ public class GlintColorHandler {
 				return optional.orElseThrow(NullPointerException::new).getGlintColor(stack);
 			} else if (stack.getItem() instanceof IGlintColor glintColor) {
 				return glintColor.getGlintColor(stack);
-			} else if (stack.hasTag() && stack.getTag().contains(XSurvive.MOD_NAME)) {
+			} else if (stack.hasTag() && Objects.requireNonNull(stack.getTag()).contains(XSurvive.MOD_NAME)) {
 				CompoundTag tag = stack.getTag().getCompound(XSurvive.MOD_NAME);
 				if (tag.contains(XSurvive.MOD_NAME + "GlintColor")) {
 					return tag.getInt(XSurvive.MOD_NAME + "GlintColor");

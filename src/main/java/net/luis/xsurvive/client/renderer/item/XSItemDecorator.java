@@ -56,10 +56,10 @@ public class XSItemDecorator implements IItemDecorator {
 	private void fillRect(BufferBuilder bufferBuilder, int xStart, int yStart, int xEnd, int yEnd, int red, int green, int blue, int alpha) {
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-		bufferBuilder.vertex((double) (xStart + 0), (double) (yStart + 0), 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex((double) (xStart + 0), (double) (yStart + yEnd), 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex((double) (xStart + xEnd), (double) (yStart + yEnd), 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex((double) (xStart + xEnd), (double) (yStart + 0), 0.0).color(red, green, blue, alpha).endVertex();
+		bufferBuilder.vertex(xStart, yStart, 0.0).color(red, green, blue, alpha).endVertex();
+		bufferBuilder.vertex(xStart, yStart + yEnd, 0.0).color(red, green, blue, alpha).endVertex();
+		bufferBuilder.vertex(xStart + xEnd, yStart + yEnd, 0.0).color(red, green, blue, alpha).endVertex();
+		bufferBuilder.vertex(xStart + xEnd, yStart, 0.0).color(red, green, blue, alpha).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 	}
 	

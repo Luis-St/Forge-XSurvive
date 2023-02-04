@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -26,7 +27,7 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	private final List<ItemStack> stacks;
 	
 	public ClientShulkerBoxTooltip(ShulkerBoxTooltip tooltip) {
-		this.stacks = tooltip.getStacks();
+		this.stacks = tooltip.stacks();
 	}
 	
 	@Override
@@ -35,12 +36,12 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	}
 
 	@Override
-	public int getWidth(Font font) {
+	public int getWidth(@NotNull Font font) {
 		return 162;
 	}
 	
 	@Override
-	public void renderImage(Font font, int x, int y, PoseStack stack, ItemRenderer itemRenderer, int blitOffset) {
+	public void renderImage(@NotNull Font font, int x, int y, @NotNull PoseStack stack, @NotNull ItemRenderer itemRenderer, int blitOffset) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
 				int index = j + i * 9;

@@ -24,13 +24,8 @@ public class WikiListBuilder extends AbstractWikiBuilder<WikiListBuilder> {
 	
 	private String getEntryPrefix(int lineNumber) {
 		return switch (this.list) {
-			case NUMBER -> {
-				yield lineNumber + ". ";
-			} 
-			case POINT -> {
-				yield "- ";
-			}
-			default -> throw new IllegalArgumentException("Unexpected value: " + this.list);
+			case NUMBER -> lineNumber + ". ";
+			case POINT -> "- ";
 		};
 	}
 	

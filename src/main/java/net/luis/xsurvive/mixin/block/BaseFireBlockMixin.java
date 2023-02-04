@@ -39,17 +39,11 @@ public abstract class BaseFireBlockMixin {
 		if (!level.isClientSide) {
 			EntityProvider.getSafe(entity).ifPresent((handler) -> {
 				if (state.getBlock() instanceof SoulFireBlock) {
-					handler.doAndBroadcast(() -> {
-						handler.setFireType(EntityFireType.SOUL_FIRE);
-					});
+					handler.doAndBroadcast(() -> handler.setFireType(EntityFireType.SOUL_FIRE));
 				} else if (state.getBlock() instanceof MysticFireBlock) {
-					handler.doAndBroadcast(() -> {
-						handler.setFireType(EntityFireType.MYSTIC_FIRE);
-					});
+					handler.doAndBroadcast(() -> handler.setFireType(EntityFireType.MYSTIC_FIRE));
 				} else {
-					handler.doAndBroadcast(() -> {
-						handler.setFireType(EntityFireType.FIRE);
-					});
+					handler.doAndBroadcast(() -> handler.setFireType(EntityFireType.FIRE));
 				}
 			});
 		}

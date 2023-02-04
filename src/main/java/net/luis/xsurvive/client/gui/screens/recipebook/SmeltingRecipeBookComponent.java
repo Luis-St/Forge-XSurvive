@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -22,12 +23,12 @@ public class SmeltingRecipeBookComponent extends AbstractFurnaceRecipeBookCompon
 	private static final Component FILTER_NAME = Component.translatable(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable");
 	
 	@Override
-	protected Component getRecipeFilterName() {
+	protected @NotNull Component getRecipeFilterName() {
 		return FILTER_NAME;
 	}
 	
 	@Override
-	protected Set<Item> getFuelItems() {
+	protected @NotNull Set<Item> getFuelItems() {
 		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
 			return item.getBurnTime(new ItemStack(item), XSRecipeTypes.SMELTING.get()) > 0;
 		}).collect(Collectors.toSet());

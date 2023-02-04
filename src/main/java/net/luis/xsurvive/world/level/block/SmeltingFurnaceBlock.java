@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -39,23 +40,23 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 		return new SmeltingFurnaceBlockEntity(pos, state);
 	}
 	
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
 		return createFurnaceTicker(level, type, XSBlockEntityTypes.SMELTING_FURNACE.get());
 	}
 
 	@Override
-	protected void openContainer(Level level, BlockPos pos, Player player) {
+	protected void openContainer(Level level, @NotNull BlockPos pos, @NotNull Player player) {
 		if (level.getBlockEntity(pos) instanceof SmeltingFurnaceBlockEntity smeltingBlockEntity) {
 			player.openMenu(smeltingBlockEntity);
 		}
 	}
 	
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rng) {
+	public void animateTick(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource rng) {
 		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY();

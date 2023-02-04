@@ -22,8 +22,8 @@ public class XSSpiderAttackGoal extends MeleeAttackGoal {
 	}
 	
 	@Override
-	protected double getAttackReachSqr(LivingEntity p_33825_) {
-		return (double) (4.0F + p_33825_.getBbWidth());
+	protected double getAttackReachSqr(LivingEntity entity) {
+		return 4.0F + entity.getBbWidth();
 	}
 	
 }

@@ -13,6 +13,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Vex;
 
+import java.util.Objects;
+
 /**
  *
  * @author Luis-st
@@ -22,23 +24,23 @@ import net.minecraft.world.entity.monster.Vex;
 @Mixin(targets = "net.minecraft.world.entity.monster.Evoker$EvokerSummonSpellGoal")
 public abstract class EvokerSummonSpellGoalMixin {
 	
-	@Shadow
-	private Evoker this$0;
+/*	@Shadow
+	private Evoker this$0;*/
 	
 	@Inject(method = "performSpellCasting", at = @At("HEAD"), cancellable = true)
 	protected void performSpellCasting(CallbackInfo callback) {
-		if (this.this$0.level instanceof ServerLevel level) {
+/*		if (this.this$0.level instanceof ServerLevel level) {
 			int i = this.this$0.getRandom().nextInt(4);
 			for (int j = 0; j < 3 + i; ++j) {
 				BlockPos pos = this.this$0.blockPosition().offset(-2 + this.this$0.getRandom().nextInt(5), 1, -2 + this.this$0.getRandom().nextInt(5));
-				Vex vex = EntityType.VEX.create(level);
+				Vex vex = Objects.requireNonNull(EntityType.VEX.create(level));
 				vex.moveTo(pos, 0.0F, 0.0F);
 				vex.finalizeSpawn(level, level.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
 				vex.setOwner(this.this$0);
 				vex.setBoundOrigin(pos);
 				level.addFreshEntityWithPassengers(vex);
 			}
-		}
+		}*/
 		callback.cancel();
 	}
 	

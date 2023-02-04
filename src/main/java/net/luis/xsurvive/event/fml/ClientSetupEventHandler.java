@@ -16,14 +16,14 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 @EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
 public class ClientSetupEventHandler {
-
+	
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
@@ -33,17 +33,17 @@ public class ClientSetupEventHandler {
 		replaceGammaOption(minecraft);
 		XSurvive.LOGGER.info("Replace gamma option and reload options");
 		minecraft.options.load();
-		XSurvive.LOGGER.info("Gamma value is now {}", minecraft.options.gamma.get().doubleValue());
+		XSurvive.LOGGER.info("Gamma value is now {}", minecraft.options.gamma.get());
 	}
-
+	
 	private static void replaceGammaOption(Minecraft minecraft) {
-		minecraft.options.gamma = new OptionInstance<Double>("options.gamma", OptionInstance.noTooltip(), (component, value) -> {
+		minecraft.options.gamma = new OptionInstance<>("options.gamma", OptionInstance.noTooltip(), (component, value) -> {
 			int gamma = (int) (value * 100.0);
 			if (gamma == 0) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.min"));
 			} else if (gamma == 50) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.default"));
-			} else if (100 > gamma && gamma >= 99) {
+			} else if (gamma == 99) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.max"));
 			} else if (gamma >= 100) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.infinite"));
@@ -54,5 +54,5 @@ public class ClientSetupEventHandler {
 			
 		});
 	}
-
+	
 }

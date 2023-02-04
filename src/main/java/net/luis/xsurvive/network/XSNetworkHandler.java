@@ -43,13 +43,13 @@ public enum XSNetworkHandler {
 	}
 	
 	public void registerPackets() {
-		this.registerPacket(UpdatePlayerCapabilityPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdatePlayerCapabilityPacket::encode, UpdatePlayerCapabilityPacket::new, UpdatePlayerCapabilityPacket::handle);
-		this.registerPacket(UpdateTridentGlintColorPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdateTridentGlintColorPacket::encode, UpdateTridentGlintColorPacket::new, UpdateTridentGlintColorPacket::handle);
-		this.registerPacket(UpdateEntityCapabilityPacket.class, NetworkDirection.PLAY_TO_CLIENT, UpdateEntityCapabilityPacket::encode, UpdateEntityCapabilityPacket::new, UpdateEntityCapabilityPacket::handle);
+		this.registerPacket(UpdatePlayerCapabilityPacket.class, UpdatePlayerCapabilityPacket::encode, UpdatePlayerCapabilityPacket::new, UpdatePlayerCapabilityPacket::handle);
+		this.registerPacket(UpdateTridentGlintColorPacket.class, UpdateTridentGlintColorPacket::encode, UpdateTridentGlintColorPacket::new, UpdateTridentGlintColorPacket::handle);
+		this.registerPacket(UpdateEntityCapabilityPacket.class, UpdateEntityCapabilityPacket::encode, UpdateEntityCapabilityPacket::new, UpdateEntityCapabilityPacket::handle);
 	}
 	
-	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, NetworkDirection direction, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {
-		this.simpleChannel.messageBuilder(clazz, id++, direction).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
+	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {
+		this.simpleChannel.messageBuilder(clazz, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
 	}
 	
 	public SimpleChannel getChannel() {
@@ -75,9 +75,7 @@ public enum XSNetworkHandler {
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayers(T packet, ServerPlayer... players) {
-		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> {
-			return player.connection.connection;
-		}).collect(Collectors.toList());
+		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> player.connection.connection).collect(Collectors.toList());
 		this.getChannel().send(PacketDistributor.NMLIST.with(() -> connections), packet);
 	}
 	

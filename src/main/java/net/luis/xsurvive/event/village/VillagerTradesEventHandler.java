@@ -56,26 +56,26 @@ public class VillagerTradesEventHandler {
 			trade3.add(SimpleTradeBuilder.item(4, Items.CHAINMAIL_CHESTPLATE, 1).maxUses(12).villagerXp(10).multiplier(0.2F).build());
 			trade3.add(SimpleTradeBuilder.item(5, Items.SHIELD, 1).maxUses(12).villagerXp(10).multiplier(0.2F).build());
 			
-			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_LEGGINGS, 14, 3, 4, 0.2F)); // TEST
-			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_BOOTS, 8, 3, 4, 0.2F)); // TEST
+			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_LEGGINGS, 14, 3, 4, 0.2F));
+			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_BOOTS, 8, 3, 4, 0.2F));
 			
-			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_HELMET, 8, 3, 5, 0.2F)); // TEST
-			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_CHESTPLATE, 16, 3, 5, 0.2F)); // TEST
+			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_HELMET, 8, 3, 5, 0.2F));
+			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_CHESTPLATE, 16, 3, 5, 0.2F));
 		} else if (event.getType() == VillagerProfession.LIBRARIAN) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.PAPER, 24, 1).maxUses(16).villagerXp(2).multiplier(0.05F).build());
-			trade1.add(DynamicEnchantedTrades.randomEnchantedBook(1)); // TEST 
+			trade1.add(DynamicEnchantedTrades.randomEnchantedBook(1));
 			trade1.add(SimpleTradeBuilder.item(9, Items.BOOKSHELF, 1).maxUses(12).villagerXp(2).multiplier(0.05F).build());
 			
 			trade2.add(SimpleTradeBuilder.emerald(Items.BOOK, 4, 1).maxUses(12).villagerXp(10).multiplier(0.05F).build());
-			trade2.add(DynamicEnchantedTrades.randomEnchantedBook(2)); // TEST
+			trade2.add(DynamicEnchantedTrades.randomEnchantedBook(2));
 			trade2.add(SimpleTradeBuilder.item(1, Items.LANTERN, 1).maxUses(12).villagerXp(5).multiplier(0.05F).build());
 			
 			trade3.add(SimpleTradeBuilder.emerald(Items.INK_SAC, 5, 1).maxUses(12).villagerXp(20).multiplier(0.05F).build());
-			trade3.add(DynamicEnchantedTrades.randomEnchantedBook(3)); // TEST
+			trade3.add(DynamicEnchantedTrades.randomEnchantedBook(3));
 			trade3.add(SimpleTradeBuilder.item(1, Items.GLASS, 4).maxUses(12).villagerXp(10).multiplier(0.05F).build());
 			
 			trade4.add(SimpleTradeBuilder.emerald(Items.WRITABLE_BOOK, 2, 1).maxUses(12).villagerXp(30).multiplier(0.05F).build());
-			trade4.add(DynamicEnchantedTrades.randomEnchantedBook(4)); // TEST
+			trade4.add(DynamicEnchantedTrades.randomEnchantedBook(4));
 			trade4.add(SimpleTradeBuilder.item(5, Items.CLOCK, 1).maxUses(12).villagerXp(15).multiplier(0.05F).build());
 			trade4.add(SimpleTradeBuilder.item(4, Items.COMPASS, 1).maxUses(12).villagerXp(15).multiplier(0.05F).build());
 			

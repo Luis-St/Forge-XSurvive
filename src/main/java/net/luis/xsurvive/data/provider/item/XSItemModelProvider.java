@@ -1,5 +1,6 @@
 package net.luis.xsurvive.data.provider.item;
 
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import net.luis.xsurvive.XSurvive;
@@ -14,6 +15,7 @@ import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -24,12 +26,12 @@ import net.minecraftforge.registries.RegistryObject;
 public class XSItemModelProvider extends ItemModelProvider {
 
 	public XSItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, XSurvive.MOD_ID, existingFileHelper);
+		super(generator.getPackOutput(), XSurvive.MOD_ID, existingFileHelper);
 	}
 
 	@Override
 	protected void registerModels() {
-		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
+		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
 			if (item instanceof TieredItem tieredItem) {
 				this.handheldItem(tieredItem);
 			} else {
@@ -39,19 +41,19 @@ public class XSItemModelProvider extends ItemModelProvider {
 	}
 	
 	private void generatedItem(Item item) {
-		ResourceLocation location = ForgeRegistries.ITEMS.getKey(item);
+		ResourceLocation location = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item));
 		ModelFile model = new ExistingModelFile(new ResourceLocation("item/generated"), this.existingFileHelper);
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", new ResourceLocation(XSurvive.MOD_ID, "item/" + location.getPath()));
 	}
 	
 	private void handheldItem(TieredItem tool) {
-		ResourceLocation location = ForgeRegistries.ITEMS.getKey(tool);
+		ResourceLocation location = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(tool));
 		ModelFile model = new ExistingModelFile(new ResourceLocation("item/handheld"), this.existingFileHelper);
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", new ResourceLocation(XSurvive.MOD_ID, "item/" + location.getPath()));
 	}
 	
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "XSurvive Item Models";
 	}
 

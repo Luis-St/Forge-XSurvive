@@ -43,7 +43,7 @@ public abstract class EndCrystalMixin extends Entity {
 			if (!this.isRemoved() && !this.level.isClientSide) {
 				this.remove(Entity.RemovalReason.KILLED);
 				if (!source.isExplosion()) {
-					this.level.explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Explosion.BlockInteraction.DESTROY);
+					this.level.explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Level.ExplosionInteraction.TNT);
 				}
 				this.onDestroyedBy(source);
 			}

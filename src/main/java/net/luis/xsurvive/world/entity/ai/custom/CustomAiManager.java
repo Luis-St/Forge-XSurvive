@@ -21,7 +21,7 @@ public enum CustomAiManager {
 	
 	private final Map<Class<?>, CustomAiFactory<?>> factories = Maps.newHashMap();
 	
-	private CustomAiManager() {
+	CustomAiManager() {
 		
 	}
 	

@@ -4,6 +4,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.data.provider.block.XSBlockStateProvider;
 import net.luis.xsurvive.data.provider.item.XSItemModelProvider;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
+import net.luis.xsurvive.data.provider.level.XSLevelProvider;
 import net.luis.xsurvive.data.provider.loot.XSGlobalLootModifierProvider;
 import net.luis.xsurvive.data.provider.loottable.XSLootTableProvider;
 import net.luis.xsurvive.data.provider.recipe.XSRecipeProvider;
@@ -12,10 +13,13 @@ import net.luis.xsurvive.data.provider.tag.XSBlockTagsProvider;
 import net.luis.xsurvive.data.provider.tag.XSItemTagsProvider;
 import net.luis.xsurvive.data.provider.tag.XSPoiTypeTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+
+import java.util.Set;
 
 /**
  * 
@@ -35,12 +39,13 @@ public class GatherDataEventHandler {
 			generator.addProvider(event.includeClient(), new XSLanguageProvider(generator));
 			generator.addProvider(event.includeServer(), new XSLootTableProvider(generator));
 			generator.addProvider(event.includeServer(), new XSRecipeProvider(generator));
-			XSBlockTagsProvider blockTagsProvider = new XSBlockTagsProvider(generator, event.getExistingFileHelper());
+			XSBlockTagsProvider blockTagsProvider = new XSBlockTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper());
 			generator.addProvider(event.includeServer(), blockTagsProvider);
-			generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, blockTagsProvider, event.getExistingFileHelper()));
-			generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getExistingFileHelper()));
-			generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, event.getLookupProvider(), blockTagsProvider, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator));
+			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), XSLevelProvider.createProvider(), Set.of(XSurvive.MOD_ID)));
 		}
 	}
 	

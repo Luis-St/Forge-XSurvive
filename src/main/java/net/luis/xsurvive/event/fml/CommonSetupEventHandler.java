@@ -29,11 +29,11 @@ public class CommonSetupEventHandler {
 	@SubscribeEvent
 	public static void commonSetup(FMLCommonSetupEvent event) {
 		DependencyCallWrapper.wrapCommonSetup();
-		registerBrewingRecipies();
+		registerBrewingRecipes();
 		registerCustomAis();
 	}
 	
-	private static void registerBrewingRecipies() {
+	private static void registerBrewingRecipes() {
 		BrewingRecipeUtils.addRecipes(Items.SNOWBALL, XSPotions.FORST.get(), XSPotions.LONG_FORST.get(), XSPotions.STRONG_FORST.get());
 		BrewingRecipeUtils.addRecipes(Items.WITHER_ROSE, XSPotions.WITHER.get(), XSPotions.LONG_WITHER.get(), XSPotions.STRONG_WITHER.get());
 		BrewingRecipeUtils.addRecipes(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get(), XSPotions.LONG_DIG_SPEED.get(), XSPotions.STRONG_DIG_SPEED.get());

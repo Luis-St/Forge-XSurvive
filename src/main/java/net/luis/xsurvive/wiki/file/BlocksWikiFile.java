@@ -1,6 +1,7 @@
 package net.luis.xsurvive.wiki.file;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -19,6 +20,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.tags.ITagManager;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -87,9 +89,8 @@ public class BlocksWikiFile {
 		});
 	}
 	
-	@Nullable
-	private static String getToolForBlock(Block block) {
-		ITagManager<Block> tagManager = ForgeRegistries.BLOCKS.tags();
+	private static @NotNull String getToolForBlock(Block block) {
+		ITagManager<Block> tagManager = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags());
 		if (tagManager.getTag(BlockTags.MINEABLE_WITH_PICKAXE).contains(block)) {
 			return "Pickaxe";
 		} else if (tagManager.getTag(BlockTags.MINEABLE_WITH_AXE).contains(block)) {

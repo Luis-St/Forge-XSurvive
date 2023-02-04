@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 public class GlintColorProvider implements ICapabilityProvider {
 	
@@ -15,7 +16,7 @@ public class GlintColorProvider implements ICapabilityProvider {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
 		return XSCapabilities.GLINT_COLOR.orEmpty(capability, this.optional);
 	}
 	

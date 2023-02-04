@@ -21,6 +21,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -31,7 +32,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 	
 	public XSGlobalLootModifierProvider(DataGenerator generator) {
-		super(generator, XSurvive.MOD_ID);
+		super(generator.getPackOutput(), XSurvive.MOD_ID);
 	}
 	
 	@Override
@@ -63,7 +64,7 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 	}
 	
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "XSurvive Global Loot Modifiers";
 	}
 	

@@ -55,8 +55,8 @@ public class RarityList<T> {
 		return this.values.add(value);
 	}
 	
-	public boolean addAll(RarityList<T> list) {
-		return this.values.addAll(list.values);
+	public void addAll(RarityList<T> list) {
+		this.values.addAll(list.values);
 	}
 	
 	@Override
@@ -69,9 +69,7 @@ public class RarityList<T> {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RarityList{rarity=").append(this.rarity).append(", values=").append(this.values).append("}");
-		return builder.toString();
+		return "RarityList{rarity=" + this.rarity + ", values=" + this.values + "}";
 	}
 	
 	public static <T> Codec<RarityList<T>> codec(Codec<T> codec) {

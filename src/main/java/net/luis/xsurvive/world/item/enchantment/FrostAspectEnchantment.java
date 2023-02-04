@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.FireAspectEnchantment;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -21,7 +22,7 @@ public class FrostAspectEnchantment extends FireAspectEnchantment implements Wik
 	}
 	
 	@Override
-	protected boolean checkCompatibility(Enchantment enchantment) {
+	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment instanceof FireAspectEnchantment) {
 			return enchantment != Enchantments.FIRE_ASPECT;
 		}

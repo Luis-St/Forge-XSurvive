@@ -1,10 +1,6 @@
 package net.luis.xsurvive.world.entity;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.ItemStackHelper;
@@ -24,17 +20,7 @@ import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.animal.Turtle;
-import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Drowned;
-import net.minecraft.world.entity.monster.ElderGuardian;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.monster.Endermite;
-import net.minecraft.world.entity.monster.Ghast;
-import net.minecraft.world.entity.monster.Guardian;
-import net.minecraft.world.entity.monster.MagmaCube;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Shulker;
-import net.minecraft.world.entity.monster.Strider;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,8 +28,12 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -55,7 +45,7 @@ public class EntityHelper {
 	}
 	
 	public static boolean isAffectedByImpaling(Entity entity) {
-		return entity instanceof AbstractFish || entity instanceof Dolphin || entity instanceof Squid || entity instanceof Guardian || entity instanceof ElderGuardian || entity instanceof Drowned || entity instanceof Turtle;
+		return entity instanceof AbstractFish || entity instanceof Dolphin || entity instanceof Squid || entity instanceof Guardian || entity instanceof Drowned || entity instanceof Turtle;
 	}
 	
 	public static boolean isAffectedByFrost(Entity entity) {
@@ -77,7 +67,7 @@ public class EntityHelper {
 	}
 	
 	public static void updateAttributeModifier(Player player, Attribute attribute, Operation operation, UUID uuid, String name, double to, double from) {
-		AttributeInstance instance = player.getAttribute(attribute);
+		AttributeInstance instance = Objects.requireNonNull(player.getAttribute(attribute));
 		AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to, operation);
 		boolean hasModifier = instance.getModifier(uuid) != null;
 		if (to == from && !hasModifier) {
@@ -117,7 +107,7 @@ public class EntityHelper {
 	public static void addAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
 		AttributeMap attributes = entity.getAttributes();
 		if (attributes.hasAttribute(attribute)) {
-			AttributeInstance instance = attributes.getInstance(attribute);
+			AttributeInstance instance = Objects.requireNonNull(attributes.getInstance(attribute));
 			if (instance.getModifier(modifier.getId()) == null) {
 				instance.addTransientModifier(modifier);
 			}

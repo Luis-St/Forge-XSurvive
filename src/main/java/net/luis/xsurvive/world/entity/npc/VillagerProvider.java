@@ -7,6 +7,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -25,7 +26,7 @@ public class VillagerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
 		return XSCapabilities.VILLAGER.orEmpty(capability, this.optional);
 	}
 

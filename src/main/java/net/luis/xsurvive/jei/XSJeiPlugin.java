@@ -34,6 +34,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -52,7 +53,7 @@ public class XSJeiPlugin implements IModPlugin {
 	}
 	
 	@Override
-	public ResourceLocation getPluginUid() {
+	public @NotNull ResourceLocation getPluginUid() {
 		return this.pluginId;
 	}
 	
@@ -110,7 +111,7 @@ public class XSJeiPlugin implements IModPlugin {
 	private void registerRuneAnvilRecipes(IRecipeRegistration registration, IVanillaRecipeFactory recipeFactory) {
 		List<IJeiAnvilRecipe> recipes = Lists.newArrayList();
 		for (GlintColorItem item : ItemHelper.getRunes()) {
-			for (ItemStack stack : ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new).filter(ItemStack::isEnchantable).collect(Collectors.toList())) {
+			for (ItemStack stack : ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new).filter(ItemStack::isEnchantable).toList()) {
 				if (!stack.is(Items.BOOK) && !stack.is(XSItems.ENCHANTED_GOLDEN_BOOK.get())) {
 					ItemStack enchantedStack = this.enchantItemRandomly(stack);
 					ItemStack glintColorStack = this.createResultForRune(enchantedStack, item.getGlintColor(new ItemStack(item)));

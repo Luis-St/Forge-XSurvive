@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -27,7 +28,7 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
 		return XSCapabilities.ENTITY.orEmpty(capability, this.optional);
 	}
 

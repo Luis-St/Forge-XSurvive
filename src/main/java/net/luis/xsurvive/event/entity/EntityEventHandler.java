@@ -1,7 +1,5 @@
 package net.luis.xsurvive.event.entity;
 
-import java.util.UUID;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
@@ -23,12 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
@@ -36,24 +29,13 @@ import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.ElderGuardian;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Pillager;
-import net.minecraft.world.entity.monster.Skeleton;
-import net.minecraft.world.entity.monster.Spider;
-import net.minecraft.world.entity.monster.Vex;
-import net.minecraft.world.entity.monster.Vindicator;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -62,6 +44,9 @@ import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  *
@@ -82,13 +67,13 @@ public class EntityEventHandler {
 		if (event.getEntity() instanceof LivingEntity entity) {
 			if (!(entity instanceof Player)) {
 				if (entity instanceof EnderDragon) {
-					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
 				} else if (entity instanceof WitherBoss) {
-					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
 				} else if (entity instanceof ElderGuardian) {
-					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
 				} else if (entity instanceof Warden) {
-					entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(1000.0);
+					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
 				} else if (entity instanceof Enemy) {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
 					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
@@ -107,7 +92,7 @@ public class EntityEventHandler {
 		if (entity instanceof Player player) {
 			PlayerProvider.get(player).broadcastChanges();
 		} else if (entity instanceof Blaze blaze) {
-			blaze.goalSelector.removeAllGoals();
+			blaze.goalSelector.removeAllGoals(goal -> true);
 			blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
 			blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0D));
 			blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0D, 0.0F));
@@ -124,18 +109,18 @@ public class EntityEventHandler {
 		} else if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(creeper.level, creeper.blockPosition());
 			iCreeper.setExplosionRadius((int) Math.max(3.0, instance.getEffectiveDifficulty()));
-			if (instance.getSpecialMultiplier() >= 1.0 &&  0.5 > rng.nextDouble()) {
+			if (instance.getSpecialMultiplier() >= 1.0 && 0.5 > rng.nextDouble()) {
 				iCreeper.setPowered(true);
 			}
 		} else if (entity instanceof Spider spider) {
-			spider.goalSelector.removeAllGoals();
+			spider.goalSelector.removeAllGoals(goal -> true);
 			spider.goalSelector.addGoal(1, new FloatGoal(spider));
 			spider.goalSelector.addGoal(3, new LeapAtTargetGoal(spider, 0.4F));
 			spider.goalSelector.addGoal(4, new XSSpiderAttackGoal(spider));
 			spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8D));
 			spider.goalSelector.addGoal(6, new LookAtPlayerGoal(spider, Player.class, 8.0F));
 			spider.goalSelector.addGoal(6, new RandomLookAroundGoal(spider));
-			spider.targetSelector.removeAllGoals();
+			spider.targetSelector.removeAllGoals(goal -> true);
 			spider.targetSelector.addGoal(1, new HurtByTargetGoal(spider));
 			spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
 			spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
@@ -145,7 +130,7 @@ public class EntityEventHandler {
 				EntityHelper.equipEntityForDifficulty(skeleton, instance);
 			}
 		} else if (entity instanceof ZombifiedPiglin zombifiedPiglin) {
-			zombifiedPiglin.targetSelector.removeAllGoals();
+			zombifiedPiglin.targetSelector.removeAllGoals(goal -> true);
 			zombifiedPiglin.targetSelector.addGoal(1, new HurtByTargetGoal(zombifiedPiglin).setAlertOthers());
 			zombifiedPiglin.targetSelector.addGoal(2, new XSZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
 			zombifiedPiglin.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(zombifiedPiglin, true));
@@ -177,7 +162,7 @@ public class EntityEventHandler {
 		Entity entity = event.getEntity();
 		Entity vehicle = event.getEntityBeingMounted();
 		if (event.isMounting()) {
-			if (entity instanceof EnderMan enderMan) {
+			if (entity instanceof EnderMan) {
 				if (vehicle instanceof Boat || vehicle instanceof AbstractMinecart) {
 					event.setCanceled(true);
 				}
@@ -200,7 +185,7 @@ public class EntityEventHandler {
 			int explosionLevel = arrow.getExplosionLevel();
 			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {
 				Vec3 location = hitResult.getLocation();
-				event.getProjectile().level.explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Explosion.BlockInteraction.BREAK);
+				event.getProjectile().level.explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.NONE);
 			}
 		}
 	}

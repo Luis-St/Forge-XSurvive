@@ -28,6 +28,8 @@ import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPattern.BlockPatternMatch;
 import net.minecraft.world.phys.AABB;
 
+import java.util.Objects;
+
 /**
  * 
  * @author Luis-st
@@ -48,7 +50,7 @@ public abstract class WitherSkullBlockMixin {
 			BlockState state = blockEntity.getBlockState();
 			boolean witherSkull = state.is(Blocks.WITHER_SKELETON_SKULL) || state.is(Blocks.WITHER_SKELETON_WALL_SKULL);
 			if (witherSkull && pos.getY() >= level.getMinBuildHeight() && level.getDifficulty() != Difficulty.PEACEFUL) {
-				BlockPattern pattern = getOrCreateWitherFull();
+				BlockPattern pattern = Objects.requireNonNull(getOrCreateWitherFull());
 				BlockPatternMatch patternMatch = pattern.find(level, pos);
 				if (patternMatch != null) {
 					if (level.getBiome(pos).is(Biomes.THE_END)) {
@@ -67,7 +69,7 @@ public abstract class WitherSkullBlockMixin {
 								level.levelEvent(2001, inWorld.getPos(), Block.getId(inWorld.getState()));
 							}
 						}
-						WitherBoss wither = EntityType.WITHER.create(level);
+						WitherBoss wither = Objects.requireNonNull(EntityType.WITHER.create(level));
 						BlockPos spawnPos = patternMatch.getBlock(1, 2, 0).getPos();
 						wither.moveTo((double) spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
 						wither.yBodyRot = patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
@@ -93,17 +95,16 @@ public abstract class WitherSkullBlockMixin {
 			return true;
 		} else if (128 >= pos.getY() && pos.getY() >= 121) {
 			return false;
-		} else if (5 > pos.getY()) {
-			return false;
+		} else {
+			return 5 <= pos.getY();
 		}
-		return true;
 	}
 	
 	private static boolean checkSpawnArea(Level level, BlockPatternMatch patternMatch) {
 		BlockPos pos = patternMatch.getBlock(1, 1, 0).getPos();
-		return level.getBlockStates(new AABB(pos.below().south().west(), pos.above().north().east())).filter((state) -> {
+		return level.getBlockStates(new AABB(pos.below().south().west(), pos.above().north().east())).anyMatch((state) -> {
 			return !state.isAir() && !state.is(Blocks.WITHER_SKELETON_SKULL) && !state.is(Blocks.WITHER_SKELETON_WALL_SKULL) && !state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
-		}).findFirst().isPresent();
+		});
 	}
 	
 }

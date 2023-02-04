@@ -35,9 +35,7 @@ public class WeightCollection<T> {
 	private WeightCollection(List<Pair<Integer, T>> list) {
 		this.map = Maps.newTreeMap();
 		this.random = new Random();
-		list.forEach((pair) -> {
-			this.add(pair.getFirst(), pair.getSecond());
-		});
+		list.forEach((pair) -> this.add(pair.getFirst(), pair.getSecond()));
 	}
 
 	public void add(int weight, T value) {

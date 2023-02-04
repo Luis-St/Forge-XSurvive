@@ -1,9 +1,6 @@
 package net.luis.xsurvive;
 
-import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.XSEntityTypes;
@@ -11,7 +8,6 @@ import net.luis.xsurvive.world.entity.ai.village.XSPoiTypes;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
-import net.luis.xsurvive.world.item.XSCreativeModeTab;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
@@ -24,10 +20,10 @@ import net.luis.xsurvive.world.level.levelgen.feature.XSOreFeatures;
 import net.luis.xsurvive.world.level.levelgen.placement.XSOrePlacements;
 import net.luis.xsurvive.world.level.storage.loot.XSGlobalLootModifiers;
 import net.luis.xsurvive.world.level.storage.loot.predicates.XSLootItemConditions;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.slf4j.Logger;
 
 /**
  * 
@@ -41,8 +37,6 @@ public class XSurvive {
 	public static final String MOD_ID = "xsurvive";
 	public static final String MOD_NAME = "XSurvive";
 	public static final Logger LOGGER = LogUtils.getLogger();
-	public static final CreativeModeTab GOLDEN_BOOK_TAB = new XSCreativeModeTab(XSurvive.MOD_ID + ".golden_book", XSItems.ENCHANTED_GOLDEN_BOOK);
-	public static final CreativeModeTab RUNE_TAB = new XSCreativeModeTab(XSurvive.MOD_ID + ".rune", XSItems.RAINBOW_RUNE);
 	
 	public XSurvive() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -61,8 +55,8 @@ public class XSurvive {
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSEntityTypes.ENTITY_TYPES.register(eventBus);
-		XSOreFeatures.CONFIGURED_FEATURES.register(eventBus);
-		XSOrePlacements.PLACED_FEATURES.register(eventBus);
+		XSOreFeatures.register();
+		XSOrePlacements.register();
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSRecipeBookTypes.register();
 		XSNetworkHandler.INSTANCE.initChannel();

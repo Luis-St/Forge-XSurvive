@@ -36,40 +36,28 @@ public class XSBlocks {
 		return new SmeltingFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).lightLevel((state) -> {
 			return state.getValue(BlockStateProperties.LIT) ? 13 : 0;
 		}));
-	}, CreativeModeTab.TAB_DECORATIONS);
+	}, true);
 	public static final RegistryObject<HoneyMelonBlock> HONEY_MELON = register("honey_melon", () -> {
 		return new HoneyMelonBlock(BlockBehaviour.Properties.of(Material.VEGETABLE, MaterialColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD));
-	}, CreativeModeTab.TAB_BUILDING_BLOCKS);
+	}, true);
 	public static final RegistryObject<StemBlock> HONEY_MELON_STEM = register("honey_melon_stem", () -> {
-		return new StemBlock(HONEY_MELON.get(), () -> {
-			return XSItems.HONEY_MELON_SEEDS.get();
-		}, BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP));
+		return new StemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP));
 	});
 	public static final RegistryObject<AttachedStemBlock> ATTACHED_HONEY_MELON_STEM = register("attached_honey_melon_stem", () -> {
-		return new AttachedStemBlock(HONEY_MELON.get(), () -> {
-			return XSItems.HONEY_MELON_SEEDS.get();
-		}, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WOOD));
+		return new AttachedStemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WOOD));
 	});
 	public static final RegistryObject<MysticFireBlock> MYSTIC_FIRE = register("mystic_fire", () ->  {
-		return new MysticFireBlock(BlockBehaviour.Properties.of(Material.FIRE, MaterialColor.FIRE).noCollission().instabreak().lightLevel((state) -> {
-			return 15;
-		}).sound(SoundType.WOOL));
+		return new MysticFireBlock(BlockBehaviour.Properties.of(Material.FIRE, MaterialColor.FIRE).noCollission().instabreak().lightLevel((state) -> 15).sound(SoundType.WOOL));
 	});
 	
 	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier) {
-		return register(name, blockSupplier, false, null);
+		return register(name, blockSupplier, false);
 	}
 	
-	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier, @Nullable CreativeModeTab tab) {
-		return register(name, blockSupplier, true, tab);
-	}
-	
-	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier, boolean registerItem, @Nullable CreativeModeTab tab) {
+	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier, boolean registerItem) {
 		RegistryObject<T> blockObject = BLOCKS.register(name, blockSupplier);
 		if (registerItem) {
-			ITEMS.register(name, () -> {
-				return new BlockItem(blockObject.get(), new Item.Properties().tab(tab));
-			});
+			ITEMS.register(name, () -> new BlockItem(blockObject.get(), new Item.Properties()));
 		}
 		return blockObject;
 	}

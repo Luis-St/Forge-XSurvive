@@ -71,7 +71,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			Map<Enchantment, Integer> resultEnchantments = EnchantmentHelper.getEnchantments(resultStack);
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
-			boolean enchantedBook = false;
+			boolean enchantedBook;
 			boolean decreaseRepairCost = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -151,21 +151,12 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 								survival = true;
 							} else {
 								resultEnchantments.put(rightEnchantment, rightLevel);
-								int rarityCost = 0;
-								switch (rightEnchantment.getRarity()) {
-									case COMMON:
-										rarityCost = 1;
-										break;
-									case UNCOMMON:
-										rarityCost = 2;
-										break;
-									case RARE:
-										rarityCost = 4;
-										break;
-									case VERY_RARE:
-										rarityCost = 8;
-										break;
-								}
+								int rarityCost = switch (rightEnchantment.getRarity()) {
+									case COMMON -> 1;
+									case UNCOMMON -> 2;
+									case RARE -> 4;
+									case VERY_RARE -> 8;
+								};
 								if (enchantedBook) {
 									rarityCost = Math.max(1, rarityCost / 2);
 								}

@@ -10,6 +10,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -24,17 +25,17 @@ public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	}
 
 	@Override
-	protected Component getDefaultName() {
+	protected @NotNull Component getDefaultName() {
 		return Component.translatable(XSurvive.MOD_ID + ".container.smelting_furnace");
 	}
 	
 	@Override
-	protected int getBurnDuration(ItemStack stack) {
+	protected int getBurnDuration(@NotNull ItemStack stack) {
 		return super.getBurnDuration(stack) / 2;
 	}
 
 	@Override
-	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
+	protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
 		return new SmeltingFurnaceMenu(id, inventory, this, this.dataAccess);
 	}
 

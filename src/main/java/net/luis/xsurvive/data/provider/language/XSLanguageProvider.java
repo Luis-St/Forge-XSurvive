@@ -17,6 +17,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * 
@@ -27,7 +30,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class XSLanguageProvider extends LanguageProvider {
 	
 	public XSLanguageProvider(DataGenerator generator) {
-		super(generator, XSurvive.MOD_ID, "en_us");
+		super(generator.getPackOutput(), XSurvive.MOD_ID, "en_us");
 	}
 	
 	@Override
@@ -48,11 +51,11 @@ public class XSLanguageProvider extends LanguageProvider {
 			this.add(potion);
 		}
 		for (VillagerProfession profession : XSVillagerProfessions.VILLAGER_PROFESSIONS.getEntries().stream().map(RegistryObject::get).toList()) {
-			ResourceLocation location = ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession);
+			ResourceLocation location = Objects.requireNonNull(ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession));
 			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), getName(location));
 		}
-		this.add(XSurvive.GOLDEN_BOOK_TAB.getDisplayName().getString(), "Golden Books");
-		this.add(XSurvive.RUNE_TAB.getDisplayName().getString(), "Runes");
+		this.add("item_tab.golden_book", "Golden Books");
+		this.add("item_tab.runes", "Runes");
 		this.add("death.attack.curse_of_harming", "{0} die by his own weapon");
 		this.add("death.attack.curse_of_harming.player", "{0} die by his own weapon whilst fighting {1}");
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");
@@ -64,7 +67,7 @@ public class XSLanguageProvider extends LanguageProvider {
 	}
 	
 	private void add(Potion potion) {
-		ResourceLocation location = ForgeRegistries.POTIONS.getKey(potion);
+		ResourceLocation location = Objects.requireNonNull(ForgeRegistries.POTIONS.getKey(potion));
 		String potionName = location.getPath();
 		this.add("item.minecraft.potion.effect." + potionName, "Potion of " + this.getPotionName(location));
 		this.add("item.minecraft.splash_potion.effect." + potionName, "Splash Potion of " + this.getPotionName(location));
@@ -73,15 +76,15 @@ public class XSLanguageProvider extends LanguageProvider {
 	}
 	
 	public static String getName(ResourceLocation location) {
-		String name = "";
+		StringBuilder name = new StringBuilder();
 		if (location != null) {
 			String[] nameParts = location.getPath().split("_");
 			for (String namePart : nameParts) {
 				String startChar = namePart.substring(0, 1).toUpperCase();
-				name += startChar + namePart.substring(1, namePart.length()) + " ";
+				name.append(startChar).append(namePart.substring(1)).append(" ");
 			}
 		}
-		return name.trim();
+		return name.toString().trim();
 	}
 	
 	public static String getLocalizedName(ResourceLocation location) {
@@ -107,7 +110,7 @@ public class XSLanguageProvider extends LanguageProvider {
 	}
 	
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "XSurvive Languages";
 	}
 	

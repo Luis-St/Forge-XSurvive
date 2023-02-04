@@ -1,10 +1,10 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[44,)"
 license="All rights reserved"
 
 [[mods]]
 modId="xsurvive"
-version="1.19.2-2.1"
+version="1.19.3-2.1"
 displayName="XSurvive"
 credits="Thanks for downloading my Mod"
 authors="Luis"
@@ -19,25 +19,25 @@ XSurvive Development Team
 [[dependencies.xsurvive]]
 modId="forge"
 mandatory=true
-versionRange="[43,)"
+versionRange="[44,)"
 ordering="BEFORE"
 side="BOTH"
 
 [[dependencies.xsurvive]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.2,1.20)"
+versionRange="[1.19.3,1.20)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.xsurvive]]
 modId="xbackpack"
 mandatory=false
-versionRange="[1.19.2-3.0,)"
+versionRange="[1.19.3-3.2,)"
 ordering="BEFORE"
 
 [[dependencies.xsurvive]]
 modId="xores"
 mandatory=true
-versionRange="[1.19.2-2.4,)"
+versionRange="[1.19.3-2.4,)"
 ordering="BEFORE"

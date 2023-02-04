@@ -10,6 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
 import net.minecraft.network.chat.Component;
 
+import java.util.Objects;
+
 /**
  * 
  * @author Luis-st
@@ -26,7 +28,7 @@ public abstract class ChatReportScreenMixin extends Screen {
 	@Inject(method = "sendReport", at = @At("HEAD"))
 	private void sendReport(CallbackInfo callback) {
 		Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
-		this.minecraft.player.sendSystemMessage(component);
+		Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).sendSystemMessage(component);
 	}
 
 }

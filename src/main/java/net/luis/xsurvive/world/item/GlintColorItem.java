@@ -2,6 +2,7 @@ package net.luis.xsurvive.world.item;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -23,7 +24,7 @@ public class GlintColorItem extends Item implements IGlintColor {
 	}
 	
 	@Override
-	public boolean isFoil(ItemStack stack) {
+	public boolean isFoil(@NotNull ItemStack stack) {
 		return true;
 	}
 

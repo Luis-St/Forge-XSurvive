@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 
@@ -36,7 +37,7 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	}
 	
 	@Override
-	protected boolean checkCompatibility(Enchantment enchantment) {
+	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment == Enchantments.SILK_TOUCH) {
 			return false;
 		} else if (enchantment == Enchantments.BLOCK_FORTUNE) {
@@ -46,7 +47,7 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
 	

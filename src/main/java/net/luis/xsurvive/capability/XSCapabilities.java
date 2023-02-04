@@ -16,9 +16,9 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 
 public class XSCapabilities {
 	
-	public static final Capability<IGlintColor> GLINT_COLOR = CapabilityManager.get(new CapabilityToken<IGlintColor>() {});
-	public static final Capability<IPlayer> PLAYER = CapabilityManager.get(new CapabilityToken<IPlayer>() {});
-	public static final Capability<IEntity> ENTITY = CapabilityManager.get(new CapabilityToken<IEntity>() {});
-	public static final Capability<IVillager> VILLAGER = CapabilityManager.get(new CapabilityToken<IVillager>() {});
+	public static final Capability<IGlintColor> GLINT_COLOR = CapabilityManager.get(new CapabilityToken<>() {});
+	public static final Capability<IPlayer> PLAYER = CapabilityManager.get(new CapabilityToken<>() {});
+	public static final Capability<IEntity> ENTITY = CapabilityManager.get(new CapabilityToken<>() {});
+	public static final Capability<IVillager> VILLAGER = CapabilityManager.get(new CapabilityToken<>() {});
 	
 }

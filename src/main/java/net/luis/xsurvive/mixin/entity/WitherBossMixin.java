@@ -55,8 +55,7 @@ public abstract class WitherBossMixin extends Monster {
 				if (source.getDirectEntity() instanceof AbstractArrow arrow && 4 > arrow.getPierceLevel()) {
 					callback.setReturnValue(false);
 				} else {
-					Entity entity = source.getEntity();
-					if (entity != null && entity instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity.getMobType() == this.getMobType()) {
+					if (source.getEntity() instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity.getMobType() == this.getMobType()) {
 						callback.setReturnValue(false);
 					} else {
 						if (this.destroyBlocksTick <= 0) {

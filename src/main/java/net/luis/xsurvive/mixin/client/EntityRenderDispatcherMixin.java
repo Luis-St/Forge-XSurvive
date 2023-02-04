@@ -1,15 +1,8 @@
 package net.luis.xsurvive.mixin.client;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
-
+import com.mojang.math.Axis;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.EntityProvider;
@@ -22,6 +15,11 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  *
@@ -58,7 +56,7 @@ public abstract class EntityRenderDispatcherMixin {
 		float xOffset = 0.5F;
 		float height = entity.getBbHeight() / width;
 		float yOffset = 0.0F;
-		stack.mulPose(Vector3f.YP.rotationDegrees(-this.camera.getYRot()));
+		stack.mulPose(Axis.YP.rotationDegrees(-this.camera.getYRot()));
 		stack.translate(0.0, 0.0, -0.3F + (float) ((int) height) * 0.02F);
 		float zOffset = 0.0F;
 		int index = 0;

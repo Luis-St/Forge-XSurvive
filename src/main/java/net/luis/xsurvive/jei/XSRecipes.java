@@ -1,6 +1,7 @@
 package net.luis.xsurvive.jei;
 
 import java.util.List;
+import java.util.Objects;
 
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
@@ -22,8 +23,7 @@ public class XSRecipes {
 	private final RecipeManager recipeManager;
 	
 	public XSRecipes() {
-		Minecraft minecraft = Minecraft.getInstance();
-		this.recipeManager = minecraft.level.getRecipeManager();
+		this.recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
 	}
 	
 	public List<SmeltingRecipe> getSmeltingRecipes(IRecipeCategory<SmeltingRecipe> smeltingCategory) {

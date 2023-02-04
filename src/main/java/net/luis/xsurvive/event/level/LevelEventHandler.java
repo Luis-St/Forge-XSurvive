@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Structures;
 import net.minecraft.server.level.PlayerRespawnLogic;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.CreateFluidSourceEvent;
@@ -31,6 +34,7 @@ import net.minecraftforge.event.level.LevelEvent.CreateSpawnPosition;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  *
@@ -56,7 +60,7 @@ public class LevelEventHandler {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}
 		if (blasting > 0) {
-			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Explosion.BlockInteraction.BREAK);
+			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.NONE);
 		}
 		if (harvesting > 0) {
 			if (event.getState().is(BlockTags.LOGS)) {
@@ -68,7 +72,7 @@ public class LevelEventHandler {
 	
 	@SubscribeEvent
 	public static void createFluidSource(CreateFluidSourceEvent event) {
-		if (event.getLevel() instanceof Level level && level.dimension().equals(Level.NETHER)) {
+		if (event.getLevel().dimension().equals(Level.NETHER)) {
 			event.setResult(Result.ALLOW);
 		}
 	}
@@ -76,7 +80,7 @@ public class LevelEventHandler {
 	@SubscribeEvent
 	public static void createSpawnPosition(CreateSpawnPosition event) {
 		if (event.getLevel() instanceof ServerLevel level) {
-			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registry.STRUCTURE_REGISTRY)), BlockPos.ZERO, 100, false);
+			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
 			if (pair != null) {
 				ChunkPos pos = level.getChunk(pair.getFirst()).getPos();
 				BlockPos spawnPos = getSpawnPos(level, pos);
@@ -90,7 +94,7 @@ public class LevelEventHandler {
 	}
 	
 	private static HolderSet<Structure> getHolderSet(Registry<Structure> registry) {
-		return Structures.VILLAGE_PLAINS.unwrap().left().map(registry::getHolderOrThrow).map(HolderSet::direct).orElseThrow();
+		return HolderSet.direct(registry.getHolderOrThrow(BuiltinStructures.VILLAGE_PLAINS));
 	}
 	
 	private static BlockPos getSpawnPos(ServerLevel level, ChunkPos pos) {

@@ -74,8 +74,8 @@ public class PlayerEventHandler {
 				event.setCanceled(true);
 			} else if ((left.isEnchantable() || left.isEnchanted()) && right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 				Enchantment enchantment = goldenBook.getEnchantment(right);
-				if (enchantment != null && enchantment instanceof IEnchantment ench) {
-					EnchantedItem enchantedItem = EnchantedItem.EMPTY;
+				if (enchantment instanceof IEnchantment ench) {
+					EnchantedItem enchantedItem;
 					if (ench.isUpgradeEnchantment()) {
 						enchantedItem = IEnchantment.upgrade(left, right);
 					} else {
@@ -224,9 +224,7 @@ public class PlayerEventHandler {
 			if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
 				Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level, 6.0 * aspectOfTheEnd);
 				player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
-				entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> {
-					p.broadcastBreakEvent(entry.getKey());
-				});
+				entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
 				PlayerProvider.getServer(player).setEndAspectCooldown(20);
 			}
 		}

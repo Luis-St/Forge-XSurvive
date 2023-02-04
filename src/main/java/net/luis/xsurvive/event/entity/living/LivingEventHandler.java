@@ -1,5 +1,6 @@
 package net.luis.xsurvive.event.entity.living;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -145,7 +146,7 @@ public class LivingEventHandler {
 			int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
 			int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
 			EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom);
-			player.setHealth(Math.min(player.getHealth(), (float) player.getAttribute(Attributes.MAX_HEALTH).getValue()));
+			player.setHealth(Math.min(player.getHealth(), (float) Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).getValue()));
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			EntityHelper.updateAttributeModifier(player, ForgeMod.ATTACK_RANGE.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom);
@@ -160,7 +161,7 @@ public class LivingEventHandler {
 		if (player != null) {
 			int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
 			int looting = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.MOB_LOOTING, player);
-			if (player != null && xp > 0 && experience > 0) {
+			if (xp > 0 && experience > 0) {
 				event.setDroppedExperience(xp * ((experience + 1) * ((experience * 2) + looting)));
 			}
 		}
@@ -186,7 +187,7 @@ public class LivingEventHandler {
 	public static void livingTick(LivingEvent.LivingTickEvent event) {
 		if (event.getEntity() instanceof ILivingEntity livingEntity) {
 			if (livingEntity.hasCustomAi()) {
-				CustomAi customAi = livingEntity.getCustomAi();
+				CustomAi customAi = Objects.requireNonNull(livingEntity.getCustomAi());
 				if (customAi.canUse()) {
 					customAi.tick();
 				}
@@ -205,8 +206,8 @@ public class LivingEventHandler {
 	
 	@SubscribeEvent
 	public static void shieldBlock(ShieldBlockEvent event) {
-		if (event.getEntity() instanceof Player player) {
-			if (event.getDamageSource() instanceof IndirectEntityDamageSource source && source.getEntity() instanceof Blaze attacker) {
+		if (event.getEntity() instanceof Player) {
+			if (event.getDamageSource() instanceof IndirectEntityDamageSource source && source.getEntity() instanceof Blaze) {
 				event.setCanceled(true);
 			}
 		}

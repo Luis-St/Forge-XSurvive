@@ -40,24 +40,12 @@ public abstract class RaidMixin {
 		RandomSource rng = RandomSource.create();
 		int spawns = bonusWave ? raiderType.spawnsPerWaveBeforeBonus[this.numGroups] : raiderType.spawnsPerWaveBeforeBonus[wave];
 		switch (raiderType) {
-			case VINDICATOR: {
-				callback.setReturnValue(VINDICATOR_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
-			} break;
-			case EVOKER: {
-				callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
-			} break;
-			case PILLAGER: {
-				callback.setReturnValue(PILLAGER_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
-			} break;
-			case WITCH: {
-				callback.setReturnValue(WITCH_SPAWNS[bonusWave ? this.numGroups : wave]);
-			} break;
-			case RAVAGER: {
-				callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
-			} break;
-			default: {
-				callback.setReturnValue(spawns + rng.nextInt(Math.max(1, spawns / 2)));
-			} break;
+			case VINDICATOR -> callback.setReturnValue(VINDICATOR_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
+			case EVOKER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
+			case PILLAGER -> callback.setReturnValue(PILLAGER_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
+			case WITCH -> callback.setReturnValue(WITCH_SPAWNS[bonusWave ? this.numGroups : wave]);
+			case RAVAGER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
+			default -> callback.setReturnValue(spawns + rng.nextInt(Math.max(1, spawns / 2)));
 		}
 	}
 	
@@ -65,20 +53,10 @@ public abstract class RaidMixin {
 	private void getPotentialBonusSpawns(Raid.RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(0);
 		switch (raiderType) {
-			case VINDICATOR:
-			case EVOKER: {
-				callback.setReturnValue(0);				
-			} break;	
-			case PILLAGER:
-			case WITCH: {
-				callback.setReturnValue(1);
-			} break;
-			case RAVAGER: {
-				callback.setReturnValue(rng.nextInt(3) == 0 && bonusWave ? 1 : 0);
-			} break;
-			default: {
-				callback.setReturnValue(rng.nextInt(wave));
-			} break;
+			case VINDICATOR, EVOKER -> callback.setReturnValue(0);
+			case PILLAGER, WITCH -> callback.setReturnValue(1);
+			case RAVAGER -> callback.setReturnValue(rng.nextInt(3) == 0 && bonusWave ? 1 : 0);
+			default -> callback.setReturnValue(rng.nextInt(wave));
 		}
 	}
 	
