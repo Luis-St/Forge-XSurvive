@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#is_nether",
-  "features": ["xsurvive:nether_gold_ore", "xsurvive:quartz_ore", "xsurvive:ancient_debris_ore_small", "xsurvive:ancient_debris_ore_large"],
-  "step": "underground_ores"
-}

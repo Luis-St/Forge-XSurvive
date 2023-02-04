@@ -1,6 +1,0 @@
-{
-  "type": "forge:remove_features",
-  "biomes": "#is_overworld",
-  "features": ["ore_coal_upper", "ore_coal_lower", "ore_copper", "ore_copper_large", "ore_iron_upper", "ore_iron_middle", "ore_iron_small", "ore_gold_extra", "ore_gold", "ore_gold_lower", "ore_lapis", "ore_lapis_buried", "ore_redstone", "ore_redstone_lower", "ore_diamond", "ore_diamond_large", "ore_diamond_buried", "ore_emerald"],
-  "steps": "underground_ores"
-}

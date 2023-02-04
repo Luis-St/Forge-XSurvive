@@ -1,7 +1,0 @@
-{
-  "type": "xsurvive:mod_based_biome_modifier",
-  "mod_id": "xores",
-  "biomes": "#is_end",
-  "features_to_add": ["xsurvive:enderite_ore_rare", "xsurvive:enderite_ore_buried"],
-  "features_to_remove": ["xores:enderite_ore_rare", "xores:enderite_ore_buried"]
-}

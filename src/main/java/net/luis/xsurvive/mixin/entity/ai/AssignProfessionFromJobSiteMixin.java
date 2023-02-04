@@ -31,7 +31,7 @@ import java.util.Optional;
 public abstract class AssignProfessionFromJobSiteMixin {
 	
 	@Inject(method = "create", at = @At(value = "HEAD"), cancellable = true)
-	public static void create(CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
+	private static void create(CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
 		callback.setReturnValue(BehaviorBuilder.create((builder) -> builder.group(builder.present(MemoryModuleType.POTENTIAL_JOB_SITE), builder.registered(MemoryModuleType.JOB_SITE)).apply(builder, (memory, accessor) -> (level, villager, seed) -> {
 			GlobalPos pos = builder.get(memory);
 			if (!pos.pos().closerToCenterThan(villager.position(), 2.0D) && !villager.assignProfessionWhenSpawned()) {
