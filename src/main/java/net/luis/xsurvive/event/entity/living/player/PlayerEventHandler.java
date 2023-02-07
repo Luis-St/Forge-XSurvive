@@ -16,18 +16,17 @@ import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.ChatFormatting;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.TippedArrowItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -220,12 +219,22 @@ public class PlayerEventHandler {
 	public static void rightClickItem(RightClickItem event) {
 		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.ASPECT_OF_THE_END.get(), event.getEntity());
 		int aspectOfTheEnd = entry.getValue().getEnchantmentLevel(XSEnchantments.ASPECT_OF_THE_END.get());
-		if (aspectOfTheEnd > 0 && event.getEntity() instanceof ServerPlayer player) {
-			if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
-				Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level, 6.0 * aspectOfTheEnd);
-				player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
-				entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
-				PlayerProvider.getServer(player).setEndAspectCooldown(20);
+		if (event.getEntity() instanceof ServerPlayer player) {
+			if (aspectOfTheEnd > 0) {
+				if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
+					Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level, 6.0 * aspectOfTheEnd);
+					player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
+					entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
+					PlayerProvider.getServer(player).setEndAspectCooldown(20);
+				}
+			}
+			if (event.getItemStack().getItem() instanceof Wearable) { // TODO: remove when added by minecraft
+				EquipmentSlot slot = Mob.getEquipmentSlotForItem(event.getItemStack());
+				ItemStack slotStack = player.getItemBySlot(slot).copy();
+				if (!slotStack.isEmpty() && slot.isArmor()) {
+					player.setItemSlot(slot, event.getItemStack());
+					player.setItemInHand(event.getHand(), slotStack);
+				}
 			}
 		}
 	}
