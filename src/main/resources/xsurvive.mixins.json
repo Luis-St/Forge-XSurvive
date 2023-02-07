@@ -6,6 +6,7 @@
 	"mixins": [
 		"block.BlockMixin",
 		"block.BaseFireBlockMixin",
+		"block.SugarCaneBlockMixin",
 		"block.entity.ConduitBlockEntityMixin",
 		"enchantment.EnchantmentMixin",
 		"enchantment.EnchantmentHelperMixin",

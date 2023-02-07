@@ -96,7 +96,6 @@ public class VillagerTradesEventHandler {
 			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_SWORD, 8, 3, 5, 0.2F)); // TEST
 		} else if (event.getType() == VillagerProfession.TOOLSMITH) { // TODO: remove axe's
 			trade1.add(SimpleTradeBuilder.emerald(Items.COAL, 15, 1).maxUses(16).villagerXp(2).multiplier(0.05F).build());
-			trade1.add(SimpleTradeBuilder.item(1, Items.STONE_AXE, 1).maxUses(12).villagerXp(1).multiplier(0.2F).build());
 			trade1.add(SimpleTradeBuilder.item(1, Items.STONE_SHOVEL, 1).maxUses(12).villagerXp(1).multiplier(0.2F).build());
 			trade1.add(SimpleTradeBuilder.item(1, Items.STONE_PICKAXE, 1).maxUses(12).villagerXp(1).multiplier(0.2F).build());
 			trade1.add(SimpleTradeBuilder.item(1, Items.STONE_HOE, 1).maxUses(12).villagerXp(1).multiplier(0.2F).build());
@@ -105,16 +104,14 @@ public class VillagerTradesEventHandler {
 			trade2.add(SimpleTradeBuilder.item(36, Items.BELL, 1).maxUses(12).villagerXp(5).multiplier(0.2F).build());
 			
 			trade3.add(SimpleTradeBuilder.emerald(Items.FLINT, 30, 1).maxUses(12).villagerXp(20).multiplier(0.05F).build());
-			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.IRON_AXE, 1, 3, 3, 0.2F)); // TEST
-			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.IRON_SHOVEL, 2, 3, 3, 0.2F)); // TEST
-			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.IRON_PICKAXE, 3, 3, 3, 0.2F)); // TEST
-			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_HOE, 4, 3, 3, 0.2F)); // TEST
+			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.IRON_SHOVEL, 2, 3, 3, 0.2F));
+			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.IRON_PICKAXE, 3, 3, 3, 0.2F));
+			trade3.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_HOE, 4, 3, 3, 0.2F));
 			
 			trade4.add(SimpleTradeBuilder.emerald(Items.DIAMOND, 1, 1).maxUses(12).villagerXp(20).multiplier(0.05F).build());
-			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_AXE, 12, 3, 4, 0.2F)); // TEST
-			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_SHOVEL, 5, 3, 4, 0.2F)); // TEST
+			trade4.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_SHOVEL, 5, 3, 4, 0.2F));
 			
-			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_PICKAXE, 13, 3, 5, 0.2F)); // TEST
+			trade5.add(DynamicEnchantedTrades.randomEnchantedItem(Items.DIAMOND_PICKAXE, 13, 3, 5, 0.2F));
 		} else if (event.getType() == XSVillagerProfessions.BEEKEEPER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.DANDELION, 10, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.POPPY, 10, 1).defaultBuild(1));
@@ -140,7 +137,7 @@ public class VillagerTradesEventHandler {
 			trade5.add(SimpleTradeBuilder.emerald(Items.HONEY_BOTTLE, 1, 3).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(4, Items.HONEYCOMB_BLOCK, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(6, Items.HONEY_BLOCK, 1).defaultBuild(5));
-		} else if (event.getType() == XSVillagerProfessions.ENCHANTER.get()) { // TODO -> trade rework
+		} else if (event.getType() == XSVillagerProfessions.ENCHANTER.get()) { // TODO: trade rework -> only 1 trade per item -> enchanted books level 1 -> only common and uncommon enchantments
 			trade1.add(SimpleTradeBuilder.item(1, Items.LAPIS_LAZULI, 2).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.LAPIS_LAZULI, 2, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.BOOK, 4, 1).defaultBuild(1));
@@ -155,7 +152,7 @@ public class VillagerTradesEventHandler {
 			trade4.add(DynamicEnchantedTrades.randomEnchantedBook(4));
 			trade4.add(DynamicEnchantedTrades.randomEnchantedBook(4));
 			
-			trade5.add(DynamicEnchantedTrades.randomEnchantedGoldenBook(5)); // requies normal book max level
+			trade5.add(DynamicEnchantedTrades.randomEnchantedGoldenBook(5)); // TODO: requires normal book max level for trade -> no golden book only enchantments
 		} else if (event.getType() == XSVillagerProfessions.END_TRADER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.END_STONE, 12, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.emerald(Items.CHORUS_FRUIT, 10, 1).defaultBuild(1));
@@ -175,8 +172,8 @@ public class VillagerTradesEventHandler {
 			
 			trade5.add(SimpleTradeBuilder.item(4, Items.ENDER_EYE, 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.enchantedBook(XSEnchantments.VOID_WALKER.get(), 1).defaultBuild(5)); // TODO -> random chance in loot table (end city)
-			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSEnchantments.VOID_PROTECTION.get()).defaultBuild(5)); // TODO -> random chance in loot table (end city)
+			trade5.add(AdvancedTradeBuilder.enchantedBook(XSEnchantments.VOID_WALKER.get(), 1).defaultBuild(5)); // TODO: rare chance in loot table (end city)
+			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSEnchantments.VOID_PROTECTION.get()).defaultBuild(5)); // TODO: rare chance in loot table (end city)
 			trade5.add(SimpleTradeBuilder.emerald(XOItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
 		} else if (event.getType() == XSVillagerProfessions.LUMBERJACK.get()) {
