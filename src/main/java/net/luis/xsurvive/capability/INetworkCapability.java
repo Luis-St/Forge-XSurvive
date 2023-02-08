@@ -18,15 +18,6 @@ public interface INetworkCapability extends ICapability {
 		
 	}
 	
-	default void doAndBroadcast(Runnable action) {
-		
-	}
-	
-	@Nullable
-	default <T> T doAndBroadcast(Supplier<T> action) {
-		return null;
-	}
-	
 	default void broadcastChanges() {
 		
 	}

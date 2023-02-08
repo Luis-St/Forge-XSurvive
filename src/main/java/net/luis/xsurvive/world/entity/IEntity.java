@@ -14,7 +14,9 @@ public interface IEntity extends INetworkCapability {
 	
 	Entity getEntity();
 	
-	Level getLevel();
+	default Level getLevel() {
+		return this.getEntity().getLevel();
+	}
 	
 	void tick();
 	

@@ -17,7 +17,9 @@ public interface IPlayer extends INetworkCapability {
 	
 	Player getPlayer();
 	
-	Level getLevel();
+	default Level getLevel() {
+		return this.getPlayer().getLevel();
+	}
 	
 	void tick();
 	

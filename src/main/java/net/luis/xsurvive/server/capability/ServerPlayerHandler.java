@@ -2,6 +2,7 @@ package net.luis.xsurvive.server.capability;
 
 import java.util.function.Supplier;
 
+import net.luis.xsurvive.capability.handler.AbstractPlayerHandler;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -17,49 +18,23 @@ import net.minecraft.util.Mth;
  *
  */
 
-public class ServerPlayerHandler implements IPlayer {
+public class ServerPlayerHandler extends AbstractPlayerHandler {
 	
-	private final ServerPlayer player;
-	private int tick;
-	private int frostTime;
-	private int startFrostTime;
-	private int endAspectCooldown;
-	private int startEndAspectCooldown;
 	private int lastSync;
 	private boolean changed = false;
 	
 	public ServerPlayerHandler(ServerPlayer player) {
-		this.player = player;
-	}
-	
-	@Override
-	public ServerPlayer getPlayer() {
-		return this.player;
-	}
-	
-	@Override
-	public ServerLevel getLevel() {
-		return this.getPlayer().getLevel();
+		super(player);
 	}
 	
 	@Override
 	public void tick() {
-		this.tick++;
-		if (this.player.getRemainingFireTicks() > 0 || this.getLevel().dimensionType().ultraWarm()) {
-			if (this.player.removeEffect(XSMobEffects.FROST.get())) {
+		super.tick();
+		if (this.getPlayer().getRemainingFireTicks() > 0 || this.getLevel().dimensionType().ultraWarm()) {
+			if (this.getPlayer().removeEffect(XSMobEffects.FROST.get())) {
 				this.frostTime = 0;
 				this.setChanged();
 			}
-		}
-		if (this.frostTime > 0) {
-			this.frostTime--;
-		} else {
-			this.frostTime = 0;
-		}
-		if (this.endAspectCooldown > 0) {
-			this.endAspectCooldown--;
-		} else {
-			this.endAspectCooldown = 0;
 		}
 		if (this.changed) {
 			this.broadcastChanges();
@@ -70,34 +45,10 @@ public class ServerPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public int getFrostTime() {
-		return this.frostTime;
-	}
-	
-	@Override
 	public void setFrostTime(int frostTime) {
 		this.frostTime = frostTime;
 		this.startFrostTime = frostTime;
 		this.setChanged();
-	}
-	
-	@Override
-	public double getFrostPercent() {
-		double showStartTime = ((double) this.startFrostTime - (double) this.frostTime) / 20.0;
-		double showEndTime = ((double) this.frostTime) / 20.0;
-		if (showStartTime > 5.0 && showEndTime > 5.0) {
-			return 1.0;
-		} else if (5.0 >= showStartTime) {
-			return (float) showStartTime / 5.0;
-		} else if (5.0 >= showEndTime) {
-			return (float) showEndTime / 5.0;
-		}
-		return 0.0;
-	}
-	
-	@Override
-	public int getEndAspectCooldown() {
-		return this.endAspectCooldown;
 	}
 	
 	@Override
@@ -113,42 +64,19 @@ public class ServerPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public double getEndAspectPercent() {
-		return Mth.clamp((double) this.endAspectCooldown / (double) this.startEndAspectCooldown, 0.0, 1.0);
-	}
-	
-	@Override
 	public void setChanged() {
 		this.changed = true;
 	}
 	
 	@Override
-	public void doAndBroadcast(Runnable action) {
-		action.run();
-		this.broadcastChanges();
-	}
-	
-	@Override
-	public <T> T doAndBroadcast(Supplier<T> action) {
-		T value = action.get();
-		this.broadcastChanges();
-		return value;
-	}
-	
-	@Override
 	public void broadcastChanges() {
-		XSNetworkHandler.INSTANCE.sendToPlayer(this.player, new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
+		XSNetworkHandler.INSTANCE.sendToPlayer(this.getPlayer(), new UpdatePlayerCapabilityPacket(this.serializeNetwork()));
 		this.changed = false;
 	}
 	
 	@Override
 	public CompoundTag serializeDisk() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", this.tick);
-		tag.putInt("frost_time", this.frostTime);
-		tag.putInt("start_frost_time", this.startFrostTime);
-		tag.putInt("end_aspect_cooldown", this.endAspectCooldown);
-		tag.putInt("start_end_aspect_cooldown", this.startEndAspectCooldown);
+		CompoundTag tag = super.serializeDisk();
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
@@ -156,24 +84,9 @@ public class ServerPlayerHandler implements IPlayer {
 	
 	@Override
 	public void deserializeDisk(CompoundTag tag) {
-		this.tick = tag.getInt("tick");
-		this.frostTime = tag.getInt("frost_time");
-		this.startFrostTime = tag.getInt("start_frost_time");
-		this.endAspectCooldown = tag.getInt("end_aspect_cooldown");
-		this.startEndAspectCooldown = tag.getInt("start_end_aspect_cooldown");
+		super.deserializeDisk(tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
-	}
-	
-	@Override
-	public CompoundTag serializeNetwork() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", this.tick);
-		tag.putInt("frost_time", this.frostTime);
-		tag.putInt("start_frost_time", this.startFrostTime);
-		tag.putInt("end_aspect_cooldown", this.endAspectCooldown);
-		tag.putInt("start_end_aspect_cooldown", this.startEndAspectCooldown);
-		return tag;
 	}
 	
 	@Override
@@ -183,8 +96,7 @@ public class ServerPlayerHandler implements IPlayer {
 	
 	@Override
 	public CompoundTag serializePersistent() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", this.tick);
+		CompoundTag tag = super.serializePersistent();
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
@@ -192,7 +104,7 @@ public class ServerPlayerHandler implements IPlayer {
 	
 	@Override
 	public void deserializePersistent(CompoundTag tag) {
-		this.tick = tag.getInt("tick");
+		super.deserializePersistent(tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}

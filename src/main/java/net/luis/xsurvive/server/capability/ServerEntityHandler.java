@@ -1,11 +1,9 @@
 package net.luis.xsurvive.server.capability;
 
-import java.util.function.Supplier;
-
+import net.luis.xsurvive.capability.handler.AbstractEntityHandler;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.world.entity.EntityFireType;
-import net.luis.xsurvive.world.entity.IEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -16,35 +14,22 @@ import net.minecraft.world.entity.Entity;
  *
  */
 
-public class ServerEntityHandler implements IEntity {
+public class ServerEntityHandler extends AbstractEntityHandler {
 	
-	private final Entity entity;
-	private int tick;
-	private EntityFireType fireType = EntityFireType.NONE;
 	private int lastSync;
 	private boolean changed = false;
 	
 	public ServerEntityHandler(Entity entity) {
-		this.entity = entity;
-	}
-	
-	@Override
-	public Entity getEntity() {
-		return this.entity;
-	}
-	
-	@Override
-	public ServerLevel getLevel() {
-		return (ServerLevel) this.getEntity().getLevel();
+		super(entity);
 	}
 	
 	@Override
 	public void tick() {
-		this.tick++;
-		if (this.entity.isOnFire() && this.fireType == EntityFireType.NONE) {
+		super.tick();
+		if (this.getEntity().isOnFire() && this.getFireType() == EntityFireType.NONE) {
 			this.fireType = EntityFireType.FIRE;
 			this.setChanged();
-		} else if (!this.entity.isOnFire() && this.fireType != EntityFireType.NONE) {
+		} else if (!this.getEntity().isOnFire() && this.getFireType() != EntityFireType.NONE) {
 			this.fireType = EntityFireType.NONE;
 			this.setChanged();
 		}
@@ -54,11 +39,6 @@ public class ServerEntityHandler implements IEntity {
 			this.changed = false;
 		}
 		this.lastSync++;
-	}
-	
-	@Override
-	public EntityFireType getFireType() {
-		return this.fireType;
 	}
 	
 	@Override
@@ -73,29 +53,14 @@ public class ServerEntityHandler implements IEntity {
 	}
 	
 	@Override
-	public void doAndBroadcast(Runnable action) {
-		action.run();
-		this.broadcastChanges();
-	}
-	
-	@Override
-	public <T> T doAndBroadcast(Supplier<T> action) {
-		T value = action.get();
-		this.broadcastChanges();
-		return value;
-	}
-	
-	@Override
 	public void broadcastChanges() {
-		XSNetworkHandler.INSTANCE.sendToPlayersInLevel(this.getLevel(), new UpdateEntityCapabilityPacket(this.entity.getId(), this.serializeNetwork()));
+		XSNetworkHandler.INSTANCE.sendToPlayersInLevel((ServerLevel) this.getLevel(), new UpdateEntityCapabilityPacket(this.getEntity().getId(), this.serializeNetwork()));
 		this.changed = false;
 	}
 	
 	@Override
 	public CompoundTag serializeDisk() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", this.tick);
-		tag.putInt("fire_type", this.fireType.ordinal());
+		CompoundTag tag = super.serializeDisk();
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
@@ -103,18 +68,9 @@ public class ServerEntityHandler implements IEntity {
 	
 	@Override
 	public void deserializeDisk(CompoundTag tag) {
-		this.tick = tag.getInt("tick");
-		this.fireType = EntityFireType.byOrdinal(tag.getInt("fire_type"), EntityFireType.NONE);
+		super.deserializeDisk(tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
-	}
-	
-	@Override
-	public CompoundTag serializeNetwork() {
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", this.tick);
-		tag.putInt("fire_type", this.fireType.ordinal());
-		return tag;
 	}
 	
 	@Override
