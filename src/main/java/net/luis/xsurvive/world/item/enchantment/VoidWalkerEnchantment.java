@@ -9,13 +9,13 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry {
-
+	
 	public VoidWalkerEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -41,7 +41,7 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 			return false;
 		} else if (enchantment == Enchantments.FROST_WALKER) {
 			return false;
-		}	
+		}
 		return super.checkCompatibility(enchantment);
 	}
 	
@@ -67,5 +67,5 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 			builder.append("If a player is sneaking while flying the he will slowly float down.").endLine();
 		});
 	}
-
+	
 }

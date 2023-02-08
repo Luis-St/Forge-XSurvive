@@ -1,36 +1,24 @@
 package net.luis.xsurvive.wiki.file;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xores.world.item.ElytraChestplateItem;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ElytraItem;
-import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PickaxeItem;
-import net.minecraft.world.item.ShieldItem;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -67,12 +55,12 @@ public class EnchantmentWikiFile {
 				builder.append("Not compatible with:").append(getIncompatibleEnchantments(enchantment)).endLine();
 			}
 			if (enchantment.isCurse()) {
-				builder.append("Curse:").append(true).endLine(); 
+				builder.append("Curse:").append(true).endLine();
 			}
 			builder.append("Tradeable:").append(enchantment.isTradeable()).endLine();
 			builder.append("Discoverable:").append(enchantment.isDiscoverable()).endLine();
 			if (enchantment.isTreasureOnly()) {
-				builder.append("Treasure:").append(true).endLine(); 
+				builder.append("Treasure:").append(true).endLine();
 			}
 			if (enchantment instanceof IEnchantment ench && ench.isAllowedOnGoldenBooks()) {
 				builder.append("Golden book level:").append(ench.getMaxGoldenBookLevel()).endLine();

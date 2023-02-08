@@ -1,20 +1,12 @@
 package net.luis.xsurvive.jei;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.recipe.vanilla.IJeiAnvilRecipe;
 import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
-import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.*;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.inventory.SmeltingFurnaceMenu;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
@@ -35,6 +27,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  *

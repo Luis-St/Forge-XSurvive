@@ -1,19 +1,17 @@
 package net.luis.xsurvive.mixin.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.ThrownTridentRenderer;
-import net.minecraft.world.entity.projectile.ThrownTrident;
-
 /**
- * 
+ *
  * @author Luis-st
  *
  */

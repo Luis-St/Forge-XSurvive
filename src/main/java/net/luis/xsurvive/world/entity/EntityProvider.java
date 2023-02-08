@@ -27,21 +27,6 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 		this.optional = LazyOptional.of(() -> this.entityCapability);
 	}
 	
-	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
-		return XSCapabilities.ENTITY.orEmpty(capability, this.optional);
-	}
-
-	@Override
-	public CompoundTag serializeNBT() {
-		return this.entityCapability.serializeDisk();
-	}
-
-	@Override
-	public void deserializeNBT(CompoundTag tag) {
-		this.entityCapability.deserializeDisk(tag);
-	}
-	
 	public static IEntity get(Entity entity) {
 		return entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 	}
@@ -68,6 +53,21 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 			return handler;
 		}
 		throw new IllegalStateException("Unknown network side");
+	}
+	
+	@Override
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
+		return XSCapabilities.ENTITY.orEmpty(capability, this.optional);
+	}
+	
+	@Override
+	public CompoundTag serializeNBT() {
+		return this.entityCapability.serializeDisk();
+	}
+	
+	@Override
+	public void deserializeNBT(CompoundTag tag) {
+		this.entityCapability.deserializeDisk(tag);
 	}
 	
 }

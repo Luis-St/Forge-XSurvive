@@ -16,8 +16,8 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class ReplantingEnchantment extends Enchantment implements WikiFileEntry {
-
-
+	
+	
 	public ReplantingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -46,7 +46,7 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

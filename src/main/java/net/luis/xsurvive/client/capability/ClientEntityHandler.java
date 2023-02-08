@@ -1,9 +1,6 @@
 package net.luis.xsurvive.client.capability;
 
 import net.luis.xsurvive.capability.handler.AbstractEntityHandler;
-import net.luis.xsurvive.world.entity.EntityFireType;
-import net.luis.xsurvive.world.entity.IEntity;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 

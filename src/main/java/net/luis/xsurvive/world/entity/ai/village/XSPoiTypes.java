@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.entity.ai.village;
 
-import java.util.Set;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -10,8 +8,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Set;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

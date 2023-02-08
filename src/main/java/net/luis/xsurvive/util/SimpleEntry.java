@@ -1,13 +1,12 @@
 package net.luis.xsurvive.util;
 
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import net.luis.xsurvive.XSurvive;
 
+import javax.annotation.Nullable;
+import java.util.Map;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -32,13 +31,13 @@ public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 	public K getKey() {
 		return this.key;
 	}
-
+	
 	@Nullable
 	@Override
 	public V getValue() {
 		return this.value;
 	}
-
+	
 	@Nullable
 	@Override
 	public V setValue(V value) {
@@ -72,5 +71,5 @@ public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 		}
 		return false;
 	}
-
+	
 }

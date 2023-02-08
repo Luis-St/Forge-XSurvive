@@ -1,15 +1,14 @@
 package net.luis.xsurvive.mixin;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.raid.Raid;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.raid.Raid;
 
 /**
  *
@@ -21,13 +20,13 @@ import net.minecraft.world.entity.raid.Raid;
 public abstract class RaidMixin {
 	
 	private static final int[] VINDICATOR_SPAWNS = new int[] {
-		1, 3, 8, 12, 15, 20, 24, 29
+			1, 3, 8, 12, 15, 20, 24, 29
 	};
 	private static final int[] PILLAGER_SPAWNS = new int[] {
-		3, 5, 11, 15, 19, 24, 30, 34
+			3, 5, 11, 15, 19, 24, 30, 34
 	};
 	private static final int[] WITCH_SPAWNS = new int[] {
-		1, 1, 2, 3, 4, 5, 6, 7
+			1, 1, 2, 3, 4, 5, 6, 7
 	};
 	
 	@Shadow

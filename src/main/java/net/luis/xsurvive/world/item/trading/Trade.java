@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.trading;
 
-import java.util.Objects;
-
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
@@ -9,8 +7,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

@@ -1,22 +1,17 @@
 package net.luis.xsurvive.world.level.storage.loot.predicates;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-
+import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -33,7 +28,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 	public boolean test(LootContext context) {
 		return this.lootTables.contains(context.getQueriedLootTableId());
 	}
-
+	
 	@Override
 	public @NotNull LootItemConditionType getType() {
 		return XSLootItemConditions.LOOT_TABLE_IDS.get();
@@ -78,7 +73,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 			}
 			object.add("loot_table_ids", array);
 		}
-
+		
 		@Override
 		public @NotNull LootTableIdsCondition deserialize(JsonObject object, @NotNull JsonDeserializationContext context) {
 			List<ResourceLocation> lootTables = Lists.newArrayList();
@@ -90,5 +85,5 @@ public class LootTableIdsCondition implements LootItemCondition {
 		}
 		
 	}
-
+	
 }

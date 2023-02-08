@@ -1,18 +1,18 @@
 package net.luis.xsurvive.util;
 
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
+import java.util.Random;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -37,7 +37,13 @@ public class WeightCollection<T> {
 		this.random = new Random();
 		list.forEach((pair) -> this.add(pair.getFirst(), pair.getSecond()));
 	}
-
+	
+	public static <E> Codec<WeightCollection<E>> codec(Codec<E> codec) {
+		return RecordCodecBuilder.create((instance) -> {
+			return instance.group(Codec.pair(Codec.INT.fieldOf("weight").codec(), codec.fieldOf("value").codec()).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
+		});
+	}
+	
 	public void add(int weight, T value) {
 		if (0 >= weight) {
 			throw new IllegalArgumentException("The weight must be larger that 0 but it is " + weight);
@@ -61,12 +67,6 @@ public class WeightCollection<T> {
 			list.add(Pair.of(entry.getValue().getFirst(), entry.getValue().getSecond()));
 		}
 		return list;
-	}
-	
-	public static <E> Codec<WeightCollection<E>> codec(Codec<E> codec) {
-		return RecordCodecBuilder.create((instance) -> {
-			return instance.group(Codec.pair(Codec.INT.fieldOf("weight").codec(), codec.fieldOf("value").codec()).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
-		});
 	}
 	
 }

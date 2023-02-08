@@ -1,12 +1,6 @@
 package net.luis.xsurvive.data.provider.recipe;
 
-import java.util.Objects;
-import java.util.function.Consumer;
-
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
 import net.minecraft.advancements.Advancement;
@@ -27,8 +21,12 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.function.Consumer;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -70,12 +68,12 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		this.advancement.addCriterion(key, triggerInstance);
 		return this;
 	}
-
+	
 	public @NotNull SmeltingRecipeBuilder group(String group) {
 		this.group = group;
 		return this;
 	}
-
+	
 	public @NotNull Item getResult() {
 		return this.result;
 	}
@@ -84,7 +82,8 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
 		this.ensureValid(id);
 		this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-		consumer.accept(new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
+		consumer.accept(
+				new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
 	}
 	
 	private void ensureValid(ResourceLocation id) {

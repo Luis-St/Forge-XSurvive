@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -70,7 +70,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

@@ -1,11 +1,6 @@
 package net.luis.xsurvive.wiki.file;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.mojang.datafixers.util.Pair;
-
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.WikiList;
@@ -17,6 +12,9 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  *
@@ -34,7 +32,7 @@ public class ItemsWikiFile {
 		addVanillaItems(builder);
 		return builder;
 	}
-
+	
 	private static void addItems(WikiFileBuilder wikiBuilder) {
 		addItem(wikiBuilder, XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		addRuneItem(wikiBuilder, XSItems.WHITE_RUNE.get());
@@ -107,7 +105,7 @@ public class ItemsWikiFile {
 				builder.append("Crafting remaining item:").append(item.craftingRemainingItem).endLine();
 			}
 		});
-
+		
 	}
 	
 	private static void addFoodProperties(WikiFileBuilder wikiBuilder, Item item, FoodProperties properties) {
@@ -156,11 +154,11 @@ public class ItemsWikiFile {
 	private static void addVanillaItems(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.header2("Shulker Box");
 		wikiBuilder.header3("Modifications");
-		wikiBuilder.lines((builder) ->  {
+		wikiBuilder.lines((builder) -> {
 			builder.append("Shulker Boxes can contains a Shulker Boxes.").endLine();
 		});
 		wikiBuilder.emptyLine();
-		wikiBuilder.lines((builder) ->  {
+		wikiBuilder.lines((builder) -> {
 			builder.append("The Shulker Box Tooltip shows the full content of the Shulker Box Inventory. ").endLine();
 		});
 	}

@@ -1,8 +1,19 @@
 package net.luis.xsurvive.mixin;
 
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.collect.Lists;
+import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
+import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -10,28 +21,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.google.common.collect.Lists;
-
-import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.ItemCombinerMenu;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import java.util.List;
+import java.util.Map;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -39,16 +33,15 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
-	private AnvilMenuMixin(MenuType<?> menuType, int id, Inventory inventory, ContainerLevelAccess levelAccess) {
-		super(menuType, id, inventory, levelAccess);
-	}
-	
 	@Shadow
 	public int repairItemCountCost;
 	@Shadow
 	private String itemName;
 	@Shadow
 	private DataSlot cost;
+	private AnvilMenuMixin(MenuType<?> menuType, int id, Inventory inventory, ContainerLevelAccess levelAccess) {
+		super(menuType, id, inventory, levelAccess);
+	}
 	
 	@Shadow
 	public static int calculateIncreasedRepairCost(int cost) {

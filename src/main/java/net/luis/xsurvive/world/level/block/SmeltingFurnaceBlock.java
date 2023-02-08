@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.level.block;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
@@ -27,18 +24,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFileEntry {
-
+	
 	public SmeltingFurnaceBlock(Properties properties) {
 		super(properties);
 	}
-
+	
 	@Override
 	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 		return new SmeltingFurnaceBlockEntity(pos, state);
@@ -48,7 +48,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
 		return createFurnaceTicker(level, type, XSBlockEntityTypes.SMELTING_FURNACE.get());
 	}
-
+	
 	@Override
 	protected void openContainer(Level level, @NotNull BlockPos pos, @NotNull Player player) {
 		if (level.getBlockEntity(pos) instanceof SmeltingFurnaceBlockEntity smeltingBlockEntity) {
@@ -73,7 +73,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 			level.addParticle(ParticleTypes.SMOKE, x + xOffset, y + yOffset, z + zOffset, 0.0D, 0.0D, 0.0D);
 		}
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
@@ -92,5 +92,5 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 			return name.replace("From Smelting", "").trim();
 		}).collect(Collectors.toList());
 	}
-
+	
 }

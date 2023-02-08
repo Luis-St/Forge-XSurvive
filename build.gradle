@@ -5,7 +5,7 @@ buildscript {
 		}
 		mavenCentral()
 	}
-	
+
 	dependencies {
 		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
 		classpath "org.spongepowered:mixingradle:0.7.+"
@@ -26,76 +26,76 @@ println("Java: " + System.getProperty("java.version") + " JVM: " + System.getPro
 
 minecraft {
 	mappings channel: "official", version: "1.19.3"
-	
+
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
-	
+
 	runs {
 		client {
 			workingDirectory project.file("run")
-			
+
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-			
+
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-		
+
 		serverClient {
 			parent runs.client
-			
+
 			args "--username", "Dev2"
 		}
-		
+
 		server {
 			workingDirectory project.file("run")
-			
+
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
 			property "forge.logging.mojang.level", "debug"
-			
+
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-		
+
 		gameTestServer {
 			workingDirectory project.file("run")
-			
+
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-			
+
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-		
+
 		data {
 			workingDirectory project.file("run")
-			
+
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-			
+
 			args "--mod", "xsurvive", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
-			
+
 			mods {
 				examplemod {
 					source sourceSets.main
@@ -125,16 +125,16 @@ repositories {
 	maven {
 		url "https://cursemaven.com"
 	}
-	maven  {
+	maven {
 		url uri("${projectDir}/maven/repositories")
 	}
 }
 
 dependencies {
 	minecraft "net.minecraftforge:forge:1.19.3-44.1.8"
-	
+
 	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
-	
+
 	implementation /*compileOnly*/ fg.deobf("net.luis.xbackpack:Forge-XBackpack:1.19.3-3.2")
 	implementation fg.deobf("net.luis.xores:Forge-XOres:1.19.3-2.5")
 
@@ -146,10 +146,10 @@ dependencies {
 jar {
 	manifest {
 		attributes([
-			"Specification-Title"     : "XSurvive",
-			"Specification-Version"   : "1.19.3-2.1",
-			"Implementation-Title"    : project.name,
-			"Implementation-Timestamp": new Date().format("yyyy-MM-dd HH:mm:ssZ")
+				"Specification-Title"     : "XSurvive",
+				"Specification-Version"   : "1.19.3-2.1",
+				"Implementation-Title"    : project.name,
+				"Implementation-Timestamp": new Date().format("yyyy-MM-dd HH:mm:ssZ")
 		])
 	}
 }
@@ -171,7 +171,7 @@ publishing {
 			artifact sourcesJar
 		}
 	}
-	
+
 	repositories {
 		maven {
 			url uri("C:/Users/luiss/.m2/repository")

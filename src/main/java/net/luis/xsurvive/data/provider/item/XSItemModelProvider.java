@@ -1,8 +1,5 @@
 package net.luis.xsurvive.data.provider.item;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.data.DataGenerator;
@@ -17,18 +14,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class XSItemModelProvider extends ItemModelProvider {
-
+	
 	public XSItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID, existingFileHelper);
 	}
-
+	
 	@Override
 	protected void registerModels() {
 		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
@@ -56,5 +55,5 @@ public class XSItemModelProvider extends ItemModelProvider {
 	public @NotNull String getName() {
 		return "XSurvive Item Models";
 	}
-
+	
 }

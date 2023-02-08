@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
-import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
-
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
@@ -19,8 +17,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
+import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

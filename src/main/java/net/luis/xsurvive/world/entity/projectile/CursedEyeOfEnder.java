@@ -23,7 +23,7 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 	public CursedEyeOfEnder(EntityType<? extends EyeOfEnder> entityType, Level level) {
 		super(entityType, level);
 	}
-
+	
 	public CursedEyeOfEnder(Level level, double x, double y, double z) {
 		super(XSEntityTypes.CURSED_ENDER_EYE.get(), level);
 		this.setPos(x, y, z);
@@ -78,5 +78,5 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 			this.setPosRaw(x, y, z);
 		}
 	}
-
+	
 }

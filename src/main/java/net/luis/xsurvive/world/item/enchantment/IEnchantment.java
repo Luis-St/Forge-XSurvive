@@ -8,12 +8,63 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public interface IEnchantment {
+	
+	static EnchantedItem merge(ItemStack left, ItemStack right) {
+		ItemStack result = left.copy();
+		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
+			Enchantment enchantment = goldenBook.getEnchantment(right);
+			if (enchantment instanceof IEnchantment ench) {
+				int level = result.getEnchantmentLevel(enchantment);
+				GoldenEnchantmentInstance instance = ench.createGoldenInstance(level + 1);
+				if (!XSEnchantmentHelper.hasEnchantment(enchantment, result)) {
+					if (XSEnchantmentHelper.isEnchantmentCompatible(result, enchantment)) {
+						XSEnchantmentHelper.addEnchantment(new EnchantmentInstance(enchantment, 1), result, false);
+						return new EnchantedItem(result, 10);
+					}
+					return EnchantedItem.EMPTY;
+				} else if (instance.isGolden() && instance.level > enchantment.getMaxLevel() && level >= enchantment.getMaxLevel()) {
+					if (ench.getMaxGoldenBookLevel() > level) {
+						XSEnchantmentHelper.replaceEnchantment(instance, result);
+						return new EnchantedItem(result, ench.getGoldenCost(level));
+					}
+					return EnchantedItem.EMPTY;
+				} else {
+					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
+					return new EnchantedItem(result, 10);
+				}
+			}
+			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			return EnchantedItem.EMPTY;
+		}
+		XSurvive.LOGGER.error("Can not merge {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
+		return EnchantedItem.EMPTY;
+	}
+	
+	static EnchantedItem upgrade(ItemStack left, ItemStack right) {
+		ItemStack result = left.copy();
+		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
+			Enchantment enchantment = goldenBook.getEnchantment(right);
+			if (enchantment instanceof IEnchantment ench) {
+				int level = result.getEnchantmentLevel(enchantment);
+				if (ench.isUpgradeEnchantment() && ench.getMaxUpgradeLevel() > level) {
+					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
+					return new EnchantedItem(result, ench.getUpgradeCost(level));
+				} else {
+					return merge(left, right);
+				}
+			}
+			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			return EnchantedItem.EMPTY;
+		}
+		XSurvive.LOGGER.error("Can not upgrade {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
+		return EnchantedItem.EMPTY;
+	}
 	
 	private Enchantment self() {
 		return (Enchantment) this;
@@ -71,57 +122,6 @@ public interface IEnchantment {
 			return new GoldenEnchantmentInstance(this.self(), this.getMaxGoldenBookLevel());
 		}
 		return new GoldenEnchantmentInstance(this.self(), level);
-	}
-	
-	static EnchantedItem merge(ItemStack left, ItemStack right) {
-		ItemStack result = left.copy();
-		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
-			Enchantment enchantment = goldenBook.getEnchantment(right);
-			if (enchantment instanceof IEnchantment ench) {
-				int level = result.getEnchantmentLevel(enchantment);
-				GoldenEnchantmentInstance instance = ench.createGoldenInstance(level + 1);
-				if (!XSEnchantmentHelper.hasEnchantment(enchantment, result)) {
-					if (XSEnchantmentHelper.isEnchantmentCompatible(result, enchantment)) {
-						XSEnchantmentHelper.addEnchantment(new EnchantmentInstance(enchantment, 1), result, false);
-						return new EnchantedItem(result, 10);
-					}
-					return EnchantedItem.EMPTY;
-				} else if (instance.isGolden() && instance.level > enchantment.getMaxLevel() && level >= enchantment.getMaxLevel()) {
-					if (ench.getMaxGoldenBookLevel() > level) {
-						XSEnchantmentHelper.replaceEnchantment(instance, result);
-						return new EnchantedItem(result, ench.getGoldenCost(level));
-					}
-					return EnchantedItem.EMPTY;
-				} else {
-					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
-					return new EnchantedItem(result, 10);
-				}
-			}
-			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-			return EnchantedItem.EMPTY;
-		}
-		XSurvive.LOGGER.error("Can not merge {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
-		return EnchantedItem.EMPTY;
-	}
-	
-	static EnchantedItem upgrade(ItemStack left, ItemStack right) {
-		ItemStack result = left.copy();
-		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
-			Enchantment enchantment = goldenBook.getEnchantment(right);
-			if (enchantment instanceof IEnchantment ench) {
-				int level = result.getEnchantmentLevel(enchantment);
-				if (ench.isUpgradeEnchantment() && ench.getMaxUpgradeLevel() > level) {
-					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
-					return new EnchantedItem(result, ench.getUpgradeCost(level));
-				} else {
-					return merge(left, right);
-				}
-			}
-			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-			return EnchantedItem.EMPTY;
-		}
-		XSurvive.LOGGER.error("Can not upgrade {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
-		return EnchantedItem.EMPTY;
 	}
 	
 }

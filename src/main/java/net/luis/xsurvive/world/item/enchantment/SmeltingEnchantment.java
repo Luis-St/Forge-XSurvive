@@ -10,13 +10,13 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
-
+	
 	public SmeltingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -60,7 +60,7 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	public boolean isTradeable() {
 		return false;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
@@ -68,5 +68,5 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 			builder.append("the Block drops it's furnace smelting result.").endLine();
 		});
 	}
-
+	
 }

@@ -3,7 +3,7 @@ package net.luis.xsurvive.world.inventory;
 import net.minecraft.world.inventory.RecipeBookType;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

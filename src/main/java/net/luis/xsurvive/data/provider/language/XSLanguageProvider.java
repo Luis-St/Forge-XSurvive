@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -31,6 +31,29 @@ public class XSLanguageProvider extends LanguageProvider {
 	
 	public XSLanguageProvider(DataGenerator generator) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID, "en_us");
+	}
+	
+	public static String getName(ResourceLocation location) {
+		StringBuilder name = new StringBuilder();
+		if (location != null) {
+			String[] nameParts = location.getPath().split("_");
+			for (String namePart : nameParts) {
+				String startChar = namePart.substring(0, 1).toUpperCase();
+				name.append(startChar).append(namePart.substring(1)).append(" ");
+			}
+		}
+		return name.toString().trim();
+	}
+	
+	public static String getLocalizedName(ResourceLocation location) {
+		String name = getName(location);
+		if (name.contains(" Of ")) {
+			return name.replace(" Of ", " of ");
+		}
+		if (name.contains(" The ")) {
+			return name.replace(" The ", " the ");
+		}
+		return name;
 	}
 	
 	@Override
@@ -73,29 +96,6 @@ public class XSLanguageProvider extends LanguageProvider {
 		this.add("item.minecraft.splash_potion.effect." + potionName, "Splash Potion of " + this.getPotionName(location));
 		this.add("item.minecraft.lingering_potion.effect." + potionName, "Lingering Potion of " + this.getPotionName(location));
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
-	}
-	
-	public static String getName(ResourceLocation location) {
-		StringBuilder name = new StringBuilder();
-		if (location != null) {
-			String[] nameParts = location.getPath().split("_");
-			for (String namePart : nameParts) {
-				String startChar = namePart.substring(0, 1).toUpperCase();
-				name.append(startChar).append(namePart.substring(1)).append(" ");
-			}
-		}
-		return name.toString().trim();
-	}
-	
-	public static String getLocalizedName(ResourceLocation location) {
-		String name = getName(location);
-		if (name.contains(" Of ")) {
-			return name.replace(" Of ", " of ");
-		}
-		if (name.contains(" The ")) {
-			return name.replace(" The ", " the ");
-		}
-		return name;
 	}
 	
 	private String getPotionName(ResourceLocation location) {

@@ -14,8 +14,8 @@ import net.minecraft.world.entity.Entity;
 public class AbstractEntityHandler implements IEntity {
 	
 	private final Entity entity;
-	private int tick;
 	protected EntityFireType fireType = EntityFireType.NONE;
+	private int tick;
 	
 	public AbstractEntityHandler(Entity entity) {
 		this.entity = entity;

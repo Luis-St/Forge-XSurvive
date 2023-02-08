@@ -1,18 +1,14 @@
 package net.luis.xsurvive.world.item;
 
-import java.util.List;
-
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
+
+import java.util.List;
 
 /**
  *

@@ -1,8 +1,5 @@
 package net.luis.xsurvive.client.gui.screens.recipebook;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
@@ -12,8 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -33,5 +33,5 @@ public class SmeltingRecipeBookComponent extends AbstractFurnaceRecipeBookCompon
 			return item.getBurnTime(new ItemStack(item), XSRecipeTypes.SMELTING.get()) > 0;
 		}).collect(Collectors.toSet());
 	}
-
+	
 }

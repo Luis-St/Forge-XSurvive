@@ -2,7 +2,6 @@ package net.luis.xsurvive.client.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
-
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;

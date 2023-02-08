@@ -14,13 +14,13 @@ import java.util.concurrent.CompletableFuture;
 import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.*;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
-
+	
 	public XSPoiTypeTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
@@ -35,5 +35,5 @@ public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Poi Tags";
 	}
-
+	
 }

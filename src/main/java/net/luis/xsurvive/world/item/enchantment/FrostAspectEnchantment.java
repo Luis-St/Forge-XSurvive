@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -28,7 +28,7 @@ public class FrostAspectEnchantment extends FireAspectEnchantment implements Wik
 		}
 		return super.checkCompatibility(enchantment);
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

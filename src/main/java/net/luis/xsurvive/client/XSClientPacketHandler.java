@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Objects;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -37,7 +37,7 @@ public class XSClientPacketHandler {
 			}
 		}
 	}
-
+	
 	@SuppressWarnings("resource")
 	public static void handleEntityCapabilityUpdate(int entityId, CompoundTag tag) {
 		ClientLevel level = Minecraft.getInstance().level;

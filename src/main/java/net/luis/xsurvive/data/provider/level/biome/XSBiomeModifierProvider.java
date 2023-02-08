@@ -2,8 +2,6 @@ package net.luis.xsurvive.data.provider.level.biome;
 
 import com.google.common.collect.Lists;
 import net.luis.xores.XOres;
-import net.luis.xores.world.level.levelgen.feature.XOOreFeatures;
-import net.luis.xores.world.level.levelgen.placement.XOOrePlacements;
 import net.luis.xsurvive.tag.XSBiomeTags;
 import net.luis.xsurvive.world.level.biome.IfElseBiomeModifier;
 import net.luis.xsurvive.world.level.biome.ReplaceBiomeModifier;
@@ -95,8 +93,10 @@ public class XSBiomeModifierProvider {
 	
 	private static RemoveFeaturesBiomeModifier createRemoveFromOverworld(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(OrePlacements.ORE_COAL_UPPER), featureRegistry.getOrThrow(OrePlacements.ORE_COAL_LOWER), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_UPPER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_IRON_MIDDLE), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_GOLD), featureRegistry.getOrThrow(OrePlacements.ORE_GOLD_LOWER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS), featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS_BURIED), featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE), featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE_LOWER),
+				featureRegistry.getOrThrow(OrePlacements.ORE_IRON_MIDDLE), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_GOLD),
+				featureRegistry.getOrThrow(OrePlacements.ORE_GOLD_LOWER),
+				featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS), featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS_BURIED), featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE),
+				featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE_LOWER),
 				featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_LARGE), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_BURIED));
 		return new RemoveFeaturesBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_OVERWORLD), features, Set.of(Decoration.UNDERGROUND_ORES));
 	}
@@ -120,7 +120,7 @@ public class XSBiomeModifierProvider {
 	
 	private static ReplaceBiomeModifier createReplacePeak(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> toAdd = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.JADE_ORE_UPPER), featureRegistry.getOrThrow(XSOrePlacements.SAPHIRE_ORE_RARE_UPPER));
-	/*	HolderSet<PlacedFeature> toRemove = HolderSet.direct(featureRegistry.getOrThrow(XOOrePlacements.JADE_ORE_UPPER), featureRegistry.getOrThrow(XOOrePlacements.SAPHIRE_ORE_RARE_UPPER));*/
+		/*	HolderSet<PlacedFeature> toRemove = HolderSet.direct(featureRegistry.getOrThrow(XOOrePlacements.JADE_ORE_UPPER), featureRegistry.getOrThrow(XOOrePlacements.SAPHIRE_ORE_RARE_UPPER));*/
 		List<ResourceLocation> toRemove = Lists.newArrayList(new ResourceLocation(XOres.MOD_ID, "jade_ore_upper"), new ResourceLocation(XOres.MOD_ID, "saphire_ore_rare_upper"));
 		return new ReplaceBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_END), toAdd, toRemove);
 	}

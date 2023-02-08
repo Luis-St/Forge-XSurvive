@@ -1,15 +1,14 @@
 package net.luis.xsurvive.wiki.builder;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

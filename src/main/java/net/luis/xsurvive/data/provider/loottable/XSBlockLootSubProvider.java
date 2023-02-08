@@ -1,8 +1,5 @@
 package net.luis.xsurvive.data.provider.loottable;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -18,8 +15,11 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -50,5 +50,5 @@ public class XSBlockLootSubProvider extends BlockLootSubProvider {
 	protected @NotNull Iterable<Block> getKnownBlocks() {
 		return XSBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList());
 	}
-
+	
 }

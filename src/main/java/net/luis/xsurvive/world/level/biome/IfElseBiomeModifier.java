@@ -2,7 +2,6 @@ package net.luis.xsurvive.world.level.biome;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
@@ -45,7 +44,7 @@ public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome>
 			}
 		}
 	}
-
+	
 	@Override
 	public Codec<IfElseBiomeModifier> codec() {
 		return XSBiomeModifiers.IF_ELSE_BIOME_MODIFIER.get();

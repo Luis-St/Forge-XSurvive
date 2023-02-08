@@ -1,11 +1,5 @@
 package net.luis.xsurvive.mixin.entity;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.ItemWeightHelper;
@@ -27,6 +21,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  *
@@ -36,7 +35,7 @@ import net.minecraft.world.level.Level;
 
 @Mixin(WitherSkeleton.class)
 public abstract class WitherSkeletonMixin extends AbstractSkeleton {
-
+	
 	private WitherSkeletonMixin(EntityType<? extends AbstractSkeleton> entityType, Level level) {
 		super(entityType, level);
 	}

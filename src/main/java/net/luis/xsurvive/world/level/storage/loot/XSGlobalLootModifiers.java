@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
 import com.mojang.serialization.Codec;
-
 import net.luis.xsurvive.XSurvive;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
@@ -9,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

@@ -1,7 +1,7 @@
 package net.luis.xsurvive.world.entity.monster;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

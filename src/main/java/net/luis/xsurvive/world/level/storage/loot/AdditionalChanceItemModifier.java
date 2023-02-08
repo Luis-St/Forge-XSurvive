@@ -1,10 +1,7 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import java.util.List;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.Chance;
@@ -19,8 +16,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -52,7 +51,7 @@ public class AdditionalChanceItemModifier extends LootModifier {
 	public Codec<AdditionalChanceItemModifier> codec() {
 		return XSGlobalLootModifiers.ADDITIONAL_CHANCE_ITEM_MODIFIER.get();
 	}
-
+	
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();

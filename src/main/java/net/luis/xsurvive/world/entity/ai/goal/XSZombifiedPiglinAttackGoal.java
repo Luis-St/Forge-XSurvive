@@ -12,9 +12,9 @@ import net.minecraft.world.entity.player.Player;
  */
 
 public class XSZombifiedPiglinAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
-
+	
 	public XSZombifiedPiglinAttackGoal(ZombifiedPiglin zombifiedPiglin, Class<T> targetType, boolean mustSee, boolean mustReach) {
-		super(zombifiedPiglin, targetType,  mustSee, mustReach);
+		super(zombifiedPiglin, targetType, mustSee, mustReach);
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -25,21 +25,6 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	public PlayerProvider(IPlayer playerCapability) {
 		this.playerCapability = playerCapability;
 		this.optional = LazyOptional.of(() -> this.playerCapability);
-	}
-	
-	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
-		return XSCapabilities.PLAYER.orEmpty(capability, this.optional);
-	}
-
-	@Override
-	public CompoundTag serializeNBT() {
-		return this.playerCapability.serializeDisk();
-	}
-
-	@Override
-	public void deserializeNBT(CompoundTag tag) {
-		this.playerCapability.deserializeDisk(tag);
 	}
 	
 	public static IPlayer get(Player player) {
@@ -64,6 +49,21 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 			return handler;
 		}
 		throw new IllegalStateException("Unknown network side");
+	}
+	
+	@Override
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
+		return XSCapabilities.PLAYER.orEmpty(capability, this.optional);
+	}
+	
+	@Override
+	public CompoundTag serializeNBT() {
+		return this.playerCapability.serializeDisk();
+	}
+	
+	@Override
+	public void deserializeNBT(CompoundTag tag) {
+		this.playerCapability.deserializeDisk(tag);
 	}
 	
 }

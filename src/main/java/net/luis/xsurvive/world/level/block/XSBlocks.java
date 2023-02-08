@@ -1,13 +1,8 @@
 package net.luis.xsurvive.world.level.block;
 
-import java.util.function.Supplier;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
@@ -21,8 +16,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -46,7 +43,7 @@ public class XSBlocks {
 	public static final RegistryObject<AttachedStemBlock> ATTACHED_HONEY_MELON_STEM = register("attached_honey_melon_stem", () -> {
 		return new AttachedStemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WOOD));
 	});
-	public static final RegistryObject<MysticFireBlock> MYSTIC_FIRE = register("mystic_fire", () ->  {
+	public static final RegistryObject<MysticFireBlock> MYSTIC_FIRE = register("mystic_fire", () -> {
 		return new MysticFireBlock(BlockBehaviour.Properties.of(Material.FIRE, MaterialColor.FIRE).noCollission().instabreak().lightLevel((state) -> 15).sound(SoundType.WOOL));
 	});
 	

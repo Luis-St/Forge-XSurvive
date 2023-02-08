@@ -1,9 +1,5 @@
 package net.luis.xsurvive.event.entity.living;
 
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -22,11 +18,7 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Blaze;
@@ -34,16 +26,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.ShieldBlockEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+import java.util.Objects;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  *
@@ -54,11 +43,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class LivingEventHandler {
 	
-	private static final Random RNG = new Random();
 	public static final UUID GRAVITY_MODIFIER_UUID = UUID.fromString("715AF01B-DED3-45ED-8812-C8878C7F98CC");
 	public static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("CD14D16D-82ED-474E-97E9-403DE2439D01");
 	public static final UUID ATTACK_RANGE_UUID = UUID.fromString("95C48A2D-C536-4FB4-88DF-0DC534CE012A");
 	public static final UUID REACH_DISTANCE_UUID = UUID.fromString("F4502088-D181-44F4-A881-CDE977976A6D");
+	private static final Random RNG = new Random();
 	
 	@SubscribeEvent
 	public static void livingAttack(LivingAttackEvent event) {
@@ -150,7 +139,7 @@ public class LivingEventHandler {
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			EntityHelper.updateAttributeModifier(player, ForgeMod.ATTACK_RANGE.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom);
-			EntityHelper.updateAttributeModifier(player, ForgeMod.REACH_DISTANCE.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", 0.5 *  reachingTo, 0.5 * reachingFrom);
+			EntityHelper.updateAttributeModifier(player, ForgeMod.REACH_DISTANCE.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", 0.5 * reachingTo, 0.5 * reachingFrom);
 		}
 	}
 	

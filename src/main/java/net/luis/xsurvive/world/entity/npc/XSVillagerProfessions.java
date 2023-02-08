@@ -1,9 +1,6 @@
 package net.luis.xsurvive.world.entity.npc;
 
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableSet;
-
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -13,8 +10,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

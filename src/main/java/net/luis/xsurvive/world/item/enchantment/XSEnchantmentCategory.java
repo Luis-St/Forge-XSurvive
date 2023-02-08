@@ -3,16 +3,11 @@ package net.luis.xsurvive.world.item.enchantment;
 import net.luis.xores.world.item.ElytraChestplateItem;
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ElytraItem;
-import net.minecraft.world.item.HoeItem;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

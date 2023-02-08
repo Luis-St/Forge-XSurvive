@@ -1,9 +1,5 @@
 package net.luis.xsurvive.client.renderer.item;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.renderer.XSurviveRenderType;
@@ -13,8 +9,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -54,27 +54,27 @@ public class GlintColorHandler {
 	public static RenderType getGlint() {
 		return renderType(XSurviveRenderType.glint, RenderType::glint);
 	}
-
+	
 	public static RenderType getGlintTranslucent() {
 		return renderType(XSurviveRenderType.glintTranslucent, RenderType::glintTranslucent);
 	}
-
+	
 	public static RenderType getEntityGlint() {
 		return renderType(XSurviveRenderType.entityGlint, RenderType::entityGlint);
 	}
-
+	
 	public static RenderType getGlintDirect() {
 		return renderType(XSurviveRenderType.glintDirect, RenderType::glintDirect);
 	}
-
+	
 	public static RenderType getEntityGlintDirect() {
 		return renderType(XSurviveRenderType.entityGlintDirect, RenderType::entityGlintDirect);
 	}
-
+	
 	public static RenderType getArmorGlint() {
 		return renderType(XSurviveRenderType.armorGlint, RenderType::armorGlint);
 	}
-
+	
 	public static RenderType getArmorEntityGlint() {
 		return renderType(XSurviveRenderType.armorEntityGlint, RenderType::armorEntityGlint);
 	}
@@ -82,7 +82,7 @@ public class GlintColorHandler {
 	private static RenderType renderType(List<RenderType> renderTypes, Supplier<RenderType> vanillaRenderType) {
 		int color = getColor();
 		if (17 >= color && color >= 0) {
-			return renderTypes.get(color) ;
+			return renderTypes.get(color);
 		}
 		return vanillaRenderType.get();
 	}

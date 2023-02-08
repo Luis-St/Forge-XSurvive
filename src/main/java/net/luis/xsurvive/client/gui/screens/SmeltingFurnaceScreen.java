@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -21,5 +21,5 @@ public class SmeltingFurnaceScreen extends AbstractFurnaceScreen<SmeltingFurnace
 	public SmeltingFurnaceScreen(SmeltingFurnaceMenu smeltingMenu, Inventory inventory, Component component) {
 		super(smeltingMenu, new SmeltingRecipeBookComponent(), inventory, component, TEXTURE);
 	}
-
+	
 }

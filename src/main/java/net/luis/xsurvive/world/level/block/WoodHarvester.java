@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.level.block;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -14,8 +11,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

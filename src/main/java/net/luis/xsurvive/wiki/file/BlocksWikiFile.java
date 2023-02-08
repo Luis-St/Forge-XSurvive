@@ -1,12 +1,6 @@
 package net.luis.xsurvive.wiki.file;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xores.world.fixer.ToolFixer;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.world.level.block.XSBlocks;
@@ -21,6 +15,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.tags.ITagManager;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  *

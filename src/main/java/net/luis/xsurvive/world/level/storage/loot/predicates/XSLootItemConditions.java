@@ -1,14 +1,13 @@
 package net.luis.xsurvive.world.level.storage.loot.predicates;
 
 import net.luis.xsurvive.XSurvive;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

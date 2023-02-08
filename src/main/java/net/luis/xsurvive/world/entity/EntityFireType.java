@@ -1,14 +1,12 @@
 package net.luis.xsurvive.world.entity;
 
-import java.util.Objects;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.luis.xsurvive.world.level.block.MysticFireBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.SoulFireBlock;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  *

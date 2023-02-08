@@ -1,11 +1,5 @@
 package net.luis.xsurvive.mixin.entity.villager;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.luis.xsurvive.world.entity.npc.VillagerProvider;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  *
@@ -28,16 +27,16 @@ import net.minecraft.world.level.Level;
 
 @Mixin(Villager.class)
 public abstract class VillagerMixin extends AbstractVillager {
-
+	
 	private VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
 	}
 	
 	@Shadow
-	public abstract void setVillagerData(VillagerData villagerData);
+	public abstract VillagerData getVillagerData();
 	
 	@Shadow
-	public abstract VillagerData getVillagerData();
+	public abstract void setVillagerData(VillagerData villagerData);
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
 	public void mobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {

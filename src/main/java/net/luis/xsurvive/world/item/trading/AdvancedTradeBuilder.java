@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.trading;
 
-import java.util.Objects;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
@@ -18,8 +16,10 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -137,5 +137,5 @@ public class AdvancedTradeBuilder {
 	public ItemListing defaultBuild(int level) {
 		return this.defaultValues(level).build();
 	}
-
+	
 }

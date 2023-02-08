@@ -15,12 +15,12 @@ public class CustomZombifiedPiglinAi extends AbstractCustomAi<ZombifiedPiglin> {
 	public CustomZombifiedPiglinAi(ZombifiedPiglin entity, ServerLevel level) {
 		super(entity, level);
 	}
-
+	
 	@Override
 	public boolean canUse() {
 		return this.entity.getTarget() instanceof Player && this.entity.isAngry();
 	}
-
+	
 	@Override
 	public void tick() {
 		if (this.entity.getTarget() instanceof Player player) {

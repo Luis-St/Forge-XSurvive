@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.level.biome;
 
 import com.mojang.serialization.Codec;
-
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-
+	
 	public AspectOfTheEndEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -41,7 +41,7 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	public boolean canEnchant(ItemStack stack) {
 		return stack.getItem() instanceof SwordItem;
 	}
-
+	
 	@Override
 	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;

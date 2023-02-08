@@ -11,13 +11,13 @@ import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry {
-
+	
 	public ThunderboltEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -41,7 +41,8 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment == Enchantments.KNOCKBACK) {
 			return false;
-		} if (enchantment instanceof FireAspectEnchantment) {
+		}
+		if (enchantment instanceof FireAspectEnchantment) {
 			return false;
 		}
 		return super.checkCompatibility(enchantment);
@@ -51,7 +52,7 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

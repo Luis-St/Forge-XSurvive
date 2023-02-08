@@ -3,7 +3,6 @@ package net.luis.xsurvive.world.level.biome;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -18,7 +17,6 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 

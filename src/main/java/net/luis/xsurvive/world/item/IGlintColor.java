@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

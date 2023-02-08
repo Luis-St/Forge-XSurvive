@@ -20,7 +20,7 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 	public ReachingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
-
+	
 	@Override
 	public int getMaxLevel() {
 		return 3;

@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class XSLootTableProvider extends LootTableProvider {
-
+	
 	public XSLootTableProvider(DataGenerator generator) {
 		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)));
 	}
@@ -28,5 +28,5 @@ public class XSLootTableProvider extends LootTableProvider {
 	protected void validate(@NotNull Map<ResourceLocation, LootTable> lootTables, @NotNull ValidationContext validationContext) {
 		
 	}
-
+	
 }

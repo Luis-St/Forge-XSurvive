@@ -1,7 +1,7 @@
 package net.luis.xsurvive.wiki;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

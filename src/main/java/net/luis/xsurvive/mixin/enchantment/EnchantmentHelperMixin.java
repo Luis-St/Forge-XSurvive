@@ -1,22 +1,9 @@
 package net.luis.xsurvive.mixin.enchantment;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.google.common.collect.Maps;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -24,9 +11,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -65,7 +61,7 @@ public abstract class EnchantmentHelperMixin {
 				}
 				
 			} else {
-				XSurvive.LOGGER.error("Fail to set the Enchantment (" + enchantments +") for a EnchantedGoldenBookItem, since the given Map size must be 1");
+				XSurvive.LOGGER.error("Fail to set the Enchantment (" + enchantments + ") for a EnchantedGoldenBookItem, since the given Map size must be 1");
 			}
 			stack.removeTagKey("Enchantments");
 		}

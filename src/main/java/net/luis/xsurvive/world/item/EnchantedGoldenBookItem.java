@@ -28,6 +28,12 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 		super(properties);
 	}
 	
+	public static ItemStack createForEnchantment(Enchantment enchantment) {
+		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
+		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
+		return stack;
+	}
+	
 	@Override
 	public boolean isFoil(@NotNull ItemStack stack) {
 		return true;
@@ -73,12 +79,6 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			EnchantmentHelper.setEnchantments(Map.of(enchantment, 1), stack);
 		}
-	}
-	
-	public static ItemStack createForEnchantment(Enchantment enchantment) {
-		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
-		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
-		return stack;
 	}
 	
 	@Override

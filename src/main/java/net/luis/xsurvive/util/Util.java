@@ -1,16 +1,16 @@
 package net.luis.xsurvive.util;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
 /**
- * 
+ *
  * @author Luis-st
  *
  */

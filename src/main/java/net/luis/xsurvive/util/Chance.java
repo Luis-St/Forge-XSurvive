@@ -1,11 +1,11 @@
 package net.luis.xsurvive.util;
 
-import java.util.Random;
-
 import com.mojang.serialization.Codec;
 
+import java.util.Random;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

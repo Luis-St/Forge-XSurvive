@@ -1,10 +1,6 @@
 package net.luis.xsurvive.data.provider.block;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.block.MysticFireBlock;
 import net.luis.xsurvive.world.level.block.XSBlocks;
@@ -26,8 +22,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -84,7 +82,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	private void attachedStemBlock(Block block) {
 		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.models().getBuilder(name).parent(new ExistingModelFile(this.mcLoc("block/stem_fruit"), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).texture("upperstem", this.mcLoc("block/attached_melon_stem"))
-			.renderType("cutout");
+				.renderType("cutout");
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (Direction direction : Lists.newArrayList(Direction.Plane.HORIZONTAL.iterator())) {
 			builder.partialState().with(AttachedStemBlock.FACING, direction).modelForState().modelFile(this.blockModel(block)).rotationY((this.getYRotation(direction) + 90) % 360).addModel();
@@ -105,71 +103,71 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		this.models().getBuilder(name + "_up_alt1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
 		// @formatter:off
 		this.getMultipartBuilder(block)
-			.part().modelFile(this.blockModel(block, "floor0")).nextModel()
+				.part().modelFile(this.blockModel(block, "floor0")).nextModel()
 				.modelFile(this.blockModel(block, "floor1")).addModel()
-					.condition(MysticFireBlock.NORTH, false)
-					.condition(MysticFireBlock.SOUTH, false)
-					.condition(MysticFireBlock.EAST, false)
-					.condition(MysticFireBlock.WEST, false)
-					.condition(MysticFireBlock.UP, false)
-			.end().part().modelFile(this.blockModel(block, "side0")).nextModel()
+				.condition(MysticFireBlock.NORTH, false)
+				.condition(MysticFireBlock.SOUTH, false)
+				.condition(MysticFireBlock.EAST, false)
+				.condition(MysticFireBlock.WEST, false)
+				.condition(MysticFireBlock.UP, false)
+				.end().part().modelFile(this.blockModel(block, "side0")).nextModel()
 				.modelFile(this.blockModel(block, "side1")).nextModel()
 				.modelFile(this.blockModel(block, "side_alt0")).nextModel()
 				.modelFile(this.blockModel(block, "side_alt1")).addModel()
-					.useOr().nestedGroup()
-						.condition(MysticFireBlock.NORTH, true)
-					.end().nestedGroup()
-						.condition(MysticFireBlock.NORTH, false)
-						.condition(MysticFireBlock.SOUTH, false)
-						.condition(MysticFireBlock.EAST, false)
-						.condition(MysticFireBlock.WEST, false)
-						.condition(MysticFireBlock.UP, false)
-					.end()
-			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(180).nextModel()
+				.useOr().nestedGroup()
+				.condition(MysticFireBlock.NORTH, true)
+				.end().nestedGroup()
+				.condition(MysticFireBlock.NORTH, false)
+				.condition(MysticFireBlock.SOUTH, false)
+				.condition(MysticFireBlock.EAST, false)
+				.condition(MysticFireBlock.WEST, false)
+				.condition(MysticFireBlock.UP, false)
+				.end()
+				.end().part().modelFile(this.blockModel(block, "side0")).rotationY(180).nextModel()
 				.modelFile(this.blockModel(block, "side1")).rotationY(180).nextModel()
 				.modelFile(this.blockModel(block, "side_alt0")).rotationY(180).nextModel()
 				.modelFile(this.blockModel(block, "side_alt1")).rotationY(180).addModel()
-					.useOr().nestedGroup()
-						.condition(MysticFireBlock.SOUTH, true)
-					.end().nestedGroup()
-						.condition(MysticFireBlock.NORTH, false)
-						.condition(MysticFireBlock.SOUTH, false)
-						.condition(MysticFireBlock.EAST, false)
-						.condition(MysticFireBlock.WEST, false)
-						.condition(MysticFireBlock.UP, false)
-					.end()
-			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(90).nextModel()
+				.useOr().nestedGroup()
+				.condition(MysticFireBlock.SOUTH, true)
+				.end().nestedGroup()
+				.condition(MysticFireBlock.NORTH, false)
+				.condition(MysticFireBlock.SOUTH, false)
+				.condition(MysticFireBlock.EAST, false)
+				.condition(MysticFireBlock.WEST, false)
+				.condition(MysticFireBlock.UP, false)
+				.end()
+				.end().part().modelFile(this.blockModel(block, "side0")).rotationY(90).nextModel()
 				.modelFile(this.blockModel(block, "side1")).rotationY(90).nextModel()
 				.modelFile(this.blockModel(block, "side_alt0")).rotationY(90).nextModel()
 				.modelFile(this.blockModel(block, "side_alt1")).rotationY(90).addModel()
-					.useOr().nestedGroup()
-						.condition(MysticFireBlock.EAST, true)
-					.end().nestedGroup()
-						.condition(MysticFireBlock.NORTH, false)
-						.condition(MysticFireBlock.SOUTH, false)
-						.condition(MysticFireBlock.EAST, false)
-						.condition(MysticFireBlock.WEST, false)
-						.condition(MysticFireBlock.UP, false)
-					.end()
-			.end().part().modelFile(this.blockModel(block, "side0")).rotationY(270).nextModel()
+				.useOr().nestedGroup()
+				.condition(MysticFireBlock.EAST, true)
+				.end().nestedGroup()
+				.condition(MysticFireBlock.NORTH, false)
+				.condition(MysticFireBlock.SOUTH, false)
+				.condition(MysticFireBlock.EAST, false)
+				.condition(MysticFireBlock.WEST, false)
+				.condition(MysticFireBlock.UP, false)
+				.end()
+				.end().part().modelFile(this.blockModel(block, "side0")).rotationY(270).nextModel()
 				.modelFile(this.blockModel(block, "side1")).rotationY(270).nextModel()
 				.modelFile(this.blockModel(block, "side_alt0")).rotationY(270).nextModel()
 				.modelFile(this.blockModel(block, "side_alt1")).rotationY(270).addModel()
-					.useOr().nestedGroup()
-						.condition(MysticFireBlock.WEST, true)
-					.end().nestedGroup()
-						.condition(MysticFireBlock.NORTH, false)
-						.condition(MysticFireBlock.SOUTH, false)
-						.condition(MysticFireBlock.EAST, false)
-						.condition(MysticFireBlock.WEST, false)
-						.condition(MysticFireBlock.UP, false)
-					.end()
-			.end().part().modelFile(this.blockModel(block, "up0")).rotationY(270).nextModel()
-					.modelFile(this.blockModel(block, "up1")).rotationY(270).nextModel()
-					.modelFile(this.blockModel(block, "up_alt0")).rotationY(270).nextModel()
-					.modelFile(this.blockModel(block, "up_alt1")).rotationY(270).addModel()
-						.condition(MysticFireBlock.UP, true)
-					.end();
+				.useOr().nestedGroup()
+				.condition(MysticFireBlock.WEST, true)
+				.end().nestedGroup()
+				.condition(MysticFireBlock.NORTH, false)
+				.condition(MysticFireBlock.SOUTH, false)
+				.condition(MysticFireBlock.EAST, false)
+				.condition(MysticFireBlock.WEST, false)
+				.condition(MysticFireBlock.UP, false)
+				.end()
+				.end().part().modelFile(this.blockModel(block, "up0")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "up1")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "up_alt0")).rotationY(270).nextModel()
+				.modelFile(this.blockModel(block, "up_alt1")).rotationY(270).addModel()
+				.condition(MysticFireBlock.UP, true)
+				.end();
 		// @formatter:on
 	}
 	

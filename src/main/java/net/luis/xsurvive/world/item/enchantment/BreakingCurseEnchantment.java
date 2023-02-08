@@ -8,13 +8,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class BreakingCurseEnchantment extends Enchantment implements WikiFileEntry {
-
+	
 	public BreakingCurseEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -43,7 +43,7 @@ public class BreakingCurseEnchantment extends Enchantment implements WikiFileEnt
 	public boolean isCurse() {
 		return true;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {

@@ -1,15 +1,15 @@
 package net.luis.xsurvive.world.entity.ai.goal;
 
-import java.util.EnumSet;
-
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.projectile.SmallFireball;
 
+import java.util.EnumSet;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

@@ -10,13 +10,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class HarvestingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-
+	
 	public HarvestingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -60,5 +60,5 @@ public class HarvestingEnchantment extends Enchantment implements IEnchantment, 
 			builder.appendFormatted("harvestingLevel * 4 + (harvestingLevel / 2)", WikiFormat.CODE).endLine();
 		});
 	}
-
+	
 }

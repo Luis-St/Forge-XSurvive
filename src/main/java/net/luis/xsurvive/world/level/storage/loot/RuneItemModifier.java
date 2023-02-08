@@ -1,10 +1,7 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import java.util.Random;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.util.RarityList;
 import net.luis.xsurvive.util.WeightCollection;
@@ -16,8 +13,10 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

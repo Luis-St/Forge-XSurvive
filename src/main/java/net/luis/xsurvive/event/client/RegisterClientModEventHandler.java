@@ -25,7 +25,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
-import static net.luis.xsurvive.client.XSRecipeBookCategories.SMELTING_FURNACE_MISC;
 
 /**
  *

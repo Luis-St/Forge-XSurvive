@@ -1,10 +1,18 @@
 package net.luis.xsurvive.wiki.file;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
+
+import com.google.common.collect.Lists;
+import com.mojang.logging.LogUtils;
+import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.wiki.WikiFormat;
+import net.luis.xsurvive.wiki.WikiList;
+import net.luis.xsurvive.wiki.builder.*;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,20 +20,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Consumer;
-
-import org.jetbrains.annotations.VisibleForTesting;
-
-import com.google.common.collect.Lists;
-import com.mojang.logging.LogUtils;
-
-import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.WikiList;
-import net.luis.xsurvive.wiki.builder.WikiHeaderBuilder;
-import net.luis.xsurvive.wiki.builder.WikiListBuilder;
-import net.luis.xsurvive.wiki.builder.WikiMultiLineBuilder;
-import net.luis.xsurvive.wiki.builder.WikiQuoteBuilder;
-import net.luis.xsurvive.wiki.builder.WikiSingleLineBuilder;
 
 public class WikiFileBuilder {
 	

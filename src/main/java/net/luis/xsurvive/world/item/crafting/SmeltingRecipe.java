@@ -10,13 +10,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class SmeltingRecipe extends AbstractCookingRecipe {
-
+	
 	public SmeltingRecipe(ResourceLocation location, String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
 		super(XSRecipeTypes.SMELTING.get(), location, group, category, ingredient, result, experience, cookingTime);
 	}
@@ -30,5 +30,5 @@ public class SmeltingRecipe extends AbstractCookingRecipe {
 	public @NotNull RecipeSerializer<?> getSerializer() {
 		return XSRecipeSerializers.SMELTING_RECIPE.get();
 	}
-
+	
 }

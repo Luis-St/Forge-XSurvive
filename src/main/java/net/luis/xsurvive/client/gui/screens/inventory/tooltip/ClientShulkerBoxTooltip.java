@@ -1,10 +1,7 @@
 package net.luis.xsurvive.client.gui.screens.inventory.tooltip;
 
-import java.util.List;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxTooltip;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -14,8 +11,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -34,7 +33,7 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	public int getHeight() {
 		return 59;
 	}
-
+	
 	@Override
 	public int getWidth(@NotNull Font font) {
 		return 162;

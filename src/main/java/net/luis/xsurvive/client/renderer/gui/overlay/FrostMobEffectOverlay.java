@@ -1,12 +1,7 @@
 package net.luis.xsurvive.client.renderer.gui.overlay;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-
+import com.mojang.blaze3d.vertex.*;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
@@ -19,7 +14,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import java.util.Objects;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -62,5 +57,5 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
-
+	
 }

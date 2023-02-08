@@ -1,25 +1,12 @@
 package net.luis.xsurvive.mixin.entity;
 
-import java.util.List;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.util.Util;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
@@ -31,9 +18,16 @@ import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.List;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -44,9 +38,9 @@ public abstract class EnderDragonMixin extends Mob {
 	@Shadow
 	public EndCrystal nearestCrystal;
 	@Shadow
-	private EndDragonFight dragonFight;
-	@Shadow
 	public int dragonDeathTime;
+	@Shadow
+	private EndDragonFight dragonFight;
 	@Shadow(remap = false)
 	private Player unlimitedLastHurtByPlayer = null;
 	
@@ -96,12 +90,12 @@ public abstract class EnderDragonMixin extends Mob {
 		for (Player player : players) {
 			int xp = experience;
 			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, XSEnchantmentHelper.getItemsWith(Enchantments.MENDING, player, ItemStack::isDamaged))) {
-		         int repair = (int) Math.min(experience * stack.getXpRepairRatio(), stack.getDamageValue());
-		         stack.setDamageValue(stack.getDamageValue() - repair);
-		         xp -= repair / 2;
-		         if (0 > xp) {
-		        	 break;
-		         }
+				int repair = (int) Math.min(experience * stack.getXpRepairRatio(), stack.getDamageValue());
+				stack.setDamageValue(stack.getDamageValue() - repair);
+				xp -= repair / 2;
+				if (0 > xp) {
+					break;
+				}
 			}
 			if (xp > 0) {
 				player.giveExperiencePoints(xp);

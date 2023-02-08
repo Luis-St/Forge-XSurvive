@@ -26,7 +26,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

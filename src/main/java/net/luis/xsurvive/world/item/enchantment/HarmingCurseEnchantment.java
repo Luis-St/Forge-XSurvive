@@ -8,13 +8,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class HarmingCurseEnchantment extends Enchantment implements WikiFileEntry {
-
+	
 	public HarmingCurseEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}

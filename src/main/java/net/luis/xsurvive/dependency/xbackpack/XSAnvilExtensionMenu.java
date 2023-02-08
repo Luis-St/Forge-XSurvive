@@ -1,11 +1,6 @@
 package net.luis.xsurvive.dependency.xbackpack;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xbackpack.network.XBNetworkHandler;
 import net.luis.xbackpack.network.packet.extension.UpdateAnvilPacket;
 import net.luis.xbackpack.world.capability.BackpackProvider;
@@ -35,6 +30,10 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 /**
  *
  * @author Luis-st
@@ -50,6 +49,10 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	public XSAnvilExtensionMenu(AbstractExtensionContainerMenu menu, Player player) {
 		super(menu, player);
 		this.handler = BackpackProvider.get(this.player).getAnvilHandler();
+	}
+	
+	private static int calculateIncreasedRepairCost(int cost) {
+		return cost * 2 + 1;
 	}
 	
 	@Override
@@ -113,7 +116,8 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	}
 	
 	private void playSound(ServerPlayer player, ServerLevel level) {
-		player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ANVIL_USE), SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
+		player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ANVIL_USE), SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F,
+				level.random.nextLong()));
 	}
 	
 	@Override
@@ -277,10 +281,6 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 		XBNetworkHandler.INSTANCE.sendToPlayer(player, new UpdateAnvilPacket(this.cost));
 	}
 	
-	private static int calculateIncreasedRepairCost(int cost) {
-		return cost * 2 + 1;
-	}
-
 	public int getCost() {
 		return this.cost;
 	}

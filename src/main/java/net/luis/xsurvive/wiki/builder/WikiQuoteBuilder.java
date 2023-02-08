@@ -1,19 +1,18 @@
 package net.luis.xsurvive.wiki.builder;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class WikiQuoteBuilder extends AbstractWikiBuilder<WikiQuoteBuilder> {
-
+	
 	public WikiQuoteBuilder(WikiFileBuilder fileBuilder) {
 		super(fileBuilder);
 	}

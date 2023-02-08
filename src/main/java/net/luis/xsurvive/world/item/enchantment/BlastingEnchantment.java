@@ -10,13 +10,13 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class BlastingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-
+	
 	public BlastingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}

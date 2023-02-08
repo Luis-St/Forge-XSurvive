@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class XSBlockTagsProvider extends BlockTagsProvider {
-
+	
 	public XSBlockTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
@@ -37,5 +37,5 @@ public class XSBlockTagsProvider extends BlockTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Block Tags";
 	}
-
+	
 }

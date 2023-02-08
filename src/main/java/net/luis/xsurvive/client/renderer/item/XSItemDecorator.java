@@ -1,12 +1,7 @@
 package net.luis.xsurvive.client.renderer.item;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-
+import com.mojang.blaze3d.vertex.*;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.client.Minecraft;
@@ -30,7 +25,7 @@ public class XSItemDecorator implements IItemDecorator {
 	public XSItemDecorator(Minecraft minecraft) {
 		this.minecraft = minecraft;
 	}
-
+	
 	@Override
 	public boolean render(Font font, ItemStack stack, int xOffset, int yOffset, float blitOffset) {
 		LocalPlayer player = this.minecraft.player;

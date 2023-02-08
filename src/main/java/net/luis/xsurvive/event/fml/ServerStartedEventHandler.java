@@ -1,21 +1,16 @@
 package net.luis.xsurvive.event.fml;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.wiki.file.BlocksWikiFile;
-import net.luis.xsurvive.wiki.file.DimensionsWikiFile;
-import net.luis.xsurvive.wiki.file.EffectsWikiFile;
-import net.luis.xsurvive.wiki.file.EnchantmentWikiFile;
-import net.luis.xsurvive.wiki.file.ItemsWikiFile;
-import net.luis.xsurvive.wiki.file.PotionsWikiFile;
+import net.luis.xsurvive.wiki.file.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  *

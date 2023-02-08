@@ -1,11 +1,11 @@
 package net.luis.xsurvive.world.item;
 
-import java.util.List;
-
 import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+
+import java.util.List;
 
 /**
  *
@@ -28,10 +28,10 @@ public class ItemWeightHelper {
 		}
 		if (difficulty >= 2.75) {
 			itemWeights.add(30, ItemHelper.getIronWeapons());
-		} 
+		}
 		if (3.5 >= difficulty && difficulty >= 1.75) {
 			itemWeights.add(20, ItemHelper.getStoneWeapons());
-		} 
+		}
 		if (2.75 >= difficulty && difficulty >= 1.0) {
 			itemWeights.add(10, ItemHelper.getGoldWeapons());
 		}
@@ -62,10 +62,10 @@ public class ItemWeightHelper {
 		}
 		if (difficulty >= 2.75) {
 			itemWeights.add(30, ItemHelper.getIronArmor());
-		} 
+		}
 		if (3.5 >= difficulty && difficulty >= 1.75) {
 			itemWeights.add(20, ItemHelper.getChainArmor());
-		} 
+		}
 		if (2.75 >= difficulty && difficulty >= 1.0) {
 			itemWeights.add(10, ItemHelper.getGoldArmor());
 		}

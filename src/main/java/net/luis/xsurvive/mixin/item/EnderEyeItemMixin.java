@@ -1,10 +1,5 @@
 package net.luis.xsurvive.mixin.item;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.luis.xsurvive.world.entity.projectile.CursedEyeOfEnder;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -28,6 +23,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  *
@@ -37,7 +36,7 @@ import net.minecraft.world.phys.HitResult;
 
 @Mixin(EnderEyeItem.class)
 public abstract class EnderEyeItemMixin extends Item {
-
+	
 	private EnderEyeItemMixin(Properties properties) {
 		super(properties);
 	}

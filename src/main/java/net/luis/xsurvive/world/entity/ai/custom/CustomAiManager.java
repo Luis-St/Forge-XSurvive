@@ -1,13 +1,11 @@
 package net.luis.xsurvive.world.entity.ai.custom;
 
-import java.util.Map;
-
-import org.jetbrains.annotations.Nullable;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
 
 /**
  *

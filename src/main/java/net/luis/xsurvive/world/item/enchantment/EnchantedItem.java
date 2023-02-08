@@ -3,7 +3,7 @@ package net.luis.xsurvive.world.item.enchantment;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

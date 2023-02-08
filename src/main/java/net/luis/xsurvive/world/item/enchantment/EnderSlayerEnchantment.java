@@ -8,13 +8,13 @@ import net.minecraft.world.item.enchantment.DamageEnchantment;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFileEntry {
-
+	
 	public EnderSlayerEnchantment(Rarity rarity, EquipmentSlot... slots) {
 		super(rarity, -1, slots);
 	}
@@ -33,7 +33,7 @@ public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFil
 	public float getDamageBonus(int level, @NotNull MobType mobType) {
 		return 0.0F;
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
@@ -42,5 +42,5 @@ public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFil
 			builder.append("End Entities:").append("Ender Man,").append("Endermite and").append("Shulker").endLine();
 		});
 	}
-
+	
 }

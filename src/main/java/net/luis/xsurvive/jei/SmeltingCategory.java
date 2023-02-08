@@ -1,13 +1,9 @@
 package net.luis.xsurvive.jei;
 
-import static mezz.jei.api.recipe.RecipeIngredientRole.INPUT;
-import static mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
-
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -25,6 +21,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import static mezz.jei.api.recipe.RecipeIngredientRole.INPUT;
+import static mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
 
 /**
  *
@@ -57,17 +56,17 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	public @NotNull RecipeType<SmeltingRecipe> getRecipeType() {
 		return XSJeiRecipeTypes.SMELTING;
 	}
-
+	
 	@Override
 	public @NotNull Component getTitle() {
 		return XSBlocks.SMELTING_FURNACE.get().getName();
 	}
-
+	
 	@Override
 	public @NotNull IDrawable getBackground() {
 		return this.background;
 	}
-
+	
 	@Override
 	public @NotNull IDrawable getIcon() {
 		return this.icon;
@@ -109,7 +108,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 			fontRenderer.draw(stack, component, this.background.getWidth() - fontRenderer.width(component), 45, 0xFF808080);
 		}
 	}
-
+	
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, @NotNull IFocusGroup focuses) {
 		builder.addSlot(INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));

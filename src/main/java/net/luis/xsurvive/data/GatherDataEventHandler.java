@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import java.util.Set;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

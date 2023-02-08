@@ -28,7 +28,7 @@ public class EndEnchantmentsModifier extends LootModifier {
 	public static final Codec<EndEnchantmentsModifier> CODEC = RecordCodecBuilder.create((instance) -> {
 		return LootModifier.codecStart(instance).and(instance.group(ForgeRegistries.ENCHANTMENTS.getCodec().fieldOf("enchantment").forGetter((modifier) -> {
 			return modifier.enchantment;
-		}),  Chance.CODEC.fieldOf("chance").forGetter((modifier) -> {
+		}), Chance.CODEC.fieldOf("chance").forGetter((modifier) -> {
 			return modifier.chance;
 		}), Codec.BOOL.fieldOf("allow_golden").forGetter((modifier) -> {
 			return modifier.allowGolden;

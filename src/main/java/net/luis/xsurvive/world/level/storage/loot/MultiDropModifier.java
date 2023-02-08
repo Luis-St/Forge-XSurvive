@@ -1,11 +1,8 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
@@ -16,8 +13,10 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

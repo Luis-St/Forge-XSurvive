@@ -8,13 +8,13 @@ import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class SmeltingFurnaceMenu extends AbstractFurnaceMenu {
-
+	
 	public SmeltingFurnaceMenu(int id, Inventory inventory, FriendlyByteBuf data) {
 		super(XSMenuTypes.SMELTING_FURNACE.get(), XSRecipeTypes.SMELTING.get(), XSRecipeBookTypes.SMELTING, id, inventory);
 	}
@@ -22,5 +22,5 @@ public class SmeltingFurnaceMenu extends AbstractFurnaceMenu {
 	public SmeltingFurnaceMenu(int id, Inventory inventory, Container container, ContainerData data) {
 		super(XSMenuTypes.SMELTING_FURNACE.get(), XSRecipeTypes.SMELTING.get(), XSRecipeBookTypes.SMELTING, id, inventory, container, data);
 	}
-
+	
 }

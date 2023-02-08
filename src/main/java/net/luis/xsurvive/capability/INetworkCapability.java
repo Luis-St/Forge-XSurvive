@@ -1,9 +1,5 @@
 package net.luis.xsurvive.capability;
 
-import java.util.function.Supplier;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.nbt.CompoundTag;
 
 /**

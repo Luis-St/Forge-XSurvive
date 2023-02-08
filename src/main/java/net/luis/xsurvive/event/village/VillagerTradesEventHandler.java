@@ -1,9 +1,6 @@
 package net.luis.xsurvive.event.village;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.luis.xores.world.item.XOItems;
 import net.luis.xores.world.level.block.XOBlocks;
@@ -22,8 +19,10 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -52,7 +51,7 @@ public class VillagerTradesEventHandler {
 			trade2.add(SimpleTradeBuilder.item(36, Items.BELL, 1).maxUses(12).villagerXp(5).multiplier(0.2F).build());
 			trade2.add(SimpleTradeBuilder.item(12, Items.IRON_LEGGINGS, 1).maxUses(12).villagerXp(5).multiplier(0.2F).build());
 			trade2.add(SimpleTradeBuilder.item(9, Items.IRON_BOOTS, 1).maxUses(12).villagerXp(5).multiplier(0.2F).build());
-
+			
 			trade3.add(SimpleTradeBuilder.emerald(Items.LAVA_BUCKET, 1, 1).maxUses(12).villagerXp(20).multiplier(0.05F).build());
 			trade3.add(SimpleTradeBuilder.emerald(Items.DIAMOND, 1, 3).maxUses(12).villagerXp(20).multiplier(0.05F).build());
 			trade3.add(SimpleTradeBuilder.item(10, Items.IRON_HELMET, 1).maxUses(12).villagerXp(10).multiplier(0.2F).build());

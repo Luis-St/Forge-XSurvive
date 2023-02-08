@@ -14,13 +14,13 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class VoidProtectionEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-
+	
 	public VoidProtectionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
@@ -104,7 +104,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	public int getMaxUpgradeLevel() {
 		return this.getMaxLevel();
 	}
-
+	
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
@@ -113,5 +113,5 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 			builder.appendFormatted("1 - (voidProtectionLevel * 0,2)", WikiFormat.CODE).endLine();
 		});
 	}
-
+	
 }

@@ -1,10 +1,7 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
-import java.util.Random;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.RarityList;
@@ -23,8 +20,10 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -55,7 +54,7 @@ public class GoldenBookModifier extends LootModifier {
 	private final RarityList<Enchantment> extraEndTreasure;
 	
 	public GoldenBookModifier(LootItemCondition[] conditions, int goldenBookCount, WeightCollection<RarityList<Enchantment>> enchantmentWeights, RarityList<Enchantment> extraOverworldTreasure, RarityList<Enchantment> extraNetherTreasure,
-		RarityList<Enchantment> extraEndTreasure) {
+							  RarityList<Enchantment> extraEndTreasure) {
 		super(conditions);
 		this.goldenBookCount = goldenBookCount;
 		this.enchantmentWeights = enchantmentWeights;

@@ -2,7 +2,6 @@ package net.luis.xsurvive.world.level.storage.loot;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;

@@ -1,19 +1,18 @@
 package net.luis.xsurvive.mixin.client;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
-import net.minecraft.network.chat.Component;
-
 import java.util.Objects;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -30,5 +29,5 @@ public abstract class ChatReportScreenMixin extends Screen {
 		Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
 		Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).sendSystemMessage(component);
 	}
-
+	
 }

@@ -1,19 +1,16 @@
 package net.luis.xsurvive.mixin.entity.ai;
 
+import net.luis.xsurvive.world.entity.npc.VillagerProvider;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
+import net.minecraft.world.entity.ai.behavior.ResetProfession;
 import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerData;
+import net.minecraft.world.entity.npc.VillagerProfession;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import net.luis.xsurvive.world.entity.npc.VillagerProvider;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.behavior.ResetProfession;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**

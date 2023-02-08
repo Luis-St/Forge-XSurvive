@@ -1,13 +1,6 @@
 package net.luis.xsurvive.network;
 
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
 import com.google.common.collect.Lists;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
@@ -24,8 +17,14 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */

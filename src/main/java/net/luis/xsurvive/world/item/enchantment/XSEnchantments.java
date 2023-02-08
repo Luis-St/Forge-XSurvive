@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -18,10 +18,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class XSEnchantments {
 	
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, XSurvive.MOD_ID);
-	
-	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
-			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
-	};
 	public static final RegistryObject<MultiDropEnchantment> MULTI_DROP = ENCHANTMENTS.register("multi_drop", () -> {
 		return new MultiDropEnchantment(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
 	});
@@ -49,32 +45,35 @@ public class XSEnchantments {
 	public static final RegistryObject<VoidWalkerEnchantment> VOID_WALKER = ENCHANTMENTS.register("void_walker", () -> {
 		return new VoidWalkerEnchantment(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET);
 	});
-	public static final RegistryObject<GrowthEnchantment> GROWTH = ENCHANTMENTS.register("growth", () -> { 
-		return new GrowthEnchantment(Rarity.COMMON, EnchantmentCategory.ARMOR, ARMOR_SLOTS);
-	});
 	public static final RegistryObject<BlastingEnchantment> BLASTING = ENCHANTMENTS.register("blasting", () -> {
 		return new BlastingEnchantment(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<ThunderboltEnchantment> THUNDERBOLT = ENCHANTMENTS.register("thunderbolt", () -> { 
+	public static final RegistryObject<ThunderboltEnchantment> THUNDERBOLT = ENCHANTMENTS.register("thunderbolt", () -> {
 		return new ThunderboltEnchantment(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<VoidProtectionEnchantment> VOID_PROTECTION = ENCHANTMENTS.register("void_protection", () -> { 
+	public static final RegistryObject<VoidProtectionEnchantment> VOID_PROTECTION = ENCHANTMENTS.register("void_protection", () -> {
 		return new VoidProtectionEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.ELYTRA, EquipmentSlot.CHEST);
 	});
-	public static final RegistryObject<HarvestingEnchantment> HARVESTING = ENCHANTMENTS.register("harvesting", () -> { 
+	public static final RegistryObject<HarvestingEnchantment> HARVESTING = ENCHANTMENTS.register("harvesting", () -> {
 		return new HarvestingEnchantment(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<ReplantingEnchantment> REPLANTING = ENCHANTMENTS.register("replanting", () -> { 
+	public static final RegistryObject<ReplantingEnchantment> REPLANTING = ENCHANTMENTS.register("replanting", () -> {
 		return new ReplantingEnchantment(Rarity.RARE, XSEnchantmentCategory.HOE, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<AspectOfTheEndEnchantment> ASPECT_OF_THE_END = ENCHANTMENTS.register("aspect_of_the_end", () -> { 
+	public static final RegistryObject<AspectOfTheEndEnchantment> ASPECT_OF_THE_END = ENCHANTMENTS.register("aspect_of_the_end", () -> {
 		return new AspectOfTheEndEnchantment(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<ExplosionEnchantment> EXPLOSION = ENCHANTMENTS.register("explosion", () -> { 
+	public static final RegistryObject<ExplosionEnchantment> EXPLOSION = ENCHANTMENTS.register("explosion", () -> {
 		return new ExplosionEnchantment(Rarity.RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND);
 	});
-	public static final RegistryObject<ReachingEnchantment> REACHING = ENCHANTMENTS.register("reaching", () -> { 
+	public static final RegistryObject<ReachingEnchantment> REACHING = ENCHANTMENTS.register("reaching", () -> {
 		return new ReachingEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.TOOLS, EquipmentSlot.MAINHAND);
+	});
+	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
+			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+	};
+	public static final RegistryObject<GrowthEnchantment> GROWTH = ENCHANTMENTS.register("growth", () -> {
+		return new GrowthEnchantment(Rarity.COMMON, EnchantmentCategory.ARMOR, ARMOR_SLOTS);
 	});
 	
 }

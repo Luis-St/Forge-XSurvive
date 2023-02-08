@@ -1,15 +1,15 @@
-modLoader="javafml"
-loaderVersion="[44,)"
-license="All rights reserved"
+modLoader = "javafml"
+loaderVersion = "[44,)"
+license = "All rights reserved"
 
 [[mods]]
-modId="xsurvive"
-version="1.19.3-2.1"
-displayName="XSurvive"
-credits="Thanks for downloading my Mod"
-authors="Luis"
-displayURL="https://github.com/Luis-st/Forge-XSurvive/issues"
-description='''
+modId = "xsurvive"
+version = "1.19.3-2.1"
+displayName = "XSurvive"
+credits = "Thanks for downloading my Mod"
+authors = "Luis"
+displayURL = "https://github.com/Luis-st/Forge-XSurvive/issues"
+description = '''
 XSurvive is a life balancing mod
 
 Have a lot of fun when playing
@@ -17,27 +17,27 @@ XSurvive Development Team
 '''
 
 [[dependencies.xsurvive]]
-modId="forge"
-mandatory=true
-versionRange="[44,)"
-ordering="BEFORE"
-side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[44,)"
+ordering = "BEFORE"
+side = "BOTH"
 
 [[dependencies.xsurvive]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.19.3,1.20)"
-ordering="NONE"
-side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.3,1.20)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.xsurvive]]
-modId="xbackpack"
-mandatory=false
-versionRange="[1.19.3-3.2,)"
-ordering="BEFORE"
+modId = "xbackpack"
+mandatory = false
+versionRange = "[1.19.3-3.2,)"
+ordering = "BEFORE"
 
 [[dependencies.xsurvive]]
-modId="xores"
-mandatory=true
-versionRange="[1.19.3-2.5,)"
-ordering="BEFORE"
+modId = "xores"
+mandatory = true
+versionRange = "[1.19.3-2.5,)"
+ordering = "BEFORE"

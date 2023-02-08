@@ -3,7 +3,7 @@ package net.luis.xsurvive.wiki.file;
 import net.luis.xsurvive.wiki.WikiFormat;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

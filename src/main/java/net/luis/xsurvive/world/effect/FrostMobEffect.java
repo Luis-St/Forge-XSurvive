@@ -8,13 +8,13 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class FrostMobEffect extends MobEffect {
-
+	
 	public FrostMobEffect(MobEffectCategory category, int color) {
 		super(category, color);
 	}
@@ -30,5 +30,5 @@ public class FrostMobEffect extends MobEffect {
 	public boolean isDurationEffectTick(int duration, int amplifier) {
 		return duration % 30 == 0;
 	}
-
+	
 }

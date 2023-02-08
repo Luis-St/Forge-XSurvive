@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -27,7 +27,7 @@ public class GlintColorItem extends Item implements IGlintColor {
 	public boolean isFoil(@NotNull ItemStack stack) {
 		return true;
 	}
-
+	
 	@Override
 	public int getGlintColor(ItemStack stack) {
 		return this.glintColor.getGlintColor(stack);

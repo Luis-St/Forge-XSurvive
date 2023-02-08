@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */

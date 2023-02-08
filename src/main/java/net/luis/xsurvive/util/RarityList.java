@@ -1,13 +1,13 @@
 package net.luis.xsurvive.util;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import java.util.List;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -25,7 +25,7 @@ public class RarityList<T> {
 	public RarityList(Rarity rarity, T... values) {
 		this(rarity, Lists.newArrayList(values));
 	}
-
+	
 	public RarityList(Rarity rarity, List<T> values) {
 		this.rarity = rarity;
 		this.values = Lists.newArrayList(values);
@@ -37,6 +37,16 @@ public class RarityList<T> {
 	
 	public static <T> RarityList<T> copy(RarityList<T> list) {
 		return new RarityList<>(list.rarity, list.values);
+	}
+	
+	public static <T> Codec<RarityList<T>> codec(Codec<T> codec) {
+		return RecordCodecBuilder.create((instance) -> {
+			return instance.group(Rarity.CODEC.fieldOf("rarity").forGetter((list) -> {
+				return list.rarity;
+			}), Codec.list(codec).fieldOf("values").forGetter((list) -> {
+				return list.values;
+			})).apply(instance, RarityList::new);
+		});
 	}
 	
 	public Rarity getRarity() {
@@ -66,20 +76,10 @@ public class RarityList<T> {
 		}
 		return false;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "RarityList{rarity=" + this.rarity + ", values=" + this.values + "}";
-	}
-	
-	public static <T> Codec<RarityList<T>> codec(Codec<T> codec) {
-		return RecordCodecBuilder.create((instance) -> {
-			return instance.group(Rarity.CODEC.fieldOf("rarity").forGetter((list) -> {
-				return list.rarity;
-			}), Codec.list(codec).fieldOf("values").forGetter((list) -> {
-				return list.values;
-			})).apply(instance, RarityList::new);
-		});
 	}
 	
 }

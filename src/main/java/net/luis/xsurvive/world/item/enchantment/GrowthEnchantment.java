@@ -7,13 +7,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
 
 public class GrowthEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
-
+	
 	public GrowthEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}

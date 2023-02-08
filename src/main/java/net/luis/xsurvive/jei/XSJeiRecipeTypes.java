@@ -12,6 +12,6 @@ import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 
 public class XSJeiRecipeTypes {
 	
-	public static final RecipeType<SmeltingRecipe> SMELTING = RecipeType.create(XSurvive.MOD_ID, "xsurvive_smelting", SmeltingRecipe.class); 
+	public static final RecipeType<SmeltingRecipe> SMELTING = RecipeType.create(XSurvive.MOD_ID, "xsurvive_smelting", SmeltingRecipe.class);
 	
 }
