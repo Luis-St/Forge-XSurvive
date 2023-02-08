@@ -25,9 +25,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 class DynamicTradeHelper {
 	
-	static List<Enchantment> getValidEnchantments(Collection<Enchantment> enchantments) {
+	static List<Enchantment> getValidEnchantments(Collection<Enchantment> enchantments, List<Enchantment.Rarity> allowedRarities) {
 		return enchantments.stream().filter((enchantment) -> {
-			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
+			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly() && allowedRarities.contains(enchantment.getRarity());
 		}).collect(Collectors.toList());
 	}
 	
@@ -91,10 +91,6 @@ class DynamicTradeHelper {
 	
 	static int getEmeraldCount(RandomSource rng, int level) {
 		return Math.min(2 + rng.nextInt(5 + level * 10) + 3 * level + 5, 64);
-	}
-	
-	static int getGoldenEmeraldCount(RandomSource rng, int level) {
-		return Math.min(2 + rng.nextInt(5 + level * 10) + 4 * level + 5, 128);
 	}
 	
 	static int getEmeraldCount(RandomSource rng, List<MobEffectInstance> effects) {

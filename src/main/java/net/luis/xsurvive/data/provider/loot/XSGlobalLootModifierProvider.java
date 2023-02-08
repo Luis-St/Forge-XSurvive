@@ -5,12 +5,7 @@ import net.luis.xsurvive.util.Chance;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
-import net.luis.xsurvive.world.level.storage.loot.AdditionalChanceItemModifier;
-import net.luis.xsurvive.world.level.storage.loot.GoldenBookModifier;
-import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
-import net.luis.xsurvive.world.level.storage.loot.MultiDropModifier;
-import net.luis.xsurvive.world.level.storage.loot.RuneItemModifier;
-import net.luis.xsurvive.world.level.storage.loot.SmeltingModifier;
+import net.luis.xsurvive.world.level.storage.loot.*;
 import net.luis.xsurvive.world.level.storage.loot.predicates.LootTableIdsCondition;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
@@ -53,7 +48,7 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 		})));
 		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder("chests/stronghold_library").add("chests/bastion_treasure").add("chests/end_city_treasure").add("chests/ancient_city").add("chests/ancient_city_ice_box").build()
-		}, 2, Util.make(new WeightCollection<>(), (collection) -> {
+		}, 1, Util.make(new WeightCollection<>(), (collection) -> {
 			collection.add(20, LootModifierHelper.getCommonEnchantments());
 			collection.add(40, LootModifierHelper.getRareEnchantments());
 			collection.add(25, LootModifierHelper.getVeryRareEnchantments());
@@ -61,6 +56,12 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 		}), LootModifierHelper.getExtraOverworldTreasure(), LootModifierHelper.getExtraNetherTreasure(), LootModifierHelper.getExtraEndTreasure()));
 		this.add("diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {}, Items.GOLDEN_APPLE, XSItems.DIAMOND_APPLE.get(), Chance.of(0.07)));
 		this.add("enchanted_diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {}, Items.ENCHANTED_GOLDEN_APPLE, XSItems.ENCHANTED_DIAMOND_APPLE.get(), Chance.of(0.03)));
+		this.add("void_walker_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder("chests/end_city_treasure").build()
+		}, XSEnchantments.VOID_WALKER.get(), Chance.of(0.08), false));
+		this.add("void_protection_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
+				new LootTableIdsCondition.Builder("chests/end_city_treasure").build()
+		}, XSEnchantments.VOID_PROTECTION.get(), Chance.of(0.02), true));
 	}
 	
 	@Override

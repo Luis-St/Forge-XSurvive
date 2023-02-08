@@ -2,6 +2,7 @@ package net.luis.xsurvive.world.item.trading.dynamic;
 
 import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
 
+import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+
 /**
  * 
  * @author Luis-st
@@ -26,38 +29,29 @@ public class DynamicEnchantedTrades {
 	
 	public static ItemListing randomEnchantedItem(Item item, int emeralds, int maxUses, int villagerXp, float priceMultiplier) {
 		return (villager, rng) -> {
-			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), 5 + rng.nextInt(20), false);
+			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), Math.max(emeralds / 2, 1), false);
 			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds + getEmeraldCount(stack)), stack, maxUses, villagerXp, priceMultiplier);
 		};
 	}
-		
-	public static ItemListing randomEnchantedBook(int villagerLevel) {
-		return randomEnchantedBook(0, Integer.MAX_VALUE, villagerLevel);
-	}
 	
-	public static ItemListing randomEnchantedBook(int minLevel, int maxLevel, int villagerLevel) {
+	public static ItemListing randomEnchantedBook(int villagerLevel, List<Enchantment.Rarity> allowedRarities) {
 		return (villager, rng) -> {
-			Enchantment enchantment = random(getValidEnchantments(ForgeRegistries.ENCHANTMENTS.getValues()), rng);
-			int level = getRandomLevel(rng, enchantment, minLevel, maxLevel, villagerLevel);
-			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level));
-			return new MerchantOffer(new ItemStack(Items.EMERALD, getEmeraldCount(rng, level)), new ItemStack(Items.BOOK), stack, 12, getVillagerXp(villagerLevel), 0.2F);
+			Enchantment enchantment = random(getValidEnchantments(ForgeRegistries.ENCHANTMENTS.getValues(), Lists.newArrayList(allowedRarities.isEmpty() ? Lists.newArrayList(Enchantment.Rarity.values()) : allowedRarities)), rng);
+			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, 1));
+			return new MerchantOffer(new ItemStack(Items.EMERALD, getEmeraldCount(rng, enchantment.getMaxLevel())), new ItemStack(Items.BOOK), stack, 1, getVillagerXp(villagerLevel), 0.2F);
+			
 		};
 	}
 	
 	public static ItemListing randomEnchantedGoldenBook(int villagerLevel) {
 		return (villager, rng) -> {
 			Enchantment enchantment = random(getValidGoldenEnchantments(ForgeRegistries.ENCHANTMENTS.getValues()), rng);
-			if (enchantment instanceof IEnchantment ench) {
-				int level = ench.getMaxGoldenBookLevel();
-				int emeralds = getGoldenEmeraldCount(rng, level);
-				if (64 >= emeralds) {
-					return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds), new ItemStack(Items.BOOK), EnchantedGoldenBookItem.createForEnchantment(enchantment), 16, getVillagerXp(villagerLevel), 0.02F);
-				} else {
-					return new MerchantOffer(new ItemStack(Items.EMERALD, 64), new ItemStack(Items.EMERALD, emeralds - 64), EnchantedGoldenBookItem.createForEnchantment(enchantment), 16, getVillagerXp(villagerLevel), 0.02F);
-				}
+			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel()));
+			if (enchantment instanceof IEnchantment) {
+				return new MerchantOffer(new ItemStack(Items.EMERALD, 64), stack, EnchantedGoldenBookItem.createForEnchantment(enchantment), 1, getVillagerXp(villagerLevel), 0.02F);
 			} else {
 				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-				return randomEnchantedBook(villagerLevel).getOffer(villager, rng);
+				return randomEnchantedBook(villagerLevel, Lists.newArrayList(Enchantment.Rarity.COMMON, Enchantment.Rarity.UNCOMMON)).getOffer(villager, rng);
 			}
 		};
 	}

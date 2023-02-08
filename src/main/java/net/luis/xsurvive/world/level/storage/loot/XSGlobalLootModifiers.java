@@ -33,5 +33,8 @@ public class XSGlobalLootModifiers {
 	public static final RegistryObject<Codec<AdditionalChanceItemModifier>> ADDITIONAL_CHANCE_ITEM_MODIFIER = LOOT_MODIFIERS.register("additional_chance_item_modifier", () -> {
 		return AdditionalChanceItemModifier.CODEC;
 	});
+	public static final RegistryObject<Codec<EndEnchantmentsModifier>> END_ENCHANTMENTS_MODIFIER = LOOT_MODIFIERS.register("end_enchantments_modifier", () -> {
+		return EndEnchantmentsModifier.CODEC;
+	});
 	
 }
