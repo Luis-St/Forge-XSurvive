@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -19,6 +19,9 @@ public class XSMenuTypes {
 	
 	public static final RegistryObject<MenuType<SmeltingFurnaceMenu>> SMELTING_FURNACE = MENU_TYPES.register("smelting_furnace", () -> {
 		return IForgeMenuType.create(SmeltingFurnaceMenu::new);
+	});
+	public static final RegistryObject<MenuType<EnderChestMenu>> ENDER_CHEST = MENU_TYPES.register("ender_chest", () -> {
+		return IForgeMenuType.create(EnderChestMenu::new);
 	});
 	
 }

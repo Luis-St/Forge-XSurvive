@@ -5,6 +5,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.items.wrapper.InvWrapper;
+
+import java.util.function.Supplier;
 
 /**
  *
@@ -15,11 +20,13 @@ import net.minecraft.world.level.Level;
 public class AbstractPlayerHandler implements IPlayer {
 	
 	private final Player player;
-	private int tick;
+	private final ItemStackHandler enderChest = new ItemStackHandler(27);
+	private final Supplier<CombinedInvWrapper> combinedInventory = () -> new CombinedInvWrapper(new InvWrapper(this.getPlayer().getEnderChestInventory()), this.enderChest);
 	protected int frostTime;
 	protected int startFrostTime;
 	protected int endAspectCooldown;
 	protected int startEndAspectCooldown;
+	private int tick;
 	
 	public AbstractPlayerHandler(Player player) {
 		this.player = player;
@@ -79,6 +86,11 @@ public class AbstractPlayerHandler implements IPlayer {
 		return Mth.clamp((double) this.endAspectCooldown / (double) this.startEndAspectCooldown, 0.0, 1.0);
 	}
 	
+	@Override
+	public CombinedInvWrapper getCombinedInventory() {
+		return this.combinedInventory.get();
+	}
+	
 	private CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
@@ -99,12 +111,15 @@ public class AbstractPlayerHandler implements IPlayer {
 	
 	@Override
 	public CompoundTag serializeDisk() {
-		return this.serialize();
+		CompoundTag tag = this.serialize();
+		tag.put("ender_chest", this.enderChest.serializeNBT());
+		return tag;
 	}
 	
 	@Override
 	public void deserializeDisk(CompoundTag tag) {
 		this.deserialize(tag);
+		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}
 	
 	@Override
@@ -121,12 +136,14 @@ public class AbstractPlayerHandler implements IPlayer {
 	public CompoundTag serializePersistent() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
+		tag.put("ender_chest", this.enderChest.serializeNBT());
 		return tag;
 	}
 	
 	@Override
 	public void deserializePersistent(CompoundTag tag) {
 		this.tick = tag.getInt("tick");
+		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}
 	
 }

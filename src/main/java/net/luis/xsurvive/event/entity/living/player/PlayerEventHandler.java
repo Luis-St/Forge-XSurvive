@@ -1,13 +1,11 @@
 package net.luis.xsurvive.event.entity.living.player;
 
-import java.util.List;
-import java.util.Map.Entry;
-
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
+import net.luis.xsurvive.world.inventory.EnderChestMenu;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
@@ -16,38 +14,49 @@ import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.ChatFormatting;
-import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.AnvilRepairEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 /**
- * 
+ *
  * @author Luis-st
  *
  */
@@ -56,6 +65,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class PlayerEventHandler {
 	
 	private static final String ATTACK_SPEED_TRANSLATION_KEY = Component.translatable(Attributes.ATTACK_SPEED.getDescriptionId()).getString();
+	private static final Component ENDER_CHEST = Component.translatable("container.enderchest");
 	
 	@SubscribeEvent
 	public static void anvilUpdate(AnvilUpdateEvent event) {
@@ -216,7 +226,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void rightClickItem(RightClickItem event) {
+	public static void rightClickItem(PlayerInteractEvent.RightClickItem event) {
 		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.ASPECT_OF_THE_END.get(), event.getEntity());
 		int aspectOfTheEnd = entry.getValue().getEnchantmentLevel(XSEnchantments.ASPECT_OF_THE_END.get());
 		if (event.getEntity() instanceof ServerPlayer player) {
@@ -235,6 +245,32 @@ public class PlayerEventHandler {
 					player.setItemSlot(slot, event.getItemStack());
 					player.setItemInHand(event.getHand(), slotStack);
 				}
+				SoundEvent sound = event.getItemStack().getEquipSound();
+				if (sound != null) {
+					Level level = player.getLevel();
+					player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		BlockPos pos = event.getPos();
+		Level level = event.getLevel();
+		BlockState state = level.getBlockState(pos);
+		if (state.getBlock() == Blocks.ENDER_CHEST && event.getEntity() instanceof ServerPlayer player) {
+			if (!player.isShiftKeyDown()) {
+				event.setUseBlock(Event.Result.DENY);
+				if (!player.getItemInHand(event.getHand()).isEmpty()) {
+					event.setUseItem(Event.Result.DENY);
+				}
+				NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST), pos);
+				player.awardStat(Stats.OPEN_ENDERCHEST);
+				PiglinAi.angerNearbyPiglins(player, true);
+				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
+			} else {
+				event.setCanceled(true);
 			}
 		}
 	}
