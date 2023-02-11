@@ -46,14 +46,17 @@ public class LootModifierHelper {
 		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_PROTECTION.get(), ASPECT_OF_THE_END.get()));
 	}
 	
+	public static RarityList<Enchantment> getAllTreasureEnchantments() {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(MULTI_DROP.get(), SWIFT_SNEAK, SOUL_SPEED, VOID_PROTECTION.get(), ASPECT_OF_THE_END.get()));
+	}
+	
 	public static RarityList<Item> getCommonRunes() {
 		return RarityList.of(Rarity.COMMON, Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get()));
 	}
 	
 	public static RarityList<Item> getRareRunes() {
 		return RarityList.of(Rarity.RARE,
-				Lists.newArrayList(ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(), PINK_RUNE.get(), CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(),
-						RED_RUNE.get()));
+				Lists.newArrayList(ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(), PINK_RUNE.get(), CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(), RED_RUNE.get()));
 	}
 	
 	public static RarityList<Item> getTreasureRunes() {

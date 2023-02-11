@@ -1,5 +1,9 @@
 package net.luis.xsurvive.mixin.entity.villager;
 
+import net.luis.xsurvive.XSurvive;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,18 +22,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MerchantOfferMixin {
 	
 	@Shadow
+	private ItemStack baseCostA;
+	@Shadow
 	private int uses;
 	@Shadow
 	private int maxUses;
+	@Shadow
+	private int specialPriceDiff;
+	@Shadow
+	private int demand;
+	@Shadow
+	private float priceMultiplier;
 	@Shadow
 	private int xp;
 	
 	@Shadow
 	public abstract int getMaxUses();
 	
+	@Inject(method = "getCostA", at = @At("TAIL"), cancellable = true)
+	public void getCostA(CallbackInfoReturnable<ItemStack> callback) {
+		int baseCount = this.baseCostA.getCount();
+		ItemStack stack = this.baseCostA.copy();
+		int demandCount = (int) Math.max(0, Math.floor(baseCount * this.demand) * this.priceMultiplier);
+		int count = Mth.clamp(baseCount + demandCount + this.specialPriceDiff, (int) (baseCount * 0.85), (int) (baseCount * 1.5));
+		stack.setCount(Mth.clamp(count, 1, this.baseCostA.getMaxStackSize()));
+		callback.setReturnValue(stack);
+	}
+	
 	@Inject(method = "getMaxUses", at = @At("HEAD"), cancellable = true)
 	public void getMaxUses(CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(this.maxUses * 5);
+		if (this.maxUses != 1) {
+			callback.setReturnValue(this.maxUses * 5);
+		}
 	}
 	
 	@Inject(method = "getXp", at = @At("HEAD"), cancellable = true)

@@ -2,6 +2,7 @@ package net.luis.xsurvive.world.item.trading.dynamic;
 
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
@@ -34,9 +35,9 @@ public class DynamicEnchantedTrades {
 		};
 	}
 	
-	public static ItemListing randomEnchantedBook(int villagerLevel, List<Enchantment.Rarity> allowedRarities) {
+	public static ItemListing randomEnchantedBook(int villagerLevel, List<Rarity> rarities) {
 		return (villager, rng) -> {
-			Enchantment enchantment = random(getValidEnchantments(ForgeRegistries.ENCHANTMENTS.getValues(), Lists.newArrayList(allowedRarities.isEmpty() ? Lists.newArrayList(Enchantment.Rarity.values()) : allowedRarities)), rng);
+			Enchantment enchantment = random(getValidEnchantments(rarities), rng);
 			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, 1));
 			return new MerchantOffer(new ItemStack(Items.EMERALD, getEmeraldCount(rng, enchantment.getMaxLevel())), new ItemStack(Items.BOOK), stack, 1, getVillagerXp(villagerLevel), 0.2F);
 			
@@ -51,7 +52,7 @@ public class DynamicEnchantedTrades {
 				return new MerchantOffer(new ItemStack(Items.EMERALD, 64), stack, EnchantedGoldenBookItem.createForEnchantment(enchantment), 1, getVillagerXp(villagerLevel), 0.02F);
 			} else {
 				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-				return randomEnchantedBook(villagerLevel, Lists.newArrayList(Enchantment.Rarity.COMMON, Enchantment.Rarity.UNCOMMON)).getOffer(villager, rng);
+				return randomEnchantedBook(villagerLevel, Lists.newArrayList(Rarity.COMMON, Rarity.RARE)).getOffer(villager, rng);
 			}
 		};
 	}

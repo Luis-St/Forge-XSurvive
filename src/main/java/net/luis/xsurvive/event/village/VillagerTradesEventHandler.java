@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.luis.xores.world.item.XOItems;
 import net.luis.xores.world.level.block.XOBlocks;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.item.trading.AdvancedTradeBuilder;
@@ -14,7 +15,6 @@ import net.luis.xsurvive.world.item.trading.dynamic.DynamicPotionTrades;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -30,7 +30,7 @@ import java.util.List;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class VillagerTradesEventHandler {
 	
-	private static final List<Enchantment.Rarity> ALLOWED_RARITIES = Lists.newArrayList(Enchantment.Rarity.COMMON, Enchantment.Rarity.UNCOMMON);
+	private static final List<Rarity> ALLOWED_RARITIES = Lists.newArrayList(Rarity.COMMON, Rarity.RARE);
 	
 	@SubscribeEvent
 	public static void villagerTrades(VillagerTradesEvent event) {

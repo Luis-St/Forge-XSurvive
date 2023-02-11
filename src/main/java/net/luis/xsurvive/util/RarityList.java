@@ -53,6 +53,10 @@ public class RarityList<T> {
 		return this.rarity;
 	}
 	
+	public List<T> getValues() {
+		return this.values;
+	}
+	
 	public int size() {
 		return this.values.size();
 	}

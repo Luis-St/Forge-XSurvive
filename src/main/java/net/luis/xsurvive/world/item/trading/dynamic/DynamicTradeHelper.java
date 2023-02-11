@@ -1,8 +1,11 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
+import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.trading.Trade;
+import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,10 +28,27 @@ import java.util.stream.Collectors;
 
 class DynamicTradeHelper {
 	
-	static List<Enchantment> getValidEnchantments(Collection<Enchantment> enchantments, List<Enchantment.Rarity> allowedRarities) {
-		return enchantments.stream().filter((enchantment) -> {
-			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly() && allowedRarities.contains(enchantment.getRarity());
+	static List<Enchantment> getValidEnchantments(List<Rarity> rarities) {
+		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> {
+			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
 		}).collect(Collectors.toList());
+	}
+	
+	private static List<Enchantment> getEnchantmentsForRarity(List<Rarity> rarities) {
+		List<Enchantment> enchantments = Lists.newArrayList();
+		if (rarities.contains(Rarity.COMMON)) {
+			enchantments.addAll(LootModifierHelper.getCommonEnchantments().getValues());
+		}
+		if (rarities.contains(Rarity.RARE)) {
+			enchantments.addAll(LootModifierHelper.getRareEnchantments().getValues());
+		}
+		if (rarities.contains(Rarity.VERY_RARE)) {
+			enchantments.addAll(LootModifierHelper.getVeryRareEnchantments().getValues());
+		}
+		if (rarities.contains(Rarity.TREASURE)) {
+			enchantments.addAll(LootModifierHelper.getAllTreasureEnchantments().getValues());
+		}
+		return enchantments;
 	}
 	
 	static List<Enchantment> getValidGoldenEnchantments(Collection<Enchantment> enchantments) {
