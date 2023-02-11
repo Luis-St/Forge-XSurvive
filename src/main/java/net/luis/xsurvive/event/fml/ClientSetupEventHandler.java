@@ -48,7 +48,7 @@ public class ClientSetupEventHandler {
 			} else if (gamma == 99) {
 				return Options.genericValueLabel(component, Component.translatable("options.gamma.max"));
 			} else if (gamma >= 100) {
-				return Options.genericValueLabel(component, Component.translatable("options.gamma.infinite"));
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".gamma.infinite"));
 			} else {
 				return Options.genericValueLabel(component, gamma);
 			}

@@ -19,11 +19,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -204,6 +206,16 @@ public class PlayerEventHandler {
 	public static void playerSleepInBed(PlayerSleepInBedEvent event) {
 		if (!event.getEntity().getAbilities().instabuild) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
+			event.getEntity().displayClientMessage(Component.translatable("message.xsurvive.sleeping"), true);
+			if (event.getEntity().getLevel() instanceof ServerLevel level && (level.isRaining() || level.isThundering())) {
+				level.setWeatherParameters(6000, 0, false, false);
+			}
+			if (event.getEntity() instanceof ServerPlayer player) {
+				StatsCounter stats = player.getStats();
+				if (stats.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)) > 12000) {
+					stats.setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
+				}
+			}
 		}
 	}
 	

@@ -33,17 +33,17 @@ public class GammaCommand {
 	}
 	
 	private static int getGamma(CommandSourceStack source, Minecraft minecraft) {
-		source.sendSuccess(Component.translatable(XSurvive.MOD_ID + "commands.gamma.get", minecraft.options.gamma.get() + ""), false);
+		source.sendSuccess(Component.translatable(XSurvive.MOD_ID + ".commands.gamma.get", minecraft.options.gamma.get() + ""), false);
 		return 1;
 	}
 	
 	private static int setGamma(CommandSourceStack source, Minecraft minecraft, double value) {
 		minecraft.options.gamma.set(value);
 		if (minecraft.options.gamma.get() == value) {
-			source.sendSuccess(Component.translatable(XSurvive.MOD_ID + "commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
+			source.sendSuccess(Component.translatable(XSurvive.MOD_ID + ".commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
 			return 1;
 		} else {
-			source.sendFailure(Component.translatable(XSurvive.MOD_ID + "commands.gamma.failure", Double.toString(value)));
+			source.sendFailure(Component.translatable(XSurvive.MOD_ID + ".commands.gamma.failure", Double.toString(value)));
 			return 0;
 		}
 		

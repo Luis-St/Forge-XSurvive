@@ -88,12 +88,13 @@
   "item.xsurvive.red_rune": "Red Rune",
   "item.xsurvive.white_rune": "White Rune",
   "item.xsurvive.yellow_rune": "Yellow Rune",
-  "item_tab.golden_book": "Golden Books",
-  "item_tab.runes": "Runes",
-  "options.gamma.infinite": "Infinite",
+  "item_tab.xsurvive.golden_book": "Golden Books",
+  "item_tab.xsurvive.runes": "Runes",
+  "message.xsurvive.sleeping": "Sleeping was disabled to increase the difficulty",
+  "options.xsurvive.gamma.infinite": "Infinite",
+  "xsurvive.commands.gamma.failure": "Fail to set gamma value to {0}",
+  "xsurvive.commands.gamma.get": "Gamma value is set to {0}",
+  "xsurvive.commands.gamma.success": "Successfully sets the gamma value to {0}",
   "xsurvive.container.smelting_furnace": "Smelting Furnace",
-  "xsurvive.gui.recipebook.toggleRecipes.smeltable": "Showing Smeltable",
-  "xsurvivecommands.gamma.failure": "Fail to set gamma value to {0}",
-  "xsurvivecommands.gamma.get": "Gamma value is set to {0}",
-  "xsurvivecommands.gamma.success": "Successfully sets the gamma value to {0}"
+  "xsurvive.gui.recipebook.toggleRecipes.smeltable": "Showing Smeltable"
 }

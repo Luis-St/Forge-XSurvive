@@ -27,7 +27,7 @@ public class RegisterModEventHandler {
 	@SubscribeEvent
 	public static void register(CreativeModeTabEvent.Register event) {
 		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "runes"), builder -> {
-			builder.title(Component.translatable("item_tab.runes"));
+			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".runes"));
 			builder.icon(() -> new ItemStack(XSItems.RAINBOW_RUNE.get()));
 			builder.displayItems((enabledFlags, populator, hasPermissions) -> {
 				populator.accept(XSItems.WHITE_RUNE.get());
@@ -50,7 +50,7 @@ public class RegisterModEventHandler {
 			});
 		});
 		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "golden_book"), builder -> {
-			builder.title(Component.translatable("item_tab.golden_book"));
+			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".golden_book"));
 			builder.icon(() -> new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get()));
 			builder.displayItems((enabledFlags, populator, hasPermissions) -> {
 				for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {

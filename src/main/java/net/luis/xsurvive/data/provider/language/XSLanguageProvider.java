@@ -77,16 +77,17 @@ public class XSLanguageProvider extends LanguageProvider {
 			ResourceLocation location = Objects.requireNonNull(ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession));
 			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), getName(location));
 		}
-		this.add("item_tab.golden_book", "Golden Books");
-		this.add("item_tab.runes", "Runes");
+		this.add("item_tab." + XSurvive.MOD_ID + ".runes", "Runes");
+		this.add("item_tab." + XSurvive.MOD_ID + ".golden_book", "Golden Books");
 		this.add("death.attack.curse_of_harming", "{0} die by his own weapon");
 		this.add("death.attack.curse_of_harming.player", "{0} die by his own weapon whilst fighting {1}");
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");
 		this.add(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable", "Showing Smeltable");
-		this.add("options.gamma.infinite", "Infinite");
-		this.add(XSurvive.MOD_ID + "commands.gamma.get", "Gamma value is set to {0}");
-		this.add(XSurvive.MOD_ID + "commands.gamma.failure", "Fail to set gamma value to {0}");
-		this.add(XSurvive.MOD_ID + "commands.gamma.success", "Successfully sets the gamma value to {0}");
+		this.add("options." + XSurvive.MOD_ID + ".gamma.infinite", "Infinite");
+		this.add(XSurvive.MOD_ID + ".commands.gamma.get", "Gamma value is set to {0}");
+		this.add(XSurvive.MOD_ID + ".commands.gamma.failure", "Fail to set gamma value to {0}");
+		this.add(XSurvive.MOD_ID + ".commands.gamma.success", "Successfully sets the gamma value to {0}");
+		this.add("message.xsurvive.sleeping", "Sleeping was disabled to increase the difficulty");
 	}
 	
 	private void add(Potion potion) {
