@@ -108,9 +108,9 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Entity is wearing an Elytra with this Enchantment").endLine();
-			builder.append("and the Entity takes void damage, the Damage will be reduced and calculated as follows:").endLine();
-			builder.appendFormatted("1 - (voidProtectionLevel * 0,2)", WikiFormat.CODE).endLine();
+			builder.append("If a entity wears an elytra with this enchantment and it takes void damage, the damage is reduced.").endLine();
+			builder.append("Damage reduction is calculated as follows:").endLine();
+			builder.appendFormatted("1 - (VoidProtectionLevel * 0,2)", WikiFormat.CODE).endLine();
 		});
 	}
 	

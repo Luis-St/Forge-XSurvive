@@ -63,8 +63,8 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("If an Entity wears boots with this Enchantment, this Entity is be able to fly.").endLine();
-			builder.append("If a player is sneaking while flying the he will slowly float down.").endLine();
+			builder.append("If a entity wears boots with this enchantment, that entity can fly.").endLine();
+			builder.append("If a player is sneaking while flying, they will slowly float down.").endLine();
 		});
 	}
 	

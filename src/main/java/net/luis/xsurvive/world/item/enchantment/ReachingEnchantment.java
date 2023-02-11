@@ -84,8 +84,7 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a this Enchantment is applied on a Sword or a Tool,").endLine();
-			builder.append("the reach and attack range will be increased by a half Block per level").endLine();
+			builder.append("When applied to a sword or tool, this Enchantment increases the range by half a block per level.").endLine();
 		});
 	}
 	

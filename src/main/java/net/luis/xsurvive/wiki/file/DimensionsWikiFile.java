@@ -28,15 +28,15 @@ public class DimensionsWikiFile {
 	}
 	
 	private static void addEnd(WikiFileBuilder builder) {
-		builder.header2("Dragon Fight");
+		builder.header2("Dragon fight");
 		addDragonFight(builder);
 	}
 	
 	private static void addDragonFight(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("Removed the End Stone from The End Biome.").endLine();
-			builder.append("The Crystal pillars, the Spawn platform and the exit portal are still at the same positions.").endLine();
-			builder.append("Hint: You should take some (more) Blocks into the end.").endLine();
+			builder.append("The End Stone has been removed from the end biome.").endLine();
+			builder.append("The crystal pillars, the spawn platform and the exit portal are still in the same positions.").endLine();
+			builder.append("Hint: You should take some (more) blocks to the end.").endLine();
 		});
 	}
 	

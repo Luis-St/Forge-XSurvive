@@ -50,11 +50,9 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Plant block is destroyed by an Item with this Enchantment,").endLine();
-			builder.append("at the position of the destroyed Block a Plant will be replanted with  the lowest age.").endLine();
-			builder.append("The following Blocks are Plant blocks:").endLine();
-			builder.append("Wheat, Carrot, Potato, Beetroot, Sweet Berries, Cocoa Beans, Nether Wart, Sugar Cane,").endLine();
-			builder.append("Cactus, Bamboo, Pumpkin-, Melon- and Honey Melon stem").endLine();
+			builder.append("When a plant block is destroyed by an item with this enchantment, a plant of the lowest age is replanted in the place of the destroyed block.").endLine();
+			builder.append("The following blocks are plant blocks:").endLine();
+			builder.append("Wheat, Carrot, Potato, Beetroot, Sweet Berries, Cocoa Beans, Nether Wart, Sugar Cane, Cactus, Bamboo, Pumpkin-, Melon- and Honey Melon stem").endLine();
 		});
 	}
 	

@@ -85,11 +85,10 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Item with this Enchantment is right clicked,").endLine();
-			builder.append("the Player will be teleported in it's looking direction.").endLine();
-			builder.append("After the teleport all Items with this Enchantment have a 1 second cooldown.").endLine();
+			builder.append("When an item with this enchantment is right-clicked, the player is teleported in the direction they're looking.").endLine();
+			builder.append("After the teleport, all items with this enchantment have a 1 second cooldown.").endLine();
 			builder.append("The teleport distance is calculated as follows:").endLine();
-			builder.appendFormatted("6.0 * aspectOfTheEndLevel", WikiFormat.CODE).endLine();
+			builder.appendFormatted("6.0 * AspectOfTheEndLevel", WikiFormat.CODE).endLine();
 		});
 	}
 	

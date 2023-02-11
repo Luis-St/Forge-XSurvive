@@ -29,7 +29,7 @@ public class EnchantmentWikiFile {
 		WikiFileBuilder builder = new WikiFileBuilder("EnchantmentWiki");
 		builder.header1("Enchantments");
 		addEnchantments(builder, Lists.newArrayList(XSEnchantments.ENCHANTMENTS.getEntries().stream().map(RegistryObject::get).iterator()));
-		builder.header1("Vanilla Enchantment Modifications");
+		builder.header1("Vanilla enchantment modifications");
 		addVanillaEnchantments(builder);
 		return builder;
 	}
@@ -177,7 +177,7 @@ public class EnchantmentWikiFile {
 	
 	private static void addVanillaEnchantments(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.PUNCH_ARROWS)));
-		wikiBuilder.header3("Modified Properties");
+		wikiBuilder.header3("Modified properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.PUNCH_ARROWS.getMaxLevel()).endLine();
 		});
@@ -186,24 +186,23 @@ public class EnchantmentWikiFile {
 		addProtectionEnchantments(wikiBuilder, (ProtectionEnchantment) Enchantments.BLAST_PROTECTION);
 		addProtectionEnchantments(wikiBuilder, (ProtectionEnchantment) Enchantments.PROJECTILE_PROTECTION);
 		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.QUICK_CHARGE)));
-		wikiBuilder.header3("Modified Properties");
+		wikiBuilder.header3("Modified properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.QUICK_CHARGE.getMaxLevel()).endLine();
 		});
 		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.THORNS)));
-		wikiBuilder.header3("Modified Properties");
+		wikiBuilder.header3("Modified properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Max level:").append(Enchantments.THORNS.getMaxLevel()).endLine();
 		});
-		wikiBuilder.header3("Modified Usage");
+		wikiBuilder.header3("Modified usage");
 		wikiBuilder.lines((builder) -> {
-			builder.append("The damage of the Thorns Enchantment is increased,").endLine();
-			builder.append("the damage is now calculated based on all armor pieces with the Thorns Enchantment.").endLine();
-			builder.append("The damage is calculated as follows:").endLine();
-			builder.appendFormatted("(0.2 * pieceThornsLevel) * armorThornsLevel", WikiFormat.CODE).endLine();
+			builder.append("The damage of the thorns enchantment has been increased, the damage is now calculated based on all armor items with the thorns enchantment.").endLine();
+			builder.append("Damage is calculated as follows:").endLine();
+			builder.appendFormatted("(0.2 * itemThornsLevel) * armorThornsLevel", WikiFormat.CODE).endLine();
 		});
 		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(Enchantments.IMPALING)));
-		wikiBuilder.header3("Modified Properties");
+		wikiBuilder.header3("Modified properties");
 		wikiBuilder.lines((builder) -> {
 			builder.append("Enchantable items:").append(getEnchantableItems(Enchantments.IMPALING)).endLine();
 			String incompatibleEnchantments = getIncompatibleEnchantments(Enchantments.IMPALING);
@@ -211,17 +210,16 @@ public class EnchantmentWikiFile {
 				builder.append("Not compatible with:").append(getIncompatibleEnchantments(Enchantments.IMPALING)).endLine();
 			}
 		});
-		wikiBuilder.header3("Modified Usage");
+		wikiBuilder.header3("Modified usage");
 		wikiBuilder.lines((builder) -> {
-			builder.append("When an Water Entity is hit by an Item with this Enchantment,").endLine();
-			builder.append("the damage will be multiplied by 2.5.").endLine();
-			builder.append("Water Entities:").append("All Fish types,").append("Squid,").append("Glow Squid,").append("Guardian,").append("Elder Guardian,").append("Drowned and").append("Turtle").endLine();
+			builder.append("When a water entity is hit by an item with this enchantment, the damage is multiplied by 2.5.").endLine();
+			builder.append("Water Entities:").append("All fish types,").append("squid,").append("glow squid,").append("guardian,").append("elder guardian,").append("drowned and").append("turtle").endLine();
 		});
 	}
 	
 	private static void addProtectionEnchantments(WikiFileBuilder wikiBuilder, ProtectionEnchantment enchantment) {
 		wikiBuilder.header2(XSLanguageProvider.getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
-		wikiBuilder.header3("Modified Properties");
+		wikiBuilder.header3("Modified properties");
 		wikiBuilder.line((builder) -> {
 			builder.append("Enchantable items:").append(getEnchantableItems(enchantment)).endLine();
 		});

@@ -21,9 +21,8 @@ public class PoisonAspectEnchantment extends FireAspectEnchantment implements Wi
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When an Entity is hit by an Item with this Enchantment, the hit Entity gets the Potion Effect,").endLine();
-			builder.append("the duration of the Effect is calculated as follows:").endLine();
-			builder.appendFormatted("100 * poisonAspectLevel", WikiFormat.CODE).endLine();
+			builder.append("When an entity is struck by an item with this enchantment, the struck entity receives the potion effect, with the duration of the effect calculated as follows:").endLine();
+			builder.appendFormatted("100 * PoisonAspectLevel", WikiFormat.CODE).endLine();
 		});
 	}
 	

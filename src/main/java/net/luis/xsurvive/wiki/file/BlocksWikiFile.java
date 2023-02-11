@@ -14,6 +14,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.tags.ITagManager;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -30,7 +31,15 @@ public class BlocksWikiFile {
 	public static WikiFileBuilder create() {
 		WikiFileBuilder builder = new WikiFileBuilder("BlocksWiki");
 		builder.header1("Blocks");
-		addBlocks(builder, Lists.newArrayList(XSBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(BlocksWikiFile::hasItem).iterator()));
+		for (Block block : XSBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(BlocksWikiFile::hasItem).toList()) {
+			builder.header2(StringUtils.capitalize(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).toString()));
+			builder.header3("Properties");
+			addBlockProperties(builder, block);
+			if (block instanceof WikiFileEntry wikiEntry) {
+				builder.header3("Usage");
+				wikiEntry.add(builder);
+			}
+		}
 		return builder;
 	}
 	
@@ -41,18 +50,6 @@ public class BlocksWikiFile {
 			}
 		}
 		return false;
-	}
-	
-	private static void addBlocks(WikiFileBuilder builder, List<Block> blocks) {
-		for (Block block : blocks) {
-			builder.header2(XSLanguageProvider.getName(ForgeRegistries.BLOCKS.getKey(block)));
-			builder.header3("Properties");
-			addBlockProperties(builder, block);
-			if (block instanceof WikiFileEntry wikiEntry) {
-				builder.header3("Usage");
-				wikiEntry.add(builder);
-			}
-		}
 	}
 	
 	private static void addBlockProperties(WikiFileBuilder wikiBuilder, Block block) {

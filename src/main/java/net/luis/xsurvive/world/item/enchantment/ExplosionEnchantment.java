@@ -54,8 +54,7 @@ public class ExplosionEnchantment extends Enchantment implements IEnchantment, W
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a this Enchantment is applied on a Bow,").endLine();
-			builder.append("the shooten arrow will explode when the arrow hits a Block").endLine();
+			builder.append("When applied to a bow, this enchantment causes the arrow to explode when it hits a block.").endLine();
 		});
 	}
 	

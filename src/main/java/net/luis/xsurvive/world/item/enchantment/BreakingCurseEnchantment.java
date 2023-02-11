@@ -47,9 +47,9 @@ public class BreakingCurseEnchantment extends Enchantment implements WikiFileEnt
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("If an Item has this Enchantment the Item will be damaged every 5 seconds,").endLine();
-			builder.append("the damage is calculated as follows:").endLine();
-			builder.appendFormatted("breakingCurseLevel * 2", WikiFormat.CODE).endLine();
+			builder.append("When an item has this enchantment, it will take damage every 5 seconds.").endLine();
+			builder.append("The damage is calculated as follows:").endLine();
+			builder.appendFormatted("BreakingCurseLevel * 2", WikiFormat.CODE).endLine();
 		});
 	}
 	

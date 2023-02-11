@@ -47,10 +47,9 @@ public class HarmingCurseEnchantment extends Enchantment implements WikiFileEntr
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Entity is hit by an Item with this Enchantment,").endLine();
-			builder.append("the damage from the hit Entity is reflected back to the attacker.").endLine();
-			builder.append("The reflected damage is calculated as follows:").endLine();
-			builder.appendFormatted("(amount / 2) * harmingCurseLevel", WikiFormat.CODE).endLine();
+			builder.append("When an entity is hit by an item with this enchantment, the damage is reflected back to the attacking entity.").endLine();
+			builder.append("Reflected damage is calculated as follows:").endLine();
+			builder.appendFormatted("(Amount / 2) * HarmingCurseLevel", WikiFormat.CODE).endLine();
 		});
 	}
 	

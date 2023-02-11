@@ -53,15 +53,15 @@ public class ItemsWikiFile {
 		addRuneItem(wikiBuilder, XSItems.BLACK_RUNE.get());
 		addRuneItem(wikiBuilder, XSItems.RAINBOW_RUNE.get());
 		addItem(wikiBuilder, XSItems.HONEY_MELON_SEEDS.get(), (builder) -> {
-			builder.line("Can be used to plant the Honey Melon on Farmland.");
-			builder.line("Can be craft from Honey Melon Slices.");
+			builder.line("Can be used to plant the honey melon on farmland.");
+			builder.line("Can be craft from honey melon slices.");
 		});
 		addItem(wikiBuilder, XSItems.HONEY_MELON_SLICE.get(), null);
 		addItem(wikiBuilder, XSItems.DIAMOND_APPLE.get(), (builder) -> {
-			builder.line("Rarer variant of the vanilla Golden Apple with stronger Effects.");
+			builder.line("Rarer variety of the vanilla golden apple with stronger effects.");
 		});
 		addItem(wikiBuilder, XSItems.ENCHANTED_DIAMOND_APPLE.get(), (builder) -> {
-			builder.line("Rarer variant of the vanilla Enchanted Golden Apple with stronger Effects.");
+			builder.line("Rarer variant of the vanilla enchanted golden apple with stronger effects.");
 		});
 	}
 	
@@ -78,10 +78,10 @@ public class ItemsWikiFile {
 		builder.header3("Properties");
 		addItemProperties(builder, item);
 		if (item.foodProperties != null) {
-			builder.header3("Food Properties");
+			builder.header3("Food properties");
 			addFoodProperties(builder, item, item.foodProperties);
 			if (!item.foodProperties.getEffects().isEmpty()) {
-				builder.header3("Food Effects");
+				builder.header3("Food effects");
 				addFoodEffects(builder, item.foodProperties.getEffects());
 			}
 		}
@@ -155,11 +155,11 @@ public class ItemsWikiFile {
 		wikiBuilder.header2("Shulker Box");
 		wikiBuilder.header3("Modifications");
 		wikiBuilder.lines((builder) -> {
-			builder.append("Shulker Boxes can contains a Shulker Boxes.").endLine();
+			builder.append("A shulker box can be placed inside another shulker box.").endLine();
 		});
 		wikiBuilder.emptyLine();
 		wikiBuilder.lines((builder) -> {
-			builder.append("The Shulker Box Tooltip shows the full content of the Shulker Box Inventory. ").endLine();
+			builder.append("The shulker box tooltip displays the full contents of the stored inventory.").endLine();
 		});
 	}
 	

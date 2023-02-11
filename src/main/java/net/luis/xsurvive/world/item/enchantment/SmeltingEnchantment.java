@@ -64,8 +64,7 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Block is destroyed by an Item with this Enchantment,").endLine();
-			builder.append("the Block drops it's furnace smelting result.").endLine();
+			builder.append("When a block is destroyed by an item with this enchantment, the block drops it's furnace smelting result.").endLine();
 		});
 	}
 	

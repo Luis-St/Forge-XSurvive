@@ -41,8 +41,7 @@ public class GrowthEnchantment extends Enchantment implements IEnchantment, Wiki
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Entity is wearing a Armor with this Enchantment,").endLine();
-			builder.append("the entities health will be increased by the sum enchantment levels of all armor pieces.").endLine();
+			builder.append("When a entity wears armor with this enchantment, the entities health is increased by the sum of the enchantment levels of all armor items.").endLine();
 		});
 	}
 	

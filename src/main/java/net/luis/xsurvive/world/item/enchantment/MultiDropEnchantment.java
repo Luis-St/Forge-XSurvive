@@ -74,8 +74,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Block is destroyed by an Item with this Enchantment,").endLine();
-			builder.append("the Block's loot will be multiplied by the enchantment level.").endLine();
+			builder.append("When a block is destroyed by an item with this enchantment, the loot from the block is multiplied by the level of the enchantment.").endLine();
 		});
 	}
 	

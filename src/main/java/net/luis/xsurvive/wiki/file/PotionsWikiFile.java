@@ -13,25 +13,25 @@ public class PotionsWikiFile {
 		wikiBuilder.header1("Potions");
 		wikiBuilder.header2("Frost Potion");
 		wikiBuilder.header3("Frost Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by using a snowball as input.");
+		wikiBuilder.line("Brewable in the vanilla brewing stand using a snowball as an input.");
 		wikiBuilder.header3("Long Frost Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by extending the Frost Potion with Redstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the frost potion.");
 		wikiBuilder.header3("Strong Frost Potion");
-		wikiBuilder.line("Brewable in the Vanilla Brewing Stand by amplifying the Frost Potion with Glowstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding glowstone dust to the frost potion with.");
 		wikiBuilder.header2("Wither Potion");
 		wikiBuilder.header3("Wither Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by using a wither rose as input.");
+		wikiBuilder.line("Brewable in the vanilla brew stand using a wither rose as an input.");
 		wikiBuilder.header3("Long Wither Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by extending the Wither Potion with Redstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the wither potion.");
 		wikiBuilder.header3("Strong Wither Potion");
-		wikiBuilder.line("Brewable in the Vanilla Brewing Stand by amplifying the Wither Potion with Glowstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the wither potion.");
 		wikiBuilder.header2("Haste Potion");
 		wikiBuilder.header3("Haste Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by using a iron pickaxe as input.");
+		wikiBuilder.line("Brewable in the vanilla brew stand using an iron pickaxe as an input.");
 		wikiBuilder.header3("Long Haste Potion");
-		wikiBuilder.line("Brewable in the vanilla Brewing Stand by extending the Haste Potion with Redstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the haste potion.");
 		wikiBuilder.header3("Strong Haste Potion");
-		wikiBuilder.line("Brewable in the Vanilla Brewing Stand by amplifying the Haste Potion with Glowstone Dust.");
+		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the haste potion.");
 		return wikiBuilder;
 	}
 	

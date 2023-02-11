@@ -54,10 +54,9 @@ public class HarvestingEnchantment extends Enchantment implements IEnchantment, 
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When an Entity destroys a Log Block in a Tree by an Item with this Enchantment,").endLine();
-			builder.append("the tree will be automatically felled up to a specific height.").endLine();
-			builder.append("The felled height will be calculated as follows:").endLine();
-			builder.appendFormatted("harvestingLevel * 4 + (harvestingLevel / 2)", WikiFormat.CODE).endLine();
+			builder.append("When a entity destroys a block of wood in a tree with an item with this enchantment, the tree is automatically cut down to a certain height.").endLine();
+			builder.append("The felled height is calculated as follows:").endLine();
+			builder.appendFormatted("HarvestingLevel * 4 + (HarvestingLevel / 2)", WikiFormat.CODE).endLine();
 		});
 	}
 	

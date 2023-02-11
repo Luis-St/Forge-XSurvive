@@ -40,13 +40,11 @@ public class ExperienceEnchantment extends Enchantment implements IEnchantment, 
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When a Block is destroyed by an Item with this Enchantment,").endLine();
-			builder.append("the experience dropped by the Block will be modified as follows: ").endLine();
-			builder.appendFormatted("(experience * ((experienceLevel + 1) * ((experienceLevel * 2) + fortuneLevel))) * (multiDropLevel + 1)", WikiFormat.CODE).endLine();
+			builder.append("When a block is destroyed by an item with this enchantment, the experience dropped by the block is modified as follows:").endLine();
+			builder.appendFormatted("(Experience * ((ExperienceLevel + 1) * ((ExperienceLevel * 2) + FortuneLevel))) * (MultiDropLevel + 1)", WikiFormat.CODE).endLine();
 			builder.endLine();
-			builder.append("When an Entity is killed by an Item with this Enchantment,").endLine();
-			builder.append("the experience dropped by the Entity will be modified as follows: ").endLine();
-			builder.appendFormatted("experience * ((experienceLevel + 1) * ((experienceLevel * 2) + lootingLevel))", WikiFormat.CODE).endLine();
+			builder.append("When an entity is killed by an item with this enchantment, the experience dropped by the entity is modified as follows:").endLine();
+			builder.appendFormatted("Experience * ((ExperienceLevel + 1) * ((ExperienceLevel * 2) + LootingLevel))", WikiFormat.CODE).endLine();
 		});
 	}
 	

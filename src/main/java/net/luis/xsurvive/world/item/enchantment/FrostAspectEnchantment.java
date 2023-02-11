@@ -32,9 +32,8 @@ public class FrostAspectEnchantment extends FireAspectEnchantment implements Wik
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When an Entity is hit by an Item with this Enchantment, the hit Entity gets the Forst Effect,").endLine();
-			builder.append("the duration of the Effect is calculated as follows:").endLine();
-			builder.appendFormatted("100 * frostAspectLevel", WikiFormat.CODE).endLine();
+			builder.append("When an entity is struck by an item with this enchantment, the struck entity gains the frost effect, the duration of the effect calculated as follows:").endLine();
+			builder.appendFormatted("100 * FrostAspectLevel", WikiFormat.CODE).endLine();
 		});
 	}
 	

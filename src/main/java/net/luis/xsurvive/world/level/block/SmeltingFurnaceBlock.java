@@ -77,8 +77,8 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("The Smelting Furnace works similar to the vanilla Blast Furnace or the Smoker.").endLine();
-			builder.append("The Smelting Furnace provides faster recipes for the following Blocks:").endLine();
+			builder.append("The smelting furnace works similarly to the vanilla blast furnace or the smoker.").endLine();
+			builder.append("The furnace provides faster recipes for the following blocks:").endLine();
 		});
 		wikiBuilder.list(WikiList.POINT, (builder) -> {
 			for (String recipe : this.getRecipes()) {

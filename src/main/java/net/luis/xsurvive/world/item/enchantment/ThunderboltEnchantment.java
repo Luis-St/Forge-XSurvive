@@ -56,8 +56,7 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	@Override
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
-			builder.append("When an Entity is hit by an Item with this Enchantment,").endLine();
-			builder.append("a lightning strikes at the position of the Entity.").endLine();
+			builder.append("When an entity is hit by an item with this enchantment, a bolt of lightning strikes the entity's location.").endLine();
 		});
 	}
 	

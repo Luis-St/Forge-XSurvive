@@ -85,16 +85,16 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 	public void add(WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("Add enchantment:").endLine();
-			builder.append("The Golden Book can be used to add the Enchantment for a cost of 10 xp to the Item in the Anvil.").endLine();
-			builder.append("Note: This is not recommend use case").endLine();
+			builder.append("The golden book can be used to add the enchantment to the item in the anvil for 10 xp.").endLine();
+			builder.append("Note: This is not a recommended use case.").endLine();
 			builder.emptyLine();
-			builder.append("Increase enchantment level:").endLine();
-			builder.append("The Golden Book can be used to increase the Enchantment level on the Item for a cost of 10 xp in the Anvil.").endLine();
-			builder.append("Note: This can be helpful for very rare enchantments but this is still not recommend use case").endLine();
+			builder.append("Increase/upgrade enchantment level:").endLine();
+			builder.append("The golden book can be used to increase the enchanting level of an item for 10 xp in the anvil.").endLine();
+			builder.append("Note: This can be helpful for very rare enchantments.").endLine();
 			builder.emptyLine();
 			builder.append("Increase max enchantment level:").endLine();
-			builder.append("The Golden Book can be used to increase the max Enchantment level on a Item.").endLine();
-			builder.append("Apply the Golden Book in the Anvil to an Item which has the max vanilla Enchantment level.").endLine();
+			builder.append("The golden book can be used to increase the maximum enchanting level of an enchantment.").endLine();
+			builder.append("Use the golden book in the anvil on an item with the maximum vanilla enchantment level.").endLine();
 		});
 	}
 	
