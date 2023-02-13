@@ -1,12 +1,8 @@
-package net.luis.xsurvive.wiki.builder;
+package net.luis.xsurvive.wiki.builder.line;
 
+
+import net.luis.xsurvive.wiki.builder.AbstractWikiBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-
-/**
- *
- * @author Luis-st
- *
- */
 
 public abstract class AbstractWikiLineBuilder<T extends AbstractWikiLineBuilder<T>> extends AbstractWikiBuilder<T> {
 	

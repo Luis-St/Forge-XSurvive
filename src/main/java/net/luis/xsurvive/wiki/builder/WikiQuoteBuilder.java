@@ -1,15 +1,9 @@
 package net.luis.xsurvive.wiki.builder;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
-
-/**
- *
- * @author Luis-st
- *
- */
 
 public class WikiQuoteBuilder extends AbstractWikiBuilder<WikiQuoteBuilder> {
 	
@@ -24,7 +18,7 @@ public class WikiQuoteBuilder extends AbstractWikiBuilder<WikiQuoteBuilder> {
 	
 	@Override
 	protected List<String> modifyLines(List<String> lines) {
-		List<String> newLines = Lists.newArrayList();
+		List<String> newLines = new ArrayList<>();
 		for (int i = 0; i < lines.size(); i++) {
 			String line = lines.get(i);
 			if (line.endsWith("\\")) {

@@ -1,23 +1,19 @@
 package net.luis.xsurvive.wiki.file;
 
-/**
- *
- * @author Luis-st
- *
- */
-
-import com.google.common.collect.Lists;
-import com.mojang.logging.LogUtils;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.WikiList;
-import net.luis.xsurvive.wiki.builder.*;
-import org.jetbrains.annotations.VisibleForTesting;
+import net.luis.xsurvive.wiki.builder.WikiHeaderBuilder;
+import net.luis.xsurvive.wiki.builder.WikiListBuilder;
+import net.luis.xsurvive.wiki.builder.WikiQuoteBuilder;
+import net.luis.xsurvive.wiki.builder.WikiTableBuilder;
+import net.luis.xsurvive.wiki.builder.line.WikiMultiLineBuilder;
+import net.luis.xsurvive.wiki.builder.line.WikiSingleLineBuilder;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -28,7 +24,7 @@ public class WikiFileBuilder {
 	
 	public WikiFileBuilder(String name) {
 		this.name = name;
-		this.lines = Lists.newArrayList();
+		this.lines = new ArrayList<>();
 	}
 	
 	private int getCurrentLine() {
@@ -36,19 +32,19 @@ public class WikiFileBuilder {
 	}
 	
 	public void header1(String string) {
-		this.header(1).append(string).end();
+		new WikiHeaderBuilder(this, 1).append(string).end();
 	}
 	
 	public void header2(String string) {
-		this.header(2).append(string).end();
+		new WikiHeaderBuilder(this, 2).append(string).end();
 	}
 	
 	public void header3(String string) {
-		this.header(3).append(string).end();
+		new WikiHeaderBuilder(this, 3).append(string).end();
 	}
 	
-	public WikiHeaderBuilder header(int header) {
-		return new WikiHeaderBuilder(this, header);
+	public void header(int header, String string) {
+		new WikiHeaderBuilder(this, header).append(string).end();
 	}
 	
 	public void line(String string) {
@@ -59,12 +55,6 @@ public class WikiFileBuilder {
 		new WikiSingleLineBuilder(this).append(object).end();
 	}
 	
-	public void line(Consumer<WikiSingleLineBuilder> consumer) {
-		WikiSingleLineBuilder builder = new WikiSingleLineBuilder(this);
-		consumer.accept(builder);
-		builder.end();
-	}
-	
 	public void formattedLine(String string, WikiFormat format) {
 		new WikiSingleLineBuilder(this).appendFormatted(string, format).end();
 	}
@@ -73,12 +63,8 @@ public class WikiFileBuilder {
 		new WikiSingleLineBuilder(this).appendFormatted(object, format).end();
 	}
 	
-	public WikiMultiLineBuilder lines() {
-		return new WikiMultiLineBuilder(this);
-	}
-	
 	public void lines(Consumer<WikiMultiLineBuilder> consumer) {
-		WikiMultiLineBuilder builder = this.lines();
+		WikiMultiLineBuilder builder = new WikiMultiLineBuilder(this);
 		consumer.accept(builder);
 		builder.end();
 	}
@@ -87,30 +73,26 @@ public class WikiFileBuilder {
 		this.line("");
 	}
 	
-	public WikiListBuilder numberList() {
-		return this.list(WikiList.NUMBER);
-	}
-	
-	public WikiListBuilder pointList() {
-		return this.list(WikiList.POINT);
-	}
-	
-	public WikiListBuilder list(WikiList list) {
-		return new WikiListBuilder(this, list);
-	}
-	
-	public void list(WikiList list, Consumer<WikiListBuilder> consumer) {
-		WikiListBuilder builder = this.list(list);
+	public void numberList(Consumer<WikiListBuilder> consumer) {
+		WikiListBuilder builder = new WikiListBuilder(this, WikiList.NUMBER);
 		consumer.accept(builder);
 		builder.end();
 	}
 	
-	public WikiQuoteBuilder quote() {
-		return new WikiQuoteBuilder(this);
+	public void pointList(Consumer<WikiListBuilder> consumer) {
+		WikiListBuilder builder = new WikiListBuilder(this, WikiList.POINT);
+		consumer.accept(builder);
+		builder.end();
 	}
 	
 	public void quote(Consumer<WikiQuoteBuilder> consumer) {
-		WikiQuoteBuilder builder = this.quote();
+		WikiQuoteBuilder builder = new WikiQuoteBuilder(this);
+		consumer.accept(builder);
+		builder.end();
+	}
+	
+	public void table(Consumer<WikiTableBuilder> consumer) {
+		WikiTableBuilder builder = new WikiTableBuilder(this);
 		consumer.accept(builder);
 		builder.end();
 	}
@@ -125,13 +107,11 @@ public class WikiFileBuilder {
 		this.lines.addAll(lines);
 	}
 	
-	@VisibleForTesting
 	public void print() {
-		this.lines.forEach(LogUtils.getLogger()::debug);
+		this.lines.forEach(System.out::println);
 	}
 	
 	public void write(Path path) throws IOException {
-		XSurvive.LOGGER.debug("Create {} file", this.name);
 		path = path.resolve(this.name + ".md");
 		if (!Files.exists(path)) {
 			Files.createDirectories(path.getParent());

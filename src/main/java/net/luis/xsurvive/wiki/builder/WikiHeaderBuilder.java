@@ -1,15 +1,9 @@
 package net.luis.xsurvive.wiki.builder;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
-
-/**
- *
- * @author Luis-st
- *
- */
 
 public class WikiHeaderBuilder extends AbstractWikiBuilder<WikiHeaderBuilder> {
 	
@@ -25,16 +19,12 @@ public class WikiHeaderBuilder extends AbstractWikiBuilder<WikiHeaderBuilder> {
 	
 	@Override
 	protected String getLinePrefix() {
-		String prefix = "";
-		for (int i = 0; i < this.header; i++) {
-			prefix += "#";
-		}
-		return prefix + " ";
+		return "#".repeat(Math.max(0, this.header)) + " ";
 	}
 	
 	@Override
 	protected List<String> modifyLines(List<String> lines) {
-		List<String> newLines = Lists.newArrayList();
+		List<String> newLines = new ArrayList<>();
 		for (String line : lines) {
 			if (line.endsWith("\\")) {
 				line = line.substring(0, line.length() - 1);

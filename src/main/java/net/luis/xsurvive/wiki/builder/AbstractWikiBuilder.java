@@ -1,27 +1,20 @@
 package net.luis.xsurvive.wiki.builder;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- *
- * @author Luis-st
- *
- */
-
 public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> implements WikiBuilder<T> {
 	
-	private final WikiFileBuilder fileBuilder;
-	private final List<String> lines;
-	private boolean end;
+	protected final List<String> lines = new ArrayList<>();
+	protected final WikiFileBuilder fileBuilder;
+	protected boolean end;
 	
 	protected AbstractWikiBuilder(WikiFileBuilder fileBuilder) {
 		this.fileBuilder = fileBuilder;
-		this.lines = Lists.newArrayList();
 		this.lines.add("");
 	}
 	
@@ -66,11 +59,11 @@ public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> impl
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected final T append(String string, boolean space) {
-		if (string != null && !string.isEmpty()) {
-			if (this.isEnd()) {
-				throw new IllegalStateException("Can not append \"" + string + "\", since the builder has already been end");
-			}
+	protected T append(String string, boolean space) {
+		if (this.isEnd()) {
+			throw new IllegalStateException("Can not append \"" + string + "\", since the builder has already been end");
+		}
+		if (!string.isEmpty()) {
 			int lineToAppend = this.getLineToAppend();
 			if (this.lines.size() > lineToAppend && lineToAppend >= 0) {
 				if (this.isInNewLine(lineToAppend)) {
@@ -88,36 +81,27 @@ public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> impl
 		return (T) this;
 	}
 	
-	private String excludeSpecialCharacters(String string) {
-		return string.replace("#", "\\#").replace("*", "\\*").replace("_", "\\_").replace("~", "\\~").replace("`", "\\`").replace(">", "\\>").replace("-", "\\-");
-	}
-	
 	@Override
 	public T append(String string) {
-		string = this.excludeSpecialCharacters(string);
 		return this.append(string, true);
 	}
 	
 	@Override
 	public T append(Object object) {
-		String string = this.excludeSpecialCharacters(object.toString());
-		return this.append(string, true);
+		return this.append(object.toString(), true);
 	}
 	
 	@Override
 	public T appendFormatted(String string, WikiFormat format) {
-		return this.append(Objects.requireNonNull(format, "WikiFormat can not be null").formate(string), true);
+		return this.append(Objects.requireNonNull(format, "WikiFormat must not be null").formate(string), true);
 	}
 	
 	@Override
 	public T appendFormatted(Object object, WikiFormat format) {
-		return this.append(Objects.requireNonNull(format, "WikiFormat can not be null").formate(object.toString()), true);
+		return this.append(Objects.requireNonNull(format, "WikiFormat must not be null").formate(object.toString()), true);
 	}
 	
-	public boolean isEnd() {
-		return this.end;
-	}
-	
+	@Override
 	public void endLine() {
 		String line = this.lines.get(this.getCurrentLine());
 		if (line.endsWith("\\")) {
@@ -144,6 +128,10 @@ public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> impl
 			this.fileBuilder.appendLines(this.modifyLines(this.lines), this.shouldRemoveLineEnd());
 			this.end = true;
 		}
+	}
+	
+	public boolean isEnd() {
+		return this.end;
 	}
 	
 }

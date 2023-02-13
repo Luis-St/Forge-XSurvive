@@ -2,12 +2,6 @@ package net.luis.xsurvive.wiki.builder;
 
 import net.luis.xsurvive.wiki.WikiFormat;
 
-/**
- *
- * @author Luis-st
- *
- */
-
 public interface WikiBuilder<T extends WikiBuilder<T>> {
 	
 	T append(String string);
@@ -18,6 +12,10 @@ public interface WikiBuilder<T extends WikiBuilder<T>> {
 	
 	T appendFormatted(Object object, WikiFormat format);
 	
+	void endLine();
+	
 	void end();
+	
+	boolean isEnd();
 	
 }

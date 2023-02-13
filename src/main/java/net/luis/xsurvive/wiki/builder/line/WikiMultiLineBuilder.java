@@ -1,24 +1,14 @@
-package net.luis.xsurvive.wiki.builder;
+package net.luis.xsurvive.wiki.builder.line;
 
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Luis-st
- *
- */
-
 public class WikiMultiLineBuilder extends AbstractWikiLineBuilder<WikiMultiLineBuilder> {
 	
 	public WikiMultiLineBuilder(WikiFileBuilder fileBuilder) {
 		super(fileBuilder);
-	}
-	
-	public void emptyLine() {
-		this.append("").endLine();
 	}
 	
 	@Override

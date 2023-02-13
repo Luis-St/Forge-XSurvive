@@ -1,15 +1,9 @@
-package net.luis.xsurvive.wiki.builder;
+package net.luis.xsurvive.wiki.builder.line;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
-
-/**
- *
- * @author Luis-st
- *
- */
 
 public class WikiSingleLineBuilder extends AbstractWikiLineBuilder<WikiSingleLineBuilder> {
 	
@@ -25,7 +19,7 @@ public class WikiSingleLineBuilder extends AbstractWikiLineBuilder<WikiSingleLin
 	
 	@Override
 	protected List<String> modifyLines(List<String> lines) {
-		List<String> newLines = Lists.newArrayList();
+		List<String> newLines = new ArrayList<>();
 		newLines.add(lines.get(0));
 		return newLines;
 	}
