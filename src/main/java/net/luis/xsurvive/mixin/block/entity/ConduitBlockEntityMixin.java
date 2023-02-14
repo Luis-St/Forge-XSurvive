@@ -4,8 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,6 +46,18 @@ public abstract class ConduitBlockEntityMixin {
 	@Inject(method = "updateHunting", at = @At("HEAD"), cancellable = true)
 	private static void updateHunting(ConduitBlockEntity blockEntity, List<BlockPos> shapeBlocks, CallbackInfo callback) {
 		blockEntity.setHunting(shapeBlocks.size() >= 30);
+		callback.cancel();
+	}
+	
+	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
+	private static void applyEffects(Level level, BlockPos pos, List<BlockPos> shapeBlocks, CallbackInfo callback) {
+		int range = (shapeBlocks.size() / 7 * 16) * 2;
+		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).expandTowards(0.0, level.getHeight(), 0.0);
+		for(Player player : level.getEntitiesOfClass(Player.class, aabb)) {
+			if (pos.closerThan(player.blockPosition(), range) && player.isInWaterOrRain()) {
+				player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 260 * (shapeBlocks.size() >= 42 ? 2 : 1), 0, true, true));
+			}
+		}
 		callback.cancel();
 	}
 	

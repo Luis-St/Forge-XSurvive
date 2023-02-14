@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 public class ServerPlayerHandler extends AbstractPlayerHandler {
 	
+	private int nextPhantomReset = 0;
 	private int lastSync;
 	private boolean changed = false;
 	
@@ -30,6 +31,9 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 				this.frostTime = 0;
 				this.setChanged();
 			}
+		}
+		if (this.nextPhantomReset > 0) {
+			this.nextPhantomReset--;
 		}
 		if (this.changed) {
 			this.broadcastChanges();
@@ -58,6 +62,14 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		this.setChanged();
 	}
 	
+	public void setNextPhantomReset(int days) {
+		this.nextPhantomReset = 24000 * days;
+	}
+	
+	public boolean canResetPhantomSpawn() {
+		return 0 >= this.nextPhantomReset;
+	}
+	
 	@Override
 	public void setChanged() {
 		this.changed = true;
@@ -72,6 +84,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	@Override
 	public CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();
+		tag.putInt("next_phantom_reset", this.nextPhantomReset);
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
@@ -80,6 +93,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	@Override
 	public void deserializeDisk(CompoundTag tag) {
 		super.deserializeDisk(tag);
+		this.nextPhantomReset = tag.getInt("next_phantom_reset");
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}
