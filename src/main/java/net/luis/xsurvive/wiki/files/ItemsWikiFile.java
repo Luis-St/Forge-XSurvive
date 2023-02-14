@@ -1,9 +1,11 @@
-package net.luis.xsurvive.wiki.file;
+package net.luis.xsurvive.wiki.files;
 
 import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.WikiList;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.GlintColorItem;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.resources.ResourceLocation;
@@ -28,8 +30,6 @@ public class ItemsWikiFile {
 		WikiFileBuilder builder = new WikiFileBuilder("ItemsWiki");
 		builder.header1("Items");
 		addItems(builder);
-		builder.header1("Vanilla Item Modifications");
-		addVanillaItems(builder);
 		return builder;
 	}
 	
@@ -123,7 +123,7 @@ public class ItemsWikiFile {
 	}
 	
 	private static void addFoodEffects(WikiFileBuilder wikiBuilder, List<Pair<MobEffectInstance, Float>> effects) {
-		wikiBuilder.list(WikiList.POINT, (builder) -> {
+		wikiBuilder.pointList((builder) -> {
 			for (Pair<MobEffectInstance, Float> pair : effects) {
 				MobEffectInstance instance = pair.getFirst();
 				builder.append("Effect").appendFormatted(XSLanguageProvider.getName(ForgeRegistries.MOB_EFFECTS.getKey(instance.getEffect())), WikiFormat.CODE);
@@ -149,18 +149,6 @@ public class ItemsWikiFile {
 			return "rainbow";
 		}
 		throw new RuntimeException("Fail to get run color for id: " + color);
-	}
-	
-	private static void addVanillaItems(WikiFileBuilder wikiBuilder) {
-		wikiBuilder.header2("Shulker Box");
-		wikiBuilder.header3("Modifications");
-		wikiBuilder.lines((builder) -> {
-			builder.append("A shulker box can be placed inside another shulker box.").endLine();
-		});
-		wikiBuilder.emptyLine();
-		wikiBuilder.lines((builder) -> {
-			builder.append("The shulker box tooltip displays the full contents of the stored inventory.").endLine();
-		});
 	}
 	
 }

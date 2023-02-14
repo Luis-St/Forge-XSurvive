@@ -1,4 +1,6 @@
-package net.luis.xsurvive.wiki.file;
+package net.luis.xsurvive.wiki.files;
+
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 /**
  *
@@ -13,7 +15,6 @@ public class PotionsWikiFile {
 		wikiBuilder.header1("Potions");
 		wikiBuilder.header2("Frost Potion");
 		wikiBuilder.header3("Frost Potion");
-		wikiBuilder.line("Brewable in the vanilla brewing stand using a snowball as an input.");
 		wikiBuilder.header3("Long Frost Potion");
 		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the frost potion.");
 		wikiBuilder.header3("Strong Frost Potion");

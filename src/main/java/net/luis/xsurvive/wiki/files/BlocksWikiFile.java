@@ -1,8 +1,9 @@
-package net.luis.xsurvive.wiki.file;
+package net.luis.xsurvive.wiki.files;
 
-import com.google.common.collect.Lists;
 import net.luis.xores.world.fixer.ToolFixer;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
+import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -17,7 +18,6 @@ import net.minecraftforge.registries.tags.ITagManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

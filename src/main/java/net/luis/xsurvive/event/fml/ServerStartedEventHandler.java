@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.fml;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.wiki.file.*;
+import net.luis.xsurvive.wiki.files.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,12 +32,15 @@ public class ServerStartedEventHandler {
 	}
 	
 	private static void createWikis(Path path) throws IOException {
-		EnchantmentWikiFile.create().write(path);
-		EffectsWikiFile.create().write(path);
-		PotionsWikiFile.create().write(path);
 		BlocksWikiFile.create().write(path);
-		ItemsWikiFile.create().write(path);
+		CommandsWikiFile.create().write(path);
 		DimensionsWikiFile.create().write(path);
+		EffectsWikiFile.create().write(path);
+		EnchantmentWikiFile.create().write(path);
+		ItemsWikiFile.create().write(path);
+		PotionsWikiFile.create().write(path);
+		VanillaModificationsWikiFile.create().write(path);
+		VillagerTradeWikiFile.create().write(path);
 	}
 	
 }

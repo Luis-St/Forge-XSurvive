@@ -1,4 +1,6 @@
-package net.luis.xsurvive.wiki.file;
+package net.luis.xsurvive.wiki.files;
+
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 /**
  *

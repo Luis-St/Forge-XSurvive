@@ -121,7 +121,7 @@ public class WikiFileBuilder {
 		for (int i = 0; i < this.lines.size(); i++) {
 			String line = this.lines.get(i);
 			if (i == this.lines.size() - 1) {
-				writer.write(line.substring(0, line.length() - 1) + "\n");
+				writer.write(line.substring(0, Math.max(0, line.length() - 1)) + "\n");
 			} else {
 				writer.write(line + "\n");
 			}

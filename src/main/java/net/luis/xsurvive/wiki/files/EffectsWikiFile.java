@@ -1,6 +1,7 @@
-package net.luis.xsurvive.wiki.file;
+package net.luis.xsurvive.wiki.files;
 
 import net.luis.xsurvive.wiki.WikiFormat;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 /**
  *
@@ -23,8 +24,14 @@ public class EffectsWikiFile {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When the frost effect is applied to an entity that is affected by freezing, the entity will be damaged by the freezing damage every 1.5 seconds.").endLine();
 			builder.append("The amount of damage is calculated as follows:").endLine();
-			builder.appendFormatted("(amplifier + 1) * 2", WikiFormat.CODE).endLine();
-			builder.append("Freeze affected entities:").append("Magma Cube,").append("Ghast,").append("Blaze and").append("Strider").endLine();
+			builder.appendFormatted("(Amplifier + 1) * 2", WikiFormat.CODE).endLine();
+			builder.append("Freeze affected entities:").endLine();
+		});
+		wikiBuilder.pointList((builder) -> {
+			builder.append("Magma cube").endLine();
+			builder.append("Ghast").endLine();
+			builder.append("Blaze").endLine();
+			builder.append("Strider").endLine();
 		});
 		return wikiBuilder;
 	}
