@@ -158,9 +158,8 @@ public class LivingEventHandler {
 	
 	@SubscribeEvent
 	public static void livingHurt(LivingHurtEvent event) {
-		Entity target = event.getEntity();
-		DamageSource source = event.getSource();
-		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof LivingEntity livingAttacker && target instanceof LivingEntity livingTarget) {
+		LivingEntity livingTarget = event.getEntity();
+		if (event.getSource() instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof LivingEntity livingAttacker) {
 			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT.get(), livingAttacker);
 			int frostAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.FROST_ASPECT.get(), livingAttacker);
 			if (poisonAspect > 0) {
@@ -188,8 +187,7 @@ public class LivingEventHandler {
 	public static void mobEffectAdded(MobEffectEvent.Added event) {
 		MobEffectInstance instance = event.getEffectInstance();
 		if (event.getEntity() instanceof ServerPlayer player && instance.getEffect() == XSMobEffects.FROST.get()) {
-			ServerPlayerHandler handler = PlayerProvider.getServer(player);
-			handler.setFrostTime(instance.getDuration());
+			PlayerProvider.getServer(player).setFrostTime(instance.getDuration());
 		}
 	}
 	

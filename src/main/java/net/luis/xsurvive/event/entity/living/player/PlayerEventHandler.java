@@ -2,6 +2,7 @@ package net.luis.xsurvive.event.entity.living.player;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
+import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
@@ -26,6 +27,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.stats.StatsCounter;
+import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -76,8 +78,8 @@ public class PlayerEventHandler {
 		if (!left.isEmpty()) {
 			ItemStack result = left.copy();
 			if (right.isEmpty()) {
-				if ((left.isDamageableItem() || left.isEnchantable() || left.isEnchanted()) && left.getBaseRepairCost() > 0) {
-					event.setCost(1);
+				if ((left.isDamageableItem() || left.isEnchantable() || left.isEnchanted()) && left.getBaseRepairCost() > 1) {
+					event.setCost(5);
 					result.setRepairCost(result.getBaseRepairCost() / 2);
 					event.setOutput(result);
 				}
@@ -86,12 +88,7 @@ public class PlayerEventHandler {
 			} else if ((left.isEnchantable() || left.isEnchanted()) && right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 				Enchantment enchantment = goldenBook.getEnchantment(right);
 				if (enchantment instanceof IEnchantment ench) {
-					EnchantedItem enchantedItem;
-					if (ench.isUpgradeEnchantment()) {
-						enchantedItem = IEnchantment.upgrade(left, right);
-					} else {
-						enchantedItem = IEnchantment.merge(left, right);
-					}
+					EnchantedItem enchantedItem = ench.isUpgradeEnchantment() ? IEnchantment.upgrade(left, right) : IEnchantment.merge(left, right);
 					event.setOutput(enchantedItem.stack());
 					event.setCost(enchantedItem.cost());
 				} else {
@@ -131,7 +128,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void anvilRepair(BreakSpeed event) {
+	public static void breakSpeed(BreakSpeed event) {
 		if (event.getState().is(Blocks.SPAWNER)) {
 			event.setCanceled(true);
 		}
@@ -211,9 +208,10 @@ public class PlayerEventHandler {
 				level.setWeatherParameters(6000, 0, false, false);
 			}
 			if (event.getEntity() instanceof ServerPlayer player) {
-				StatsCounter stats = player.getStats();
-				if (stats.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)) > 12000) {
-					stats.setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
+				ServerPlayerHandler handler = PlayerProvider.getServer(player);
+				if (handler.canResetPhantomSpawn()) {
+					player.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
+					handler.setNextPhantomReset(player.getLevel().getDifficulty().getId() + Mth.nextInt(player.getRandom(), 6, 10));
 				}
 			}
 		}

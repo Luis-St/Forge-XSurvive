@@ -40,10 +40,9 @@ public abstract class RaidMixin {
 		int spawns = bonusWave ? raiderType.spawnsPerWaveBeforeBonus[this.numGroups] : raiderType.spawnsPerWaveBeforeBonus[wave];
 		switch (raiderType) {
 			case VINDICATOR -> callback.setReturnValue(VINDICATOR_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
-			case EVOKER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
+			case EVOKER, RAVAGER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
 			case PILLAGER -> callback.setReturnValue(PILLAGER_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
 			case WITCH -> callback.setReturnValue(WITCH_SPAWNS[bonusWave ? this.numGroups : wave]);
-			case RAVAGER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
 			default -> callback.setReturnValue(spawns + rng.nextInt(Math.max(1, spawns / 2)));
 		}
 	}

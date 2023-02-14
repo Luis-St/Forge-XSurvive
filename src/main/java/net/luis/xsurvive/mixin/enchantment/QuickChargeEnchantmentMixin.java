@@ -17,7 +17,7 @@ public abstract class QuickChargeEnchantmentMixin {
 	
 	@Inject(method = "getMaxLevel", at = @At("HEAD"), cancellable = true)
 	public void getMaxLevel(CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(3);
+		callback.setReturnValue(4);
 	}
 	
 }

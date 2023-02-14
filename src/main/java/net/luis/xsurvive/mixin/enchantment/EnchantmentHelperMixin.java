@@ -30,7 +30,6 @@ import java.util.Objects;
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
 	
-	@SuppressWarnings("deprecation")
 	@Inject(method = "getEnchantments", at = @At("HEAD"), cancellable = true)
 	private static void getEnchantments(ItemStack stack, CallbackInfoReturnable<Map<Enchantment, Integer>> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
@@ -67,7 +66,6 @@ public abstract class EnchantmentHelperMixin {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Inject(method = "enchantItem", at = @At("HEAD"), cancellable = true)
 	private static void enchantItem(RandomSource rng, ItemStack stack, int cost, boolean treasure, CallbackInfoReturnable<ItemStack> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {

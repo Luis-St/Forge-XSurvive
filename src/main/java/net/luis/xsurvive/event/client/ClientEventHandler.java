@@ -28,11 +28,10 @@ public class ClientEventHandler {
 		if (event.getScreen() instanceof ChatReportScreen screen) {
 			Minecraft minecraft = screen.getMinecraft();
 			screen.sendButton = Button.builder(Component.translatable("gui.chatReport.send"), (button) -> {
-						Component component =
-								Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
-						Objects.requireNonNull(minecraft.player).sendSystemMessage(component);
-					}).pos((screen.width / 2) + 10, Math.min((screen.height + 300) / 2, screen.height) - 30).size(120, 20).tooltip(Tooltip.create(Component.literal("Disabled for several reasons").withStyle(ChatFormatting.RED)))
-					.build();
+				Component component =
+						Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
+				Objects.requireNonNull(minecraft.player).sendSystemMessage(component);
+			}).pos((screen.width / 2) + 10, Math.min((screen.height + 300) / 2, screen.height) - 30).size(120, 20).tooltip(Tooltip.create(Component.literal("Disabled for several reasons").withStyle(ChatFormatting.RED))).build();
 		}
 	}
 	

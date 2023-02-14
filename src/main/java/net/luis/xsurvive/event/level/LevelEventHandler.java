@@ -32,6 +32,8 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Luis-st
@@ -116,6 +118,7 @@ public class LevelEventHandler {
 					level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
 				}
 			}
+			event.getAffectedBlocks().removeIf(pos -> level.getBlockState(pos).is(Blocks.SPAWNER));
 		}
 	}
 	

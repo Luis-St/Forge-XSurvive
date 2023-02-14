@@ -97,10 +97,10 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			}
 			this.handler.getInputHandler().setStackInSlot(0, ItemStack.EMPTY);
 			if (this.repairItemCountCost > 0) {
-				ItemStack rigthStack = this.handler.getInputHandler().getStackInSlot(1);
-				if (!rigthStack.isEmpty() && rigthStack.getCount() > this.repairItemCountCost) {
-					rigthStack.shrink(this.repairItemCountCost);
-					this.handler.getInputHandler().setStackInSlot(1, rigthStack);
+				ItemStack rightStack = this.handler.getInputHandler().getStackInSlot(1);
+				if (!rightStack.isEmpty() && rightStack.getCount() > this.repairItemCountCost) {
+					rightStack.shrink(this.repairItemCountCost);
+					this.handler.getInputHandler().setStackInSlot(1, rightStack);
 				} else {
 					this.handler.getInputHandler().setStackInSlot(1, ItemStack.EMPTY);
 				}
@@ -140,7 +140,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			Map<Enchantment, Integer> resultEnchantments = EnchantmentHelper.getEnchantments(resultStack);
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
-			boolean enchantedBook = false;
+			boolean enchantedBook;
 			boolean decreaseRepairCost = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);

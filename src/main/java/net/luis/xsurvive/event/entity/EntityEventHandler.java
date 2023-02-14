@@ -78,7 +78,7 @@ public class EntityEventHandler {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
 					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				} else if (entity instanceof AbstractGolem) {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 4.0
+					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
 				} else {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				}
@@ -124,7 +124,7 @@ public class EntityEventHandler {
 			spider.targetSelector.addGoal(1, new HurtByTargetGoal(spider));
 			spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
 			spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
-		} else if (entity instanceof Skeleton skeleton) {
+		} else if (entity instanceof AbstractSkeleton skeleton && !(entity instanceof WitherSkeleton)) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(skeleton.level, skeleton.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(skeleton, instance);
