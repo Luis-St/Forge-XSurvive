@@ -1,7 +1,6 @@
 package net.luis.xsurvive.wiki.files;
 
 import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.minecraft.locale.Language;
 import org.apache.commons.lang3.StringUtils;
@@ -212,6 +211,37 @@ public class VanillaModificationsWikiFile {
 		});
 		wikiBuilder.header3("Zombie villager");
 		wikiBuilder.line("The convention from a zombie villager to a villager requires an enchanted golden apple instead of a normal golden apple.");
+		wikiBuilder.header3("Shulker box");
+		wikiBuilder.lines((builder) -> {
+			builder.append("Shulker boxes can be placed inside another shulker box.").endLine();
+			builder.append("The full inventory is displayed in the shulker box tooltip.").endLine();
+		});
+		wikiBuilder.header3("Ender eye");
+		wikiBuilder.line("The eye of ender has a 40% chance of spawning an cursed eye of ender that does not point to the next stronghold.");
+		wikiBuilder.header2("Dragon fight");
+		wikiBuilder.lines((builder) -> {
+			builder.append("The End Stone has been removed from the end biome.").endLine();
+			builder.append("The crystal pillars, the spawn platform and the exit portal are still in the same positions.").endLine();
+			builder.append("Hint: You should take some (more) blocks to the end.").endLine();
+		});
+		wikiBuilder.header3("Phantom spawn");
+		wikiBuilder.line("Increased the number of phantom spawn in each difficulty.");
+		wikiBuilder.table((builder) -> {
+			builder.append("Difficulty").append("Old spawns").append("New spawns").endLine();
+			builder.append("Easy").append("1 - 3").append("2 - 5").endLine();
+			builder.append("Normal").append("1 - 4").append("2 - 6").endLine();
+			builder.append("Hard").append("1 - 5").append("2 - 7").endLine();
+		});
+		wikiBuilder.header3("Raid");
+		wikiBuilder.line("Increased spawn rate of all raiders.");
+		wikiBuilder.header3("Wither spawn");
+		wikiBuilder.line("The wither cannot spawn under the following conditions:");
+		wikiBuilder.pointList((builder) -> {
+			builder.append("In the end dimension").endLine();
+			builder.append("In the nether below 5 and between 121 and 128").endLine();
+			builder.append("In the overworld below -59").endLine();
+			builder.append("In a cube which is smaller than 5x4x5 (x, y, z)").endLine();
+		});
 	}
 	
 	private static void addAdditions(WikiFileBuilder wikiBuilder) {
@@ -233,10 +263,15 @@ public class VanillaModificationsWikiFile {
 		wikiBuilder.line("The color of the fire will be the color of the fire that has been in contact.");
 		wikiBuilder.header3("Sugar cane");
 		wikiBuilder.line("Sugar cane can be bonemealed up to a height of 5 blocks.");
+		wikiBuilder.header3("Elder guardian");
+		wikiBuilder.line("The Elder Guardian will destroy any blocks that come in contact with him.");
+		wikiBuilder.header3("Ender man");
+		wikiBuilder.line("Ender men will be able to freeze water to reach players trying to save themselves in the water.");
+		
 	}
 	
 	private static void addDeactivations(WikiFileBuilder wikiBuilder) {
-	    wikiBuilder.header3("Chat reporting system");
+		wikiBuilder.header3("Chat reporting system");
 		wikiBuilder.lines((builder) -> {
 			builder.append("We have decided to disable the chat reporting system because it is inappropriate in a game like Minecraft where we have a friendly community.").endLine();
 			builder.append("In our opinion, the chat reporting system needs to be overhauled, if you want to report players in the game, you need to remove our mod.").endLine();

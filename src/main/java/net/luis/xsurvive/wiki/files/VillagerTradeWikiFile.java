@@ -33,8 +33,6 @@ import java.util.function.Supplier;
 
 public class VillagerTradeWikiFile {
 	
-	// TODO: try to do this for all professions
-	
 	private static final List<Supplier<VillagerProfession>> PROFESSIONS = Util.make(Lists.newArrayList(), (list) -> {
 		list.add(() -> VillagerProfession.ARMORER);
 		list.add(() -> VillagerProfession.LIBRARIAN);

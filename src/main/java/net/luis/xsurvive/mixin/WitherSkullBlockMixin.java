@@ -53,13 +53,13 @@ public abstract class WitherSkullBlockMixin {
 				BlockPatternMatch patternMatch = pattern.find(level, pos);
 				if (patternMatch != null) {
 					if (level.getBiome(pos).is(Biomes.THE_END)) {
-						XSurvive.LOGGER.warn("Can not spawn the wither in the end biome");
+						XSurvive.LOGGER.debug("Can not spawn the wither in the end biome");
 					} else if (level.getBiome(pos).is(BiomeTags.IS_NETHER) && !checkNetherSpawn(pos)) {
-						XSurvive.LOGGER.warn("Can not spawn the wither in the nether at height {}", pos.getY());
+						XSurvive.LOGGER.debug("Can not spawn the wither in the nether at height {}", pos.getY());
 					} else if (level.getBiome(pos).is(BiomeTags.IS_OVERWORLD) && -59 > pos.getY()) {
-						XSurvive.LOGGER.warn("Can not spawn the wither in the overworld at height {}", pos.getY());
+						XSurvive.LOGGER.debug("Can not spawn the wither in the overworld at height {}", pos.getY());
 					} else if (checkSpawnArea(level, patternMatch)) {
-						XSurvive.LOGGER.warn("Can not spawn the wither at position {}, since there is not enough space around", patternMatch.getBlock(1, 1, 0).getPos().toShortString());
+						XSurvive.LOGGER.debug("Can not spawn the wither at position {}, since there is not enough space around", patternMatch.getBlock(1, 1, 0).getPos().toShortString());
 					} else {
 						for (int width = 0; width < pattern.getWidth(); ++width) {
 							for (int height = 0; height < pattern.getHeight(); ++height) {

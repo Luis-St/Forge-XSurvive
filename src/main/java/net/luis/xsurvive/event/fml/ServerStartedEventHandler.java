@@ -34,7 +34,6 @@ public class ServerStartedEventHandler {
 	private static void createWikis(Path path) throws IOException {
 		BlocksWikiFile.create().write(path);
 		CommandsWikiFile.create().write(path);
-		DimensionsWikiFile.create().write(path);
 		EffectsWikiFile.create().write(path);
 		EnchantmentWikiFile.create().write(path);
 		ItemsWikiFile.create().write(path);

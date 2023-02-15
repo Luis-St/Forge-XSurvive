@@ -62,7 +62,7 @@ public class PhantomSpawnerMixin {
 									BlockPos spawnPos = playerPos.above(20 + rng.nextInt(15)).east(-10 + rng.nextInt(21)).south(-10 + rng.nextInt(21));
 									if (NaturalSpawner.isValidEmptySpawnBlock(level, spawnPos, level.getBlockState(spawnPos), level.getFluidState(spawnPos), EntityType.PHANTOM)) {
 										SpawnGroupData spawnGroup = null;
-										int maxSpawnCount = 2 + rng.nextInt(instance.getDifficulty().getId() + 1);
+										int maxSpawnCount = 2 + rng.nextInt(instance.getDifficulty().getId() + 2);
 										for (int count = 0; count < maxSpawnCount; ++count) {
 											Phantom phantom = Objects.requireNonNull(EntityType.PHANTOM.create(level));
 											phantom.moveTo(spawnPos, 0.0F, 0.0F);

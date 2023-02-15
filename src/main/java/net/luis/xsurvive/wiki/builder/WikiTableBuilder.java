@@ -5,6 +5,7 @@ import net.luis.xsurvive.wiki.WikiAlignment;
 import net.luis.xsurvive.wiki.WikiFormat;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -97,10 +98,12 @@ public class WikiTableBuilder extends AbstractWikiBuilder<WikiTableBuilder> {
 				lines.get(j + 1).append(this.centerString(this.table.get(j, i), columnSize)).append("|");
 			}
 		}
-		this.fileBuilder.appendLines(lines.values().stream().map(StringBuilder::toString).toList(), true);
+		List<String> linesToAppend = lines.values().stream().map(StringBuilder::toString).collect(Collectors.toList());
+		linesToAppend.add("");
+		this.fileBuilder.appendLines(linesToAppend, true);
 	}
 	
-	private class Table {
+	private static class Table {
 		
 		private final Map<Integer, List<String>> table = new HashMap<>();
 		private final Map<Integer, WikiAlignment> alignments = new HashMap<>();
