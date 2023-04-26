@@ -24,6 +24,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.BlockEvent.CreateFluidSourceEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
@@ -113,7 +114,8 @@ public class LevelEventHandler {
 		Explosion explosion = event.getExplosion();
 		if (event.getLevel() instanceof ServerLevel level) {
 			if (level.dimension().equals(Level.NETHER) && explosion.getExploder() instanceof PrimedTnt) {
-				BlockPos pos = new BlockPos(explosion.getPosition());
+				Vec3 vec3 = explosion.getPosition();
+				BlockPos pos = new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z);
 				if (pos.getY() >= 124 && level.getBlockState(pos.below()).is(Blocks.BEDROCK)) {
 					level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
 				}

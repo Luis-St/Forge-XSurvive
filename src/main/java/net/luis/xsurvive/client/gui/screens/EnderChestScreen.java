@@ -3,6 +3,7 @@ package net.luis.xsurvive.client.gui.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.luis.xsurvive.world.inventory.EnderChestMenu;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +38,7 @@ public class EnderChestScreen extends AbstractContainerScreen<EnderChestMenu> {
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(stack, i, j, 0, 0, this.imageWidth, 125);
-		this.blit(stack, i, j + 125, 0, 126, this.imageWidth, 96);
+		blit(stack, i, j, 0, 0, this.imageWidth, 125);
+		blit(stack, i, j + 125, 0, 126, this.imageWidth, 96);
 	}
 }

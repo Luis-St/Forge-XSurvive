@@ -138,8 +138,8 @@ public class LivingEventHandler {
 			player.setHealth(Math.min(player.getHealth(), (float) Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).getValue()));
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
-			EntityHelper.updateAttributeModifier(player, ForgeMod.ATTACK_RANGE.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom);
-			EntityHelper.updateAttributeModifier(player, ForgeMod.REACH_DISTANCE.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", 0.5 * reachingTo, 0.5 * reachingFrom);
+			EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_REACH.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom);
+			EntityHelper.updateAttributeModifier(player, ForgeMod.BLOCK_REACH.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", 0.5 * reachingTo, 0.5 * reachingFrom);
 		}
 	}
 	

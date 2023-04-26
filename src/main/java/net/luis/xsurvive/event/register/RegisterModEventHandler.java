@@ -29,7 +29,7 @@ public class RegisterModEventHandler {
 		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "runes"), builder -> {
 			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".runes"));
 			builder.icon(() -> new ItemStack(XSItems.RAINBOW_RUNE.get()));
-			builder.displayItems((enabledFlags, populator, hasPermissions) -> {
+			builder.displayItems((parameters, populator) -> {
 				populator.accept(XSItems.WHITE_RUNE.get());
 				populator.accept(XSItems.LIGHT_GRAY_RUNE.get());
 				populator.accept(XSItems.GRAY_RUNE.get());
@@ -52,7 +52,7 @@ public class RegisterModEventHandler {
 		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "golden_book"), builder -> {
 			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".golden_book"));
 			builder.icon(() -> new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get()));
-			builder.displayItems((enabledFlags, populator, hasPermissions) -> {
+			builder.displayItems((parameters, populator) -> {
 				for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
 					if (enchantment instanceof IEnchantment ench) {
 						if (ench.isAllowedOnGoldenBooks()) {

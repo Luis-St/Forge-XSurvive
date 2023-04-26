@@ -21,14 +21,12 @@ import java.util.Objects;
 
 public class XSClientPacketHandler {
 	
-	@SuppressWarnings("resource")
 	public static void handlePlayerCapabilityUpdate(CompoundTag tag) {
 		LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
 		LocalPlayerHandler handler = PlayerProvider.getLocal(player);
 		handler.deserializeNetwork(tag);
 	}
 	
-	@SuppressWarnings("resource")
 	public static void handleTridentGlintColorUpdate(int tridentEntityId, ItemStack tridentStack) {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null) {
@@ -38,7 +36,6 @@ public class XSClientPacketHandler {
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	public static void handleEntityCapabilityUpdate(int entityId, CompoundTag tag) {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null) {

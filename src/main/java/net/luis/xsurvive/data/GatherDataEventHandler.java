@@ -41,7 +41,7 @@ public class GatherDataEventHandler {
 			generator.addProvider(event.includeServer(), new XSRecipeProvider(generator));
 			XSBlockTagsProvider blockTagsProvider = new XSBlockTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper());
 			generator.addProvider(event.includeServer(), blockTagsProvider);
-			generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, event.getLookupProvider(), blockTagsProvider, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator));

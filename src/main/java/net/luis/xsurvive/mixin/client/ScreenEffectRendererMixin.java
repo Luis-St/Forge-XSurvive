@@ -44,7 +44,6 @@ public abstract class ScreenEffectRendererMixin {
 		RenderSystem.depthMask(false);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.enableTexture();
 		TextureAtlasSprite textureSprite = getFireTextureSprite1(Objects.requireNonNull(minecraft.player), EntityProvider.get(minecraft.player).getFireType());
 		RenderSystem.setShaderTexture(0, textureSprite.atlasLocation());
 		float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;

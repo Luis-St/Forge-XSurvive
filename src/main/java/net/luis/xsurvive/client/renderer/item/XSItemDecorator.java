@@ -27,19 +27,18 @@ public class XSItemDecorator implements IItemDecorator {
 	}
 	
 	@Override
-	public boolean render(Font font, ItemStack stack, int xOffset, int yOffset, float blitOffset) {
+	public boolean render(PoseStack poseStack, Font font, ItemStack stack, int xOffset, int yOffset) {
 		LocalPlayer player = this.minecraft.player;
 		if (player != null) {
 			if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
 				double endAspectCooldown = PlayerProvider.getLocal(player).getEndAspectPercent();
 				if (endAspectCooldown > 0 && stack.getEnchantmentLevel(XSEnchantments.ASPECT_OF_THE_END.get()) > 0) {
 					RenderSystem.disableDepthTest();
-					RenderSystem.disableTexture();
 					RenderSystem.enableBlend();
 					RenderSystem.defaultBlendFunc();
 					BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
 					this.fillRect(bufferBuilder, xOffset, yOffset + Mth.floor(16.0 * (1.0 - endAspectCooldown)), 16, Mth.ceil(16.0 * endAspectCooldown), 255, 255, 255, 127);
-					RenderSystem.enableTexture();
+					RenderSystem.disableBlend();
 					RenderSystem.enableDepthTest();
 					return true;
 				}

@@ -15,7 +15,6 @@ import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
-import net.minecraftforge.common.ForgeHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -66,9 +65,6 @@ public class PhantomSpawnerMixin {
 										for (int count = 0; count < maxSpawnCount; ++count) {
 											Phantom phantom = Objects.requireNonNull(EntityType.PHANTOM.create(level));
 											phantom.moveTo(spawnPos, 0.0F, 0.0F);
-											if (ForgeHooks.canEntitySpawn(phantom, level, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), null, MobSpawnType.NATURAL) == -1) {
-												callback.setReturnValue(0);
-											}
 											spawnGroup = phantom.finalizeSpawn(level, instance, MobSpawnType.NATURAL, spawnGroup, null);
 											level.addFreshEntityWithPassengers(phantom);
 										}

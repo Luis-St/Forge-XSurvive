@@ -13,6 +13,7 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -69,7 +70,7 @@ public class RegisterClientModEventHandler {
 		event.registerBookCategories(XSRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
 		event.registerAggregateCategory(SMELTING_FURNACE_SEARCH, Lists.newArrayList(SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
 		event.registerRecipeCategoryFinder(XSRecipeTypes.SMELTING.get(), (recipe) -> {
-			if (recipe.getResultItem().getItem() instanceof BlockItem) {
+			if (recipe.getResultItem(Minecraft.getInstance().level.registryAccess()).getItem() instanceof BlockItem) {
 				return SMELTING_FURNACE_BLOCKS;
 			}
 			return SMELTING_FURNACE_MISC;

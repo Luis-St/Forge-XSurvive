@@ -112,7 +112,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, @NotNull IFocusGroup focuses) {
 		builder.addSlot(INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
-		builder.addSlot(OUTPUT, 61, 19).addItemStack(recipe.getResultItem());
+		builder.addSlot(OUTPUT, 61, 19).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
 	}
 	
 	@Override

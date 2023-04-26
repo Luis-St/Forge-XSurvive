@@ -40,26 +40,27 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	}
 	
 	@Override
-	public void renderImage(@NotNull Font font, int x, int y, @NotNull PoseStack stack, @NotNull ItemRenderer itemRenderer, int blitOffset) {
+	public void renderImage(@NotNull Font font, int x, int y, @NotNull PoseStack stack, @NotNull ItemRenderer itemRenderer) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
 				int index = j + i * 9;
-				this.blit(stack, x + j * 18, y + i * 18, blitOffset);
+				this.blit(stack, x + j * 18, y + i * 18);
 				if (this.stacks.size() > index && index >= 0) {
 					ItemStack itemStack = this.stacks.get(index);
 					if (!itemStack.isEmpty()) {
-						itemRenderer.renderAndDecorateItem(itemStack, x + j * 18 + 1, y + i * 18 + 1, index);
-						itemRenderer.renderGuiItemDecorations(font, itemStack, x + j * 18 + 1, y + i * 18 + 1);
+						itemRenderer.renderAndDecorateItem(stack, itemStack, x + j * 18 + 1, y + i * 18 + 1, index);
+						itemRenderer.renderAndDecorateItem(stack, itemStack, x + j * 18 + 1, y + i * 18 + 1, index);
+						itemRenderer.renderGuiItemDecorations(stack, font, itemStack, x + j * 18 + 1, y + i * 18 + 1);
 					}
 				}
 			}
 		}
 	}
 	
-	private void blit(PoseStack stack, int x, int y, int blitOffset) {
+	private void blit(PoseStack stack, int x, int y) {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, TEXTURE_LOCATION);
-		GuiComponent.blit(stack, x, y, blitOffset, 0.0F, 0.0F, 18, 18, 128, 128);
+		GuiComponent.blit(stack, x, y, 0, 0.0F, 0.0F, 18, 18, 128, 128);
 	}
 	
 }

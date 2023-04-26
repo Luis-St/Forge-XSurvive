@@ -16,26 +16,24 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.stats.StatsCounter;
 import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.PotionItem;
+import net.minecraft.world.item.TippedArrowItem;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -49,7 +47,6 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -224,7 +221,7 @@ public class PlayerEventHandler {
 			player.getCapability(XSCapabilities.PLAYER, null).ifPresent(IPlayer::tick);
 		}
 		boolean hasVoidWalker = player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0;
-		BlockPos pos = new BlockPos(player.getX(), player.getY(), player.getZ());
+		BlockPos pos = new BlockPos(player.getBlockX(), player.getBlockY(), player.getBlockZ());
 		if (hasVoidWalker) {
 			player.fallDistance = 0.0F;
 		}
@@ -246,19 +243,6 @@ public class PlayerEventHandler {
 					player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
 					entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
 					PlayerProvider.getServer(player).setEndAspectCooldown(20);
-				}
-			}
-			if (event.getItemStack().getItem() instanceof Wearable) { // TODO: remove when added by minecraft
-				EquipmentSlot slot = Mob.getEquipmentSlotForItem(event.getItemStack());
-				ItemStack slotStack = player.getItemBySlot(slot).copy();
-				if (!slotStack.isEmpty() && slot.isArmor()) {
-					player.setItemSlot(slot, event.getItemStack());
-					player.setItemInHand(event.getHand(), slotStack);
-				}
-				SoundEvent sound = event.getItemStack().getEquipSound();
-				if (sound != null) {
-					Level level = player.getLevel();
-					player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound), SoundSource.PLAYERS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F, level.random.nextLong()));
 				}
 			}
 		}
