@@ -82,7 +82,7 @@ public abstract class ConduitBlockEntityMixin {
 		
 		if (blockEntity.destroyTarget != null) {
 			level.playSound(null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-			blockEntity.destroyTarget.hurt(DamageSource.MAGIC, shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
 		}
 		if (destroyTarget != blockEntity.destroyTarget) {
 			level.sendBlockUpdated(pos, state, state, 2);

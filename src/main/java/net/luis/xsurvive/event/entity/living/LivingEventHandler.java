@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.entity.living;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.server.capability.ServerPlayerHandler;
+import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.ILivingEntity;
@@ -9,13 +9,13 @@ import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -54,13 +54,13 @@ public class LivingEventHandler {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
 		float amount = event.getAmount();
-		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof Player player) {
+		if (source.getEntity() instanceof Player player) {
 			if (target instanceof LivingEntity livingTarget && amount > 0.0F) {
 				int harmingCurse = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.CURSE_OF_HARMING.get(), player);
 				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT.get(), player);
 				if (harmingCurse > 0) {
 					float damage = (amount / 2.0F) * (float) harmingCurse;
-					if (player.hurt(new EntityDamageSource("curse_of_harming", livingTarget), damage)) {
+					if (player.hurt(new DamageSource(player.level.registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
 						event.setCanceled(true);
 					}
 				}
@@ -75,7 +75,7 @@ public class LivingEventHandler {
 				}
 			}
 		}
-		if (target instanceof Player player && source == DamageSource.OUT_OF_WORLD && amount > 0) {
+		if (target instanceof Player player && source.is(DamageTypes.OUT_OF_WORLD) && amount > 0) {
 			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get());
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
@@ -96,7 +96,7 @@ public class LivingEventHandler {
 		DamageSource source = event.getSource();
 		float amount = event.getAmount();
 		float newAmount = amount;
-		if (source instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof Player player) {
+		if (source.getEntity() instanceof Player player) {
 			int enderSlayer = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.ENDER_SLAYER.get(), player);
 			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player);
 			if (enderSlayer > 0 && EntityHelper.isAffectedByEnderSlayer(target)) {
@@ -106,7 +106,7 @@ public class LivingEventHandler {
 				newAmount = (float) (amount * 2.5);
 			}
 		}
-		if (target instanceof Player player && source == DamageSource.OUT_OF_WORLD && amount > 0) {
+		if (target instanceof Player player && source.is(DamageTypes.OUT_OF_WORLD) && amount > 0) {
 			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get(), player);
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
@@ -159,7 +159,7 @@ public class LivingEventHandler {
 	@SubscribeEvent
 	public static void livingHurt(LivingHurtEvent event) {
 		LivingEntity livingTarget = event.getEntity();
-		if (event.getSource() instanceof EntityDamageSource entitySource && entitySource.getEntity() instanceof LivingEntity livingAttacker) {
+		if (event.getSource().getEntity() instanceof LivingEntity livingAttacker) {
 			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT.get(), livingAttacker);
 			int frostAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.FROST_ASPECT.get(), livingAttacker);
 			if (poisonAspect > 0) {
@@ -194,7 +194,7 @@ public class LivingEventHandler {
 	@SubscribeEvent
 	public static void shieldBlock(ShieldBlockEvent event) {
 		if (event.getEntity() instanceof Player) {
-			if (event.getDamageSource() instanceof IndirectEntityDamageSource source && source.getEntity() instanceof Blaze) {
+			if (event.getDamageSource().isIndirect() && event.getDamageSource().getEntity() instanceof Blaze) {
 				event.setCanceled(true);
 			}
 		}

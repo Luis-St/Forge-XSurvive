@@ -3,17 +3,13 @@ package net.luis.xsurvive.wiki.files;
 import com.google.common.collect.Lists;
 import net.luis.xores.world.item.ElytraChestplateItem;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.apache.commons.lang3.StringUtils;
@@ -106,7 +102,7 @@ public class EnchantmentWikiFile {
 				enchantableItems.add("Hoe");
 			}
 		}
-		if (containsArmorItem(items, EquipmentSlot.HEAD) && containsArmorItem(items, EquipmentSlot.CHEST) && containsArmorItem(items, EquipmentSlot.LEGS) && containsArmorItem(items, EquipmentSlot.FEET)) {
+		if (containsArmorItem(items, ArmorItem.Type.HELMET) && containsArmorItem(items, ArmorItem.Type.CHESTPLATE) && containsArmorItem(items, ArmorItem.Type.LEGGINGS) && containsArmorItem(items, ArmorItem.Type.BOOTS)) {
 			if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class) && containsItem(items, ElytraChestplateItem.class)) {
 				enchantableItems.add("all Armor pieces");
 			} else if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class)) {
@@ -119,10 +115,10 @@ public class EnchantmentWikiFile {
 				enchantableItems.add("vanilla Armor pieces");
 			}
 		} else {
-			if (containsArmorItem(items, EquipmentSlot.HEAD)) {
+			if (containsArmorItem(items, ArmorItem.Type.HELMET)) {
 				enchantableItems.add("Helmet");
 			}
-			if (containsArmorItem(items, EquipmentSlot.CHEST)) {
+			if (containsArmorItem(items, ArmorItem.Type.CHESTPLATE)) {
 				enchantableItems.add("Chestplate");
 			}
 			if (containsItem(items, ElytraItem.class, ElytraChestplateItem.class)) {
@@ -131,10 +127,10 @@ public class EnchantmentWikiFile {
 			if (containsItem(items, ElytraChestplateItem.class)) {
 				enchantableItems.add("Elytra Chestplate");
 			}
-			if (containsArmorItem(items, EquipmentSlot.LEGS)) {
+			if (containsArmorItem(items, ArmorItem.Type.LEGGINGS)) {
 				enchantableItems.add("Leggings");
 			}
-			if (containsArmorItem(items, EquipmentSlot.FEET)) {
+			if (containsArmorItem(items, ArmorItem.Type.BOOTS)) {
 				enchantableItems.add("Boots");
 			}
 		}
@@ -164,8 +160,8 @@ public class EnchantmentWikiFile {
 		return false;
 	}
 	
-	private static boolean containsArmorItem(List<Item> items, EquipmentSlot slot) {
-		return items.stream().filter(ArmorItem.class::isInstance).map(ArmorItem.class::cast).anyMatch((item) -> item.getSlot() == slot);
+	private static boolean containsArmorItem(List<Item> items, ArmorItem.Type type) {
+		return items.stream().filter(ArmorItem.class::isInstance).map(ArmorItem.class::cast).anyMatch((item) -> item.getType() == type);
 	}
 	
 	private static String getIncompatibleEnchantments(Enchantment enchantment) {

@@ -17,5 +17,6 @@
   ],
   "result": {
     "item": "xsurvive:diamond_apple"
-  }
+  },
+  "show_notification": true
 }

@@ -2,6 +2,7 @@ package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.network.XSNetworkHandler;
+import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.XSEntityTypes;
 import net.luis.xsurvive.world.entity.ai.village.XSPoiTypes;
@@ -55,6 +56,7 @@ public class XSurvive {
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSEntityTypes.ENTITY_TYPES.register(eventBus);
+		XSDamageTypes.register();
 		XSOreFeatures.register();
 		XSOrePlacements.register();
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);

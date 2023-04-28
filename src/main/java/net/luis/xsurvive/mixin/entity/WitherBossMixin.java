@@ -1,7 +1,9 @@
 package net.luis.xsurvive.mixin.entity;
 
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
@@ -46,8 +48,8 @@ public abstract class WitherBossMixin extends Monster {
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {
 		if (this.isInvulnerableTo(source)) {
 			callback.setReturnValue(false);
-		} else if (source != DamageSource.DROWN && !(source.getEntity() instanceof WitherBoss)) {
-			if (this.getInvulnerableTicks() > 0 && source != DamageSource.OUT_OF_WORLD) {
+		} else if (source.is(DamageTypeTags.IS_DROWNING) && !(source.getEntity() instanceof WitherBoss)) {
+			if (this.getInvulnerableTicks() > 0 && source.is(DamageTypes.OUT_OF_WORLD)) {
 				callback.setReturnValue(false);
 			} else {
 				if (source.getDirectEntity() instanceof AbstractArrow arrow && 4 > arrow.getPierceLevel()) {

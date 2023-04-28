@@ -1,7 +1,7 @@
 package net.luis.xsurvive.mixin.entity;
 
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
@@ -35,12 +35,12 @@ public abstract class EndCrystalMixin extends Entity {
 			callback.setReturnValue(false);
 		} else if (source.getEntity() instanceof EnderDragon) {
 			callback.setReturnValue(false);
-		} else if (source instanceof IndirectEntityDamageSource || source.isProjectile()) {
+		} else if (source.isIndirect() || source.is(DamageTypeTags.IS_PROJECTILE)) {
 			callback.setReturnValue(false);
 		} else {
 			if (!this.isRemoved() && !this.level.isClientSide) {
 				this.remove(Entity.RemovalReason.KILLED);
-				if (!source.isExplosion()) {
+				if (!source.is(DamageTypeTags.IS_EXPLOSION)) {
 					this.level.explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Level.ExplosionInteraction.BLOCK);
 				}
 				this.onDestroyedBy(source);

@@ -2,6 +2,7 @@ package net.luis.xsurvive.mixin.item;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -27,7 +28,7 @@ import java.util.Set;
 public abstract class CreativeModeTabsMixin {
 	
 	@Inject(method = "generateEnchantmentBookTypesOnlyMaxLevel", at = @At("HEAD"), cancellable = true)
-	private static void generateEnchantmentBookTypesOnlyMaxLevel(CreativeModeTab.Output populator, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
+	private static void generateEnchantmentBookTypesOnlyMaxLevel(CreativeModeTab.Output populator, HolderLookup<Enchantment> lookup, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isAllowedOnBooks()) {
 				if (enchantment instanceof IEnchantment ench) {
@@ -49,7 +50,7 @@ public abstract class CreativeModeTabsMixin {
 	}
 	
 	@Inject(method = "generateEnchantmentBookTypesAllLevels", at = @At("HEAD"), cancellable = true)
-	private static void generateEnchantmentBookTypesAllLevels(CreativeModeTab.Output populator, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
+	private static void generateEnchantmentBookTypesAllLevels(CreativeModeTab.Output populator, HolderLookup<Enchantment> lookup, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isAllowedOnBooks()) {
 				if (enchantment instanceof IEnchantment ench) {
