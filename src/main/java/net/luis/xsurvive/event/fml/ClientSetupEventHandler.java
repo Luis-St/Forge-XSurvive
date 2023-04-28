@@ -1,5 +1,7 @@
 package net.luis.xsurvive.event.fml;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.EnderChestScreen;
@@ -9,12 +11,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.OptionInstance;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.antlr.v4.runtime.misc.LogManager;
 
 /**
  *
@@ -33,9 +37,14 @@ public class ClientSetupEventHandler {
 			MenuScreens.register(XSMenuTypes.ENDER_CHEST.get(), EnderChestScreen::new);
 		});
 		replaceGammaOption(minecraft);
-		XSurvive.LOGGER.info("Replace gamma option and reload options");
+		XSurvive.LOGGER.info("Replaced gamma option");
+		replaceGlintOptions(minecraft);
+		XSurvive.LOGGER.info("Replaced glint options");
+		XSurvive.LOGGER.debug("Reload options");
 		minecraft.options.load();
-		XSurvive.LOGGER.info("Gamma value is now {}", minecraft.options.gamma.get());
+		XSurvive.LOGGER.info("Gamma is now {}", minecraft.options.gamma.get());
+		XSurvive.LOGGER.info("Glint speed is now {}", minecraft.options.glintSpeed.get());
+		XSurvive.LOGGER.info("Glint strength is now {}", minecraft.options.glintStrength.get());
 	}
 	
 	private static void replaceGammaOption(Minecraft minecraft) {
@@ -52,8 +61,45 @@ public class ClientSetupEventHandler {
 			} else {
 				return Options.genericValueLabel(component, gamma);
 			}
-		}, new DoubleRangeOption(0.0, 100.0), 0.5, (value) -> {
+		}, DoubleRangeOption.forGamma(0.0, 100.0), 0.5, (value) -> {
 			
+		});
+	}
+	
+	private static void replaceGlintOptions(Minecraft minecraft) {
+		minecraft.options.glintSpeed = new OptionInstance<>("options.glintSpeed", OptionInstance.cachedConstantTooltip(Component.translatable("options.glintSpeed.tooltip")), (component, value) -> {
+			int glint = (int) (value * 100.0);
+			if (glint == 0) {
+				return Options.genericValueLabel(component, CommonComponents.OPTION_OFF);
+			} else if (glint == 50) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.defaultVanilla"));
+			} else if (glint == 75) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.original"));
+			} else if (glint == 100) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.maxVanilla"));
+			} else {
+				return Options.percentValueLabel(component, value);
+			}
+		}, DoubleRangeOption.forGlint(0.0, 2.0), 0.5, (value) -> {
+		
+		});
+		minecraft.options.glintStrength = new OptionInstance<>("options.glintStrength", OptionInstance.cachedConstantTooltip(Component.translatable("options.damageTiltStrength.tooltip")), (component, value) -> {
+			int glint = (int) (value * 100.0);
+			if (glint == 0) {
+				return Options.genericValueLabel(component, CommonComponents.OPTION_OFF);
+			} else if (glint == 75) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.defaultVanilla"));
+			} else if (glint == 100) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.maxVanilla"));
+			} else if (glint == 125) {
+				return Options.genericValueLabel(component, Component.translatable("options." + XSurvive.MOD_ID + ".glint.original"));
+			} else {
+				return Options.percentValueLabel(component, value);
+			}
+		}, DoubleRangeOption.forGlint(0.0, 2.0), 0.75, (value) -> {
+			if (RenderSystem.isOnRenderThread()) {
+				RenderSystem.setShaderGlintAlpha(value);
+			}
 		});
 	}
 	
