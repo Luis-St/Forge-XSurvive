@@ -7,10 +7,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -113,5 +110,4 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 			builder.appendFormatted("1 - (VoidProtectionLevel * 0,2)", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

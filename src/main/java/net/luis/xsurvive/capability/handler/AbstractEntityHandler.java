@@ -14,8 +14,8 @@ import net.minecraft.world.entity.Entity;
 public class AbstractEntityHandler implements IEntity {
 	
 	private final Entity entity;
-	protected EntityFireType fireType = EntityFireType.NONE;
 	private int tick;
+	protected EntityFireType fireType = EntityFireType.NONE;
 	
 	public AbstractEntityHandler(Entity entity) {
 		this.entity = entity;
@@ -67,5 +67,4 @@ public class AbstractEntityHandler implements IEntity {
 	public void deserializeNetwork(CompoundTag tag) {
 		this.deserialize(tag);
 	}
-	
 }

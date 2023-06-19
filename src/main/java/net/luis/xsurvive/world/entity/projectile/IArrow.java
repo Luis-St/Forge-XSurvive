@@ -11,5 +11,4 @@ public interface IArrow {
 	int getExplosionLevel();
 	
 	void setExplosionLevel(int explosionLevel);
-	
 }

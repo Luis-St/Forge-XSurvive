@@ -1,15 +1,12 @@
 package net.luis.xsurvive.event.fml;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.EnderChestScreen;
 import net.luis.xsurvive.client.gui.screens.SmeltingFurnaceScreen;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.OptionInstance;
-import net.minecraft.client.Options;
+import net.minecraft.client.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -18,7 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import org.antlr.v4.runtime.misc.LogManager;
 
 /**
  *
@@ -102,5 +98,4 @@ public class ClientSetupEventHandler {
 			}
 		});
 	}
-	
 }

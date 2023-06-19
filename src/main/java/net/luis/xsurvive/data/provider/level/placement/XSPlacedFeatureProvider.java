@@ -89,5 +89,4 @@ public class XSPlacedFeatureProvider {
 	private static VerticalAnchor triangleMinGeneration(int maxGeneration) {
 		return VerticalAnchor.absolute((64 + maxGeneration) * -1 - 64);
 	}
-	
 }

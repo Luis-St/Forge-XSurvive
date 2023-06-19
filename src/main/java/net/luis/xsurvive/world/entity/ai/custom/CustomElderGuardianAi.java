@@ -50,5 +50,4 @@ public class CustomElderGuardianAi extends AbstractCustomAi<ElderGuardian> {
 			}
 		}
 	}
-	
 }

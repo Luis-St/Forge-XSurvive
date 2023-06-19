@@ -18,5 +18,4 @@ public abstract class AbstractCustomAi<T extends LivingEntity> implements Custom
 		this.entity = entity;
 		this.level = level;
 	}
-	
 }

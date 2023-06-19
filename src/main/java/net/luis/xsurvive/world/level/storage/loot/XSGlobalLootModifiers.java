@@ -3,9 +3,7 @@ package net.luis.xsurvive.world.level.storage.loot;
 import com.mojang.serialization.Codec;
 import net.luis.xsurvive.XSurvive;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 /**
  *
@@ -35,5 +33,4 @@ public class XSGlobalLootModifiers {
 	public static final RegistryObject<Codec<EndEnchantmentsModifier>> END_ENCHANTMENTS_MODIFIER = LOOT_MODIFIERS.register("end_enchantments_modifier", () -> {
 		return EndEnchantmentsModifier.CODEC;
 	});
-	
 }

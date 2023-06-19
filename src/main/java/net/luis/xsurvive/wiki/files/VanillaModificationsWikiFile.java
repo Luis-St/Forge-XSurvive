@@ -283,5 +283,4 @@ public class VanillaModificationsWikiFile {
 		wikiBuilder.header3("Raiders");
 		wikiBuilder.line("Raiders such as Pillagers, Vindicators, Evokers, Ravagers, and Witches cannot be trapped in boats and minecarts during a raid.");
 	}
-	
 }

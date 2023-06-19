@@ -19,5 +19,4 @@ public class XSBlockTags {
 	private static TagKey<Block> bind(ResourceLocation location) {
 		return BlockTags.create(location);
 	}
-	
 }

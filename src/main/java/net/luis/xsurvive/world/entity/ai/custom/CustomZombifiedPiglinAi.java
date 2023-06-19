@@ -29,5 +29,4 @@ public class CustomZombifiedPiglinAi extends AbstractCustomAi<ZombifiedPiglin> {
 			}
 		}
 	}
-	
 }

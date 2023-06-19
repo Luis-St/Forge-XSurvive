@@ -2,10 +2,7 @@ package net.luis.xsurvive.wiki.file;
 
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.WikiList;
-import net.luis.xsurvive.wiki.builder.WikiHeaderBuilder;
-import net.luis.xsurvive.wiki.builder.WikiListBuilder;
-import net.luis.xsurvive.wiki.builder.WikiQuoteBuilder;
-import net.luis.xsurvive.wiki.builder.WikiTableBuilder;
+import net.luis.xsurvive.wiki.builder.*;
 import net.luis.xsurvive.wiki.builder.line.WikiMultiLineBuilder;
 import net.luis.xsurvive.wiki.builder.line.WikiSingleLineBuilder;
 
@@ -134,5 +131,4 @@ public class WikiFileBuilder {
 	public String toString() {
 		return this.name;
 	}
-	
 }

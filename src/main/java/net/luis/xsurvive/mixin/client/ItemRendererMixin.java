@@ -4,15 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
@@ -63,5 +60,4 @@ public abstract class ItemRendererMixin {
 	public void render(ItemStack stack, ItemDisplayContext context, boolean leftHand, PoseStack pose, MultiBufferSource buffer, int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo callback) {
 		GlintColorHandler.setStack(stack);
 	}
-	
 }

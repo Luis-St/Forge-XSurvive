@@ -5,9 +5,7 @@ import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 /**
  *
@@ -46,5 +44,4 @@ public class XSPotions {
 	public static final RegistryObject<Potion> STRONG_DIG_SPEED = POTIONS.register("strong_haste", () -> {
 		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
 	});
-	
 }

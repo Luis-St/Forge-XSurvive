@@ -5,10 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerData;
-import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -46,7 +43,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 				stack.shrink(1);
 			}
 			this.setVillagerData(this.getVillagerData().setProfession(VillagerProfession.NONE));
-			if (this.level instanceof ServerLevel) {
+			if (this.level() instanceof ServerLevel) {
 				VillagerProvider.get((Villager) (Object) this).resetResetCount();
 			}
 			callback.setReturnValue(InteractionResult.SUCCESS);

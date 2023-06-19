@@ -69,5 +69,4 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 			builder.append("Honey melon stem").endLine();
 		});
 	}
-	
 }

@@ -44,5 +44,4 @@ public class WikiHeaderBuilder extends AbstractWikiBuilder<WikiHeaderBuilder> {
 	protected boolean shouldRemoveLineEnd() {
 		return true;
 	}
-	
 }

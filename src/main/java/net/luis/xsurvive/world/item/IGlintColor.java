@@ -23,5 +23,4 @@ public interface IGlintColor {
 	}
 	
 	int getGlintColor(ItemStack stack);
-	
 }

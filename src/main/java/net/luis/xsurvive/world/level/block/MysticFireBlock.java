@@ -5,19 +5,12 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BaseFireBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,11 +26,6 @@ import java.util.stream.Collectors;
 
 public class MysticFireBlock extends BaseFireBlock {
 	
-	public static final BooleanProperty NORTH = PipeBlock.NORTH;
-	public static final BooleanProperty EAST = PipeBlock.EAST;
-	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
-	public static final BooleanProperty WEST = PipeBlock.WEST;
-	public static final BooleanProperty UP = PipeBlock.UP;
 	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((direction) -> {
 		return direction.getKey() != Direction.DOWN;
 	}).collect(Util.toMap());
@@ -46,7 +34,11 @@ public class MysticFireBlock extends BaseFireBlock {
 	private static final VoxelShape EAST_AABB = Block.box(15.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	private static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 1.0D);
 	private static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 15.0D, 16.0D, 16.0D, 16.0D);
-	
+	public static final BooleanProperty NORTH = PipeBlock.NORTH;
+	public static final BooleanProperty EAST = PipeBlock.EAST;
+	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
+	public static final BooleanProperty WEST = PipeBlock.WEST;
+	public static final BooleanProperty UP = PipeBlock.UP;
 	private final Map<BlockState, VoxelShape> shapesCache;
 	
 	public MysticFireBlock(Properties properties) {
@@ -139,5 +131,4 @@ public class MysticFireBlock extends BaseFireBlock {
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> definitionBuilder) {
 		definitionBuilder.add(NORTH, EAST, SOUTH, WEST, UP);
 	}
-	
 }

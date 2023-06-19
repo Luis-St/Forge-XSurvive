@@ -119,5 +119,4 @@ public class XSLanguageProvider extends LanguageProvider {
 	public @NotNull String getName() {
 		return "XSurvive Languages";
 	}
-	
 }

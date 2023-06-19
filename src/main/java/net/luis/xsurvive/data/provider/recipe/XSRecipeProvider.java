@@ -125,5 +125,4 @@ public class XSRecipeProvider extends RecipeProvider {
 		}
 		return this.groupAndUnlock(builder, group, itemCriterion);
 	}
-	
 }

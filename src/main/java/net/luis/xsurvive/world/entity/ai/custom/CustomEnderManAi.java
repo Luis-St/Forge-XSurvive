@@ -47,5 +47,4 @@ public class CustomEnderManAi extends AbstractCustomAi<EnderMan> {
 		}
 		return pos;
 	}
-	
 }

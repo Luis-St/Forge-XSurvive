@@ -6,6 +6,7 @@ import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
@@ -27,7 +28,7 @@ public class XSItemDecorator implements IItemDecorator {
 	}
 	
 	@Override
-	public boolean render(PoseStack poseStack, Font font, ItemStack stack, int xOffset, int yOffset) {
+	public boolean render(GuiGraphics graphics, Font font, ItemStack stack, int xOffset, int yOffset) {
 		LocalPlayer player = this.minecraft.player;
 		if (player != null) {
 			if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
@@ -56,5 +57,4 @@ public class XSItemDecorator implements IItemDecorator {
 		bufferBuilder.vertex(xStart + xEnd, yStart, 0.0).color(red, green, blue, alpha).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 	}
-	
 }

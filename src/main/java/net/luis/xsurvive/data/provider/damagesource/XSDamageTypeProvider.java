@@ -16,5 +16,4 @@ public class XSDamageTypeProvider {
 	public static void create(BootstapContext<DamageType> context) {
 		context.register(XSDamageTypes.CURSE_OF_HARMING, new DamageType("curse_of_harming", DamageScaling.NEVER, 0.1F));
 	}
-	
 }

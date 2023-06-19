@@ -77,5 +77,4 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	public void deserializeNetwork(CompoundTag tag) {
 		
 	}
-	
 }

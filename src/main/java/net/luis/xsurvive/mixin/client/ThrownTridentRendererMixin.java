@@ -23,5 +23,4 @@ public abstract class ThrownTridentRendererMixin {
 	private void render(ThrownTrident trident, float yaw, float partialTicks, PoseStack pose, MultiBufferSource buffer, int packedLight, CallbackInfo callback) {
 		GlintColorHandler.setStack(trident.tridentItem.copy());
 	}
-	
 }

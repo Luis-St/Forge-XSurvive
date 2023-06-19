@@ -13,10 +13,7 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.*;
@@ -81,5 +78,4 @@ public class RegisterClientModEventHandler {
 	public static void registerClientCommands(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(XSEntityTypes.CURSED_ENDER_EYE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
 	}
-	
 }

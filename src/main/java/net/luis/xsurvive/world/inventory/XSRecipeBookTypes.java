@@ -15,5 +15,4 @@ public class XSRecipeBookTypes {
 	public static void register() {
 		
 	}
-	
 }

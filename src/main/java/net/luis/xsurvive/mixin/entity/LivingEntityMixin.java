@@ -4,9 +4,7 @@ import net.luis.xsurvive.world.entity.ILivingEntity;
 import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
 import net.luis.xsurvive.world.entity.ai.custom.CustomAiManager;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,8 +28,8 @@ public abstract class LivingEntityMixin extends Entity implements ILivingEntity 
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	private void init(CallbackInfo callback) {
-		if (!this.level.isClientSide && CustomAiManager.INSTANCE.hasFactory((LivingEntity) (Object) this)) {
-			this.customAi = CustomAiManager.INSTANCE.createFactory((LivingEntity) (Object) this, (ServerLevel) this.level);
+		if (!this.level().isClientSide && CustomAiManager.INSTANCE.hasFactory((LivingEntity) (Object) this)) {
+			this.customAi = CustomAiManager.INSTANCE.createFactory((LivingEntity) (Object) this, (ServerLevel) this.level());
 		} else {
 			this.customAi = null;
 		}
@@ -39,12 +37,11 @@ public abstract class LivingEntityMixin extends Entity implements ILivingEntity 
 	
 	@Override
 	public boolean hasCustomAi() {
-		return !this.level.isClientSide && this.customAi != null;
+		return !this.level().isClientSide && this.customAi != null;
 	}
 	
 	@Override
 	public CustomAi getCustomAi() {
-		return !this.level.isClientSide ? this.customAi : null;
+		return !this.level().isClientSide ? this.customAi : null;
 	}
-	
 }

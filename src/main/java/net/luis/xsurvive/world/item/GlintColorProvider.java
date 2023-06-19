@@ -19,5 +19,4 @@ public class GlintColorProvider implements ICapabilityProvider {
 	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
 		return XSCapabilities.GLINT_COLOR.orEmpty(capability, this.optional);
 	}
-	
 }

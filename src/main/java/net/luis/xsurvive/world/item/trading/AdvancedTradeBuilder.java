@@ -6,9 +6,7 @@ import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -137,5 +135,4 @@ public class AdvancedTradeBuilder {
 	public ItemListing defaultBuild(int level) {
 		return this.defaultValues(level).build();
 	}
-	
 }

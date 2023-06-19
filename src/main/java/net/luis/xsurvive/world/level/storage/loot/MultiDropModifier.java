@@ -81,5 +81,4 @@ public class MultiDropModifier extends LootModifier {
 		lootStack.setCount(count);
 		return lootStack;
 	}
-	
 }

@@ -10,10 +10,7 @@ import mezz.jei.api.registration.*;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.inventory.SmeltingFurnaceMenu;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
-import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.GlintColorItem;
-import net.luis.xsurvive.world.item.ItemHelper;
-import net.luis.xsurvive.world.item.XSItems;
+import net.luis.xsurvive.world.item.*;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.level.block.XSBlocks;
@@ -22,9 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -155,5 +150,4 @@ public class XSJeiPlugin implements IModPlugin {
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 		registration.addRecipeCatalyst(new ItemStack(XSBlocks.SMELTING_FURNACE.get()), XSJeiRecipeTypes.SMELTING, RecipeTypes.FUELING);
 	}
-	
 }

@@ -37,5 +37,4 @@ public class XSBlockTagsProvider extends BlockTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Block Tags";
 	}
-	
 }

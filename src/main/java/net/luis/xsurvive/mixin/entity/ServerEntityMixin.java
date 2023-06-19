@@ -3,8 +3,7 @@ package net.luis.xsurvive.mixin.entity;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.server.level.ServerEntity;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
@@ -43,7 +42,7 @@ public abstract class ServerEntityMixin {
 	}
 	
 	@Inject(method = "sendPairingData", at = @At("HEAD"))
-	private void sendPairingData(Consumer<Packet<?>> send, CallbackInfo callback) {
+	private void sendPairingData(ServerPlayer player, Consumer<Packet<?>> send, CallbackInfo callback) {
 		if (this.entity instanceof ThrownTrident trident) {
 			this.broadcastThrownTrident(trident, true);
 		}
@@ -53,11 +52,10 @@ public abstract class ServerEntityMixin {
 		ItemStack tridentStack = trident.tridentItem.copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
 		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
-			if (trident.level instanceof ServerLevel level) {
+			if (trident.level() instanceof ServerLevel level) {
 				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack));
 			}
 		}
 		TRIDENT_STACK_REFERENCES.put(trident, tridentStack);
 	}
-	
 }

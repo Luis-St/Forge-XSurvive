@@ -3,7 +3,6 @@ package net.luis.xsurvive.wiki.files;
 import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.GlintColorItem;
@@ -150,5 +149,4 @@ public class ItemsWikiFile {
 		}
 		throw new RuntimeException("Fail to get run color for id: " + color);
 	}
-	
 }

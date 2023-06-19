@@ -69,7 +69,4 @@ public class EnderChestMenu extends AbstractContainerMenu {
 	public boolean stillValid(@NotNull Player player) {
 		return true;
 	}
-	
-	
-	
 }

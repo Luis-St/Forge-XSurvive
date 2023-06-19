@@ -35,5 +35,4 @@ public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Poi Tags";
 	}
-	
 }

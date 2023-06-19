@@ -59,5 +59,4 @@ public class HarvestingEnchantment extends Enchantment implements IEnchantment, 
 			builder.appendFormatted("HarvestingLevel * 4 + (HarvestingLevel / 2)", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

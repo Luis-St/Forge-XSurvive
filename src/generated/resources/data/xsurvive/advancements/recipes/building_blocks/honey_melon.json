@@ -43,5 +43,6 @@
     "recipes": [
       "xsurvive:honey_melon"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

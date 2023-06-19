@@ -1,9 +1,7 @@
 package net.luis.xsurvive.world.entity;
 
 import net.luis.xsurvive.world.level.block.MysticFireBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.SoulFireBlock;
+import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -16,10 +14,7 @@ import java.util.Objects;
 
 public enum EntityFireType {
 	
-	NONE(),
-	FIRE(),
-	SOUL_FIRE(),
-	MYSTIC_FIRE();
+	NONE(), FIRE(), SOUL_FIRE(), MYSTIC_FIRE();
 	
 	@NotNull
 	public static EntityFireType byOrdinal(int ordinal, EntityFireType fallback) {
@@ -41,5 +36,4 @@ public enum EntityFireType {
 		}
 		return NONE;
 	}
-	
 }

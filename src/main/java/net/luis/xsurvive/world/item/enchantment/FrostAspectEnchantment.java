@@ -4,9 +4,7 @@ import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.FireAspectEnchantment;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -36,5 +34,4 @@ public class FrostAspectEnchantment extends FireAspectEnchantment implements Wik
 			builder.appendFormatted("100 * FrostAspectLevel", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

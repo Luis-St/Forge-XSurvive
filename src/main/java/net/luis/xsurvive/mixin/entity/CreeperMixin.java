@@ -42,5 +42,4 @@ public abstract class CreeperMixin extends Monster implements ICreeper {
 	public void setPowered(boolean powered) {
 		this.entityData.set(DATA_IS_POWERED, true);
 	}
-	
 }

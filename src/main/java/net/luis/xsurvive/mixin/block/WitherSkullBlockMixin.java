@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.block;
 
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -12,9 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.WitherSkullBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
@@ -105,5 +103,4 @@ public abstract class WitherSkullBlockMixin {
 			return !state.isAir() && !state.is(Blocks.WITHER_SKELETON_SKULL) && !state.is(Blocks.WITHER_SKELETON_WALL_SKULL) && !state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
 		});
 	}
-	
 }

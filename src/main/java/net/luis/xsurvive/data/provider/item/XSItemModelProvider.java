@@ -55,5 +55,4 @@ public class XSItemModelProvider extends ItemModelProvider {
 	public @NotNull String getName() {
 		return "XSurvive Item Models";
 	}
-	
 }

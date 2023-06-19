@@ -19,5 +19,4 @@ public abstract class QuickChargeEnchantmentMixin {
 	public void getMaxLevel(CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(4);
 	}
-	
 }

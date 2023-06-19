@@ -74,5 +74,4 @@ public class ItemWeightHelper {
 		}
 		return itemWeights;
 	}
-	
 }

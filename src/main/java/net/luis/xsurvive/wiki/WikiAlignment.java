@@ -8,9 +8,7 @@ package net.luis.xsurvive.wiki;
 
 public enum WikiAlignment {
 	
-	LEFT(":", ""),
-	CENTER(":", ":"),
-	RIGHT("", ":");
+	LEFT(":", ""), CENTER(":", ":"), RIGHT("", ":");
 	
 	private final String prefix;
 	private final String suffix;
@@ -23,5 +21,4 @@ public enum WikiAlignment {
 	public String create(int charCount) {
 		return this.prefix + "-".repeat(charCount - this.prefix.length() - this.suffix.length()) + this.suffix;
 	}
-	
 }

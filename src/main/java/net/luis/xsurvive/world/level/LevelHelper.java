@@ -21,5 +21,4 @@ public class LevelHelper {
 		}
 		return level.getCurrentDifficultyAt(pos);
 	}
-	
 }

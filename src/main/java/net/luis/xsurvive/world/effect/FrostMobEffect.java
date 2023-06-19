@@ -29,5 +29,4 @@ public class FrostMobEffect extends MobEffect {
 	public boolean isDurationEffectTick(int duration, int amplifier) {
 		return duration % 30 == 0;
 	}
-	
 }

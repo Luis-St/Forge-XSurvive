@@ -3,7 +3,6 @@ package net.luis.xsurvive.mixin.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,9 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  *
@@ -53,7 +50,7 @@ public abstract class ConduitBlockEntityMixin {
 	private static void applyEffects(Level level, BlockPos pos, List<BlockPos> shapeBlocks, CallbackInfo callback) {
 		int range = (shapeBlocks.size() / 7 * 16) * 2;
 		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).expandTowards(0.0, level.getHeight(), 0.0);
-		for(Player player : level.getEntitiesOfClass(Player.class, aabb)) {
+		for (Player player : level.getEntitiesOfClass(Player.class, aabb)) {
 			if (pos.closerThan(player.blockPosition(), range) && player.isInWaterOrRain()) {
 				player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 260 * (shapeBlocks.size() >= 42 ? 2 : 1), 0, true, true));
 			}
@@ -94,5 +91,4 @@ public abstract class ConduitBlockEntityMixin {
 	private static void getDestroyRangeAABB(BlockPos pos, CallbackInfoReturnable<AABB> callback) {
 		callback.setReturnValue(new AABB(pos).inflate(24.0));
 	}
-	
 }

@@ -60,7 +60,6 @@ public class LootTableIdsCondition implements LootItemCondition {
 		public @NotNull LootItemCondition build() {
 			return new LootTableIdsCondition(this.lootTables);
 		}
-		
 	}
 	
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<LootTableIdsCondition> {
@@ -83,7 +82,5 @@ public class LootTableIdsCondition implements LootItemCondition {
 			}
 			return new LootTableIdsCondition(lootTables);
 		}
-		
 	}
-	
 }

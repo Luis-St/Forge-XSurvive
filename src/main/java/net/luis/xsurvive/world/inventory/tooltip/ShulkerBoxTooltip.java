@@ -11,7 +11,4 @@ import java.util.List;
  *
  */
 
-public record ShulkerBoxTooltip(List<ItemStack> stacks) implements TooltipComponent {
-
-
-}
+public record ShulkerBoxTooltip(List<ItemStack> stacks) implements TooltipComponent {}

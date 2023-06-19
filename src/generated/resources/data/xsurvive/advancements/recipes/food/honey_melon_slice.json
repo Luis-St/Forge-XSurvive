@@ -56,5 +56,6 @@
     "recipes": [
       "xsurvive:honey_melon_slice"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

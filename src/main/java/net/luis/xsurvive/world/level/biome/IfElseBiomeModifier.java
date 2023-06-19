@@ -49,5 +49,4 @@ public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome>
 	public Codec<IfElseBiomeModifier> codec() {
 		return XSBiomeModifiers.IF_ELSE_BIOME_MODIFIER.get();
 	}
-	
 }

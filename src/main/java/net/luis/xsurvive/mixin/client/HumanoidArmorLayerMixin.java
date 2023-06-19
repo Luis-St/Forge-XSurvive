@@ -24,5 +24,4 @@ public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends 
 	private void getArmorModelHook(T entity, ItemStack stack, EquipmentSlot slot, A model, CallbackInfoReturnable<A> callback) {
 		GlintColorHandler.setStack(stack);
 	}
-	
 }

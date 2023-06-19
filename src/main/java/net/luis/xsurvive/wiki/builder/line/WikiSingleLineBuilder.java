@@ -23,5 +23,4 @@ public class WikiSingleLineBuilder extends AbstractWikiLineBuilder<WikiSingleLin
 		newLines.add(lines.get(0));
 		return newLines;
 	}
-	
 }

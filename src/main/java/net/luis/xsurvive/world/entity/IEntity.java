@@ -15,7 +15,7 @@ public interface IEntity extends INetworkCapability {
 	Entity getEntity();
 	
 	default Level getLevel() {
-		return this.getEntity().getLevel();
+		return this.getEntity().level();
 	}
 	
 	void tick();
@@ -25,5 +25,4 @@ public interface IEntity extends INetworkCapability {
 	default void setFireType(EntityFireType fireType) {
 		
 	}
-	
 }

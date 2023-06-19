@@ -5,10 +5,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.WoodHarvester;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.PlayerRespawnLogic;
 import net.minecraft.server.level.ServerLevel;
@@ -16,9 +13,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,8 +27,6 @@ import net.minecraftforge.event.level.LevelEvent.CreateSpawnPosition;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
-import java.util.Iterator;
 
 /**
  *
@@ -59,7 +52,7 @@ public class LevelEventHandler {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}
 		if (blasting > 0) {
-			player.level.explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.NONE);
+			player.level().explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.NONE);
 		}
 		if (harvesting > 0) {
 			if (event.getState().is(BlockTags.LOGS)) {
@@ -123,5 +116,4 @@ public class LevelEventHandler {
 			event.getAffectedBlocks().removeIf(pos -> level.getBlockState(pos).is(Blocks.SPAWNER));
 		}
 	}
-	
 }

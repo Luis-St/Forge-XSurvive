@@ -35,5 +35,4 @@ public class PotionsWikiFile {
 		wikiBuilder.line("Brewable in the vanilla brew stand by adding redstone dust to the haste potion.");
 		return wikiBuilder;
 	}
-	
 }

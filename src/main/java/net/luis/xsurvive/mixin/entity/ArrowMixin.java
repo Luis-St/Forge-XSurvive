@@ -31,5 +31,4 @@ public abstract class ArrowMixin extends AbstractArrow implements IArrow {
 	public void setExplosionLevel(int explosionLevel) {
 		this.explosionLevel = explosionLevel;
 	}
-	
 }

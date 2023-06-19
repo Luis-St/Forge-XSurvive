@@ -40,5 +40,4 @@ public class WikiQuoteBuilder extends AbstractWikiBuilder<WikiQuoteBuilder> {
 	protected boolean shouldRemoveLineEnd() {
 		return true;
 	}
-	
 }

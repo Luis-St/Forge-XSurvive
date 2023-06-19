@@ -43,5 +43,6 @@
     "recipes": [
       "xsurvive:red_glazed_terracotta_from_smelting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

@@ -1,7 +1,7 @@
 package net.luis.xsurvive.wiki.builder;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.WikiList;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,8 @@ public class WikiListBuilder extends AbstractWikiBuilder<WikiListBuilder> {
 	
 	private String getEntryPrefix(int lineNumber) {
 		return switch (this.list) {
-			case NUMBER -> {
-				yield lineNumber + ". ";
-			}
-			case POINT -> {
-				yield "- ";
-			}
+			case NUMBER -> lineNumber + ". ";
+			case POINT -> "- ";
 			default -> throw new IllegalArgumentException("Unexpected value: " + this.list);
 		};
 	}
@@ -60,5 +56,4 @@ public class WikiListBuilder extends AbstractWikiBuilder<WikiListBuilder> {
 	protected boolean shouldRemoveLineEnd() {
 		return true;
 	}
-	
 }

@@ -1,9 +1,6 @@
 package net.luis.xsurvive.jei;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.google.common.cache.*;
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,13 +14,13 @@ import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import static mezz.jei.api.recipe.RecipeIngredientRole.INPUT;
-import static mezz.jei.api.recipe.RecipeIngredientRole.OUTPUT;
+import static mezz.jei.api.recipe.RecipeIngredientRole.*;
 
 /**
  *
@@ -73,12 +70,12 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	}
 	
 	@Override
-	public void draw(@NotNull SmeltingRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull PoseStack stack, double mouseX, double mouseY) {
-		animatedFlame.draw(stack, 1, 20);
+	public void draw(@NotNull SmeltingRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
+		this.animatedFlame.draw(graphics, 1, 20);
 		IDrawableAnimated arrow = this.getArrow(recipe);
-		arrow.draw(stack, 24, 18);
-		this.drawExperience(recipe, stack);
-		this.drawCookTime(recipe, stack);
+		arrow.draw(graphics, 24, 18);
+		this.drawExperience(recipe, graphics);
+		this.drawCookTime(recipe, graphics);
 	}
 	
 	protected IDrawableAnimated getArrow(SmeltingRecipe recipe) {
@@ -89,23 +86,23 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		return this.cachedArrows.getUnchecked(cookTime);
 	}
 	
-	protected void drawExperience(SmeltingRecipe recipe, PoseStack stack) {
+	protected void drawExperience(SmeltingRecipe recipe, GuiGraphics graphics) {
 		float experience = recipe.getExperience();
 		if (experience > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.experience", experience);
 			Minecraft minecraft = Minecraft.getInstance();
-			Font fontRenderer = minecraft.font;
-			fontRenderer.draw(stack, component, this.background.getWidth() - fontRenderer.width(component), 0, 0xFF808080);
+			Font font = minecraft.font;
+			graphics.drawString(font, component, this.background.getWidth() - font.width(component), 0, 0xFF808080);
 		}
 	}
 	
-	protected void drawCookTime(SmeltingRecipe recipe, PoseStack stack) {
+	protected void drawCookTime(SmeltingRecipe recipe, GuiGraphics graphics) {
 		int cookTime = recipe.getCookingTime();
 		if (cookTime > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.time.seconds", (cookTime / 20));
 			Minecraft minecraft = Minecraft.getInstance();
-			Font fontRenderer = minecraft.font;
-			fontRenderer.draw(stack, component, this.background.getWidth() - fontRenderer.width(component), 45, 0xFF808080);
+			Font font = minecraft.font;
+			graphics.drawString(font, component, this.background.getWidth() - font.width(component), 45, 0xFF808080);
 		}
 	}
 	
@@ -119,5 +116,4 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	public boolean isHandled(SmeltingRecipe recipe) {
 		return !recipe.isSpecial();
 	}
-	
 }

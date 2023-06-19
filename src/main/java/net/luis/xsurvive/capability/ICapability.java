@@ -13,5 +13,4 @@ public interface ICapability {
 	CompoundTag serializeDisk();
 	
 	void deserializeDisk(CompoundTag tag);
-	
 }

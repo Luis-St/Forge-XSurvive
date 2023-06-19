@@ -3,9 +3,7 @@ package net.luis.xsurvive.world.item.enchantment;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -67,5 +65,4 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 			builder.append("If a player is sneaking while flying, they will slowly float down.").endLine();
 		});
 	}
-	
 }

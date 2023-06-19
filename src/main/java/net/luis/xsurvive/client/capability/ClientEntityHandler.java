@@ -20,5 +20,4 @@ public class ClientEntityHandler extends AbstractEntityHandler {
 	public CompoundTag serializeNetwork() {
 		return new CompoundTag();
 	}
-	
 }

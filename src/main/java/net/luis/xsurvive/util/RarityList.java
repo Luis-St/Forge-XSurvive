@@ -85,5 +85,4 @@ public class RarityList<T> {
 	public String toString() {
 		return "RarityList{rarity=" + this.rarity + ", values=" + this.values + "}";
 	}
-	
 }

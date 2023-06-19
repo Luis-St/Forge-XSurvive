@@ -123,5 +123,4 @@ public interface IEnchantment {
 		}
 		return new GoldenEnchantmentInstance(this.self(), level);
 	}
-	
 }

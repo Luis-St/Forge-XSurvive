@@ -6,10 +6,8 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.Random;
 
 /**
  *
@@ -68,5 +66,4 @@ public class WeightCollection<T> {
 		}
 		return list;
 	}
-	
 }

@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class Trade implements ItemListing {
 	
-	public static final int[] VILLAGER_XP = new int[] {2, 10, 20, 30, 40};
+	public static final int[] VILLAGER_XP = new int[]{2, 10, 20, 30, 40};
 	
 	private final ItemStack cost;
 	private final ItemStack secondCost;
@@ -63,5 +63,4 @@ public class Trade implements ItemListing {
 	public MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
 		return new MerchantOffer(this.cost, this.secondCost, this.result, this.maxUses, this.villagerXp, this.priceMultiplier);
 	}
-	
 }

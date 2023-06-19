@@ -6,11 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum Rarity implements StringRepresentable {
 	
-	COMMON("common"),
-	UNCOMMON("uncommon"),
-	RARE("rare"),
-	VERY_RARE("very_rare"),
-	TREASURE("treasure");
+	COMMON("common"), UNCOMMON("uncommon"), RARE("rare"), VERY_RARE("very_rare"), TREASURE("treasure");
 	
 	public static final Codec<Rarity> CODEC = StringRepresentable.fromEnum(Rarity::values);
 	
@@ -33,5 +29,4 @@ public enum Rarity implements StringRepresentable {
 	public String toString() {
 		return this.name;
 	}
-	
 }

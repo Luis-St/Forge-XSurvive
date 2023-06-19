@@ -1,11 +1,8 @@
 package net.luis.xsurvive.mixin.entity;
 
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.level.Level;
@@ -32,7 +29,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 	@Inject(method = "onHitEntity", at = @At("HEAD"), cancellable = true)
 	protected void onHitEntity(EntityHitResult hitResult, CallbackInfo callback) {
 		super.onHitEntity(hitResult);
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			Entity target = hitResult.getEntity();
 			boolean hurt;
 			if (this.getOwner() instanceof LivingEntity owner) {
@@ -49,7 +46,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 			if (hurt && target instanceof LivingEntity livingTarget) {
 				int duration = 0;
 				int amplifier = 0;
-				switch (this.level.getDifficulty()) {
+				switch (this.level().getDifficulty()) {
 					case EASY -> duration = 10;
 					case NORMAL -> {
 						duration = 25;
@@ -73,11 +70,10 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 	@Inject(method = "onHit", at = @At("HEAD"), cancellable = true)
 	protected void onHit(HitResult hitResult, CallbackInfo callback) {
 		super.onHit(hitResult);
-		if (!this.level.isClientSide) {
-			this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, false, Level.ExplosionInteraction.MOB);
+		if (!this.level().isClientSide) {
+			this.level().explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, false, Level.ExplosionInteraction.MOB);
 			this.discard();
 		}
 		callback.cancel();
 	}
-	
 }

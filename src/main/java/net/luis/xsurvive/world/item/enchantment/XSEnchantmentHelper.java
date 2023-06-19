@@ -10,9 +10,7 @@ import net.minecraft.util.random.WeightedRandom;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -203,5 +201,4 @@ public class XSEnchantmentHelper {
 			stack.enchant(instance.enchantment, instance.level);
 		}
 	}
-	
 }

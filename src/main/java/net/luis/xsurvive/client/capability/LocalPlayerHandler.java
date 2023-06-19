@@ -20,5 +20,4 @@ public class LocalPlayerHandler extends AbstractPlayerHandler {
 	public CompoundTag serializeNetwork() {
 		return new CompoundTag();
 	}
-	
 }

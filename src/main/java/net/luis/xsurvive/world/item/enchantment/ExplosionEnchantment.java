@@ -57,5 +57,4 @@ public class ExplosionEnchantment extends Enchantment implements IEnchantment, W
 			builder.append("When applied to a bow, this enchantment causes the arrow to explode when it hits a block.").endLine();
 		});
 	}
-	
 }

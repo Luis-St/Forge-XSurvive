@@ -4,9 +4,7 @@ import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -59,5 +57,4 @@ public class BlastingEnchantment extends Enchantment implements IEnchantment, Wi
 			builder.appendFormatted("2 * (BlastingLevel + 1)", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

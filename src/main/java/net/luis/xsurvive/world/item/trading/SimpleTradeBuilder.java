@@ -82,5 +82,4 @@ public class SimpleTradeBuilder {
 	public ItemListing defaultBuild(int level) {
 		return this.defaultValues(level).build();
 	}
-	
 }

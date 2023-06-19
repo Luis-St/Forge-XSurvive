@@ -38,15 +38,14 @@ public abstract class EndCrystalMixin extends Entity {
 		} else if (source.isIndirect() || source.is(DamageTypeTags.IS_PROJECTILE)) {
 			callback.setReturnValue(false);
 		} else {
-			if (!this.isRemoved() && !this.level.isClientSide) {
+			if (!this.isRemoved() && !this.level().isClientSide) {
 				this.remove(Entity.RemovalReason.KILLED);
 				if (!source.is(DamageTypeTags.IS_EXPLOSION)) {
-					this.level.explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Level.ExplosionInteraction.BLOCK);
+					this.level().explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Level.ExplosionInteraction.BLOCK);
 				}
 				this.onDestroyedBy(source);
 			}
 			callback.setReturnValue(true);
 		}
 	}
-	
 }

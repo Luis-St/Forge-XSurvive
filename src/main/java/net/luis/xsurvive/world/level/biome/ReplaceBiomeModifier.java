@@ -3,10 +3,7 @@ package net.luis.xsurvive.world.level.biome;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -78,5 +75,4 @@ public record ReplaceBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeat
 	public Codec<ReplaceBiomeModifier> codec() {
 		return XSBiomeModifiers.MOD_BASED_BIOME_MODIFIER.get();
 	}
-	
 }

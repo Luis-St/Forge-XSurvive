@@ -15,5 +15,4 @@ public interface ILivingEntity {
 	
 	@Nullable
 	CustomAi getCustomAi();
-	
 }

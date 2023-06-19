@@ -1,10 +1,10 @@
 modLoader = "javafml"
-loaderVersion = "[45,)"
+loaderVersion = "${ForgeLoaderRange}"
 license = "All rights reserved"
 
 [[mods]]
 modId = "xsurvive"
-version = "1.19.4-2.1"
+version = "${ModVersion}"
 displayName = "XSurvive"
 credits = "Thanks for downloading my Mod"
 authors = "Luis"
@@ -19,25 +19,25 @@ XSurvive Development Team
 [[dependencies.xsurvive]]
 modId = "forge"
 mandatory = true
-versionRange = "[45,)"
+versionRange = "${ForgeVersionRange}"
 ordering = "BEFORE"
 side = "BOTH"
 
 [[dependencies.xsurvive]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.4,1.20)"
+versionRange = "${MinecraftVersionRange}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.xsurvive]]
 modId = "xbackpack"
 mandatory = false
-versionRange = "[1.19.3-3.2,)"
+versionRange = "[${MinecraftVersion}-${XBackpackVersion},)"
 ordering = "BEFORE"
 
 [[dependencies.xsurvive]]
 modId = "xores"
 mandatory = true
-versionRange = "[1.19.4-2.5,)"
+versionRange = "[${MinecraftVersion}-${XOresVersion},)"
 ordering = "BEFORE"

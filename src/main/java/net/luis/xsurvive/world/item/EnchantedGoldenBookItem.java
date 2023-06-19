@@ -4,9 +4,7 @@ import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -97,5 +95,4 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 			builder.append("Use the golden book in the anvil on an item with the maximum vanilla enchantment level.").endLine();
 		});
 	}
-	
 }

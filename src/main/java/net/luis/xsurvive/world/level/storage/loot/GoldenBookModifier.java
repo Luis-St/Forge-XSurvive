@@ -30,6 +30,7 @@ import java.util.Random;
 
 public class GoldenBookModifier extends LootModifier {
 	
+	private static final Random RNG = new Random();
 	public static final Codec<GoldenBookModifier> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(IGlobalLootModifier.LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter((modifier) -> {
 			return modifier.conditions;
@@ -45,8 +46,6 @@ public class GoldenBookModifier extends LootModifier {
 			return modifier.extraEndTreasure;
 		})).apply(instance, GoldenBookModifier::new);
 	});
-	private static final Random RNG = new Random();
-	
 	private final int goldenBookCount;
 	private final WeightCollection<RarityList<Enchantment>> enchantmentWeights;
 	private final RarityList<Enchantment> extraOverworldTreasure;
@@ -110,5 +109,4 @@ public class GoldenBookModifier extends LootModifier {
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 		return null;
 	}
-	
 }

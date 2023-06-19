@@ -1,101 +1,90 @@
-buildscript {
-	repositories {
-		maven {
-			url = "https://maven.minecraftforge.net"
-		}
-		mavenCentral()
-	}
-
-	dependencies {
-		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
-		classpath "org.spongepowered:mixingradle:0.7.+"
-	}
+plugins {
+	id "eclipse"
+	id "idea"
+	id "maven-publish"
+	id "net.minecraftforge.gradle" version "[6.0,6.2)"
+	id "org.spongepowered.mixin" version "0.7.+"
 }
 
-apply plugin: "net.minecraftforge.gradle"
-apply plugin: "eclipse"
-apply plugin: "maven-publish"
-apply plugin: "org.spongepowered.mixin"
-
-version = "1.19.4-2.1"
+version = ModVersion
 group = "net.luis.xsurvive"
-archivesBaseName = "XSurvive"
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-println("Java: " + System.getProperty("java.version") + " JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ") Arch: " + System.getProperty("os.arch"))
+base {
+	archivesName = "XOres"
+}
 
 minecraft {
-	mappings channel: "official", version: "1.19.4"
-
+	mappings channel: "official", version: MinecraftVersion
+	copyIdeResources = true
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
-
+	
 	runs {
 		client {
 			workingDirectory project.file("run")
-
+			
 			property "forge.logging.markers", "REGISTRIES"
-			property "forge.logging.console.level", "debug"
+			//property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-
+			
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-
+		
 		serverClient {
 			parent runs.client
-
+			
 			args "--username", "Dev2"
 		}
-
+		
 		server {
 			workingDirectory project.file("run")
-
+			
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
 			property "forge.logging.mojang.level", "debug"
-
+			
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-
+		
 		gameTestServer {
 			workingDirectory project.file("run")
-
+			
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-
+			
 			mods {
 				examplemod {
 					source sourceSets.main
 				}
 			}
 		}
-
+		
 		data {
 			workingDirectory project.file("run")
-
+			
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
-
+			
 			args "--mod", "xsurvive", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
-
+			
 			mods {
 				examplemod {
 					source sourceSets.main
@@ -131,23 +120,39 @@ repositories {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:1.19.4-45.0.49"
-
+	minecraft "net.minecraftforge:forge:${MinecraftVersion}-${ForgeVersion}"
+	
 	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+	
+	implementation fg.deobf("net.luis.xbackpack:Forge-XBackpack:${MinecraftVersion}-${XBackpackVersion}")
+	implementation fg.deobf("net.luis.xores:Forge-XOres:${MinecraftVersion}-${XOresVersion}")
+	
+	compileOnly fg.deobf("mezz.jei:jei-${MinecraftVersion}-common-api:${JeiVersion}")
+	compileOnly fg.deobf("mezz.jei:jei-${MinecraftVersion}-forge-api:${JeiVersion}")
+	runtimeOnly fg.deobf("mezz.jei:jei-${MinecraftVersion}-forge:${JeiVersion}")
+}
 
-	implementation fg.deobf("net.luis.xbackpack:Forge-XBackpack:1.19.4-3.2")
-	implementation fg.deobf("net.luis.xores:Forge-XOres:1.19.4-2.5")
-
-	compileOnly fg.deobf("mezz.jei:jei-1.19.4-common-api:13.0.0.1")
-	compileOnly fg.deobf("mezz.jei:jei-1.19.4-forge-api:13.0.0.1")
-	runtimeOnly fg.deobf("mezz.jei:jei-1.19.4-forge:13.0.0.1")
+def resourceTargets = ["META-INF/mods.toml", "pack.mcmeta"]
+def replaceProperties = [
+		MinecraftVersion: MinecraftVersion, MinecraftVersionRange: MinecraftVersionRange,
+		ForgeVersion    : ForgeVersion, ForgeVersionRange: ForgeVersionRange,
+		ForgeLoaderRange: ForgeLoaderRange, ModVersion: ModVersion,
+		XBackpackVersion: XBackpackVersion, XOresVersion: XOresVersion
+]
+processResources {
+	inputs.properties replaceProperties
+	replaceProperties.put "project", project
+	
+	filesMatching(resourceTargets) {
+		expand replaceProperties
+	}
 }
 
 jar {
 	manifest {
 		attributes([
 				"Specification-Title"     : "XSurvive",
-				"Specification-Version"   : "1.19.4-2.1",
+				"Specification-Version"   : "${ModVersion}",
 				"Implementation-Title"    : project.name,
 				"Implementation-Timestamp": new Date().format("yyyy-MM-dd HH:mm:ssZ")
 		])
@@ -171,7 +176,7 @@ publishing {
 			artifact sourcesJar
 		}
 	}
-
+	
 	repositories {
 		maven {
 			url uri("${projectDir}/maven/repositories")

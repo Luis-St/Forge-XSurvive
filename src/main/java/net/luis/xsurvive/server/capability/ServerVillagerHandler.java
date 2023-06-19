@@ -39,5 +39,4 @@ public class ServerVillagerHandler implements IVillager {
 	public void deserializeDisk(CompoundTag tag) {
 		this.resetCount = tag.getInt("reset_count");
 	}
-	
 }

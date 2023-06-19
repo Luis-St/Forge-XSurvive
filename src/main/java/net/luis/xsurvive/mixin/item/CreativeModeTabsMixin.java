@@ -3,13 +3,8 @@ package net.luis.xsurvive.mixin.item;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -68,5 +63,4 @@ public abstract class CreativeModeTabsMixin {
 		}
 		callback.cancel();
 	}
-	
 }

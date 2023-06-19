@@ -41,5 +41,4 @@ public abstract class EndDragonFightMixin {
 		this.level.setBlockAndUpdate(new BlockPos(2, 74, 2), Blocks.AIR.defaultBlockState());
 		callback.cancel();
 	}
-	
 }

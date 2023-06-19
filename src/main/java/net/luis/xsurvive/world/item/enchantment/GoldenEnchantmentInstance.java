@@ -24,5 +24,4 @@ public class GoldenEnchantmentInstance extends EnchantmentInstance {
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(this.enchantment));
 		return false;
 	}
-	
 }

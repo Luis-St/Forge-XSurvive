@@ -43,5 +43,6 @@
     "recipes": [
       "xsurvive:cracked_deepslate_tiles_from_smelting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

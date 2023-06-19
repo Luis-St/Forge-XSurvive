@@ -1,7 +1,7 @@
 package net.luis.xsurvive.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
@@ -32,9 +32,9 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	}
 	
 	@Inject(method = "renderLabels", at = @At("HEAD"), cancellable = true)
-	protected void renderLabels(PoseStack pose, int x, int y, CallbackInfo callback) {
+	protected void renderLabels(GuiGraphics graphics, int x, int y, CallbackInfo callback) {
 		RenderSystem.disableBlend();
-		super.renderLabels(pose, x, y);
+		super.renderLabels(graphics, x, y);
 		int cost = this.menu.getCost();
 		if (cost > 0) {
 			int color = 8453920;
@@ -49,8 +49,8 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 			}
 			if (component != null) {
 				int width = this.imageWidth - 8 - this.font.width(component) - 2;
-				fill(pose, width - 2, 67, this.imageWidth - 8, 79, 1325400064);
-				this.font.drawShadow(pose, component, (float) width, 69.0F, color);
+				graphics.fill(width - 2, 67, this.imageWidth - 8, 79, 1325400064);
+				graphics.drawString(this.font, component, width, 69, color);
 			}
 		}
 		callback.cancel();

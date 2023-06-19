@@ -85,5 +85,4 @@ public class ItemHelper {
 		items.add(XOItems.ENDERITE_AXE.get());
 		return items;
 	}
-	
 }

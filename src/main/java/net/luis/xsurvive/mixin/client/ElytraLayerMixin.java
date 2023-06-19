@@ -26,5 +26,4 @@ public abstract class ElytraLayerMixin<T extends LivingEntity, M extends EntityM
 	public void render(PoseStack pose, MultiBufferSource buffer, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float yaw, float pitch, CallbackInfo callback, ItemStack itemstack) {
 		GlintColorHandler.setStack(itemstack);
 	}
-	
 }

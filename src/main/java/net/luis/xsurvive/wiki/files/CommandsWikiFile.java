@@ -39,5 +39,4 @@ public class CommandsWikiFile {
 			builder.appendFormatted("/gamma <value|min|default|max|infinite>", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

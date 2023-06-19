@@ -8,9 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.LimitCount;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
@@ -50,5 +48,4 @@ public class XSBlockLootSubProvider extends BlockLootSubProvider {
 	protected @NotNull Iterable<Block> getKnownBlocks() {
 		return XSBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList());
 	}
-	
 }

@@ -47,5 +47,4 @@ public class VillagerProvider implements ICapabilitySerializable<CompoundTag> {
 	public void deserializeNBT(CompoundTag tag) {
 		this.villagerCapability.deserializeDisk(tag);
 	}
-	
 }

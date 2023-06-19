@@ -23,5 +23,4 @@ public class XSDamageTypes {
 	private static ResourceKey<DamageType> createKey(String name) {
 		return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(XSurvive.MOD_ID, name));
 	}
-
 }

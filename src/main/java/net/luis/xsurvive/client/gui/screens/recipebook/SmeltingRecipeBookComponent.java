@@ -33,5 +33,4 @@ public class SmeltingRecipeBookComponent extends AbstractFurnaceRecipeBookCompon
 			return item.getBurnTime(new ItemStack(item), XSRecipeTypes.SMELTING.get()) > 0;
 		}).collect(Collectors.toSet());
 	}
-	
 }

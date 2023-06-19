@@ -1,9 +1,7 @@
 package net.luis.xsurvive.client.renderer;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.luis.xsurvive.XSurvive;
@@ -31,6 +29,7 @@ public abstract class XSurviveRenderType extends RenderType {
 	public static List<RenderType> entityGlintDirect = newRenderList(XSurviveRenderType::entityGlintDriectRenderType);
 	public static List<RenderType> armorGlint = newRenderList(XSurviveRenderType::armorGlintRenderType);
 	public static List<RenderType> armorEntityGlint = newRenderList(XSurviveRenderType::armorEntityGlintRenderType);
+	
 	private XSurviveRenderType(String name, VertexFormat format, Mode mode, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
 		super(name, format, mode, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
 	}
@@ -115,5 +114,4 @@ public abstract class XSurviveRenderType extends RenderType {
 	private static ResourceLocation texture(String name) {
 		return new ResourceLocation(XSurvive.MOD_ID, "textures/glint/enchanted_item_glint_" + name + ".png");
 	}
-	
 }

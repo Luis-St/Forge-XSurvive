@@ -87,12 +87,12 @@ public class XSBlazeAttackGoal extends Goal {
 					if (this.attackStep > 1) {
 						double direction = Math.sqrt(Math.sqrt(distance)) * 0.5;
 						if (!this.blaze.isSilent()) {
-							this.blaze.level.levelEvent(null, 1018, this.blaze.blockPosition(), 0);
+							this.blaze.level().levelEvent(null, 1018, this.blaze.blockPosition(), 0);
 						}
 						for (int i = 0; i < 3; ++i) {
-							SmallFireball fireball = new SmallFireball(this.blaze.level, this.blaze, this.blaze.getRandom().triangle(distanceX, 2.297 * direction), distanceY, this.blaze.getRandom().triangle(distanceZ, 2.297 * direction));
+							SmallFireball fireball = new SmallFireball(this.blaze.level(), this.blaze, this.blaze.getRandom().triangle(distanceX, 2.297 * direction), distanceY, this.blaze.getRandom().triangle(distanceZ, 2.297 * direction));
 							fireball.setPos(fireball.getX(), this.blaze.getY(0.5D) + 0.5D, fireball.getZ());
-							this.blaze.level.addFreshEntity(fireball);
+							this.blaze.level().addFreshEntity(fireball);
 						}
 					}
 				}

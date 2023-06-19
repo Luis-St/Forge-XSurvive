@@ -38,5 +38,4 @@ public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	protected @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
 		return new SmeltingFurnaceMenu(id, inventory, this, this.dataAccess);
 	}
-	
 }

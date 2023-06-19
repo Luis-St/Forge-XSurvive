@@ -62,5 +62,4 @@ public class LootModifierHelper {
 	public static RarityList<Item> getTreasureRunes() {
 		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(RAINBOW_RUNE.get()));
 	}
-	
 }

@@ -33,5 +33,4 @@ public class XSBiomeTagsProvider extends BiomeTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Biome Tags";
 	}
-	
 }

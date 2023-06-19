@@ -17,5 +17,4 @@ public interface WikiBuilder<T extends WikiBuilder<T>> {
 	void end();
 	
 	boolean isEnd();
-	
 }

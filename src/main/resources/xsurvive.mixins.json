@@ -7,6 +7,7 @@
     "block.BlockMixin",
     "block.BaseFireBlockMixin",
     "block.SugarCaneBlockMixin",
+    "block.WitherSkullBlockMixin",
     "block.entity.ConduitBlockEntityMixin",
     "enchantment.EnchantmentMixin",
     "enchantment.EnchantmentHelperMixin",
@@ -41,15 +42,13 @@
     "item.EnderEyeItemMixin",
     "item.ItemStackMixin",
     "AnvilMenuMixin",
-    "WitherSkullBlockMixin",
-    "NoiseBasedChunkGeneratorMixin",
     "EndDragonFightMixin",
-    "LootTablesMixin",
+    "NoiseBasedChunkGeneratorMixin",
+    "OreFeatureMixin",
     "PhantomSpawnerMixin",
-    "ServerPlayerGameModeMixin",
-    "SpawnerBlockEntityMixin",
     "RaidMixin",
-    "OreFeatureMixin"
+    "ServerPlayerGameModeMixin",
+    "SpawnerBlockEntityMixin"
   ],
   "client": [
     "client.ItemRendererMixin",

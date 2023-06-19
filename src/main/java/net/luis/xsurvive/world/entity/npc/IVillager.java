@@ -15,5 +15,4 @@ public interface IVillager extends ICapability {
 	void resetResetCount();
 	
 	void increaseResetCount();
-	
 }

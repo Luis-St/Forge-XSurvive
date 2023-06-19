@@ -1,19 +1,12 @@
 package net.luis.xsurvive.event.register;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.XSItems;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.level.block.XSBlocks;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  *
@@ -24,61 +17,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mod.EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegisterModEventHandler {
 	
-	@SubscribeEvent
-	public static void register(CreativeModeTabEvent.Register event) {
-		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "runes"), builder -> {
-			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".runes"));
-			builder.icon(() -> new ItemStack(XSItems.RAINBOW_RUNE.get()));
-			builder.displayItems((parameters, populator) -> {
-				populator.accept(XSItems.WHITE_RUNE.get());
-				populator.accept(XSItems.LIGHT_GRAY_RUNE.get());
-				populator.accept(XSItems.GRAY_RUNE.get());
-				populator.accept(XSItems.BLACK_RUNE.get());
-				populator.accept(XSItems.BROWN_RUNE.get());
-				populator.accept(XSItems.RED_RUNE.get());
-				populator.accept(XSItems.ORANGE_RUNE.get());
-				populator.accept(XSItems.YELLOW_RUNE.get());
-				populator.accept(XSItems.LIME_RUNE.get());
-				populator.accept(XSItems.GREEN_RUNE.get());
-				populator.accept(XSItems.CYAN_RUNE.get());
-				populator.accept(XSItems.LIGHT_BLUE_RUNE.get());
-				populator.accept(XSItems.BLUE_RUNE.get());
-				populator.accept(XSItems.PURPLE_RUNE.get());
-				populator.accept(XSItems.MAGENTA_RUNE.get());
-				populator.accept(XSItems.PINK_RUNE.get());
-				populator.accept(XSItems.RAINBOW_RUNE.get());
-			});
-		});
-		event.registerCreativeModeTab(new ResourceLocation(XSurvive.MOD_ID, "golden_book"), builder -> {
-			builder.title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".golden_book"));
-			builder.icon(() -> new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get()));
-			builder.displayItems((parameters, populator) -> {
-				for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
-					if (enchantment instanceof IEnchantment ench) {
-						if (ench.isAllowedOnGoldenBooks()) {
-							populator.accept(EnchantedGoldenBookItem.createForEnchantment(enchantment));
-						}
-					} else {
-						XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-					}
-				}
-			});
-		});
-	}
 	
 	@SubscribeEvent
-	public static void buildContents(CreativeModeTabEvent.BuildContents event) {
-		if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
 			event.accept(XSItems.HONEY_MELON_SLICE);
 			event.accept(XSItems.DIAMOND_APPLE);
 			event.accept(XSItems.ENCHANTED_DIAMOND_APPLE);
-		} else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+		} else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
 			event.accept(XSItems.CURSED_ENDER_EYE);
 			event.accept(XSBlocks.SMELTING_FURNACE);
-		} else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+		} else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 			event.accept(XSItems.HONEY_MELON_SEEDS);
 			event.accept(XSBlocks.HONEY_MELON);
 		}
 	}
-	
 }

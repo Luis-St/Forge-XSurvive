@@ -35,5 +35,4 @@ public class XSZombifiedPiglinAttackGoal<T extends LivingEntity> extends Nearest
 			zombifiedPiglin.maybeAlertOthers();
 		}
 	}
-	
 }

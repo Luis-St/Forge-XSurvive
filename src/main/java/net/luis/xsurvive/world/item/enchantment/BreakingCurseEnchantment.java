@@ -52,5 +52,4 @@ public class BreakingCurseEnchantment extends Enchantment implements WikiFileEnt
 			builder.appendFormatted("BreakingCurseLevel * 2", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

@@ -77,5 +77,4 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		}
 		return goldenEnchantments.contains(enchantment);
 	}
-	
 }

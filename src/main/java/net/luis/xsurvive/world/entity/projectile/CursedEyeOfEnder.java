@@ -43,7 +43,7 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 		double y = this.getY() + movement.y;
 		double z = this.getZ() + movement.z;
 		double horizontalDistance = movement.horizontalDistance();
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			double targetX = this.tx - x;
 			double targetZ = this.tz - z;
 			double sqrtTarget = Math.sqrt(targetX * targetX + targetZ * targetZ);
@@ -59,19 +59,19 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 		}
 		if (this.isInWater()) {
 			for (int i = 0; i < 4; ++i) {
-				this.level.addParticle(ParticleTypes.BUBBLE, x - movement.x * 0.25, y - movement.y * 0.25, z - movement.z * 0.25, movement.x, movement.y, movement.z);
+				this.level().addParticle(ParticleTypes.BUBBLE, x - movement.x * 0.25, y - movement.y * 0.25, z - movement.z * 0.25, movement.x, movement.y, movement.z);
 			}
 		} else {
-			this.level.addParticle(ParticleTypes.ASH, x - movement.x * 0.25 + this.random.nextDouble() * 0.6 - 0.3, y - movement.y * 0.25 - 0.5, z - movement.z * 0.25 + this.random.nextDouble() * 0.6 - 0.3, 0.0, movement.y, 0.0);
+			this.level().addParticle(ParticleTypes.ASH, x - movement.x * 0.25 + this.random.nextDouble() * 0.6 - 0.3, y - movement.y * 0.25 - 0.5, z - movement.z * 0.25 + this.random.nextDouble() * 0.6 - 0.3, 0.0, movement.y, 0.0);
 		}
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			this.setPos(x, y, z);
 			++this.life;
-			if (this.life > 100 && !this.level.isClientSide) {
+			if (this.life > 100 && !this.level().isClientSide) {
 				this.playSound(SoundEvents.ENDER_EYE_DEATH, 1.0F, 1.0F);
 				this.discard();
 				if (this.surviveAfterDeath) {
-					this.level.addFreshEntity(new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), this.getItem()));
+					this.level().addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), this.getItem()));
 				}
 			}
 		} else {

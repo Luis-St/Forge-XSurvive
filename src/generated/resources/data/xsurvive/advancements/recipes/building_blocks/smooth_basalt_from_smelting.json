@@ -43,5 +43,6 @@
     "recipes": [
       "xsurvive:smooth_basalt_from_smelting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

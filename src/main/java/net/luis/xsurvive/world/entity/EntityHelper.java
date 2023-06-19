@@ -7,19 +7,11 @@ import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.ItemWeightHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Dolphin;
-import net.minecraft.world.entity.animal.Squid;
-import net.minecraft.world.entity.animal.Turtle;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -28,9 +20,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  *
@@ -113,5 +103,4 @@ public class EntityHelper {
 			}
 		}
 	}
-	
 }

@@ -19,5 +19,4 @@ public class WikiMultiLineBuilder extends AbstractWikiLineBuilder<WikiMultiLineB
 		}
 		return newLines;
 	}
-	
 }

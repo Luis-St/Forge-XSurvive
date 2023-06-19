@@ -117,5 +117,4 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}
-	
 }

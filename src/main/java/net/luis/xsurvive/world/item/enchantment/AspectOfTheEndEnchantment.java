@@ -91,5 +91,4 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 			builder.appendFormatted("6.0 * AspectOfTheEndLevel", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

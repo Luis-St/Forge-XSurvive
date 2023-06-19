@@ -3,9 +3,7 @@ package net.luis.xsurvive.world.inventory;
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 /**
  *
@@ -23,5 +21,4 @@ public class XSMenuTypes {
 	public static final RegistryObject<MenuType<EnderChestMenu>> ENDER_CHEST = MENU_TYPES.register("ender_chest", () -> {
 		return IForgeMenuType.create(EnderChestMenu::new);
 	});
-	
 }

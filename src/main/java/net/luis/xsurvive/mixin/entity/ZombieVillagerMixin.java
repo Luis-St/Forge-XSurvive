@@ -42,7 +42,7 @@ public abstract class ZombieVillagerMixin extends Zombie {
 				if (!player.getAbilities().instabuild) {
 					stack.shrink(1);
 				}
-				if (!this.level.isClientSide) {
+				if (!this.level().isClientSide) {
 					this.startConverting(player.getUUID(), this.random.nextInt(2401) + 3600);
 				}
 				callback.setReturnValue(InteractionResult.SUCCESS);
@@ -53,5 +53,4 @@ public abstract class ZombieVillagerMixin extends Zombie {
 			callback.setReturnValue(super.mobInteract(player, hand));
 		}
 	}
-	
 }

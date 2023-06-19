@@ -34,5 +34,4 @@ public class ClientEventHandler {
 			}).pos((screen.width / 2) + 10, Math.min((screen.height + 300) / 2, screen.height) - 30).size(120, 20).tooltip(Tooltip.create(Component.literal("Disabled for several reasons").withStyle(ChatFormatting.RED))).build();
 		}
 	}
-	
 }

@@ -69,5 +69,4 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	public void deserializeNBT(CompoundTag tag) {
 		this.entityCapability.deserializeDisk(tag);
 	}
-	
 }

@@ -23,5 +23,4 @@ public abstract class RenderBuffersMixin {
 	private static void put(Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> map, RenderType renderType, CallbackInfo callback) {
 		XSurviveRenderType.addGlintTypes(map);
 	}
-	
 }

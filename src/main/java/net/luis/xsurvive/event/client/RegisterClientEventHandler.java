@@ -20,5 +20,4 @@ public class RegisterClientEventHandler {
 	public static void registerClientCommands(RegisterClientCommandsEvent event) {
 		GammaCommand.register(event.getDispatcher());
 	}
-	
 }

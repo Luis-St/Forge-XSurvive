@@ -19,5 +19,4 @@ public abstract class ArrowKnockbackEnchantmentMixin {
 	public void getMaxLevel(CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(3);
 	}
-	
 }

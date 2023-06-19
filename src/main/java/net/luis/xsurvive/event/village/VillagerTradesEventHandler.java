@@ -303,5 +303,4 @@ public class VillagerTradesEventHandler {
 			trades.put(5, trade5);
 		}
 	}
-	
 }

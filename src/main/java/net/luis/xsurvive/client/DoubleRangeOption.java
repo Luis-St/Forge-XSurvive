@@ -63,5 +63,4 @@ public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Doub
 	public @NotNull Double fromSliderValue(double value) {
 		return this.fromSliderValue.apply(value);
 	}
-	
 }

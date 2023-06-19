@@ -27,5 +27,4 @@ public class PhantomMixin extends FlyingMob {
 		super.aiStep();
 		callback.cancel();
 	}
-	
 }

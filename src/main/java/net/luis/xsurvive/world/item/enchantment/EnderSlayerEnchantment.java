@@ -45,5 +45,4 @@ public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFil
 			builder.append("Endermite").endLine();
 		});
 	}
-	
 }

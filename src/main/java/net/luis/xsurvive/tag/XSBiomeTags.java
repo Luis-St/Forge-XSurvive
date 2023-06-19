@@ -19,5 +19,4 @@ public class XSBiomeTags {
 	private static TagKey<Biome> bind(ResourceLocation location) {
 		return TagKey.create(Registries.BIOME, location);
 	}
-	
 }

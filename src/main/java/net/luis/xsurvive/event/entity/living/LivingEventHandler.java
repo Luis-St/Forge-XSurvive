@@ -30,9 +30,7 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-import java.util.Objects;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  *
@@ -43,11 +41,11 @@ import java.util.UUID;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class LivingEventHandler {
 	
+	private static final Random RNG = new Random();
 	public static final UUID GRAVITY_MODIFIER_UUID = UUID.fromString("715AF01B-DED3-45ED-8812-C8878C7F98CC");
 	public static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("CD14D16D-82ED-474E-97E9-403DE2439D01");
 	public static final UUID ATTACK_RANGE_UUID = UUID.fromString("95C48A2D-C536-4FB4-88DF-0DC534CE012A");
 	public static final UUID REACH_DISTANCE_UUID = UUID.fromString("F4502088-D181-44F4-A881-CDE977976A6D");
-	private static final Random RNG = new Random();
 	
 	@SubscribeEvent
 	public static void livingAttack(LivingAttackEvent event) {
@@ -60,11 +58,11 @@ public class LivingEventHandler {
 				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT.get(), player);
 				if (harmingCurse > 0) {
 					float damage = (amount / 2.0F) * (float) harmingCurse;
-					if (player.hurt(new DamageSource(player.level.registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
+					if (player.hurt(new DamageSource(player.level().registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
 						event.setCanceled(true);
 					}
 				}
-				if (thunderbolt > 0 && player.level instanceof ServerLevel serverLevel) {
+				if (thunderbolt > 0 && player.level() instanceof ServerLevel serverLevel) {
 					LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, serverLevel);
 					lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
 					serverLevel.addFreshEntity(lightningBolt);
@@ -75,7 +73,7 @@ public class LivingEventHandler {
 				}
 			}
 		}
-		if (target instanceof Player player && source.is(DamageTypes.OUT_OF_WORLD) && amount > 0) {
+		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && amount > 0) {
 			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get());
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
@@ -106,7 +104,7 @@ public class LivingEventHandler {
 				newAmount = (float) (amount * 2.5);
 			}
 		}
-		if (target instanceof Player player && source.is(DamageTypes.OUT_OF_WORLD) && amount > 0) {
+		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && amount > 0) {
 			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get(), player);
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
@@ -199,5 +197,4 @@ public class LivingEventHandler {
 			}
 		}
 	}
-	
 }

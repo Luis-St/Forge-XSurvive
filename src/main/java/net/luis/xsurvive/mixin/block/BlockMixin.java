@@ -68,5 +68,4 @@ public abstract class BlockMixin extends BlockBehaviour implements IForgeBlock {
 		}
 		return IForgeBlock.super.onDestroyedByPlayer(state, level, pos, player, canHarvest, fluid);
 	}
-	
 }

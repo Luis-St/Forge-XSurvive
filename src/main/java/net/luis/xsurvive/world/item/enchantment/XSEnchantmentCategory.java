@@ -29,5 +29,4 @@ public class XSEnchantmentCategory {
 	public static final EnchantmentCategory ELYTRA = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "elytra").toString(), (item) -> {
 		return item instanceof ElytraItem || item instanceof ElytraChestplateItem;
 	});
-	
 }

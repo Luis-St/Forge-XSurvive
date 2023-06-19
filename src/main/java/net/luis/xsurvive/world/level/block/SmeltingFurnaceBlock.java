@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.level.block;
 
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.wiki.WikiList;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
@@ -17,9 +16,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
@@ -92,5 +89,4 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 			return name.replace("From Smelting", "").trim();
 		}).collect(Collectors.toList());
 	}
-	
 }

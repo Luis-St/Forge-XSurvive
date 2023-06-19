@@ -10,10 +10,7 @@ import net.luis.xsurvive.world.inventory.EnderChestMenu;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
-import net.luis.xsurvive.world.item.enchantment.EnchantedItem;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
+import net.luis.xsurvive.world.item.enchantment.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -30,10 +27,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.TippedArrowItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -44,9 +38,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.*;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -159,7 +151,7 @@ public class PlayerEventHandler {
 	@SubscribeEvent
 	public static void playerBreakSpeed(PlayerEvent.BreakSpeed event) {
 		Player player = event.getEntity();
-		if (!player.isOnGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
+		if (!player.onGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
 			event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
 		}
 		float breakSpeed = event.getOriginalSpeed();
@@ -201,14 +193,14 @@ public class PlayerEventHandler {
 		if (!event.getEntity().getAbilities().instabuild) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			event.getEntity().displayClientMessage(Component.translatable("message.xsurvive.sleeping"), true);
-			if (event.getEntity().getLevel() instanceof ServerLevel level && (level.isRaining() || level.isThundering())) {
+			if (event.getEntity().level() instanceof ServerLevel level && (level.isRaining() || level.isThundering())) {
 				level.setWeatherParameters(6000, 0, false, false);
 			}
 			if (event.getEntity() instanceof ServerPlayer player) {
 				ServerPlayerHandler handler = PlayerProvider.getServer(player);
 				if (handler.canResetPhantomSpawn()) {
 					player.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
-					handler.setNextPhantomReset(player.getLevel().getDifficulty().getId() + Mth.nextInt(player.getRandom(), 6, 10));
+					handler.setNextPhantomReset(player.level().getDifficulty().getId() + Mth.nextInt(player.getRandom(), 6, 10));
 				}
 			}
 		}
@@ -225,7 +217,7 @@ public class PlayerEventHandler {
 		if (hasVoidWalker) {
 			player.fallDistance = 0.0F;
 		}
-		if (player.isShiftKeyDown() && hasVoidWalker && player.getLevel().getBlockState(pos).isAir()) {
+		if (player.isShiftKeyDown() && hasVoidWalker && player.level().getBlockState(pos).isAir()) {
 			player.setDeltaMovement(player.getDeltaMovement().x(), -0.25, player.getDeltaMovement().z());
 		} else if (!player.isShiftKeyDown() && hasVoidWalker && player.getDeltaMovement().y() != 0.0) {
 			player.setDeltaMovement(player.getDeltaMovement().x(), 0.0, player.getDeltaMovement().z());
@@ -239,7 +231,7 @@ public class PlayerEventHandler {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			if (aspectOfTheEnd > 0) {
 				if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
-					Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level, 6.0 * aspectOfTheEnd);
+					Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level(), 6.0 * aspectOfTheEnd);
 					player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
 					entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
 					PlayerProvider.getServer(player).setEndAspectCooldown(20);
@@ -268,5 +260,4 @@ public class PlayerEventHandler {
 			}
 		}
 	}
-	
 }

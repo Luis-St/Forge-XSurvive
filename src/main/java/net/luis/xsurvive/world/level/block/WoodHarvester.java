@@ -109,5 +109,4 @@ public class WoodHarvester {
 		}
 		return pos;
 	}
-	
 }

@@ -20,5 +20,4 @@ public class XSItemTags {
 	private static TagKey<Item> bind(ResourceLocation location) {
 		return ItemTags.create(location);
 	}
-	
 }

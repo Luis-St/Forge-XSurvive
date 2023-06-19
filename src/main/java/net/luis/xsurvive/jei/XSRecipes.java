@@ -5,9 +5,7 @@ import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,5 +31,4 @@ public class XSRecipes {
 	public List<SmeltingRecipe> getSmeltingRecipes(IRecipeCategory<SmeltingRecipe> smeltingCategory) {
 		return getValidHandledRecipes(this.recipeManager, XSRecipeTypes.SMELTING.get());
 	}
-	
 }

@@ -10,9 +10,7 @@ import net.minecraft.Util;
 import net.minecraft.locale.Language;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.npc.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
@@ -20,9 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
@@ -108,9 +104,7 @@ public class VillagerTradeWikiFile {
 		return new TradeData(StringUtils.capitalize(costItemAName), costCountA, StringUtils.capitalize(costItemBName), costCountB, maxUses, priceMultiplier, xp, StringUtils.capitalize(resultItemName), resultCount);
 	}
 	
-	
 	private record TradeData(String costItemA, MinMax costCountA, String costItemB, MinMax costCountB, MinMax maxUses, float priceMultiplier, MinMax xp, String resultItem, MinMax resultCount) {
 	
 	}
-	
 }

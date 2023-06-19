@@ -1,7 +1,5 @@
 package net.luis.xsurvive.wiki.file;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-
 /**
  *
  * @author Luis-st
@@ -12,5 +10,4 @@ import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 public interface WikiFileEntry {
 	
 	void add(WikiFileBuilder wikiBuilder);
-	
 }

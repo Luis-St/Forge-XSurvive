@@ -41,5 +41,4 @@ public class ServerStartedEventHandler {
 		VanillaModificationsWikiFile.create().write(path);
 		VillagerTradeWikiFile.create().write(path);
 	}
-	
 }

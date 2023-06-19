@@ -9,6 +9,7 @@ import net.luis.xsurvive.world.entity.ai.village.XSPoiTypes;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
+import net.luis.xsurvive.world.item.XSCreativeModeTabs;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
@@ -47,6 +48,7 @@ public class XSurvive {
 		XSBlocks.BLOCKS.register(eventBus);
 		XSBlocks.ITEMS.register(eventBus);
 		XSItems.ITEMS.register(eventBus);
+		XSCreativeModeTabs.TABS.register(eventBus);
 		XSMobEffects.MOB_EFFECTS.register(eventBus);
 		XSPotions.POTIONS.register(eventBus);
 		XSPoiTypes.POI_TYPES.register(eventBus);
@@ -64,5 +66,4 @@ public class XSurvive {
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}
-	
 }

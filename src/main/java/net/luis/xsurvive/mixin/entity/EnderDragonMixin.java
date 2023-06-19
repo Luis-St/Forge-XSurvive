@@ -36,13 +36,13 @@ import java.util.List;
 public abstract class EnderDragonMixin extends Mob {
 	
 	@Shadow
-	public EndCrystal nearestCrystal;
-	@Shadow
-	public int dragonDeathTime;
-	@Shadow
 	private EndDragonFight dragonFight;
 	@Shadow(remap = false)
 	private Player unlimitedLastHurtByPlayer = null;
+	@Shadow
+	public EndCrystal nearestCrystal;
+	@Shadow
+	public int dragonDeathTime;
 	
 	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
 		super(entityType, level);
@@ -58,22 +58,22 @@ public abstract class EnderDragonMixin extends Mob {
 			float f = (this.random.nextFloat() - 0.5F) * 8.0F;
 			float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
 			float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
-			this.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + f, this.getY() + 2.0D + f1, this.getZ() + f2, 0.0D, 0.0D, 0.0D);
+			this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + f, this.getY() + 2.0D + f1, this.getZ() + f2, 0.0D, 0.0D, 0.0D);
 		}
-		boolean doMobDrop = this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
+		boolean doMobDrop = this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
 		int i = 12000;
-		if (this.level instanceof ServerLevel) {
+		if (this.level() instanceof ServerLevel) {
 			if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0 && doMobDrop) {
 				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(i * 0.08F)));
 			}
 			if (this.dragonDeathTime == 1 && !this.isSilent()) {
-				this.level.globalLevelEvent(1028, this.blockPosition(), 0);
+				this.level().globalLevelEvent(1028, this.blockPosition(), 0);
 			}
 		}
 		this.move(MoverType.SELF, new Vec3(0.0, 0.1, 0.0));
 		this.setYRot(this.getYRot() + 20.0F);
 		this.yBodyRot = this.getYRot();
-		if (this.dragonDeathTime == 200 && this.level instanceof ServerLevel) {
+		if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel) {
 			if (doMobDrop) {
 				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(i * 0.2F)));
 			}
@@ -114,7 +114,7 @@ public abstract class EnderDragonMixin extends Mob {
 		}
 		EndCrystal nearestCrystal = null;
 		double distance = Double.MAX_VALUE;
-		for (EndCrystal endCrystal : this.level.getEntitiesOfClass(EndCrystal.class, this.getBoundingBox().inflate(32.0D))) {
+		for (EndCrystal endCrystal : this.level().getEntitiesOfClass(EndCrystal.class, this.getBoundingBox().inflate(32.0D))) {
 			double distanceTo = endCrystal.distanceToSqr(this);
 			if (distanceTo < distance) {
 				distance = distanceTo;

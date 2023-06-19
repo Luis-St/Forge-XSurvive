@@ -3,9 +3,7 @@ package net.luis.xsurvive.world.level.block.entity;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 /**
  *
@@ -20,5 +18,4 @@ public class XSBlockEntityTypes {
 	public static final RegistryObject<BlockEntityType<SmeltingFurnaceBlockEntity>> SMELTING_FURNACE = BLOCK_ENTITY_TYPES.register("smelting_furnace", () -> {
 		return BlockEntityType.Builder.of(SmeltingFurnaceBlockEntity::new, XSBlocks.SMELTING_FURNACE.get()).build(null);
 	});
-	
 }

@@ -13,5 +13,4 @@ public interface ICreeper {
 	void setExplosionRadius(int explosionRadius);
 	
 	void setPowered(boolean powered);
-	
 }

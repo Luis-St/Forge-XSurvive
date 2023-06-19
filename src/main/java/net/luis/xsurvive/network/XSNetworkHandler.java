@@ -2,25 +2,18 @@ package net.luis.xsurvive.network;
 
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
-import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
-import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
+import net.luis.xsurvive.network.packet.*;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.*;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collectors;
 
 /**
@@ -81,5 +74,4 @@ public enum XSNetworkHandler {
 	public <T extends NetworkPacket> void sendToPlayersInLevel(ServerLevel level, T packet) {
 		this.getChannel().send(PacketDistributor.DIMENSION.with(level::dimension), packet);
 	}
-	
 }

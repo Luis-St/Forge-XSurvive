@@ -18,5 +18,4 @@ public class XBackpackCommonSetup {
 		BackpackConstants.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.SMELTING.get());
 		ExtensionMenuRegistry.registerOverride(BackpackExtensions.ANVIL.get(), XSurvive.MOD_NAME, XSAnvilExtensionMenu::new);
 	}
-	
 }

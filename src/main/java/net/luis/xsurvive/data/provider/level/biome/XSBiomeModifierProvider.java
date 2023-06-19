@@ -3,13 +3,9 @@ package net.luis.xsurvive.data.provider.level.biome;
 import com.google.common.collect.Lists;
 import net.luis.xores.XOres;
 import net.luis.xsurvive.tag.XSBiomeTags;
-import net.luis.xsurvive.world.level.biome.IfElseBiomeModifier;
-import net.luis.xsurvive.world.level.biome.ReplaceBiomeModifier;
-import net.luis.xsurvive.world.level.biome.XSBiomeModifiers;
+import net.luis.xsurvive.world.level.biome.*;
 import net.luis.xsurvive.world.level.levelgen.placement.XSOrePlacements;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderSet;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.OrePlacements;
@@ -124,5 +120,4 @@ public class XSBiomeModifierProvider {
 		List<ResourceLocation> toRemove = Lists.newArrayList(new ResourceLocation(XOres.MOD_ID, "jade_ore_upper"), new ResourceLocation(XOres.MOD_ID, "saphire_ore_rare_upper"));
 		return new ReplaceBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_END), toAdd, toRemove);
 	}
-	
 }

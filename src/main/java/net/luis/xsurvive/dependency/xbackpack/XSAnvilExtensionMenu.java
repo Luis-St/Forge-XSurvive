@@ -20,9 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -108,7 +106,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				this.handler.getInputHandler().setStackInSlot(1, ItemStack.EMPTY);
 			}
 			this.cost = 0;
-			this.playSound(serverPlayer, serverPlayer.getLevel());
+			this.playSound(serverPlayer, serverPlayer.serverLevel());
 		}
 		this.menu.broadcastChanges();
 		this.broadcastChanges();

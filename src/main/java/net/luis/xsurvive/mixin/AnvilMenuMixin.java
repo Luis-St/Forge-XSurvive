@@ -8,9 +8,7 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -34,11 +32,12 @@ import java.util.Map;
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
 	@Shadow
-	public int repairItemCountCost;
-	@Shadow
 	private String itemName;
 	@Shadow
 	private DataSlot cost;
+	@Shadow
+	public int repairItemCountCost;
+	
 	private AnvilMenuMixin(MenuType<?> menuType, int id, Inventory inventory, ContainerLevelAccess levelAccess) {
 		super(menuType, id, inventory, levelAccess);
 	}
@@ -221,5 +220,4 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		}
 		callback.cancel();
 	}
-	
 }

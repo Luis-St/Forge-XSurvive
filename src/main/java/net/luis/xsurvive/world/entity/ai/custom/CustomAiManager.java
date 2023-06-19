@@ -50,5 +50,4 @@ public enum CustomAiManager {
 	public <T extends LivingEntity> CustomAi createFactory(T entity, ServerLevel level) {
 		return this.getFactory((Class<T>) entity.getClass()).create(entity, level);
 	}
-	
 }

@@ -3,9 +3,7 @@ package net.luis.xsurvive.wiki.builder;
 import net.luis.xsurvive.wiki.WikiFormat;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> implements WikiBuilder<T> {
 	
@@ -133,5 +131,4 @@ public abstract class AbstractWikiBuilder<T extends AbstractWikiBuilder<T>> impl
 	public boolean isEnd() {
 		return this.end;
 	}
-	
 }

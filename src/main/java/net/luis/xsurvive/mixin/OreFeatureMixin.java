@@ -48,5 +48,4 @@ public abstract class OreFeatureMixin extends Feature<OreConfiguration> {
 			}));
 		}
 	}
-	
 }

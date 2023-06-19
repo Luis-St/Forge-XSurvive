@@ -25,5 +25,4 @@ public class PoisonAspectEnchantment extends FireAspectEnchantment implements Wi
 			builder.appendFormatted("100 * PoisonAspectLevel", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

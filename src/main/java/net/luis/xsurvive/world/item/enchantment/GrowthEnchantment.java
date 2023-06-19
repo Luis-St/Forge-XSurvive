@@ -44,5 +44,4 @@ public class GrowthEnchantment extends Enchantment implements IEnchantment, Wiki
 			builder.append("When a entity wears armor with this enchantment, the entities health is increased by the sum of the enchantment levels of all armor items.").endLine();
 		});
 	}
-	
 }

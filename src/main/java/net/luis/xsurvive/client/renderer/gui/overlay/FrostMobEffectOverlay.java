@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +31,7 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 	}
 	
 	@Override
-	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	public void render(ForgeGui gui, GuiGraphics graphics, float partialTick, int width, int height) {
 		Player player = Objects.requireNonNull(this.minecraft.player);
 		if (!this.minecraft.options.hideGui && player.hasEffect(XSMobEffects.FROST.get()) && 0 >= player.getPercentFrozen()) {
 			gui.setupOverlayRenderState(true, false);
@@ -57,5 +58,4 @@ public class FrostMobEffectOverlay implements IGuiOverlay {
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
-	
 }

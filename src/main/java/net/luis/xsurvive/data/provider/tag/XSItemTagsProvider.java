@@ -10,7 +10,6 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +37,5 @@ public class XSItemTagsProvider extends ItemTagsProvider {
 	public @NotNull String getName() {
 		return "XSurvive Item Tags";
 	}
-	
 }
 

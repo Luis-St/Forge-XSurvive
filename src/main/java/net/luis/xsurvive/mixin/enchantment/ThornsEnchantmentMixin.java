@@ -3,11 +3,8 @@ package net.luis.xsurvive.mixin.enchantment;
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.SimpleEntry;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
@@ -74,5 +71,4 @@ public abstract class ThornsEnchantmentMixin {
 	private int getThornsLevel(LivingEntity entity) {
 		return this.getThornsLevel(entity, EquipmentSlot.HEAD) + this.getThornsLevel(entity, EquipmentSlot.CHEST) + this.getThornsLevel(entity, EquipmentSlot.LEGS) + this.getThornsLevel(entity, EquipmentSlot.FEET);
 	}
-	
 }

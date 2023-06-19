@@ -22,5 +22,4 @@ public class SmeltingFurnaceMenu extends AbstractFurnaceMenu {
 	public SmeltingFurnaceMenu(int id, Inventory inventory, Container container, ContainerData data) {
 		super(XSMenuTypes.SMELTING_FURNACE.get(), XSRecipeTypes.SMELTING.get(), XSRecipeBookTypes.SMELTING, id, inventory, container, data);
 	}
-	
 }

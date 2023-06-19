@@ -43,5 +43,6 @@
     "recipes": [
       "xsurvive:diamond_apple"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

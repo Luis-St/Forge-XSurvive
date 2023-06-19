@@ -86,5 +86,4 @@ public class GlintColorHandler {
 		}
 		return vanillaRenderType.get();
 	}
-	
 }

@@ -4,9 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.*;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -42,5 +40,4 @@ public class DynamicPotionTrades {
 					0.2F);
 		};
 	}
-	
 }

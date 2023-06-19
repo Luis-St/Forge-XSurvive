@@ -1,17 +1,14 @@
 package net.luis.xsurvive.wiki.files;
 
 import net.luis.xores.world.fixer.ToolFixer;
-import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
 import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.level.block.XSBlocks;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.tags.ITagManager;
@@ -72,14 +69,6 @@ public class BlocksWikiFile {
 			if (properties.jumpFactor != 1.0F) {
 				builder.append("Jump factor:").append(properties.jumpFactor).endLine();
 			}
-			Material material = properties.material;
-			if (material.isFlammable()) {
-				builder.append("Flammable:").append(true).endLine();
-			}
-			if (material.blocksMotion()) {
-				builder.append("Motion blocking:").append(true).endLine();
-			}
-			builder.append("Piston push reaction:").append(XSLanguageProvider.getName(new ResourceLocation(material.getPushReaction().name().toLowerCase()))).endLine();
 		});
 	}
 	
@@ -96,5 +85,4 @@ public class BlocksWikiFile {
 		}
 		return "No";
 	}
-	
 }

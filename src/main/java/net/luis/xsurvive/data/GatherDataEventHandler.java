@@ -1,17 +1,14 @@
 package net.luis.xsurvive.data;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.data.provider.XSBuiltinProvider;
 import net.luis.xsurvive.data.provider.block.XSBlockStateProvider;
 import net.luis.xsurvive.data.provider.item.XSItemModelProvider;
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.data.provider.XSBuiltinProvider;
 import net.luis.xsurvive.data.provider.loot.XSGlobalLootModifierProvider;
 import net.luis.xsurvive.data.provider.loottable.XSLootTableProvider;
 import net.luis.xsurvive.data.provider.recipe.XSRecipeProvider;
-import net.luis.xsurvive.data.provider.tag.XSBiomeTagsProvider;
-import net.luis.xsurvive.data.provider.tag.XSBlockTagsProvider;
-import net.luis.xsurvive.data.provider.tag.XSItemTagsProvider;
-import net.luis.xsurvive.data.provider.tag.XSPoiTypeTagsProvider;
+import net.luis.xsurvive.data.provider.tag.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -48,5 +45,4 @@ public class GatherDataEventHandler {
 			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), XSBuiltinProvider.createProvider(), Set.of(XSurvive.MOD_ID)));
 		}
 	}
-	
 }

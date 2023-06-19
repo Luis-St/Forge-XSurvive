@@ -4,9 +4,7 @@ import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -67,5 +65,4 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 			builder.append("When a block is destroyed by an item with this enchantment, the block drops it's furnace smelting result.").endLine();
 		});
 	}
-	
 }

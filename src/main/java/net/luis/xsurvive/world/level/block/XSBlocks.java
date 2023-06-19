@@ -4,17 +4,10 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.AttachedStemBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 import java.util.function.Supplier;
 
@@ -30,21 +23,21 @@ public class XSBlocks {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, XSurvive.MOD_ID);
 	
 	public static final RegistryObject<SmeltingFurnaceBlock> SMELTING_FURNACE = register("smelting_furnace", () -> {
-		return new SmeltingFurnaceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.5F).lightLevel((state) -> {
+		return new SmeltingFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.FURNACE).lightLevel((state) -> {
 			return state.getValue(BlockStateProperties.LIT) ? 13 : 0;
 		}));
 	}, true);
 	public static final RegistryObject<HoneyMelonBlock> HONEY_MELON = register("honey_melon", () -> {
-		return new HoneyMelonBlock(BlockBehaviour.Properties.of(Material.VEGETABLE, MaterialColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD));
+		return new HoneyMelonBlock(BlockBehaviour.Properties.copy(Blocks.MELON));
 	}, true);
 	public static final RegistryObject<StemBlock> HONEY_MELON_STEM = register("honey_melon_stem", () -> {
-		return new StemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP));
+		return new StemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.copy(Blocks.MELON_STEM));
 	});
 	public static final RegistryObject<AttachedStemBlock> ATTACHED_HONEY_MELON_STEM = register("attached_honey_melon_stem", () -> {
-		return new AttachedStemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.WOOD));
+		return new AttachedStemBlock(HONEY_MELON.get(), XSItems.HONEY_MELON_SEEDS::get, BlockBehaviour.Properties.copy(Blocks.ATTACHED_MELON_STEM));
 	});
 	public static final RegistryObject<MysticFireBlock> MYSTIC_FIRE = register("mystic_fire", () -> {
-		return new MysticFireBlock(BlockBehaviour.Properties.of(Material.FIRE, MaterialColor.FIRE).noCollission().instabreak().lightLevel((state) -> 15).sound(SoundType.WOOL));
+		return new MysticFireBlock(BlockBehaviour.Properties.copy(Blocks.FIRE).lightLevel((state) -> 15));
 	});
 	
 	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier) {
@@ -58,5 +51,4 @@ public class XSBlocks {
 		}
 		return blockObject;
 	}
-	
 }

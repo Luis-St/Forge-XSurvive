@@ -55,5 +55,4 @@ public class XSOrePlacements {
 	private static ResourceKey<PlacedFeature> createKey(String name) {
 		return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(XSurvive.MOD_ID, name));
 	}
-	
 }

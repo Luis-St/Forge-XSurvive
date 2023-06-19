@@ -1,7 +1,22 @@
 {
   "type": "xsurvive:additional_chance_item_modifier",
   "additional_item": "xsurvive:diamond_apple",
-  "chance": 0.07,
-  "conditions": [],
-  "table_item": "minecraft:golden_apple"
+  "chance": 0.06,
+  "conditions": [
+    {
+      "condition": "xsurvive:loot_table_ids",
+      "loot_table_ids": [
+        "minecraft:chests/simple_dungeon",
+        "minecraft:chests/abandoned_mineshaft",
+        "minecraft:chests/bastion_other",
+        "minecraft:chests/bastion_hoglin_stable",
+        "minecraft:chests/igloo_chest",
+        "minecraft:chests/desert_pyramid",
+        "minecraft:chests/ruined_portal",
+        "minecraft:chests/stronghold_crossing",
+        "minecraft:chests/underwater_ruin_big",
+        "minecraft:chests/woodland_mansion"
+      ]
+    }
+  ]
 }

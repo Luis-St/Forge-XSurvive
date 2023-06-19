@@ -17,9 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  *
@@ -80,5 +78,4 @@ public abstract class EnchantmentHelperMixin {
 			callback.setReturnValue(stack);
 		}
 	}
-	
 }

@@ -22,11 +22,11 @@ public class AbstractPlayerHandler implements IPlayer {
 	private final Player player;
 	private final ItemStackHandler enderChest = new ItemStackHandler(27);
 	private final Supplier<CombinedInvWrapper> combinedInventory = () -> new CombinedInvWrapper(new InvWrapper(this.getPlayer().getEnderChestInventory()), this.enderChest);
+	private int tick;
 	protected int frostTime;
 	protected int startFrostTime;
 	protected int endAspectCooldown;
 	protected int startEndAspectCooldown;
-	private int tick;
 	
 	public AbstractPlayerHandler(Player player) {
 		this.player = player;
@@ -39,7 +39,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	
 	@Override
 	public Level getLevel() {
-		return this.getPlayer().getLevel();
+		return this.getPlayer().level();
 	}
 	
 	@Override
@@ -145,5 +145,4 @@ public class AbstractPlayerHandler implements IPlayer {
 		this.tick = tag.getInt("tick");
 		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}
-	
 }

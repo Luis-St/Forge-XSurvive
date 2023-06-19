@@ -3,10 +3,7 @@ package net.luis.xsurvive.world.item.crafting;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.CookingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,5 +27,4 @@ public class SmeltingRecipe extends AbstractCookingRecipe {
 	public @NotNull RecipeSerializer<?> getSerializer() {
 		return XSRecipeSerializers.SMELTING_RECIPE.get();
 	}
-	
 }

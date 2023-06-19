@@ -6,13 +6,8 @@ import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
-import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -56,5 +51,4 @@ public class DynamicEnchantedTrades {
 			}
 		};
 	}
-	
 }

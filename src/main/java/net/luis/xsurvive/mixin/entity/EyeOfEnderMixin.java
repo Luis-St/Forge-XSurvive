@@ -31,5 +31,4 @@ public abstract class EyeOfEnderMixin extends Entity {
 	public void signalTo(BlockPos pos, CallbackInfo callback) {
 		this.surviveAfterDeath = this.random.nextInt(5) == 0;
 	}
-	
 }

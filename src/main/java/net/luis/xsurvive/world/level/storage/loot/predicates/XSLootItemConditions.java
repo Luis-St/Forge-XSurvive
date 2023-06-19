@@ -19,5 +19,4 @@ public class XSLootItemConditions {
 	public static final RegistryObject<LootItemConditionType> LOOT_TABLE_IDS = LOOT_ITEM_CONDITIONS.register("loot_table_ids", () -> {
 		return new LootItemConditionType(new LootTableIdsCondition.Serializer());
 	});
-	
 }

@@ -2,15 +2,10 @@ package net.luis.xsurvive.event.fml;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.dependency.DependencyCallWrapper;
-import net.luis.xsurvive.world.entity.ai.custom.CustomAiManager;
-import net.luis.xsurvive.world.entity.ai.custom.CustomElderGuardianAi;
-import net.luis.xsurvive.world.entity.ai.custom.CustomEnderManAi;
-import net.luis.xsurvive.world.entity.ai.custom.CustomZombifiedPiglinAi;
+import net.luis.xsurvive.world.entity.ai.custom.*;
 import net.luis.xsurvive.world.item.alchemy.BrewingRecipeUtils;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
-import net.minecraft.world.entity.monster.ElderGuardian;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,5 +39,4 @@ public class CommonSetupEventHandler {
 		CustomAiManager.INSTANCE.register(EnderMan.class, CustomEnderManAi::new);
 		CustomAiManager.INSTANCE.register(ZombifiedPiglin.class, CustomZombifiedPiglinAi::new);
 	}
-	
 }

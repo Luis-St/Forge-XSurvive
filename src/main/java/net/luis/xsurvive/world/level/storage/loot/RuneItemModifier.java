@@ -23,6 +23,7 @@ import java.util.Random;
 
 public class RuneItemModifier extends LootModifier {
 	
+	private static final Random RNG = new Random();
 	public static final Codec<RuneItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {
 		return LootModifier.codecStart(instance).and(instance.group(Codec.INT.fieldOf("rune_count").forGetter((modifier) -> {
 			return modifier.runeCount;
@@ -30,8 +31,6 @@ public class RuneItemModifier extends LootModifier {
 			return modifier.runeWeights;
 		}))).apply(instance, RuneItemModifier::new);
 	});
-	private static final Random RNG = new Random();
-	
 	private final int runeCount;
 	private final WeightCollection<RarityList<Item>> runeWeights;
 	
@@ -58,5 +57,4 @@ public class RuneItemModifier extends LootModifier {
 		RarityList<Item> runes = RarityList.copy(this.runeWeights.next());
 		return new ItemStack(runes.get(RNG.nextInt(runes.size())));
 	}
-	
 }

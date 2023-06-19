@@ -3,9 +3,7 @@ package net.luis.xsurvive.mixin.enchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.item.enchantment.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
@@ -32,5 +30,4 @@ public abstract class ProtectionEnchantmentMixin extends Enchantment {
 		}
 		return super.canEnchant(stack);
 	}
-	
 }

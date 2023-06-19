@@ -32,5 +32,4 @@ public class GlintColorItem extends Item implements IGlintColor {
 	public int getGlintColor(ItemStack stack) {
 		return this.glintColor.getGlintColor(stack);
 	}
-	
 }

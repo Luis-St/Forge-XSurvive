@@ -13,5 +13,4 @@ import net.minecraft.world.entity.LivingEntity;
 public interface CustomAiFactory<T extends LivingEntity> {
 	
 	CustomAi create(T entity, ServerLevel level);
-	
 }

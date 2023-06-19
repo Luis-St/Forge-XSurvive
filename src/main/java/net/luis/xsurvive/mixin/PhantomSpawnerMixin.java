@@ -8,9 +8,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.NaturalSpawner;
@@ -79,5 +77,4 @@ public class PhantomSpawnerMixin {
 			}
 		}
 	}
-	
 }

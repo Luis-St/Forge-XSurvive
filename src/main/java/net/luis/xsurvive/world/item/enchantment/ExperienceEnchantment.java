@@ -47,5 +47,4 @@ public class ExperienceEnchantment extends Enchantment implements IEnchantment, 
 			builder.appendFormatted("Experience * ((ExperienceLevel + 1) * ((ExperienceLevel * 2) + LootingLevel))", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

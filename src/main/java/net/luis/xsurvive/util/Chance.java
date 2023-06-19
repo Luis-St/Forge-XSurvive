@@ -46,5 +46,4 @@ public class Chance {
 			return this.chance > this.rng.nextDouble();
 		}
 	}
-	
 }

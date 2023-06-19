@@ -8,12 +8,7 @@ package net.luis.xsurvive.wiki;
 
 public enum WikiFormat {
 	
-	BOLD("**", "**"),
-	ITALIC("*", "*"),
-	CROSSED_OUT("~~", "~~"),
-	BOLD_ITALIC("***", "***"),
-	CODE("`", "`"),
-	EXCLUDE("\\", "");
+	BOLD("**", "**"), ITALIC("*", "*"), CROSSED_OUT("~~", "~~"), BOLD_ITALIC("***", "***"), CODE("`", "`"), EXCLUDE("\\", "");
 	
 	private final String prefix;
 	private final String suffix;
@@ -26,5 +21,4 @@ public enum WikiFormat {
 	public String formate(String string) {
 		return this.prefix + string + this.suffix;
 	}
-	
 }

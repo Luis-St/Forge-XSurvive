@@ -6,9 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 import javax.annotation.Nullable;
 
@@ -48,5 +46,4 @@ public class XSVillagerProfessions {
 		ResourceLocation location = new ResourceLocation(XSurvive.MOD_ID, name);
 		return new VillagerProfession(location.toString(), (holder) -> holder.is(location), (holder) -> holder.is(location), ImmutableSet.of(), ImmutableSet.of(), workSound);
 	}
-	
 }

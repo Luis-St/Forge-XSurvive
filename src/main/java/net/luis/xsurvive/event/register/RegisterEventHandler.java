@@ -19,5 +19,4 @@ public class RegisterEventHandler {
 	public static void registerClientCommands(RegisterCommandsEvent event) {
 		RaidCommand.register(event.getDispatcher());
 	}
-	
 }

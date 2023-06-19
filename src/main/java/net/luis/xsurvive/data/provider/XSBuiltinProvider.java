@@ -24,5 +24,4 @@ public class XSBuiltinProvider {
 		builder.add(Registries.DAMAGE_TYPE, XSDamageTypeProvider::create);
 		return builder;
 	}
-	
 }

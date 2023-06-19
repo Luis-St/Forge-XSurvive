@@ -4,10 +4,7 @@ import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.FireAspectEnchantment;
+import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -59,5 +56,4 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 			builder.append("When an entity is hit by an item with this enchantment, a bolt of lightning strikes the entity's location.").endLine();
 		});
 	}
-	
 }

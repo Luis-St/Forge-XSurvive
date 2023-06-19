@@ -47,5 +47,4 @@ public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
 		}
 		return false;
 	}
-	
 }

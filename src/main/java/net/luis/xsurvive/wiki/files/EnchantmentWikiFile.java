@@ -175,5 +175,4 @@ public class EnchantmentWikiFile {
 			return string.replace("_", " ");
 		}).map(StringUtils::capitalize).toList().toString().replace("[", "").replace("]", "").trim();
 	}
-	
 }

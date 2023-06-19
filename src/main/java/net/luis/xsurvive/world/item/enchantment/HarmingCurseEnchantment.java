@@ -52,5 +52,4 @@ public class HarmingCurseEnchantment extends Enchantment implements WikiFileEntr
 			builder.appendFormatted("(Amount / 2) * HarmingCurseLevel", WikiFormat.CODE).endLine();
 		});
 	}
-	
 }

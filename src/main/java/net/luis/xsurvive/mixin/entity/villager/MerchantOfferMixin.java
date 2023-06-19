@@ -1,7 +1,5 @@
 package net.luis.xsurvive.mixin.entity.villager;
 
-import net.luis.xsurvive.XSurvive;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;

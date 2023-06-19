@@ -67,5 +67,4 @@ public class EndEnchantmentsModifier extends LootModifier {
 		}
 		return generatedLoot;
 	}
-	
 }

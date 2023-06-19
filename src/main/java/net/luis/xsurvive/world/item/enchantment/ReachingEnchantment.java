@@ -87,5 +87,4 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 			builder.append("When applied to a sword or tool, this Enchantment increases the range by half a block per level.").endLine();
 		});
 	}
-	
 }

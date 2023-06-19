@@ -77,5 +77,4 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 			builder.append("When a block is destroyed by an item with this enchantment, the loot from the block is multiplied by the level of the enchantment.").endLine();
 		});
 	}
-	
 }

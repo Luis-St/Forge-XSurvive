@@ -14,9 +14,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -146,5 +144,4 @@ class DynamicTradeHelper {
 	static <T> T random(List<T> list, RandomSource rng) {
 		return list.get(rng.nextInt(list.size()));
 	}
-	
 }

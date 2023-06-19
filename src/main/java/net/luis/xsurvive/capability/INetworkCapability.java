@@ -21,5 +21,4 @@ public interface INetworkCapability extends ICapability {
 	CompoundTag serializeNetwork();
 	
 	void deserializeNetwork(CompoundTag tag);
-	
 }

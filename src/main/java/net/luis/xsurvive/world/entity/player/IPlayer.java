@@ -19,7 +19,7 @@ public interface IPlayer extends INetworkCapability {
 	Player getPlayer();
 	
 	default Level getLevel() {
-		return this.getPlayer().getLevel();
+		return this.getPlayer().level();
 	}
 	
 	void tick();
@@ -45,5 +45,4 @@ public interface IPlayer extends INetworkCapability {
 	CompoundTag serializePersistent();
 	
 	void deserializePersistent(CompoundTag tag);
-	
 }

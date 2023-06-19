@@ -49,7 +49,7 @@ public abstract class WitherBossMixin extends Monster {
 		if (this.isInvulnerableTo(source)) {
 			callback.setReturnValue(false);
 		} else if (source.is(DamageTypeTags.IS_DROWNING) && !(source.getEntity() instanceof WitherBoss)) {
-			if (this.getInvulnerableTicks() > 0 && source.is(DamageTypes.OUT_OF_WORLD)) {
+			if (this.getInvulnerableTicks() > 0 && source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
 				callback.setReturnValue(false);
 			} else {
 				if (source.getDirectEntity() instanceof AbstractArrow arrow && 4 > arrow.getPierceLevel()) {
@@ -84,5 +84,4 @@ public abstract class WitherBossMixin extends Monster {
 	public void isPowered(CallbackInfoReturnable<Boolean> callback) {
 		callback.setReturnValue(true);
 	}
-	
 }

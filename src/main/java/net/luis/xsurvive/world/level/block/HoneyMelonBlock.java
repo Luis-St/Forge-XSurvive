@@ -1,8 +1,6 @@
 package net.luis.xsurvive.world.level.block;
 
-import net.minecraft.world.level.block.AttachedStemBlock;
-import net.minecraft.world.level.block.StemBlock;
-import net.minecraft.world.level.block.StemGrownBlock;
+import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -26,5 +24,4 @@ public class HoneyMelonBlock extends StemGrownBlock {
 	public @NotNull AttachedStemBlock getAttachedStem() {
 		return XSBlocks.ATTACHED_HONEY_MELON_STEM.get();
 	}
-	
 }

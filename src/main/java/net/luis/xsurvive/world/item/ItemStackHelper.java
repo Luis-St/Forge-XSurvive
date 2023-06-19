@@ -78,5 +78,4 @@ public class ItemStackHelper {
 		}
 		return new ItemStack(Items.IRON_AXE);
 	}
-	
 }

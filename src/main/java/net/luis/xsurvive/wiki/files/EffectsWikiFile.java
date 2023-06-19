@@ -35,5 +35,4 @@ public class EffectsWikiFile {
 		});
 		return wikiBuilder;
 	}
-	
 }

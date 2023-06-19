@@ -1,8 +1,8 @@
 package net.luis.xsurvive.wiki.builder;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 import net.luis.xsurvive.wiki.WikiAlignment;
 import net.luis.xsurvive.wiki.WikiFormat;
+import net.luis.xsurvive.wiki.file.WikiFileBuilder;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class WikiTableBuilder extends AbstractWikiBuilder<WikiTableBuilder> {
 		}
 		if (!string.isEmpty()) {
 			this.table.append(string);
-		
+			
 		}
 		return this;
 	}
@@ -169,7 +169,5 @@ public class WikiTableBuilder extends AbstractWikiBuilder<WikiTableBuilder> {
 			}
 			this.rows++;
 		}
-		
 	}
-	
 }

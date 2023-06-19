@@ -29,5 +29,4 @@ public abstract class ChatReportScreenMixin extends Screen {
 		Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
 		Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).sendSystemMessage(component);
 	}
-	
 }

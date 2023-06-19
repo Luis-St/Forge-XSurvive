@@ -3,9 +3,7 @@ package net.luis.xsurvive.event.entity;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
-import net.luis.xsurvive.world.entity.ai.goal.XSBlazeAttackGoal;
-import net.luis.xsurvive.world.entity.ai.goal.XSSpiderAttackGoal;
-import net.luis.xsurvive.world.entity.ai.goal.XSZombifiedPiglinAttackGoal;
+import net.luis.xsurvive.world.entity.ai.goal.*;
 import net.luis.xsurvive.world.entity.monster.ICreeper;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.entity.projectile.IArrow;
@@ -14,17 +12,12 @@ import net.luis.xsurvive.world.level.LevelHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -38,10 +31,8 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.EntityMountEvent;
+import net.minecraftforge.event.entity.*;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
@@ -100,14 +91,14 @@ public class EntityEventHandler {
 			blaze.goalSelector.addGoal(8, new RandomLookAroundGoal(blaze));
 		} else if (entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.DROWNED || entity.getType() == EntityType.HUSK) {
 			if (entity instanceof Zombie zombie) {
-				DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombie.level, zombie.blockPosition());
+				DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombie.level(), zombie.blockPosition());
 				if (instance.getEffectiveDifficulty() > 0.0) {
 					EntityHelper.equipEntityForDifficulty(zombie, instance);
 				}
 				zombie.setCanBreakDoors(true);
 			}
 		} else if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(creeper.level, creeper.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(creeper.level(), creeper.blockPosition());
 			iCreeper.setExplosionRadius((int) Math.max(3.0, instance.getEffectiveDifficulty()));
 			if (instance.getSpecialMultiplier() >= 1.0 && 0.5 > rng.nextDouble()) {
 				iCreeper.setPowered(true);
@@ -125,7 +116,7 @@ public class EntityEventHandler {
 			spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
 			spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
 		} else if (entity instanceof AbstractSkeleton skeleton && !(entity instanceof WitherSkeleton)) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(skeleton.level, skeleton.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(skeleton.level(), skeleton.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(skeleton, instance);
 			}
@@ -134,22 +125,22 @@ public class EntityEventHandler {
 			zombifiedPiglin.targetSelector.addGoal(1, new HurtByTargetGoal(zombifiedPiglin).setAlertOthers());
 			zombifiedPiglin.targetSelector.addGoal(2, new XSZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
 			zombifiedPiglin.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(zombifiedPiglin, true));
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombifiedPiglin.level, zombifiedPiglin.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombifiedPiglin.level(), zombifiedPiglin.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				EntityHelper.equipEntityForDifficulty(zombifiedPiglin, instance);
 			}
 		} else if (entity instanceof Vex vex) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vex.level, vex.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vex.level(), vex.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				vex.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vex, EquipmentSlot.MAINHAND, ItemStackHelper.getSwordForDifficulty(vex, instance), instance.getSpecialMultiplier()));
 			}
 		} else if (entity instanceof Pillager pillager) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level, pillager.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level(), pillager.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, ItemStackHelper.getCrossbowForDifficulty(pillager, instance), instance.getSpecialMultiplier()));
 			}
 		} else if (entity instanceof Vindicator vindicator) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level, vindicator.blockPosition());
+			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level(), vindicator.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
@@ -185,9 +176,8 @@ public class EntityEventHandler {
 			int explosionLevel = arrow.getExplosionLevel();
 			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {
 				Vec3 location = hitResult.getLocation();
-				event.getProjectile().level.explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.NONE);
+				event.getProjectile().level().explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.NONE);
 			}
 		}
 	}
-	
 }

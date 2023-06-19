@@ -65,5 +65,4 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	public void deserializeNBT(CompoundTag tag) {
 		this.playerCapability.deserializeDisk(tag);
 	}
-	
 }

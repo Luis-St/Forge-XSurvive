@@ -9,5 +9,4 @@ public abstract class AbstractWikiLineBuilder<T extends AbstractWikiLineBuilder<
 	protected AbstractWikiLineBuilder(WikiFileBuilder fileBuilder) {
 		super(fileBuilder);
 	}
-	
 }
