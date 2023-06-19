@@ -10,7 +10,7 @@ version = ModVersion
 group = "net.luis.xsurvive"
 
 base {
-	archivesName = "XOres"
+	archivesName = "XSurvive"
 }
 
 minecraft {
