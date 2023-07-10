@@ -74,26 +74,26 @@ public class XSBiomeModifierProvider {
 	
 	private static AddFeaturesBiomeModifier createAddToOverworld(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.COAL_ORE_UPPER), featureRegistry.getOrThrow(XSOrePlacements.COAL_ORE_LOWER),
-				featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_UPPER), featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_MIDDLE), featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_SMALL),
-				featureRegistry.getOrThrow(XSOrePlacements.GOLD_ORE), featureRegistry.getOrThrow(XSOrePlacements.GOLD_ORE_LOWER), featureRegistry.getOrThrow(XSOrePlacements.LAPIS_ORE),
-				featureRegistry.getOrThrow(XSOrePlacements.LAPIS_ORE_BURIED), featureRegistry.getOrThrow(XSOrePlacements.REDSTONE_ORE), featureRegistry.getOrThrow(XSOrePlacements.REDSTONE_ORE_LOWER),
-				featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE), featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE_LARGE), featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE_BURIED));
+			featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_UPPER), featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_MIDDLE), featureRegistry.getOrThrow(XSOrePlacements.IRON_ORE_SMALL),
+			featureRegistry.getOrThrow(XSOrePlacements.GOLD_ORE), featureRegistry.getOrThrow(XSOrePlacements.GOLD_ORE_LOWER), featureRegistry.getOrThrow(XSOrePlacements.LAPIS_ORE),
+			featureRegistry.getOrThrow(XSOrePlacements.LAPIS_ORE_BURIED), featureRegistry.getOrThrow(XSOrePlacements.REDSTONE_ORE), featureRegistry.getOrThrow(XSOrePlacements.REDSTONE_ORE_LOWER),
+			featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE), featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE_LARGE), featureRegistry.getOrThrow(XSOrePlacements.DIAMOND_ORE_BURIED));
 		return new AddFeaturesBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_OVERWORLD), features, Decoration.UNDERGROUND_ORES);
 	}
 	
 	private static RemoveFeaturesBiomeModifier createRemoveFromNether(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(OrePlacements.ORE_GOLD_NETHER), featureRegistry.getOrThrow(OrePlacements.ORE_QUARTZ_NETHER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_ANCIENT_DEBRIS_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_ANCIENT_DEBRIS_LARGE));
+			featureRegistry.getOrThrow(OrePlacements.ORE_ANCIENT_DEBRIS_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_ANCIENT_DEBRIS_LARGE));
 		return new RemoveFeaturesBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_NETHER), features, Set.of(Decoration.UNDERGROUND_ORES));
 	}
 	
 	private static RemoveFeaturesBiomeModifier createRemoveFromOverworld(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> features = HolderSet.direct(featureRegistry.getOrThrow(OrePlacements.ORE_COAL_UPPER), featureRegistry.getOrThrow(OrePlacements.ORE_COAL_LOWER), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_UPPER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_IRON_MIDDLE), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_GOLD),
-				featureRegistry.getOrThrow(OrePlacements.ORE_GOLD_LOWER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS), featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS_BURIED), featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE),
-				featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE_LOWER),
-				featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_LARGE), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_BURIED));
+			featureRegistry.getOrThrow(OrePlacements.ORE_IRON_MIDDLE), featureRegistry.getOrThrow(OrePlacements.ORE_IRON_SMALL), featureRegistry.getOrThrow(OrePlacements.ORE_GOLD),
+			featureRegistry.getOrThrow(OrePlacements.ORE_GOLD_LOWER),
+			featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS), featureRegistry.getOrThrow(OrePlacements.ORE_LAPIS_BURIED), featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE),
+			featureRegistry.getOrThrow(OrePlacements.ORE_REDSTONE_LOWER),
+			featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_LARGE), featureRegistry.getOrThrow(OrePlacements.ORE_DIAMOND_BURIED));
 		return new RemoveFeaturesBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_OVERWORLD), features, Set.of(Decoration.UNDERGROUND_ORES));
 	}
 	
@@ -106,11 +106,11 @@ public class XSBiomeModifierProvider {
 	
 	private static ReplaceBiomeModifier createReplaceOverworld(HolderGetter<Biome> biomeRegistry, HolderGetter<PlacedFeature> featureRegistry) {
 		HolderSet<PlacedFeature> toAdd = HolderSet.direct(featureRegistry.getOrThrow(XSOrePlacements.JADE_ORE_MIDDLE), featureRegistry.getOrThrow(XSOrePlacements.SAPHIRE_ORE), featureRegistry.getOrThrow(XSOrePlacements.SAPHIRE_ORE_BURIED),
-				featureRegistry.getOrThrow(XSOrePlacements.LIMONITE_ORE_BURIED), featureRegistry.getOrThrow(XSOrePlacements.LIMONITE_ORE_DEEP_BURIED));
+			featureRegistry.getOrThrow(XSOrePlacements.LIMONITE_ORE_BURIED), featureRegistry.getOrThrow(XSOrePlacements.LIMONITE_ORE_DEEP_BURIED));
 	/*	HolderSet<PlacedFeature> toRemove = HolderSet.direct(featureRegistry.getOrThrow(XOOrePlacements.JADE_ORE_MIDDLE), featureRegistry.getOrThrow(XOOrePlacements.SAPHIRE_ORE), featureRegistry.getOrThrow(XOOrePlacements.SAPHIRE_ORE_BURIED),
 				featureRegistry.getOrThrow(XOOrePlacements.LIMONITE_ORE_BURIED),featureRegistry.getOrThrow(XOOrePlacements.LIMONITE_ORE_DEEP_BURIED));*/
 		List<ResourceLocation> toRemove = Lists.newArrayList(new ResourceLocation(XOres.MOD_ID, "jade_ore_middle"), new ResourceLocation(XOres.MOD_ID, "saphire_ore"), new ResourceLocation(XOres.MOD_ID, "saphire_ore_buried"),
-				new ResourceLocation(XOres.MOD_ID, "limonite_ore_buried"), new ResourceLocation(XOres.MOD_ID, "limonite_ore_deep_buried"));
+			new ResourceLocation(XOres.MOD_ID, "limonite_ore_buried"), new ResourceLocation(XOres.MOD_ID, "limonite_ore_deep_buried"));
 		return new ReplaceBiomeModifier(biomeRegistry.getOrThrow(BiomeTags.IS_END), toAdd, toRemove);
 	}
 	

@@ -31,39 +31,39 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 	
 	@Override
 	protected void start() {
-		this.add("multi_drop_modifier", new MultiDropModifier(new LootItemCondition[]{
-				new MatchTool(ItemPredicate.ANY)
+		this.add("multi_drop_modifier", new MultiDropModifier(new LootItemCondition[] {
+			new MatchTool(ItemPredicate.ANY)
 		}));
-		this.add("smelting_modifier", new SmeltingModifier(new LootItemCondition[]{
-				new MatchTool(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(XSEnchantments.SMELTING.get(), MinMaxBounds.Ints.atLeast(1))).build())
+		this.add("smelting_modifier", new SmeltingModifier(new LootItemCondition[] {
+			new MatchTool(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(XSEnchantments.SMELTING.get(), MinMaxBounds.Ints.atLeast(1))).build())
 		}));
-		this.add("rune_item_modifier", new RuneItemModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(STRONGHOLD_CROSSING).add(STRONGHOLD_CORRIDOR).add(BASTION_BRIDGE).add(BASTION_HOGLIN_STABLE).add(BASTION_OTHER)
-						.add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).add(ANCIENT_CITY_ICE_BOX).build()
+		this.add("rune_item_modifier", new RuneItemModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(STRONGHOLD_CROSSING).add(STRONGHOLD_CORRIDOR).add(BASTION_BRIDGE).add(BASTION_HOGLIN_STABLE).add(BASTION_OTHER)
+				.add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).add(ANCIENT_CITY_ICE_BOX).build()
 		}, 2, Util.make(new WeightCollection<>(), (collection) -> {
 			collection.add(10, LootModifierHelper.getCommonRunes());
 			collection.add(70, LootModifierHelper.getRareRunes());
 			collection.add(20, LootModifierHelper.getTreasureRunes());
 		})));
-		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).add(ANCIENT_CITY_ICE_BOX).build()
+		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).add(ANCIENT_CITY_ICE_BOX).build()
 		}, 1, Util.make(new WeightCollection<>(), (collection) -> {
 			collection.add(20, LootModifierHelper.getCommonEnchantments());
 			collection.add(40, LootModifierHelper.getRareEnchantments());
 			collection.add(25, LootModifierHelper.getVeryRareEnchantments());
 			collection.add(15, LootModifierHelper.getTreasureEnchantments());
 		}), LootModifierHelper.getExtraOverworldTreasure(), LootModifierHelper.getExtraNetherTreasure(), LootModifierHelper.getExtraEndTreasure()));
-		this.add("diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(BASTION_OTHER).add(BASTION_HOGLIN_STABLE).add(IGLOO_CHEST).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(STRONGHOLD_CROSSING).add(UNDERWATER_RUIN_BIG).add(WOODLAND_MANSION).build()
+		this.add("diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(BASTION_OTHER).add(BASTION_HOGLIN_STABLE).add(IGLOO_CHEST).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(STRONGHOLD_CROSSING).add(UNDERWATER_RUIN_BIG).add(WOODLAND_MANSION).build()
 		}, XSItems.DIAMOND_APPLE.get(), Chance.of(0.06)));
-		this.add("enchanted_diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(ANCIENT_CITY).add(BASTION_TREASURE).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(WOODLAND_MANSION).build()
+		this.add("enchanted_diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(ANCIENT_CITY).add(BASTION_TREASURE).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(WOODLAND_MANSION).build()
 		}, XSItems.ENCHANTED_DIAMOND_APPLE.get(), Chance.of(0.02)));
-		this.add("void_walker_modifier", new EndEnchantmentsModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
+		this.add("void_walker_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
 		}, XSEnchantments.VOID_WALKER.get(), Chance.of(0.08), false));
-		this.add("void_protection_modifier", new EndEnchantmentsModifier(new LootItemCondition[]{
-				new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
+		this.add("void_protection_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
+			new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
 		}, XSEnchantments.VOID_PROTECTION.get(), Chance.of(0.02), true));
 	}
 	

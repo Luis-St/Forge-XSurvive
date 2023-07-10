@@ -66,8 +66,8 @@ public abstract class EnchantmentMixin implements IEnchantment {
 	public boolean isAllowedOnGoldenBooks() {
 		Enchantment enchantment = (Enchantment) (Object) this;
 		List<Enchantment> goldenEnchantments = Lists.newArrayList(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE,
-				Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY,
-				Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);
+			Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY,
+			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);
 		if (enchantment instanceof ProtectionEnchantment) {
 			return true;
 		} else if (enchantment instanceof DamageEnchantment) {

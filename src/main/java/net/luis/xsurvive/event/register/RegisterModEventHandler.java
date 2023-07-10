@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegisterModEventHandler {
 	
-	
 	@SubscribeEvent
 	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {

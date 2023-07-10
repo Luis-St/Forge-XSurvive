@@ -33,7 +33,7 @@ public class XSBlockLootSubProvider extends BlockLootSubProvider {
 		this.dropSelf(XSBlocks.SMELTING_FURNACE.get());
 		this.add(XSBlocks.HONEY_MELON.get(), (block) -> {
 			return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(XSItems.HONEY_MELON_SLICE.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 7.0F)))
-					.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(LimitCount.limitCount(IntRange.upperBound(9)))));
+				.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(LimitCount.limitCount(IntRange.upperBound(9)))));
 		});
 		this.add(XSBlocks.HONEY_MELON_STEM.get(), (block) -> {
 			return createStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());

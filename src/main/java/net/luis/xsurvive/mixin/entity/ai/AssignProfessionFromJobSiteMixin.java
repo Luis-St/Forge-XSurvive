@@ -29,30 +29,30 @@ public abstract class AssignProfessionFromJobSiteMixin {
 	@Inject(method = "create", at = @At(value = "HEAD"), cancellable = true)
 	private static void create(CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
 		callback.setReturnValue(
-				BehaviorBuilder.create((builder) -> builder.group(builder.present(MemoryModuleType.POTENTIAL_JOB_SITE), builder.registered(MemoryModuleType.JOB_SITE)).apply(builder, (memory, accessor) -> (level, villager, seed) -> {
-					GlobalPos pos = builder.get(memory);
-					if (!pos.pos().closerToCenterThan(villager.position(), 2.0) && !villager.assignProfessionWhenSpawned()) {
-						return false;
-					} else {
-						memory.erase();
-						accessor.set(pos);
-						level.broadcastEntityEvent(villager, (byte) 14);
-						if (villager.getVillagerData().getProfession() == VillagerProfession.NONE) {
-							if (VillagerProvider.get(villager).getResetCount() > 7) {
-								villager.setVillagerData(villager.getVillagerData().setProfession(VillagerProfession.NITWIT));
+			BehaviorBuilder.create((builder) -> builder.group(builder.present(MemoryModuleType.POTENTIAL_JOB_SITE), builder.registered(MemoryModuleType.JOB_SITE)).apply(builder, (memory, accessor) -> (level, villager, seed) -> {
+				GlobalPos pos = builder.get(memory);
+				if (!pos.pos().closerToCenterThan(villager.position(), 2.0) && !villager.assignProfessionWhenSpawned()) {
+					return false;
+				} else {
+					memory.erase();
+					accessor.set(pos);
+					level.broadcastEntityEvent(villager, (byte) 14);
+					if (villager.getVillagerData().getProfession() == VillagerProfession.NONE) {
+						if (VillagerProvider.get(villager).getResetCount() > 7) {
+							villager.setVillagerData(villager.getVillagerData().setProfession(VillagerProfession.NITWIT));
+							villager.refreshBrain(level);
+						} else {
+							MinecraftServer minecraftserver = level.getServer();
+							Optional.ofNullable(minecraftserver.getLevel(pos.dimension())).flatMap((serverLevel) -> serverLevel.getPoiManager().getType(pos.pos())).flatMap((poi) -> {
+								return ForgeRegistries.VILLAGER_PROFESSIONS.getValues().stream().filter((profession) -> profession.heldJobSite().test(poi)).findFirst();
+							}).ifPresent((profession) -> {
+								villager.setVillagerData(villager.getVillagerData().setProfession(profession));
 								villager.refreshBrain(level);
-							} else {
-								MinecraftServer minecraftserver = level.getServer();
-								Optional.ofNullable(minecraftserver.getLevel(pos.dimension())).flatMap((serverLevel) -> serverLevel.getPoiManager().getType(pos.pos())).flatMap((poi) -> {
-									return ForgeRegistries.VILLAGER_PROFESSIONS.getValues().stream().filter((profession) -> profession.heldJobSite().test(poi)).findFirst();
-								}).ifPresent((profession) -> {
-									villager.setVillagerData(villager.getVillagerData().setProfession(profession));
-									villager.refreshBrain(level);
-								});
-							}
+							});
 						}
-						return true;
 					}
-				})));
+					return true;
+				}
+			})));
 	}
 }

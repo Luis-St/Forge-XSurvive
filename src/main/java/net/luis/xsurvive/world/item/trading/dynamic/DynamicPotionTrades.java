@@ -25,7 +25,7 @@ public class DynamicPotionTrades {
 			Potion potion = random(Lists.newArrayList(ForgeRegistries.POTIONS.getValues()), rng);
 			int emeralds = Math.min(getEmeraldCount(rng, potion.getEffects()), 64);
 			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), PotionUtils.setPotion(new ItemStack(Items.POTION), potion), 16, getVillagerXp(villagerLevel),
-					0.2F);
+				0.2F);
 		};
 	}
 	
@@ -37,7 +37,7 @@ public class DynamicPotionTrades {
 		return (villager, rng) -> {
 			Potion potion = random(Lists.newArrayList(potions), rng);
 			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), PotionUtils.setPotion(new ItemStack(Items.POTION), potion), 16, getVillagerXp(villagerLevel),
-					0.2F);
+				0.2F);
 		};
 	}
 }

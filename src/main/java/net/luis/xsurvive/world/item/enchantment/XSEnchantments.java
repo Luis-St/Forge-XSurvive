@@ -15,8 +15,8 @@ import net.minecraftforge.registries.*;
 
 public class XSEnchantments {
 	
-	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{
-			EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
+		EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
 	};
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, XSurvive.MOD_ID);
 	public static final RegistryObject<MultiDropEnchantment> MULTI_DROP = ENCHANTMENTS.register("multi_drop", () -> {

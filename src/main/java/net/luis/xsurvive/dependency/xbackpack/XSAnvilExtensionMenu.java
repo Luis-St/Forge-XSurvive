@@ -115,7 +115,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	
 	private void playSound(ServerPlayer player, ServerLevel level) {
 		player.connection.send(new ClientboundSoundPacket(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(SoundEvents.ANVIL_USE), SoundSource.BLOCKS, player.getX(), player.getY(), player.getZ(), 1.0F, level.random.nextFloat() * 0.1F + 0.9F,
-				level.random.nextLong()));
+			level.random.nextLong()));
 	}
 	
 	@Override

@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ReplantingEnchantment extends Enchantment implements WikiFileEntry {
 	
-	
 	public ReplantingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}

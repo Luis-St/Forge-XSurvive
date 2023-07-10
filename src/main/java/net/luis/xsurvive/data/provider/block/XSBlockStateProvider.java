@@ -77,7 +77,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	private void attachedStemBlock(Block block) {
 		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
 		this.models().getBuilder(name).parent(new ExistingModelFile(this.mcLoc("block/stem_fruit"), this.existingFileHelper)).texture("stem", this.mcLoc("block/melon_stem")).texture("upperstem", this.mcLoc("block/attached_melon_stem"))
-				.renderType("cutout");
+			.renderType("cutout");
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (Direction direction : Lists.newArrayList(Direction.Plane.HORIZONTAL.iterator())) {
 			builder.partialState().with(AttachedStemBlock.FACING, direction).modelForState().modelFile(this.blockModel(block)).rotationY((this.getYRotation(direction) + 90) % 360).addModel();

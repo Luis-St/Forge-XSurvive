@@ -61,7 +61,7 @@ public class VillagerTradeWikiFile {
 				for (VillagerTrades.ItemListing trade : trades.getValue()) {
 					TradeData tradeData = getTradeData(trade);
 					builder.append(tradeData.costItemA).append(tradeData.costCountA).append(tradeData.costItemB).append(tradeData.costCountB).append(tradeData.maxUses).append(tradeData.priceMultiplier)
-							.append(tradeData.xp).append(tradeData.resultItem).append(tradeData.resultCount.toString()).endLine();
+						.append(tradeData.xp).append(tradeData.resultItem).append(tradeData.resultCount.toString()).endLine();
 				}
 			});
 		}
