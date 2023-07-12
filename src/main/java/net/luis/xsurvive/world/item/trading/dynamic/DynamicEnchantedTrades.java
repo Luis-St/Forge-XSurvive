@@ -10,6 +10,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -23,23 +24,22 @@ import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
 
 public class DynamicEnchantedTrades {
 	
-	public static ItemListing randomEnchantedItem(Item item, int emeralds, int maxUses, int villagerXp, float priceMultiplier) {
+	public static @NotNull ItemListing randomEnchantedItem(@NotNull Item item, int emeralds, int maxUses, int villagerXp, float priceMultiplier) {
 		return (villager, rng) -> {
 			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), Math.max(emeralds / 2, 1), false);
 			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds + getEmeraldCount(stack)), stack, maxUses, villagerXp, priceMultiplier);
 		};
 	}
 	
-	public static ItemListing randomEnchantedBook(int villagerLevel, List<Rarity> rarities) {
+	public static @NotNull ItemListing randomEnchantedBook(int villagerLevel, @NotNull List<Rarity> rarities) {
 		return (villager, rng) -> {
 			Enchantment enchantment = random(getValidEnchantments(rarities), rng);
 			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, 1));
 			return new MerchantOffer(new ItemStack(Items.EMERALD, getEmeraldCount(rng, enchantment.getMaxLevel())), new ItemStack(Items.BOOK), stack, 1, getVillagerXp(villagerLevel), 0.2F);
-			
 		};
 	}
 	
-	public static ItemListing randomEnchantedGoldenBook(int villagerLevel) {
+	public static @NotNull ItemListing randomEnchantedGoldenBook(int villagerLevel) {
 		return (villager, rng) -> {
 			Enchantment enchantment = random(getValidGoldenEnchantments(ForgeRegistries.ENCHANTMENTS.getValues()), rng);
 			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel()));

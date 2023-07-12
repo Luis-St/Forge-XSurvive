@@ -17,13 +17,13 @@ public class XSPotions {
 	
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, XSurvive.MOD_ID);
 	
-	public static final RegistryObject<Potion> FORST = POTIONS.register("frost", () -> {
+	public static final RegistryObject<Potion> FROST = POTIONS.register("frost", () -> {
 		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 3600));
 	});
-	public static final RegistryObject<Potion> LONG_FORST = POTIONS.register("long_frost", () -> {
+	public static final RegistryObject<Potion> LONG_FROST = POTIONS.register("long_frost", () -> {
 		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 9600));
 	});
-	public static final RegistryObject<Potion> STRONG_FORST = POTIONS.register("strong_frost", () -> {
+	public static final RegistryObject<Potion> STRONG_FROST = POTIONS.register("strong_frost", () -> {
 		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 1800, 1));
 	});
 	public static final RegistryObject<Potion> WITHER = POTIONS.register("wither", () -> {

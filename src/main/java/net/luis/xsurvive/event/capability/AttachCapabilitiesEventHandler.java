@@ -19,6 +19,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -30,7 +31,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class AttachCapabilitiesEventHandler {
 	
 	@SubscribeEvent
-	public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
+	public static void attachEntityCapabilities(@NotNull AttachCapabilitiesEvent<Entity> event) {
 		Entity entity = event.getObject();
 		if (entity instanceof ServerPlayer player) {
 			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "server_player_capability"), new PlayerProvider(new ServerPlayerHandler(player)));
@@ -44,7 +45,7 @@ public class AttachCapabilitiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void attachItemCapabilities(AttachCapabilitiesEvent<ItemStack> event) {
+	public static void attachItemCapabilities(@NotNull AttachCapabilitiesEvent<ItemStack> event) {
 		ItemStack stack = event.getObject();
 		if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE) {
 			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "enchanted_golden_apple_glint"), new GlintColorProvider(IGlintColor.simple(DyeColor.YELLOW)));
@@ -55,7 +56,7 @@ public class AttachCapabilitiesEventHandler {
 	public static class Client {
 		
 		@SubscribeEvent
-		public static void AttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
+		public static void AttachCapabilities(@NotNull AttachCapabilitiesEvent<Entity> event) {
 			Entity entity = event.getObject();
 			if (entity instanceof LocalPlayer player) {
 				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "local_player_capability"), new PlayerProvider(new LocalPlayerHandler(player)));
@@ -64,6 +65,5 @@ public class AttachCapabilitiesEventHandler {
 				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "client_entity_capability"), new EntityProvider(new ClientEntityHandler(entity)));
 			}
 		}
-		
 	}
 }

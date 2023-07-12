@@ -48,7 +48,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof ElytraItem) {
 			return true;
 		} else if (stack.getItem() instanceof ElytraChestplateItem) {
@@ -103,7 +103,7 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("If a entity wears an elytra with this enchantment and it takes void damage, the damage is reduced.").endLine();
 			builder.append("Damage reduction is calculated as follows:").endLine();

@@ -69,5 +69,4 @@ public abstract class MerchantOfferMixin {
 		this.uses = this.getMaxUses();
 		callback.cancel();
 	}
-	
 }

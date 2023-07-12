@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -32,12 +33,12 @@ public class GammaCommand {
 		})));
 	}
 	
-	private static int getGamma(CommandSourceStack source, Minecraft minecraft) {
-		source.sendSuccess(() -> Component.translatable(XSurvive.MOD_ID + ".commands.gamma.get", minecraft.options.gamma.get() + ""), false);
+	private static int getGamma(@NotNull CommandSourceStack source, @NotNull Minecraft minecraft) {
+		source.sendSuccess(() -> Component.translatable(XSurvive.MOD_ID + ".commands.gamma.get", String.valueOf(minecraft.options.gamma.get())), false);
 		return 1;
 	}
 	
-	private static int setGamma(CommandSourceStack source, Minecraft minecraft, double value) {
+	private static int setGamma(@NotNull CommandSourceStack source, @NotNull Minecraft minecraft, double value) {
 		minecraft.options.gamma.set(value);
 		if (minecraft.options.gamma.get() == value) {
 			source.sendSuccess(() -> Component.translatable(XSurvive.MOD_ID + ".commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
@@ -46,6 +47,5 @@ public class GammaCommand {
 			source.sendFailure(Component.translatable(XSurvive.MOD_ID + ".commands.gamma.failure", Double.toString(value)));
 			return 0;
 		}
-		
 	}
 }

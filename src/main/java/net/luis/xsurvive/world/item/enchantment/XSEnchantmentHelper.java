@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -28,30 +29,30 @@ import java.util.stream.Collectors;
 
 public class XSEnchantmentHelper {
 	
-	public static boolean hasEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static boolean hasEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		List<Enchantment> enchantments = EnchantmentHelper.getEnchantments(stack).keySet().stream().toList();
 		return enchantments.contains(enchantment);
 	}
 	
-	public static boolean hasGoldenEnchantment(ItemStack stack) {
+	public static boolean hasGoldenEnchantment(@NotNull ItemStack stack) {
 		return !getGoldenEnchantments(stack).isEmpty();
 	}
 	
-	public static boolean hasMinEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static boolean hasMinEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
 			return stack.getEnchantmentLevel(enchantment) == enchantment.getMinLevel();
 		}
 		return false;
 	}
 	
-	public static boolean hasMaxEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static boolean hasMaxEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
 			return stack.getEnchantmentLevel(enchantment) == enchantment.getMaxLevel();
 		}
 		return false;
 	}
 	
-	public static boolean hasMaxGoldenEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static boolean hasMaxGoldenEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
 			if (enchantment instanceof IEnchantment ench) {
 				return stack.getEnchantmentLevel(enchantment) == ench.getMaxGoldenBookLevel();
@@ -62,11 +63,11 @@ public class XSEnchantmentHelper {
 		return false;
 	}
 	
-	public static boolean isEnchantmentCompatible(ItemStack stack, Enchantment enchantment) {
+	public static boolean isEnchantmentCompatible(@NotNull ItemStack stack, @NotNull Enchantment enchantment) {
 		return EnchantmentHelper.isEnchantmentCompatible(EnchantmentHelper.getEnchantments(stack).keySet(), enchantment);
 	}
 	
-	public static List<Enchantment> getGoldenEnchantments(ItemStack stack) {
+	public static @NotNull List<Enchantment> getGoldenEnchantments(@NotNull ItemStack stack) {
 		List<Enchantment> enchantments = Lists.newArrayList();
 		for (Enchantment enchantment : EnchantmentHelper.getEnchantments(stack).keySet().stream().toList()) {
 			if (enchantment instanceof IEnchantment ench) {
@@ -80,7 +81,7 @@ public class XSEnchantmentHelper {
 		return enchantments;
 	}
 	
-	public static Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(Enchantment enchantment, LivingEntity entity) {
+	public static @NotNull Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
 		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, itemStack -> true).entrySet()) {
 			if (entry.getKey().getType() == EquipmentSlot.Type.HAND) {
 				return entry;
@@ -89,7 +90,7 @@ public class XSEnchantmentHelper {
 		return new SimpleEntry<>(null, ItemStack.EMPTY);
 	}
 	
-	public static int getEnchantmentLevel(Enchantment enchantment, LivingEntity entity) {
+	public static int getEnchantmentLevel(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
 		int level = entity.getMainHandItem().getEnchantmentLevel(enchantment);
 		if (level > 0) {
 			return level;
@@ -97,7 +98,7 @@ public class XSEnchantmentHelper {
 		return entity.getOffhandItem().getEnchantmentLevel(enchantment);
 	}
 	
-	public static void addEnchantment(EnchantmentInstance instance, ItemStack stack, boolean present) {
+	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 		if ((!hasEnchantment(instance.enchantment, stack) || present) && EnchantmentHelper.isEnchantmentCompatible(enchantments.keySet(), instance.enchantment)) {
 			enchantments.put(instance.enchantment, instance.level);
@@ -105,7 +106,7 @@ public class XSEnchantmentHelper {
 		EnchantmentHelper.setEnchantments(enchantments, stack);
 	}
 	
-	public static void removeEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static void removeEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 		if (hasEnchantment(enchantment, stack)) {
 			enchantments.remove(enchantment);
@@ -113,7 +114,7 @@ public class XSEnchantmentHelper {
 		EnchantmentHelper.setEnchantments(enchantments, stack);
 	}
 	
-	public static void replaceEnchantment(EnchantmentInstance instance, ItemStack stack) {
+	public static void replaceEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack) {
 		if (hasEnchantment(instance.enchantment, stack)) {
 			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 			enchantments.replace(instance.enchantment, instance.level);
@@ -121,7 +122,7 @@ public class XSEnchantmentHelper {
 		}
 	}
 	
-	public static void increaseEnchantment(Enchantment enchantment, ItemStack stack, boolean golden) {
+	public static void increaseEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack, boolean golden) {
 		if (hasEnchantment(enchantment, stack)) {
 			if (!hasMaxEnchantment(enchantment, stack)) {
 				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) + 1), stack);
@@ -133,7 +134,7 @@ public class XSEnchantmentHelper {
 		}
 	}
 	
-	public static EnchantmentInstance increaseEnchantment(EnchantmentInstance instance, boolean golden) {
+	public static @NotNull EnchantmentInstance increaseEnchantment(@NotNull EnchantmentInstance instance, boolean golden) {
 		if (instance.level != instance.enchantment.getMaxLevel()) {
 			return new EnchantmentInstance(instance.enchantment, instance.level + 1);
 		} else if (golden) {
@@ -148,7 +149,7 @@ public class XSEnchantmentHelper {
 		return instance;
 	}
 	
-	public static void decreaseEnchantment(Enchantment enchantment, ItemStack stack) {
+	public static void decreaseEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
 			if (hasMinEnchantment(enchantment, stack)) {
 				removeEnchantment(enchantment, stack);
@@ -158,7 +159,7 @@ public class XSEnchantmentHelper {
 		}
 	}
 	
-	public static Map<EquipmentSlot, ItemStack> getItemsWith(Enchantment enchantment, LivingEntity entity, Predicate<ItemStack> predicate) {
+	public static @NotNull Map<EquipmentSlot, ItemStack> getItemsWith(@NotNull Enchantment enchantment, @NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
 		Map<EquipmentSlot, ItemStack> items = Maps.newHashMap();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(slot);

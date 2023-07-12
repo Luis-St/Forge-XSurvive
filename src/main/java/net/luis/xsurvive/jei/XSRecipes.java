@@ -6,9 +6,9 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -21,10 +21,10 @@ public class XSRecipes {
 	private final RecipeManager recipeManager;
 	
 	public XSRecipes() {
-		this.recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+		this.recipeManager = Minecraft.getInstance().level.getRecipeManager();
 	}
 	
-	private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType) {
+	private static <C extends Container, T extends Recipe<C>> @NotNull List<T> getValidHandledRecipes(@NotNull RecipeManager recipeManager, RecipeType<T> recipeType) {
 		return recipeManager.getAllRecipesFor(recipeType);
 	}
 	

@@ -44,6 +44,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map.Entry;
@@ -61,7 +62,7 @@ public class PlayerEventHandler {
 	private static final Component ENDER_CHEST = Component.translatable("container.enderchest");
 	
 	@SubscribeEvent
-	public static void anvilUpdate(AnvilUpdateEvent event) {
+	public static void anvilUpdate(@NotNull AnvilUpdateEvent event) {
 		ItemStack left = event.getLeft();
 		ItemStack right = event.getRight();
 		if (!left.isEmpty()) {
@@ -108,7 +109,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void anvilRepair(AnvilRepairEvent event) {
+	public static void anvilRepair(@NotNull AnvilRepairEvent event) {
 		if (event.getRight().getItem() instanceof EnchantedGoldenBookItem) {
 			event.setBreakChance(0.0F);
 		} else {
@@ -117,14 +118,14 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void breakSpeed(BreakSpeed event) {
+	public static void breakSpeed(@NotNull BreakSpeed event) {
 		if (event.getState().is(Blocks.SPAWNER)) {
 			event.setCanceled(true);
 		}
 	}
 	
 	@SubscribeEvent
-	public static void itemTooltip(ItemTooltipEvent event) {
+	public static void itemTooltip(@NotNull ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
 		if (stack.getItem() instanceof PotionItem || stack.getItem() instanceof TippedArrowItem) {
 			Potion potion = PotionUtils.getPotion(stack);
@@ -149,7 +150,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerBreakSpeed(PlayerEvent.BreakSpeed event) {
+	public static void playerBreakSpeed(@NotNull PlayerEvent.BreakSpeed event) {
 		Player player = event.getEntity();
 		if (!player.onGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
 			event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
@@ -162,14 +163,14 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerChangedDimension(PlayerChangedDimensionEvent event) {
+	public static void playerChangedDimension(@NotNull PlayerChangedDimensionEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			PlayerProvider.getServer(player).broadcastChanges();
 		}
 	}
 	
 	@SubscribeEvent
-	public static void playerClone(PlayerEvent.Clone event) {
+	public static void playerClone(@NotNull PlayerEvent.Clone event) {
 		if (event.getOriginal() instanceof ServerPlayer original && event.getEntity() instanceof ServerPlayer player) {
 			original.reviveCaps();
 			IPlayer originalHandler = PlayerProvider.get(original);
@@ -184,12 +185,12 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerRespawn(PlayerRespawnEvent event) {
+	public static void playerRespawn(@NotNull PlayerRespawnEvent event) {
 		PlayerProvider.get(event.getEntity()).broadcastChanges();
 	}
 	
 	@SubscribeEvent
-	public static void playerSleepInBed(PlayerSleepInBedEvent event) {
+	public static void playerSleepInBed(@NotNull PlayerSleepInBedEvent event) {
 		if (!event.getEntity().getAbilities().instabuild) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			event.getEntity().displayClientMessage(Component.translatable("message.xsurvive.sleeping"), true);
@@ -207,7 +208,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerTick(TickEvent.PlayerTickEvent event) {
+	public static void playerTick(TickEvent.@NotNull PlayerTickEvent event) {
 		Player player = event.player;
 		if (event.phase == TickEvent.Phase.START) {
 			player.getCapability(XSCapabilities.PLAYER, null).ifPresent(IPlayer::tick);
@@ -225,7 +226,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void rightClickItem(PlayerInteractEvent.RightClickItem event) {
+	public static void rightClickItem(PlayerInteractEvent.@NotNull RightClickItem event) {
 		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.ASPECT_OF_THE_END.get(), event.getEntity());
 		int aspectOfTheEnd = entry.getValue().getEnchantmentLevel(XSEnchantments.ASPECT_OF_THE_END.get());
 		if (event.getEntity() instanceof ServerPlayer player) {
@@ -241,7 +242,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+	public static void rightClickBlock(PlayerInteractEvent.@NotNull RightClickBlock event) {
 		BlockPos pos = event.getPos();
 		Level level = event.getLevel();
 		BlockState state = level.getBlockState(pos);

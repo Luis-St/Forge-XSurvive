@@ -38,7 +38,7 @@ public abstract class EnderDragonMixin extends Mob {
 	@Shadow
 	private EndDragonFight dragonFight;
 	@Shadow(remap = false)
-	private Player unlimitedLastHurtByPlayer = null;
+	private final Player unlimitedLastHurtByPlayer = null;
 	@Shadow
 	public EndCrystal nearestCrystal;
 	@Shadow

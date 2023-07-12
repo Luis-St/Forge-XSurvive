@@ -80,7 +80,7 @@ public class EnchantedGoldenBookItem extends Item implements WikiFileEntry {
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("Add enchantment:").endLine();
 			builder.append("The golden book can be used to add the enchantment to the item in the anvil for 10 xp.").endLine();

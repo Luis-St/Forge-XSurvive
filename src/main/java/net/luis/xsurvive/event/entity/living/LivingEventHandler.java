@@ -29,6 +29,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -48,7 +49,7 @@ public class LivingEventHandler {
 	public static final UUID REACH_DISTANCE_UUID = UUID.fromString("F4502088-D181-44F4-A881-CDE977976A6D");
 	
 	@SubscribeEvent
-	public static void livingAttack(LivingAttackEvent event) {
+	public static void livingAttack(@NotNull LivingAttackEvent event) {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
 		float amount = event.getAmount();
@@ -89,7 +90,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void livingDamage(LivingDamageEvent event) {
+	public static void livingDamage(@NotNull LivingDamageEvent event) {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
 		float amount = event.getAmount();
@@ -121,7 +122,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void livingEquipmentChange(LivingEquipmentChangeEvent event) {
+	public static void livingEquipmentChange(@NotNull LivingEquipmentChangeEvent event) {
 		if (event.getEntity() instanceof Player player) {
 			ItemStack toStack = event.getTo();
 			ItemStack fromStack = event.getFrom();
@@ -142,7 +143,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void livingExperienceDrop(LivingExperienceDropEvent event) {
+	public static void livingExperienceDrop(@NotNull LivingExperienceDropEvent event) {
 		Player player = event.getAttackingPlayer();
 		int xp = event.getOriginalExperience();
 		if (player != null) {
@@ -155,7 +156,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void livingHurt(LivingHurtEvent event) {
+	public static void livingHurt(@NotNull LivingHurtEvent event) {
 		LivingEntity livingTarget = event.getEntity();
 		if (event.getSource().getEntity() instanceof LivingEntity livingAttacker) {
 			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT.get(), livingAttacker);
@@ -170,7 +171,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void livingTick(LivingEvent.LivingTickEvent event) {
+	public static void livingTick(LivingEvent.@NotNull LivingTickEvent event) {
 		if (event.getEntity() instanceof ILivingEntity livingEntity) {
 			if (livingEntity.hasCustomAi()) {
 				CustomAi customAi = Objects.requireNonNull(livingEntity.getCustomAi());
@@ -182,7 +183,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void mobEffectAdded(MobEffectEvent.Added event) {
+	public static void mobEffectAdded(MobEffectEvent.@NotNull Added event) {
 		MobEffectInstance instance = event.getEffectInstance();
 		if (event.getEntity() instanceof ServerPlayer player && instance.getEffect() == XSMobEffects.FROST.get()) {
 			PlayerProvider.getServer(player).setFrostTime(instance.getDuration());
@@ -190,7 +191,7 @@ public class LivingEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void shieldBlock(ShieldBlockEvent event) {
+	public static void shieldBlock(@NotNull ShieldBlockEvent event) {
 		if (event.getEntity() instanceof Player) {
 			if (event.getDamageSource().isIndirect() && event.getDamageSource().getEntity() instanceof Blaze) {
 				event.setCanceled(true);

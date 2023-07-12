@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -26,13 +27,13 @@ import java.util.stream.Collectors;
 
 class DynamicTradeHelper {
 	
-	static List<Enchantment> getValidEnchantments(List<Rarity> rarities) {
+	static @NotNull List<Enchantment> getValidEnchantments(@NotNull List<Rarity> rarities) {
 		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> {
 			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
 		}).collect(Collectors.toList());
 	}
 	
-	private static List<Enchantment> getEnchantmentsForRarity(List<Rarity> rarities) {
+	private static @NotNull List<Enchantment> getEnchantmentsForRarity(@NotNull List<Rarity> rarities) {
 		List<Enchantment> enchantments = Lists.newArrayList();
 		if (rarities.contains(Rarity.COMMON)) {
 			enchantments.addAll(LootModifierHelper.getCommonEnchantments().getValues());
@@ -49,7 +50,7 @@ class DynamicTradeHelper {
 		return enchantments;
 	}
 	
-	static List<Enchantment> getValidGoldenEnchantments(Collection<Enchantment> enchantments) {
+	static @NotNull List<Enchantment> getValidGoldenEnchantments(@NotNull Collection<Enchantment> enchantments) {
 		return enchantments.stream().filter((enchantment) -> {
 			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
 		}).filter((enchantment) -> {
@@ -61,7 +62,7 @@ class DynamicTradeHelper {
 		}).collect(Collectors.toList());
 	}
 	
-	static int clampLevel(RandomSource rng, Enchantment enchantment, int minLevel, int maxLevel) {
+	static int clampLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int minLevel, int maxLevel) {
 		int min = Math.max(minLevel, enchantment.getMinLevel());
 		int max = Math.min(maxLevel, enchantment.getMaxLevel());
 		if (min == max) {
@@ -70,7 +71,7 @@ class DynamicTradeHelper {
 		return Mth.randomBetweenInclusive(rng, min, max);
 	}
 	
-	static int modifyLevel(RandomSource rng, Enchantment enchantment, int level, int villagerLevel) {
+	static int modifyLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int level, int villagerLevel) {
 		int minLevel = enchantment.getMinLevel();
 		int maxLevel = enchantment.getMaxLevel();
 		if (minLevel == maxLevel) {
@@ -103,15 +104,15 @@ class DynamicTradeHelper {
 		}
 	}
 	
-	static int getRandomLevel(RandomSource rng, Enchantment enchantment, int minLevel, int maxLevel, int villagerLevel) {
+	static int getRandomLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int minLevel, int maxLevel, int villagerLevel) {
 		return modifyLevel(rng, enchantment, clampLevel(rng, enchantment, minLevel, maxLevel), villagerLevel);
 	}
 	
-	static int getEmeraldCount(RandomSource rng, int level) {
+	static int getEmeraldCount(@NotNull RandomSource rng, int level) {
 		return Math.min(2 + rng.nextInt(5 + level * 10) + 3 * level + 5, 64);
 	}
 	
-	static int getEmeraldCount(RandomSource rng, List<MobEffectInstance> effects) {
+	static int getEmeraldCount(@NotNull RandomSource rng, @NotNull List<MobEffectInstance> effects) {
 		int emeralds = 1;
 		for (MobEffectInstance effect : effects) {
 			emeralds += effect.getAmplifier() + 1;
@@ -119,7 +120,7 @@ class DynamicTradeHelper {
 		return getEmeraldCount(rng, emeralds);
 	}
 	
-	static int getEmeraldCount(ItemStack stack) {
+	static int getEmeraldCount(@NotNull ItemStack stack) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 		int emeralds = enchantments.size();
 		for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
@@ -141,7 +142,7 @@ class DynamicTradeHelper {
 		return Trade.VILLAGER_XP[villagerLevel - 1];
 	}
 	
-	static <T> T random(List<T> list, RandomSource rng) {
+	static <T> @NotNull T random(@NotNull List<T> list, @NotNull RandomSource rng) {
 		return list.get(rng.nextInt(list.size()));
 	}
 }

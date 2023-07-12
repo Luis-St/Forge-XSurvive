@@ -6,6 +6,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -17,11 +18,6 @@ public class HarmingCurseEnchantment extends Enchantment implements WikiFileEntr
 	
 	public HarmingCurseEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
-	}
-	
-	@Override
-	public int getMaxLevel() {
-		return 1;
 	}
 	
 	@Override
@@ -45,7 +41,7 @@ public class HarmingCurseEnchantment extends Enchantment implements WikiFileEntr
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When an entity is hit by an item with this enchantment, the damage is reflected back to the attacking entity.").endLine();
 			builder.append("Reflected damage is calculated as follows:").endLine();

@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -52,7 +53,7 @@ public class XSOrePlacements {
 		
 	}
 	
-	private static ResourceKey<PlacedFeature> createKey(String name) {
+	private static @NotNull ResourceKey<PlacedFeature> createKey(@NotNull String name) {
 		return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(XSurvive.MOD_ID, name));
 	}
 }

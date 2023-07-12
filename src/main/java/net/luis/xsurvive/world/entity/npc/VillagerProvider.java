@@ -25,11 +25,11 @@ public class VillagerProvider implements ICapabilitySerializable<CompoundTag> {
 		this.optional = LazyOptional.of(() -> this.villagerCapability);
 	}
 	
-	public static IVillager get(Villager villager) {
+	public static @NotNull IVillager get(@NotNull Villager villager) {
 		return villager.getCapability(XSCapabilities.VILLAGER, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static LazyOptional<IVillager> getSafe(Villager villager) {
+	public static @NotNull LazyOptional<IVillager> getSafe(@NotNull Villager villager) {
 		return villager.getCapability(XSCapabilities.VILLAGER, null);
 	}
 	
@@ -39,12 +39,12 @@ public class VillagerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public CompoundTag serializeNBT() {
+	public @NotNull CompoundTag serializeNBT() {
 		return this.villagerCapability.serializeDisk();
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundTag tag) {
+	public void deserializeNBT(@NotNull CompoundTag tag) {
 		this.villagerCapability.deserializeDisk(tag);
 	}
 }

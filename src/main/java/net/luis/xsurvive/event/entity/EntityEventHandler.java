@@ -35,6 +35,7 @@ import net.minecraftforge.event.entity.*;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -54,7 +55,7 @@ public class EntityEventHandler {
 	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
 	
 	@SubscribeEvent
-	public static void entityJoinLevel(EntityJoinLevelEvent event) {
+	public static void entityJoinLevel(@NotNull EntityJoinLevelEvent event) {
 		if (event.getEntity() instanceof LivingEntity entity) {
 			if (!(entity instanceof Player)) {
 				if (entity instanceof EnderDragon) {
@@ -149,7 +150,7 @@ public class EntityEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void entityMount(EntityMountEvent event) {
+	public static void entityMount(@NotNull EntityMountEvent event) {
 		Entity entity = event.getEntity();
 		Entity vehicle = event.getEntityBeingMounted();
 		if (event.isMounting()) {
@@ -166,12 +167,12 @@ public class EntityEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void projectileImpact(EnderPearl event) {
+	public static void enderPearl(@NotNull EnderPearl event) {
 		event.setAttackDamage(event.getAttackDamage() * 1.5F);
 	}
 	
 	@SubscribeEvent
-	public static void projectileImpact(ProjectileImpactEvent event) {
+	public static void projectileImpact(@NotNull ProjectileImpactEvent event) {
 		if (event.getProjectile() instanceof IArrow arrow) {
 			int explosionLevel = arrow.getExplosionLevel();
 			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {

@@ -63,12 +63,12 @@ public class GoldenBookModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<GoldenBookModifier> codec() {
+	public @NotNull Codec<GoldenBookModifier> codec() {
 		return XSGlobalLootModifiers.GOLDEN_BOOK_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		for (int i = 0; i < this.goldenBookCount; i++) {
 			generatedLoot.add(this.getGoldenBook(context));
 		}
@@ -76,7 +76,7 @@ public class GoldenBookModifier extends LootModifier {
 		return generatedLoot;
 	}
 	
-	private ItemStack getGoldenBook(LootContext context) {
+	private @NotNull ItemStack getGoldenBook(@NotNull LootContext context) {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		Enchantment enchantment = this.getRandomEnchantment(context.getQueriedLootTableId());
 		if (enchantment != null && stack.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
@@ -87,7 +87,7 @@ public class GoldenBookModifier extends LootModifier {
 		return ItemStack.EMPTY;
 	}
 	
-	private Enchantment getRandomEnchantment(ResourceLocation location) {
+	private Enchantment getRandomEnchantment(@NotNull ResourceLocation location) {
 		RarityList<Enchantment> enchantments = RarityList.copy(this.enchantmentWeights.next());
 		if (enchantments.getRarity() == this.extraNetherTreasure.getRarity() && location.equals(BuiltInLootTables.BASTION_TREASURE)) {
 			enchantments.addAll(this.extraNetherTreasure);

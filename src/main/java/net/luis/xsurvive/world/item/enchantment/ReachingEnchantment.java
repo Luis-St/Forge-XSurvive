@@ -37,7 +37,7 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		return stack.getItem() instanceof TieredItem;
 	}
 	
@@ -82,7 +82,7 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When applied to a sword or tool, this Enchantment increases the range by half a block per level.").endLine();
 		});

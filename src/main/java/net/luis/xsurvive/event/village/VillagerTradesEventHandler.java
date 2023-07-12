@@ -18,6 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class VillagerTradesEventHandler {
 	private static final List<Rarity> ALLOWED_RARITIES = Lists.newArrayList(Rarity.COMMON, Rarity.RARE);
 	
 	@SubscribeEvent
-	public static void villagerTrades(VillagerTradesEvent event) {
+	public static void villagerTrades(@NotNull VillagerTradesEvent event) {
 		Int2ObjectMap<List<ItemListing>> trades = event.getTrades();
 		List<ItemListing> trade1 = Lists.newArrayList();
 		List<ItemListing> trade2 = Lists.newArrayList();

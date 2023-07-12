@@ -3,6 +3,7 @@ package net.luis.xsurvive.world.item;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -14,13 +15,13 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 @AutoRegisterCapability
 public interface IGlintColor {
 	
-	public static IGlintColor simple(DyeColor color) {
+	static @NotNull IGlintColor simple(@NotNull DyeColor color) {
 		return simple(color.getId());
 	}
 	
-	public static IGlintColor simple(int glintColor) {
+	static @NotNull IGlintColor simple(int glintColor) {
 		return (stack) -> glintColor;
 	}
 	
-	int getGlintColor(ItemStack stack);
+	int getGlintColor(@NotNull ItemStack stack);
 }

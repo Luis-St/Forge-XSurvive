@@ -1,6 +1,7 @@
 package net.luis.xsurvive.util;
 
 import com.mojang.serialization.Codec;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class Chance {
 		this.chance = chance;
 	}
 	
-	public static Chance of(double chance) {
+	public static @NotNull Chance of(double chance) {
 		return new Chance(chance);
 	}
 	

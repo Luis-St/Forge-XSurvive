@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -24,17 +25,17 @@ public class UpdatePlayerCapabilityPacket implements NetworkPacket {
 		this.tag = tag;
 	}
 	
-	public UpdatePlayerCapabilityPacket(FriendlyByteBuf buffer) {
+	public UpdatePlayerCapabilityPacket(@NotNull FriendlyByteBuf buffer) {
 		this.tag = buffer.readNbt();
 	}
 	
 	@Override
-	public void encode(FriendlyByteBuf buffer) {
+	public void encode(@NotNull FriendlyByteBuf buffer) {
 		buffer.writeNbt(this.tag);
 	}
 	
 	@Override
-	public void handle(Supplier<Context> context) {
+	public void handle(@NotNull Supplier<Context> context) {
 		context.get().enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 				XSClientPacketHandler.handlePlayerCapabilityUpdate(this.tag);

@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -26,19 +27,19 @@ public class UpdateTridentGlintColorPacket implements NetworkPacket {
 		this.tridentStack = tridentStack;
 	}
 	
-	public UpdateTridentGlintColorPacket(FriendlyByteBuf buffer) {
+	public UpdateTridentGlintColorPacket(@NotNull FriendlyByteBuf buffer) {
 		this.tridentEntityId = buffer.readInt();
 		this.tridentStack = buffer.readItem();
 	}
 	
 	@Override
-	public void encode(FriendlyByteBuf buffer) {
+	public void encode(@NotNull FriendlyByteBuf buffer) {
 		buffer.writeInt(this.tridentEntityId);
 		buffer.writeItem(this.tridentStack);
 	}
 	
 	@Override
-	public void handle(Supplier<Context> context) {
+	public void handle(@NotNull Supplier<Context> context) {
 		context.get().enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 				XSClientPacketHandler.handleTridentGlintColorUpdate(this.tridentEntityId, this.tridentStack);

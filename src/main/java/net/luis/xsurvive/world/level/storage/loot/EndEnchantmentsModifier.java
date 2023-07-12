@@ -47,12 +47,12 @@ public class EndEnchantmentsModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<EndEnchantmentsModifier> codec() {
+	public @NotNull Codec<EndEnchantmentsModifier> codec() {
 		return XSGlobalLootModifiers.END_ENCHANTMENTS_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		if (this.chance.result()) {
 			if (this.allowGolden) {
 				if (this.enchantment instanceof IEnchantment ench) {

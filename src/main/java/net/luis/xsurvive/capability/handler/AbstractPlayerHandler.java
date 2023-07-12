@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -33,12 +34,12 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public Player getPlayer() {
+	public @NotNull Player getPlayer() {
 		return this.player;
 	}
 	
 	@Override
-	public Level getLevel() {
+	public @NotNull Level getLevel() {
 		return this.getPlayer().level();
 	}
 	
@@ -87,7 +88,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public CombinedInvWrapper getCombinedInventory() {
+	public @NotNull CombinedInvWrapper getCombinedInventory() {
 		return this.combinedInventory.get();
 	}
 	
@@ -110,30 +111,30 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = this.serialize();
 		tag.put("ender_chest", this.enderChest.serializeNBT());
 		return tag;
 	}
 	
 	@Override
-	public void deserializeDisk(CompoundTag tag) {
+	public void deserializeDisk(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}
 	
 	@Override
-	public CompoundTag serializeNetwork() {
+	public @NotNull CompoundTag serializeNetwork() {
 		return this.serialize();
 	}
 	
 	@Override
-	public void deserializeNetwork(CompoundTag tag) {
+	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 	}
 	
 	@Override
-	public CompoundTag serializePersistent() {
+	public @NotNull CompoundTag serializePersistent() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
 		tag.put("ender_chest", this.enderChest.serializeNBT());
@@ -141,7 +142,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public void deserializePersistent(CompoundTag tag) {
+	public void deserializePersistent(@NotNull CompoundTag tag) {
 		this.tick = tag.getInt("tick");
 		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}

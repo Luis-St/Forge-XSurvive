@@ -47,24 +47,24 @@ public class XSJeiPlugin implements IModPlugin {
 	}
 	
 	@Override
-	public void registerItemSubtypes(ISubtypeRegistration registration) {
+	public void registerItemSubtypes(@NotNull ISubtypeRegistration registration) {
 		registration.useNbtForSubtypes(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 	}
 	
 	@Override
-	public void registerCategories(IRecipeCategoryRegistration registration) {
+	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
 		registration.addRecipeCategories(this.smeltingCategory = new SmeltingCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 	
 	@Override
-	public void registerRecipes(IRecipeRegistration registration) {
+	public void registerRecipes(@NotNull IRecipeRegistration registration) {
 		XSRecipes recipes = new XSRecipes();
 		registration.addRecipes(XSJeiRecipeTypes.SMELTING, recipes.getSmeltingRecipes(this.smeltingCategory));
 		registerGoldenBookAnvilRecipes(registration, registration.getVanillaRecipeFactory());
 		registerRuneAnvilRecipes(registration, registration.getVanillaRecipeFactory());
 	}
 	
-	private void registerGoldenBookAnvilRecipes(IRecipeRegistration registration, IVanillaRecipeFactory recipeFactory) {
+	private void registerGoldenBookAnvilRecipes(@NotNull IRecipeRegistration registration, @NotNull IVanillaRecipeFactory recipeFactory) {
 		List<IJeiAnvilRecipe> recipes = Lists.newArrayList();
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
 			if (enchantment instanceof IEnchantment ench) {
@@ -89,7 +89,7 @@ public class XSJeiPlugin implements IModPlugin {
 		registration.addRecipes(RecipeTypes.ANVIL, recipes);
 	}
 	
-	private ItemStack enchantItem(ItemStack stack, Enchantment enchantment, int level) {
+	private ItemStack enchantItem(@NotNull ItemStack stack, @NotNull Enchantment enchantment, int level) {
 		ItemStack copy = stack.copy();
 		copy.removeTagKey("Enchantments");
 		copy.removeTagKey("StoredEnchantments");
@@ -97,7 +97,7 @@ public class XSJeiPlugin implements IModPlugin {
 		return copy;
 	}
 	
-	private void registerRuneAnvilRecipes(IRecipeRegistration registration, IVanillaRecipeFactory recipeFactory) {
+	private void registerRuneAnvilRecipes(@NotNull IRecipeRegistration registration, @NotNull IVanillaRecipeFactory recipeFactory) {
 		List<IJeiAnvilRecipe> recipes = Lists.newArrayList();
 		for (GlintColorItem item : ItemHelper.getRunes()) {
 			for (ItemStack stack : ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new).filter(ItemStack::isEnchantable).toList()) {
@@ -111,7 +111,7 @@ public class XSJeiPlugin implements IModPlugin {
 		registration.addRecipes(RecipeTypes.ANVIL, recipes);
 	}
 	
-	private ItemStack enchantItemRandomly(ItemStack stack) {
+	private ItemStack enchantItemRandomly(@NotNull ItemStack stack) {
 		ItemStack copy = stack.copy();
 		copy.removeTagKey("Enchantments");
 		copy.removeTagKey("StoredEnchantments");
@@ -123,7 +123,7 @@ public class XSJeiPlugin implements IModPlugin {
 		return copy;
 	}
 	
-	private ItemStack createResultForRune(ItemStack stack, int color) {
+	private ItemStack createResultForRune(@NotNull ItemStack stack, int color) {
 		ItemStack result = stack.copy();
 		CompoundTag tag = result.getOrCreateTag();
 		if (tag.contains(XSurvive.MOD_NAME)) {
@@ -141,13 +141,13 @@ public class XSJeiPlugin implements IModPlugin {
 	}
 	
 	@Override
-	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+	public void registerRecipeTransferHandlers(@NotNull IRecipeTransferRegistration registration) {
 		registration.addRecipeTransferHandler(SmeltingFurnaceMenu.class, XSMenuTypes.SMELTING_FURNACE.get(), XSJeiRecipeTypes.SMELTING, 0, 1, 3, 36);
 		registration.addRecipeTransferHandler(SmeltingFurnaceMenu.class, XSMenuTypes.SMELTING_FURNACE.get(), RecipeTypes.FUELING, 1, 1, 3, 36);
 	}
 	
 	@Override
-	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+	public void registerRecipeCatalysts(@NotNull IRecipeCatalystRegistration registration) {
 		registration.addRecipeCatalyst(new ItemStack(XSBlocks.SMELTING_FURNACE.get()), XSJeiRecipeTypes.SMELTING, RecipeTypes.FUELING);
 	}
 }

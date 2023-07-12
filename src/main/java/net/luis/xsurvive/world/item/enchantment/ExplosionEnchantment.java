@@ -37,7 +37,7 @@ public class ExplosionEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		return stack.getItem() instanceof BowItem;
 	}
 	
@@ -52,7 +52,7 @@ public class ExplosionEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When applied to a bow, this enchantment causes the arrow to explode when it hits a block.").endLine();
 		});

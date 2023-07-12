@@ -6,6 +6,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -17,11 +18,6 @@ public class BreakingCurseEnchantment extends Enchantment implements WikiFileEnt
 	
 	public BreakingCurseEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
-	}
-	
-	@Override
-	public int getMaxLevel() {
-		return 1;
 	}
 	
 	@Override
@@ -45,7 +41,7 @@ public class BreakingCurseEnchantment extends Enchantment implements WikiFileEnt
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When an item has this enchantment, it will take damage every 5 seconds.").endLine();
 			builder.append("The damage is calculated as follows:").endLine();

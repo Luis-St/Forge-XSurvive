@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -20,7 +21,7 @@ public class XSDamageTypes {
 	
 	}
 	
-	private static ResourceKey<DamageType> createKey(String name) {
+	private static @NotNull ResourceKey<DamageType> createKey(@NotNull String name) {
 		return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(XSurvive.MOD_ID, name));
 	}
 }

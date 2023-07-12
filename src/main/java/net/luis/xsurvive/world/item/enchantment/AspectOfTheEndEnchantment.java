@@ -38,7 +38,7 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		return stack.getItem() instanceof SwordItem;
 	}
 	
@@ -83,7 +83,7 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When an item with this enchantment is right-clicked, the player is teleported in the direction they're looking.").endLine();
 			builder.append("After the teleport, all items with this enchantment have a 1 second cooldown.").endLine();

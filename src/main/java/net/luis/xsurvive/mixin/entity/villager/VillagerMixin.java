@@ -49,5 +49,4 @@ public abstract class VillagerMixin extends AbstractVillager {
 			callback.setReturnValue(InteractionResult.SUCCESS);
 		}
 	}
-	
 }

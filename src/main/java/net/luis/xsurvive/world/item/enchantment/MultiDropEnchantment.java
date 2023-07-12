@@ -22,11 +22,6 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-	
-	@Override
 	public int getMinCost(int cost) {
 		return 20;
 	}
@@ -37,7 +32,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		return stack.getItem() instanceof DiggerItem;
 	}
 	
@@ -72,7 +67,7 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a block is destroyed by an item with this enchantment, the loot from the block is multiplied by the level of the enchantment.").endLine();
 		});

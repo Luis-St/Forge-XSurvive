@@ -3,6 +3,7 @@ package net.luis.xsurvive.world.entity;
 import net.luis.xsurvive.capability.INetworkCapability;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 public interface IEntity extends INetworkCapability {
 	
-	Entity getEntity();
+	@NotNull Entity getEntity();
 	
 	default Level getLevel() {
 		return this.getEntity().level();
@@ -20,9 +21,9 @@ public interface IEntity extends INetworkCapability {
 	
 	void tick();
 	
-	EntityFireType getFireType();
+	@NotNull EntityFireType getFireType();
 	
-	default void setFireType(EntityFireType fireType) {
+	default void setFireType(@NotNull EntityFireType fireType) {
 		
 	}
 }

@@ -16,7 +16,7 @@ public enum Rarity implements StringRepresentable {
 		this.name = name;
 	}
 	
-	public String getName() {
+	public @NotNull String getName() {
 		return this.name;
 	}
 	

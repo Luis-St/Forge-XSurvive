@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -40,11 +41,11 @@ public class XSBlocks {
 		return new MysticFireBlock(BlockBehaviour.Properties.copy(Blocks.FIRE).lightLevel((state) -> 15));
 	});
 	
-	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier) {
+	private static <T extends Block> @NotNull RegistryObject<T> register(@NotNull String name, @NotNull Supplier<T> blockSupplier) {
 		return register(name, blockSupplier, false);
 	}
 	
-	private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> blockSupplier, boolean registerItem) {
+	private static <T extends Block> @NotNull RegistryObject<T> register(@NotNull String name, @NotNull Supplier<T> blockSupplier, boolean registerItem) {
 		RegistryObject<T> blockObject = BLOCKS.register(name, blockSupplier);
 		if (registerItem) {
 			ITEMS.register(name, () -> new BlockItem(blockObject.get(), new Item.Properties()));

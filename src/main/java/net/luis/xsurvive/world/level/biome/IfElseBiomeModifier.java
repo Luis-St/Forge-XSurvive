@@ -9,6 +9,7 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -31,7 +32,7 @@ public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome>
 	});
 	
 	@Override
-	public void modify(Holder<Biome> biome, Phase phase, Builder builder) {
+	public void modify(@NotNull Holder<Biome> biome, @NotNull Phase phase, @NotNull Builder builder) {
 		if (phase == Phase.ADD && this.levelBiomes.contains(biome)) {
 			if (this.conditionBiomes.contains(biome)) {
 				for (Holder<PlacedFeature> holder : this.ifFeatures) {
@@ -46,7 +47,7 @@ public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome>
 	}
 	
 	@Override
-	public Codec<IfElseBiomeModifier> codec() {
+	public @NotNull Codec<IfElseBiomeModifier> codec() {
 		return XSBiomeModifiers.IF_ELSE_BIOME_MODIFIER.get();
 	}
 }

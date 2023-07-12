@@ -19,11 +19,6 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 	}
 	
 	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-	
-	@Override
 	public int getMinCost(int level) {
 		return 20;
 	}
@@ -59,7 +54,7 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("If a entity wears boots with this enchantment, that entity can fly.").endLine();
 			builder.append("If a player is sneaking while flying, they will slowly float down.").endLine();

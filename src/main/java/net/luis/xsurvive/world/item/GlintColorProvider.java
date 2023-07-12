@@ -16,7 +16,7 @@ public class GlintColorProvider implements ICapabilityProvider {
 	}
 	
 	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @NotNull Direction side) {
 		return XSCapabilities.GLINT_COLOR.orEmpty(capability, this.optional);
 	}
 }

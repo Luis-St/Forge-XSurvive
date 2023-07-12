@@ -2,6 +2,7 @@ package net.luis.xsurvive.server.capability;
 
 import net.luis.xsurvive.world.entity.npc.IVillager;
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -29,14 +30,14 @@ public class ServerVillagerHandler implements IVillager {
 	}
 	
 	@Override
-	public CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("reset_count", this.resetCount);
 		return tag;
 	}
 	
 	@Override
-	public void deserializeDisk(CompoundTag tag) {
+	public void deserializeDisk(@NotNull CompoundTag tag) {
 		this.resetCount = tag.getInt("reset_count");
 	}
 }

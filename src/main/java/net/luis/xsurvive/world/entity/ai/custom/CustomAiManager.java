@@ -3,7 +3,7 @@ package net.luis.xsurvive.world.entity.ai.custom;
 import com.google.common.collect.Maps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public enum CustomAiManager {
 		
 	}
 	
-	public <T extends LivingEntity> void register(Class<T> entityClass, CustomAiFactory<T> factory) {
+	public <T extends LivingEntity> void register(@NotNull Class<T> entityClass, @NotNull CustomAiFactory<T> factory) {
 		if (this.factories.get(entityClass) != null) {
 			throw new RuntimeException("Can not register a CustomAiFactory for Entity " + entityClass.getSimpleName() + ", since a CustomAiFactory has already been registered to it");
 		} else {
@@ -32,22 +32,21 @@ public enum CustomAiManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends LivingEntity> boolean hasFactory(T entity) {
+	public <T extends LivingEntity> boolean hasFactory(@NotNull T entity) {
 		return this.getFactory((Class<T>) entity.getClass()) != null;
 	}
 	
-	public <T extends LivingEntity> boolean hasFactory(Class<T> entityClass) {
+	public <T extends LivingEntity> boolean hasFactory(@NotNull Class<T> entityClass) {
 		return this.getFactory(entityClass) != null;
 	}
 	
-	@Nullable
 	@SuppressWarnings("unchecked")
-	public <T extends LivingEntity> CustomAiFactory<T> getFactory(Class<T> entityClass) {
-		return (@Nullable CustomAiFactory<T>) this.factories.get(entityClass);
+	public <T extends LivingEntity> CustomAiFactory<T> getFactory(@NotNull Class<T> entityClass) {
+		return (CustomAiFactory<T>) this.factories.get(entityClass);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends LivingEntity> CustomAi createFactory(T entity, ServerLevel level) {
+	public <T extends LivingEntity> @NotNull CustomAi createFactory(@NotNull T entity, @NotNull ServerLevel level) {
 		return this.getFactory((Class<T>) entity.getClass()).create(entity, level);
 	}
 }

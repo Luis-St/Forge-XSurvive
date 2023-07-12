@@ -3,6 +3,7 @@ package net.luis.xsurvive.util;
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -31,15 +32,15 @@ public class RarityList<T> {
 		this.values = Lists.newArrayList(values);
 	}
 	
-	public static <T> RarityList<T> of(Rarity rarity, List<T> values) {
+	public static <T> @NotNull RarityList<T> of(@NotNull Rarity rarity, @NotNull List<T> values) {
 		return new RarityList<>(rarity, values);
 	}
 	
-	public static <T> RarityList<T> copy(RarityList<T> list) {
+	public static <T> @NotNull RarityList<T> copy(@NotNull RarityList<T> list) {
 		return new RarityList<>(list.rarity, list.values);
 	}
 	
-	public static <T> Codec<RarityList<T>> codec(Codec<T> codec) {
+	public static <T> @NotNull Codec<RarityList<T>> codec(@NotNull Codec<T> codec) {
 		return RecordCodecBuilder.create((instance) -> {
 			return instance.group(Rarity.CODEC.fieldOf("rarity").forGetter((list) -> {
 				return list.rarity;
@@ -49,11 +50,11 @@ public class RarityList<T> {
 		});
 	}
 	
-	public Rarity getRarity() {
+	public @NotNull Rarity getRarity() {
 		return this.rarity;
 	}
 	
-	public List<T> getValues() {
+	public @NotNull List<T> getValues() {
 		return this.values;
 	}
 	
@@ -69,7 +70,7 @@ public class RarityList<T> {
 		return this.values.add(value);
 	}
 	
-	public void addAll(RarityList<T> list) {
+	public void addAll(@NotNull RarityList<T> list) {
 		this.values.addAll(list.values);
 	}
 	

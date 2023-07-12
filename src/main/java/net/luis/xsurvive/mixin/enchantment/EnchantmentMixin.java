@@ -29,12 +29,6 @@ public abstract class EnchantmentMixin implements IEnchantment {
 	@Shadow
 	public abstract String getDescriptionId();
 	
-	@Shadow
-	public abstract boolean isCurse();
-	
-	@Shadow
-	protected abstract boolean checkCompatibility(Enchantment enchantment);
-	
 	@Inject(method = "isCompatibleWith", at = @At("HEAD"), cancellable = true)
 	public void isCompatibleWith(Enchantment enchantment, CallbackInfoReturnable<Boolean> callback) {
 		Enchantment ench = (Enchantment) (Object) this;

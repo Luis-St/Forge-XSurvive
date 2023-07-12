@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -41,7 +42,7 @@ public class CustomEnderManAi extends AbstractCustomAi<EnderMan> {
 		});
 	}
 	
-	private BlockPos immutable(BlockPos pos) {
+	private @NotNull BlockPos immutable(@NotNull BlockPos pos) {
 		if (pos instanceof MutableBlockPos mutablePos) {
 			return mutablePos.immutable();
 		}

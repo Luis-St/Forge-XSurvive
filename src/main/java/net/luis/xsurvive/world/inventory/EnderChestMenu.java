@@ -23,7 +23,7 @@ public class EnderChestMenu extends AbstractContainerMenu {
 		this(id, inventory);
 	}
 	
-	public EnderChestMenu(int id, Inventory inventory) {
+	public EnderChestMenu(int id, @NotNull Inventory inventory) {
 		super(XSMenuTypes.ENDER_CHEST.get(), id);
 		Player player = inventory.player;
 		IItemHandlerModifiable handler = PlayerProvider.get(player).getCombinedInventory();

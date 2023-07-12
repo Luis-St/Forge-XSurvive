@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemDecorator;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -28,7 +29,7 @@ public class XSItemDecorator implements IItemDecorator {
 	}
 	
 	@Override
-	public boolean render(GuiGraphics graphics, Font font, ItemStack stack, int xOffset, int yOffset) {
+	public boolean render(@NotNull GuiGraphics graphics, @NotNull Font font, @NotNull ItemStack stack, int xOffset, int yOffset) {
 		LocalPlayer player = this.minecraft.player;
 		if (player != null) {
 			if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
@@ -38,7 +39,7 @@ public class XSItemDecorator implements IItemDecorator {
 					RenderSystem.enableBlend();
 					RenderSystem.defaultBlendFunc();
 					BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-					this.fillRect(bufferBuilder, xOffset, yOffset + Mth.floor(16.0 * (1.0 - endAspectCooldown)), 16, Mth.ceil(16.0 * endAspectCooldown), 255, 255, 255, 127);
+					this.fillRect(bufferBuilder, xOffset, yOffset + Mth.floor(16.0 * (1.0 - endAspectCooldown)), Mth.ceil(16.0 * endAspectCooldown));
 					RenderSystem.disableBlend();
 					RenderSystem.enableDepthTest();
 					return true;
@@ -48,13 +49,13 @@ public class XSItemDecorator implements IItemDecorator {
 		return false;
 	}
 	
-	private void fillRect(BufferBuilder bufferBuilder, int xStart, int yStart, int xEnd, int yEnd, int red, int green, int blue, int alpha) {
+	private void fillRect(@NotNull BufferBuilder bufferBuilder, int xStart, int yStart, int yEnd) {
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-		bufferBuilder.vertex(xStart, yStart, 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(xStart, yStart + yEnd, 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(xStart + xEnd, yStart + yEnd, 0.0).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(xStart + xEnd, yStart, 0.0).color(red, green, blue, alpha).endVertex();
+		bufferBuilder.vertex(xStart, yStart, 0.0).color(255, 255, 255, 127).endVertex();
+		bufferBuilder.vertex(xStart, yStart + yEnd, 0.0).color(255, 255, 255, 127).endVertex();
+		bufferBuilder.vertex(xStart + 16, yStart + yEnd, 0.0).color(255, 255, 255, 127).endVertex();
+		bufferBuilder.vertex(xStart + 16, yStart, 0.0).color(255, 255, 255, 127).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
 	}
 }

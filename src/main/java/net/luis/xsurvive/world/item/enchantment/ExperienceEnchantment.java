@@ -6,6 +6,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -38,7 +39,7 @@ public class ExperienceEnchantment extends Enchantment implements IEnchantment, 
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a block is destroyed by an item with this enchantment, the experience dropped by the block is modified as follows:").endLine();
 			builder.appendFormatted("(Experience * ((ExperienceLevel + 1) * ((ExperienceLevel * 2) + FortuneLevel))) * (MultiDropLevel + 1)", WikiFormat.CODE).endLine();

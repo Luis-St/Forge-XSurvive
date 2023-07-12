@@ -20,11 +20,6 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	}
 	
 	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-	
-	@Override
 	public int getMinCost(int level) {
 		return 20;
 	}
@@ -60,7 +55,7 @@ public class SmeltingEnchantment extends Enchantment implements WikiFileEntry {
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a block is destroyed by an item with this enchantment, the block drops it's furnace smelting result.").endLine();
 		});

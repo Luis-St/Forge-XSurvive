@@ -27,6 +27,8 @@ import net.minecraftforge.event.level.LevelEvent.CreateSpawnPosition;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -38,7 +40,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class LevelEventHandler {
 	
 	@SubscribeEvent
-	public static void blockBreak(BlockEvent.BreakEvent event) {
+	public static void blockBreak(BlockEvent.@NotNull BreakEvent event) {
 		Player player = event.getPlayer();
 		BlockPos pos = new BlockPos(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 		BlockState state = event.getState();
@@ -63,14 +65,14 @@ public class LevelEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void createFluidSource(CreateFluidSourceEvent event) {
+	public static void createFluidSource(@NotNull CreateFluidSourceEvent event) {
 		if (event.getLevel().dimension().equals(Level.NETHER)) {
 			event.setResult(Result.ALLOW);
 		}
 	}
 	
 	@SubscribeEvent
-	public static void createSpawnPosition(CreateSpawnPosition event) {
+	public static void createSpawnPosition(@NotNull CreateSpawnPosition event) {
 		if (event.getLevel() instanceof ServerLevel level) {
 			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
 			if (pair != null) {
@@ -85,11 +87,11 @@ public class LevelEventHandler {
 		}
 	}
 	
-	private static HolderSet<Structure> getHolderSet(Registry<Structure> registry) {
+	private static @NotNull HolderSet<Structure> getHolderSet(@NotNull Registry<Structure> registry) {
 		return HolderSet.direct(registry.getHolderOrThrow(BuiltinStructures.VILLAGE_PLAINS));
 	}
 	
-	private static BlockPos getSpawnPos(ServerLevel level, ChunkPos pos) {
+	private static @Nullable BlockPos getSpawnPos(@NotNull ServerLevel level, @NotNull ChunkPos pos) {
 		BlockPos spawnPos = PlayerRespawnLogic.getSpawnPosInChunk(level, pos);
 		for (int x = -7; x <= 7; x++) {
 			for (int z = -7; z <= 7; z++) {
@@ -103,7 +105,7 @@ public class LevelEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void explosionDetonate(ExplosionEvent.Detonate event) {
+	public static void explosionDetonate(ExplosionEvent.@NotNull Detonate event) {
 		Explosion explosion = event.getExplosion();
 		if (event.getLevel() instanceof ServerLevel level) {
 			if (level.dimension().equals(Level.NETHER) && explosion.getExploder() instanceof PrimedTnt) {

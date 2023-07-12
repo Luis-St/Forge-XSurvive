@@ -13,6 +13,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -39,15 +40,15 @@ public class AdvancedTradeBuilder {
 		this.result = result;
 	}
 	
-	public static AdvancedTradeBuilder simple(ItemStack cost, ItemStack secondCost, ItemStack result) {
+	public static @NotNull AdvancedTradeBuilder simple(@NotNull ItemStack cost, @NotNull ItemStack secondCost, @NotNull ItemStack result) {
 		return new AdvancedTradeBuilder(cost, secondCost, result);
 	}
 	
-	public static AdvancedTradeBuilder simple(ItemLike cost, int costCount, ItemLike secondCost, int secondCostCount, ItemLike result, int resultCount) {
+	public static @NotNull AdvancedTradeBuilder simple(@NotNull ItemLike cost, int costCount, @NotNull ItemLike secondCost, int secondCostCount, @NotNull ItemLike result, int resultCount) {
 		return simple(new ItemStack(cost, costCount), new ItemStack(secondCost, secondCostCount), new ItemStack(result, resultCount));
 	}
 	
-	public static AdvancedTradeBuilder expensiveItem(int emeralds, ItemLike result, int count) {
+	public static @NotNull AdvancedTradeBuilder expensiveItem(int emeralds, @NotNull ItemLike result, int count) {
 		if (64 >= emeralds) {
 			return simple(new ItemStack(Items.EMERALD, emeralds), ItemStack.EMPTY, new ItemStack(result, count));
 		}
@@ -55,20 +56,20 @@ public class AdvancedTradeBuilder {
 		return simple(Items.EMERALD, 64, Items.EMERALD, emeralds - 64, result, count);
 	}
 	
-	public static AdvancedTradeBuilder processItem(ItemLike cost, int costCount, int emeralds, ItemLike result, int resultCount) {
+	public static @NotNull AdvancedTradeBuilder processItem(@NotNull ItemLike cost, int costCount, int emeralds, @NotNull ItemLike result, int resultCount) {
 		return simple(cost, costCount, Items.EMERALD, emeralds, result, resultCount);
 	}
 	
-	public static AdvancedTradeBuilder enchantedBook(Enchantment enchantment, int level) {
+	public static @NotNull AdvancedTradeBuilder enchantedBook(@NotNull Enchantment enchantment, int level) {
 		int emeralds = Math.min(2 + RNG.nextInt(5 + level * 10) + 3 * level + 5, 64);
 		return simple(new ItemStack(Items.EMERALD, emeralds), new ItemStack(Items.BOOK), EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level)));
 	}
 	
-	public static AdvancedTradeBuilder enchantedBook(Enchantment enchantment, int minLevel, int maxLevel) {
+	public static @NotNull AdvancedTradeBuilder enchantedBook(@NotNull Enchantment enchantment, int minLevel, int maxLevel) {
 		return enchantedBook(enchantment, Mth.randomBetweenInclusive(RNG, minLevel, maxLevel));
 	}
 	
-	public static AdvancedTradeBuilder enchantedGoldenBook(Enchantment enchantment) {
+	public static @NotNull AdvancedTradeBuilder enchantedGoldenBook(@NotNull Enchantment enchantment) {
 		if (enchantment instanceof IEnchantment ench) {
 			int level = ench.getMaxGoldenBookLevel();
 			int emeralds = Math.min(2 + RNG.nextInt(5 + level * 10) + 4 * level + 5, 128);
@@ -83,56 +84,56 @@ public class AdvancedTradeBuilder {
 		}
 	}
 	
-	public static AdvancedTradeBuilder firework(int emeralds, int count, int flightDuration) {
+	public static @NotNull AdvancedTradeBuilder firework(int emeralds, int count, int flightDuration) {
 		ItemStack stack = new ItemStack(Items.FIREWORK_ROCKET, count);
 		stack.getOrCreateTagElement("Fireworks").putByte("Flight", (byte) flightDuration);
 		return simple(new ItemStack(Items.EMERALD, emeralds), ItemStack.EMPTY, stack);
 	}
 	
-	public static AdvancedTradeBuilder potion(int emeralds, Potion potion) {
+	public static @NotNull AdvancedTradeBuilder potion(int emeralds, @NotNull Potion potion) {
 		return simple(new ItemStack(Items.EMERALD, emeralds), ItemStack.EMPTY, PotionUtils.setPotion(new ItemStack(Items.POTION), potion));
 	}
 	
-	public AdvancedTradeBuilder defaultMaxUses() {
+	public @NotNull AdvancedTradeBuilder defaultMaxUses() {
 		return this.maxUses(16);
 	}
 	
-	public AdvancedTradeBuilder maxUses(int maxUses) {
+	public @NotNull AdvancedTradeBuilder maxUses(int maxUses) {
 		this.maxUses = maxUses;
 		return this;
 	}
 	
-	public AdvancedTradeBuilder defaultVillagerXp(int level) {
+	public @NotNull AdvancedTradeBuilder defaultVillagerXp(int level) {
 		return this.villagerXp(Trade.VILLAGER_XP[level - 1]);
 	}
 	
-	public AdvancedTradeBuilder villagerXp(int villagerXp) {
+	public @NotNull AdvancedTradeBuilder villagerXp(int villagerXp) {
 		this.villagerXp = villagerXp;
 		return this;
 	}
 	
-	public AdvancedTradeBuilder defaultMultiplier() {
+	public @NotNull AdvancedTradeBuilder defaultMultiplier() {
 		return this.multiplier(0.05F);
 	}
 	
-	public AdvancedTradeBuilder toolMultiplier() {
+	public @NotNull AdvancedTradeBuilder toolMultiplier() {
 		return this.multiplier(0.2F);
 	}
 	
-	public AdvancedTradeBuilder multiplier(float priceMultiplier) {
+	public @NotNull AdvancedTradeBuilder multiplier(float priceMultiplier) {
 		this.priceMultiplier = priceMultiplier;
 		return this;
 	}
 	
-	public AdvancedTradeBuilder defaultValues(int level) {
+	public @NotNull AdvancedTradeBuilder defaultValues(int level) {
 		return this.defaultMaxUses().defaultVillagerXp(level).defaultMultiplier();
 	}
 	
-	public ItemListing build() {
+	public @NotNull ItemListing build() {
 		return new Trade(this.cost, this.secondCost, this.result, this.maxUses, this.villagerXp, this.priceMultiplier);
 	}
 	
-	public ItemListing defaultBuild(int level) {
+	public @NotNull ItemListing defaultBuild(int level) {
 		return this.defaultValues(level).build();
 	}
 }

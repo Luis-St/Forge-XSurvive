@@ -5,6 +5,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -14,7 +15,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 public class LevelHelper {
 	
-	public static DifficultyInstance getCurrentDifficultyAt(Level level, BlockPos pos) {
+	public static @NotNull DifficultyInstance getCurrentDifficultyAt(@NotNull Level level, @NotNull BlockPos pos) {
 		LevelChunk chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
 		if (chunk == null || !chunk.getStatus().isOrAfter(ChunkStatus.FULL)) {
 			return new DifficultyInstance(level.getDifficulty(), level.getDayTime(), 0, level.getMoonBrightness());

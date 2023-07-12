@@ -21,6 +21,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
 
@@ -34,12 +35,12 @@ import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
 public class RegisterClientModEventHandler {
 	
 	@SubscribeEvent
-	public static void registerClientTooltipComponentFactories(RegisterClientTooltipComponentFactoriesEvent event) {
+	public static void registerClientTooltipComponentFactories(@NotNull RegisterClientTooltipComponentFactoriesEvent event) {
 		event.register(ShulkerBoxTooltip.class, ClientShulkerBoxTooltip::new);
 	}
 	
 	@SubscribeEvent
-	public static void registerColorHandlers(RegisterColorHandlersEvent.Block event) {
+	public static void registerColorHandlers(@NotNull RegisterColorHandlersEvent.Block event) {
 		event.register((state, blockGetter, pos, i) -> {
 			int age = state.getValue(StemBlock.AGE);
 			int red = age * 32;
@@ -51,19 +52,19 @@ public class RegisterClientModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+	public static void registerGuiOverlays(@NotNull RegisterGuiOverlaysEvent event) {
 		event.registerAbove(VanillaGuiOverlay.FROSTBITE.id(), "frost_mob_effect_overlay", new FrostMobEffectOverlay(Minecraft.getInstance()));
 	}
 	
 	@SubscribeEvent
-	public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
+	public static void registerItemDecorations(@NotNull RegisterItemDecorationsEvent event) {
 		for (Item item : ForgeRegistries.ITEMS.getValues().stream().map(ItemStack::new).filter(XSEnchantments.ASPECT_OF_THE_END.get()::canEnchant).map(ItemStack::getItem).toList()) {
 			event.register(item, new XSItemDecorator(Minecraft.getInstance()));
 		}
 	}
 	
 	@SubscribeEvent
-	public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+	public static void registerRecipeBookCategories(@NotNull RegisterRecipeBookCategoriesEvent event) {
 		event.registerBookCategories(XSRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
 		event.registerAggregateCategory(SMELTING_FURNACE_SEARCH, Lists.newArrayList(SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
 		event.registerRecipeCategoryFinder(XSRecipeTypes.SMELTING.get(), (recipe) -> {
@@ -75,7 +76,7 @@ public class RegisterClientModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void registerClientCommands(EntityRenderersEvent.RegisterRenderers event) {
+	public static void registerClientCommands(@NotNull EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(XSEntityTypes.CURSED_ENDER_EYE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
 	}
 }

@@ -5,6 +5,7 @@ import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -39,7 +40,7 @@ public class GrowthEnchantment extends Enchantment implements IEnchantment, Wiki
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a entity wears armor with this enchantment, the entities health is increased by the sum of the enchantment levels of all armor items.").endLine();
 		});

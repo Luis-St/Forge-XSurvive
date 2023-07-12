@@ -37,7 +37,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	private final IDrawable icon;
 	private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
 	
-	public SmeltingCategory(IGuiHelper guiHelper) {
+	public SmeltingCategory(@NotNull IGuiHelper guiHelper) {
 		this.animatedFlame = guiHelper.createAnimatedDrawable(guiHelper.createDrawable(RECIPE_GUI_VANILLA, 82, 114, 14, 14), 300, IDrawableAnimated.StartDirection.TOP, true);
 		this.background = guiHelper.createDrawable(RECIPE_GUI_VANILLA, 0, 114, 82, 54);
 		this.icon = guiHelper.createDrawableItemStack(new ItemStack(XSBlocks.SMELTING_FURNACE.get()));
@@ -78,7 +78,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		this.drawCookTime(recipe, graphics);
 	}
 	
-	protected IDrawableAnimated getArrow(SmeltingRecipe recipe) {
+	protected @NotNull IDrawableAnimated getArrow(@NotNull SmeltingRecipe recipe) {
 		int cookTime = recipe.getCookingTime();
 		if (cookTime <= 0) {
 			cookTime = 100;
@@ -86,7 +86,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		return this.cachedArrows.getUnchecked(cookTime);
 	}
 	
-	protected void drawExperience(SmeltingRecipe recipe, GuiGraphics graphics) {
+	protected void drawExperience(@NotNull SmeltingRecipe recipe, @NotNull GuiGraphics graphics) {
 		float experience = recipe.getExperience();
 		if (experience > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.experience", experience);
@@ -96,7 +96,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		}
 	}
 	
-	protected void drawCookTime(SmeltingRecipe recipe, GuiGraphics graphics) {
+	protected void drawCookTime(@NotNull SmeltingRecipe recipe, @NotNull GuiGraphics graphics) {
 		int cookTime = recipe.getCookingTime();
 		if (cookTime > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.time.seconds", (cookTime / 20));
@@ -107,13 +107,13 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	}
 	
 	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, SmeltingRecipe recipe, @NotNull IFocusGroup focuses) {
+	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull SmeltingRecipe recipe, @NotNull IFocusGroup focuses) {
 		builder.addSlot(INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
 		builder.addSlot(OUTPUT, 61, 19).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
 	}
 	
 	@Override
-	public boolean isHandled(SmeltingRecipe recipe) {
+	public boolean isHandled(@NotNull SmeltingRecipe recipe) {
 		return !recipe.isSpecial();
 	}
 }

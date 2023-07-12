@@ -15,52 +15,18 @@ import java.util.Objects;
  *
  */
 
-public class Trade implements ItemListing {
+public record Trade(ItemStack getCost, ItemStack getSecondCost, ItemStack getResult, int getMaxUses, int getVillagerXp, float getPriceMultiplier) implements ItemListing {
 	
 	public static final int[] VILLAGER_XP = new int[] {2, 10, 20, 30, 40};
 	
-	private final ItemStack cost;
-	private final ItemStack secondCost;
-	private final ItemStack result;
-	private final int maxUses;
-	private final int villagerXp;
-	private final float priceMultiplier;
-	
-	public Trade(ItemStack cost, ItemStack secondCost, ItemStack result, int maxUses, int villagerXp, float priceMultiplier) {
-		this.cost = Objects.requireNonNull(cost);
-		this.secondCost = Objects.requireNonNull(secondCost);
-		this.result = Objects.requireNonNull(result);
-		this.maxUses = maxUses;
-		this.villagerXp = villagerXp;
-		this.priceMultiplier = priceMultiplier;
-	}
-	
-	public ItemStack getCost() {
-		return this.cost;
-	}
-	
-	public ItemStack getSecondCost() {
-		return this.secondCost;
-	}
-	
-	public ItemStack getResult() {
-		return this.result;
-	}
-	
-	public int getMaxUses() {
-		return this.maxUses;
-	}
-	
-	public int getVillagerXp() {
-		return this.villagerXp;
-	}
-	
-	public float getPriceMultiplier() {
-		return this.priceMultiplier;
+	public Trade {
+		Objects.requireNonNull(getCost);
+		Objects.requireNonNull(getSecondCost);
+		Objects.requireNonNull(getResult);
 	}
 	
 	@Override
 	public MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
-		return new MerchantOffer(this.cost, this.secondCost, this.result, this.maxUses, this.villagerXp, this.priceMultiplier);
+		return new MerchantOffer(this.getCost, this.getSecondCost, this.getResult, this.getMaxUses, this.getVillagerXp, this.getPriceMultiplier);
 	}
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class WoodHarvester {
 		}
 	}
 	
-	private int getTreeHeight(List<BlockPos> positions) {
+	private int getTreeHeight(@NotNull List<BlockPos> positions) {
 		int height = 0;
 		for (BlockPos pos : positions) {
 			height = Math.max(this.getTreePositionHeight(pos), height);
@@ -58,7 +59,7 @@ public class WoodHarvester {
 		return Math.min(this.harvesting * 4 + (this.harvesting / 2), height);
 	}
 	
-	private int getTreePositionHeight(BlockPos pos) {
+	private int getTreePositionHeight(@NotNull BlockPos pos) {
 		int height = 0;
 		for (int y = 0; y <= 256; y++) {
 			if (this.isTreePosition(pos.above(y))) {
@@ -70,7 +71,7 @@ public class WoodHarvester {
 		return height;
 	}
 	
-	private AABB getHarvestingArea(List<BlockPos> positions, int height) {
+	private @NotNull AABB getHarvestingArea(@NotNull List<BlockPos> positions, int height) {
 		AABB aabb;
 		if (positions.size() == 1) {
 			aabb = new AABB(this.startPos.north().east(), this.startPos.south().west());
@@ -80,10 +81,10 @@ public class WoodHarvester {
 			aabb = new AABB(this.startPos.north(2).east(2), this.startPos.south(2).west(2));
 		}
 		int y = this.startPos.getY();
-		return aabb.setMinY(y - (height / 2)).setMaxY(y + height);
+		return aabb.setMinY(y - (height / 2.0)).setMaxY(y + height);
 	}
 	
-	private ItemStack getUsedStack() {
+	private @NotNull ItemStack getUsedStack() {
 		ItemStack mainStack = this.player.getMainHandItem();
 		ItemStack offStack = this.player.getOffhandItem();
 		if (mainStack.getEnchantmentLevel(XSEnchantments.HARVESTING.get()) > 0) {
@@ -98,12 +99,12 @@ public class WoodHarvester {
 		return ItemStack.EMPTY;
 	}
 	
-	private boolean isTreePosition(BlockPos pos) {
+	private boolean isTreePosition(@NotNull BlockPos pos) {
 		BlockState state = this.level.getBlockState(pos);
 		return state.is(BlockTags.LOGS) || state.is(this.state.getBlock());
 	}
 	
-	private BlockPos immutable(BlockPos pos) {
+	private @NotNull BlockPos immutable(@NotNull BlockPos pos) {
 		if (pos instanceof MutableBlockPos mutablePos) {
 			return mutablePos.immutable();
 		}

@@ -48,7 +48,7 @@ public class MysticFireBlock extends BaseFireBlock {
 		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
 	}
 	
-	private static VoxelShape calculateShape(BlockState state) {
+	private static @NotNull VoxelShape calculateShape(@NotNull BlockState state) {
 		VoxelShape voxelShape = Shapes.empty();
 		if (state.getValue(UP)) {
 			voxelShape = UP_AABB;
@@ -84,11 +84,11 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
+	public @NotNull BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {
 		return this.getStateForPlacement(context.getLevel(), context.getClickedPos());
 	}
 	
-	public BlockState getStateForPlacement(BlockGetter blockGetter, BlockPos pos) {
+	public @NotNull BlockState getStateForPlacement(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
 		if (!this.canCatchFire(blockGetter, pos, Direction.DOWN)) {
 			BlockState state = this.defaultBlockState();
 			for (Direction direction : Direction.values()) {
@@ -103,7 +103,7 @@ public class MysticFireBlock extends BaseFireBlock {
 		}
 	}
 	
-	public boolean canCatchFire(BlockGetter blockGetter, BlockPos pos, Direction direction) {
+	public boolean canCatchFire(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull Direction direction) {
 		BlockState state = blockGetter.getBlockState(pos.relative(direction));
 		return state.is(Tags.Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN);
 	}
@@ -113,11 +113,11 @@ public class MysticFireBlock extends BaseFireBlock {
 		return this.canSurvive(levelReader, pos);
 	}
 	
-	public boolean canSurvive(BlockGetter blockGetter, BlockPos pos) {
+	public boolean canSurvive(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
 		return this.isValidFireLocation(blockGetter, pos);
 	}
 	
-	private boolean isValidFireLocation(BlockGetter blockGetter, BlockPos pos) {
+	private boolean isValidFireLocation(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
 		for (Direction direction : Direction.values()) {
 			BlockState state = blockGetter.getBlockState(pos.relative(direction));
 			if (state.is(Tags.Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN)) {
@@ -128,7 +128,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> definitionBuilder) {
+	protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> definitionBuilder) {
 		definitionBuilder.add(NORTH, EAST, SOUTH, WEST, UP);
 	}
 }

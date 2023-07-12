@@ -38,12 +38,12 @@ public class AdditionalChanceItemModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<AdditionalChanceItemModifier> codec() {
+	public @NotNull Codec<AdditionalChanceItemModifier> codec() {
 		return XSGlobalLootModifiers.ADDITIONAL_CHANCE_ITEM_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		if (this.chance.result()) {
 			generatedLoot.add(new ItemStack(this.additionalItem));
 		}

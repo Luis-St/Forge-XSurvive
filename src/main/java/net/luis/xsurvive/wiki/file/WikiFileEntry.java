@@ -1,5 +1,7 @@
 package net.luis.xsurvive.wiki.file;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  *
  * @author Luis-st
@@ -9,5 +11,5 @@ package net.luis.xsurvive.wiki.file;
 @FunctionalInterface
 public interface WikiFileEntry {
 	
-	void add(WikiFileBuilder wikiBuilder);
+	void add(@NotNull WikiFileBuilder wikiBuilder);
 }

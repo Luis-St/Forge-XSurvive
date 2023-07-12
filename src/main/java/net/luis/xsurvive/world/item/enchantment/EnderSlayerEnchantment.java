@@ -35,7 +35,7 @@ public class EnderSlayerEnchantment extends DamageEnchantment implements WikiFil
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a entity is hit by an item with this enchantment, the damage is multiplied by 2.5.").endLine();
 			builder.append("End Entities:").append(",").append("Endermite and").append("Shulker").endLine();

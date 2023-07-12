@@ -78,5 +78,4 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 			this.setPosRaw(x, y, z);
 		}
 	}
-	
 }

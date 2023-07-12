@@ -16,8 +16,7 @@ public enum EntityFireType {
 	
 	NONE(), FIRE(), SOUL_FIRE(), MYSTIC_FIRE();
 	
-	@NotNull
-	public static EntityFireType byOrdinal(int ordinal, EntityFireType fallback) {
+	public static @NotNull EntityFireType byOrdinal(int ordinal, @NotNull EntityFireType fallback) {
 		for (EntityFireType fireType : values()) {
 			if (fireType.ordinal() == ordinal) {
 				return fireType;
@@ -26,7 +25,7 @@ public enum EntityFireType {
 		return Objects.requireNonNull(fallback);
 	}
 	
-	public static EntityFireType byBlock(Block fireBlock) {
+	public static EntityFireType byBlock(@NotNull Block fireBlock) {
 		if (fireBlock instanceof FireBlock) {
 			return FIRE;
 		} else if (fireBlock instanceof SoulFireBlock) {

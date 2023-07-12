@@ -50,7 +50,7 @@ public class BlastingEnchantment extends Enchantment implements IEnchantment, Wi
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a block is destroyed by an item with this enchantment, an explosion occurs at the location of the destroyed block.").endLine();
 			builder.append("The strength of the explosion is calculated as follows:").endLine();

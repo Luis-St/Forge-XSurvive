@@ -7,6 +7,7 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.nio.file.Path;
 public class ServerStartedEventHandler {
 	
 	@SubscribeEvent
-	public static void serverStarted(ServerStartedEvent event) throws IOException {
+	public static void serverStarted(@NotNull ServerStartedEvent event) throws IOException {
 		MinecraftServer server = event.getServer();
 		if (server != null && !server.isFlightAllowed()) {
 			server.setFlightAllowed(true);

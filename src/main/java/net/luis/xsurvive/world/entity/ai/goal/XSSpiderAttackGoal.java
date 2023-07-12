@@ -3,6 +3,7 @@ package net.luis.xsurvive.world.entity.ai.goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Spider;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -22,7 +23,7 @@ public class XSSpiderAttackGoal extends MeleeAttackGoal {
 	}
 	
 	@Override
-	protected double getAttackReachSqr(LivingEntity entity) {
+	protected double getAttackReachSqr(@NotNull LivingEntity entity) {
 		return 4.0F + entity.getBbWidth();
 	}
 }

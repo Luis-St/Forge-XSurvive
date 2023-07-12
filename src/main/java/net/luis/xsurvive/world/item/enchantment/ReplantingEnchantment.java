@@ -22,11 +22,6 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	}
 	
 	@Override
-	public int getMaxLevel() {
-		return 1;
-	}
-	
-	@Override
 	public int getMinCost(int level) {
 		return 20;
 	}
@@ -37,7 +32,7 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	}
 	
 	@Override
-	public boolean canEnchant(ItemStack stack) {
+	public boolean canEnchant(@NotNull ItemStack stack) {
 		return stack.getItem() instanceof HoeItem;
 	}
 	
@@ -47,7 +42,7 @@ public class ReplantingEnchantment extends Enchantment implements WikiFileEntry 
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("When a plant block is destroyed by an item with this enchantment, a plant of the lowest age is replanted in the place of the destroyed block.").endLine();
 			builder.append("The following blocks are plant blocks:").endLine();

@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -22,14 +23,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class CommonSetupEventHandler {
 	
 	@SubscribeEvent
-	public static void commonSetup(FMLCommonSetupEvent event) {
+	public static void commonSetup(@NotNull FMLCommonSetupEvent event) {
 		DependencyCallWrapper.wrapCommonSetup();
 		registerBrewingRecipes();
 		registerCustomAis();
 	}
 	
 	private static void registerBrewingRecipes() {
-		BrewingRecipeUtils.addRecipes(Items.SNOWBALL, XSPotions.FORST.get(), XSPotions.LONG_FORST.get(), XSPotions.STRONG_FORST.get());
+		BrewingRecipeUtils.addRecipes(Items.SNOWBALL, XSPotions.FROST.get(), XSPotions.LONG_FROST.get(), XSPotions.STRONG_FROST.get());
 		BrewingRecipeUtils.addRecipes(Items.WITHER_ROSE, XSPotions.WITHER.get(), XSPotions.LONG_WITHER.get(), XSPotions.STRONG_WITHER.get());
 		BrewingRecipeUtils.addRecipes(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get(), XSPotions.LONG_DIG_SPEED.get(), XSPotions.STRONG_DIG_SPEED.get());
 	}

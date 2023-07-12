@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -15,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public interface IEnchantment {
 	
-	static EnchantedItem merge(ItemStack left, ItemStack right) {
+	static @NotNull EnchantedItem merge(@NotNull ItemStack left, @NotNull ItemStack right) {
 		ItemStack result = left.copy();
 		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 			Enchantment enchantment = goldenBook.getEnchantment(right);
@@ -46,7 +47,7 @@ public interface IEnchantment {
 		return EnchantedItem.EMPTY;
 	}
 	
-	static EnchantedItem upgrade(ItemStack left, ItemStack right) {
+	static @NotNull EnchantedItem upgrade(@NotNull ItemStack left, @NotNull ItemStack right) {
 		ItemStack result = left.copy();
 		if (right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 			Enchantment enchantment = goldenBook.getEnchantment(right);
@@ -66,7 +67,7 @@ public interface IEnchantment {
 		return EnchantedItem.EMPTY;
 	}
 	
-	private Enchantment self() {
+	private @NotNull Enchantment self() {
 		return (Enchantment) this;
 	}
 	
@@ -115,7 +116,7 @@ public interface IEnchantment {
 		return 30;
 	}
 	
-	default GoldenEnchantmentInstance createGoldenInstance(int level) {
+	default @NotNull GoldenEnchantmentInstance createGoldenInstance(int level) {
 		if (this.getMinGoldenBookLevel() > level) {
 			return new GoldenEnchantmentInstance(this.self(), this.getMinGoldenBookLevel());
 		} else if (level > this.getMaxGoldenBookLevel()) {

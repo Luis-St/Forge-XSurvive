@@ -29,18 +29,18 @@ public class SmeltingModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<SmeltingModifier> codec() {
+	public @NotNull Codec<SmeltingModifier> codec() {
 		return XSGlobalLootModifiers.SMELTING_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
 		generatedLoot.forEach(stack -> loot.add(SmeltingModifier.this.smelt(stack, context)));
 		return loot;
 	}
 	
-	private ItemStack smelt(ItemStack stack, LootContext context) {
+	private @NotNull ItemStack smelt(@NotNull ItemStack stack, @NotNull LootContext context) {
 		return context.getLevel().getRecipeManager()
 			.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
 			.map(recipe -> recipe.getResultItem(context.getLevel().registryAccess())).filter(itemStack -> !itemStack.isEmpty())

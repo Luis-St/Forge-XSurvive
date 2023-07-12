@@ -27,15 +27,15 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 		this.optional = LazyOptional.of(() -> this.entityCapability);
 	}
 	
-	public static IEntity get(Entity entity) {
+	public static @NotNull IEntity get(@NotNull Entity entity) {
 		return entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static LazyOptional<IEntity> getSafe(Entity entity) {
+	public static @NotNull LazyOptional<IEntity> getSafe(@NotNull Entity entity) {
 		return entity.getCapability(XSCapabilities.ENTITY, null);
 	}
 	
-	public static ClientEntityHandler getClient(Entity entity) {
+	public static @NotNull ClientEntityHandler getClient(@NotNull Entity entity) {
 		IEntity capability = entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof ClientEntityHandler handler) {
 			return handler;
@@ -45,7 +45,7 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 		throw new IllegalStateException("Unknown network side");
 	}
 	
-	public static ServerEntityHandler getServer(Entity entity) {
+	public static @NotNull ServerEntityHandler getServer(@NotNull Entity entity) {
 		IEntity capability = entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof ClientEntityHandler handler) {
 			throw new RuntimeException("Fail to get ServerEntityHandler from client");
@@ -61,12 +61,12 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public CompoundTag serializeNBT() {
+	public @NotNull CompoundTag serializeNBT() {
 		return this.entityCapability.serializeDisk();
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundTag tag) {
+	public void deserializeNBT(@NotNull CompoundTag tag) {
 		this.entityCapability.deserializeDisk(tag);
 	}
 }

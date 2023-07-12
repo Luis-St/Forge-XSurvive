@@ -25,7 +25,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 	}
 	
 	@Override
-	public boolean test(LootContext context) {
+	public boolean test(@NotNull LootContext context) {
 		return this.lootTables.contains(context.getQueriedLootTableId());
 	}
 	
@@ -47,11 +47,11 @@ public class LootTableIdsCondition implements LootItemCondition {
 			this.add(lootTable);
 		}
 		
-		public Builder add(String lootTable) {
+		public @NotNull Builder add(@NotNull String lootTable) {
 			return this.add(new ResourceLocation(lootTable));
 		}
 		
-		public Builder add(ResourceLocation lootTable) {
+		public @NotNull Builder add(@NotNull ResourceLocation lootTable) {
 			this.lootTables.add(lootTable);
 			return this;
 		}
@@ -65,7 +65,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<LootTableIdsCondition> {
 		
 		@Override
-		public void serialize(@NotNull JsonObject object, LootTableIdsCondition instance, @NotNull JsonSerializationContext context) {
+		public void serialize(@NotNull JsonObject object, @NotNull LootTableIdsCondition instance, @NotNull JsonSerializationContext context) {
 			JsonArray array = new JsonArray();
 			for (ResourceLocation location : instance.lootTables) {
 				array.add(location.toString());
@@ -74,7 +74,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 		}
 		
 		@Override
-		public @NotNull LootTableIdsCondition deserialize(JsonObject object, @NotNull JsonDeserializationContext context) {
+		public @NotNull LootTableIdsCondition deserialize(@NotNull JsonObject object, @NotNull JsonDeserializationContext context) {
 			List<ResourceLocation> lootTables = Lists.newArrayList();
 			JsonArray array = object.get("loot_table_ids").getAsJsonArray();
 			for (JsonElement jsonElement : array) {

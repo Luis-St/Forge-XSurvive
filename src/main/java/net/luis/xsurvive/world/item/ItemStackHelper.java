@@ -7,6 +7,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class ItemStackHelper {
 	
-	public static ItemStack setupItemForSlot(LivingEntity entity, EquipmentSlot slot, ItemStack stack, double specialMultiplier) {
+	public static @NotNull ItemStack setupItemForSlot(@NotNull LivingEntity entity, @NotNull EquipmentSlot slot, @NotNull ItemStack stack, double specialMultiplier) {
 		RandomSource rng = entity.getRandom();
 		if (stack.canEquip(slot, entity)) {
 			XSEnchantmentHelper.enchantItem(rng, stack, (int) (2 + (specialMultiplier * 2.0)), (int) (20 + specialMultiplier * rng.nextInt(18)), false, false);
@@ -26,7 +27,7 @@ public class ItemStackHelper {
 		return stack;
 	}
 	
-	public static ItemStack setupRandomItemForSlot(LivingEntity entity, EquipmentSlot slot, List<Item> items, double specialMultiplier) {
+	public static @NotNull ItemStack setupRandomItemForSlot(@NotNull LivingEntity entity, @NotNull EquipmentSlot slot, @NotNull List<Item> items, double specialMultiplier) {
 		RandomSource rng = entity.getRandom();
 		ItemStack stack = ItemStack.EMPTY;
 		int tries = 0;
@@ -41,7 +42,7 @@ public class ItemStackHelper {
 		return stack;
 	}
 	
-	public static ItemStack getSwordForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+	public static @NotNull ItemStack getSwordForDifficulty(@NotNull LivingEntity entity, @NotNull DifficultyInstance instance) {
 		WeightCollection<List<Item>> itemWeights = ItemWeightHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			List<Item> weapons = itemWeights.next();
@@ -56,7 +57,7 @@ public class ItemStackHelper {
 		return new ItemStack(Items.IRON_SWORD);
 	}
 	
-	public static ItemStack getCrossbowForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+	public static @NotNull ItemStack getCrossbowForDifficulty(@NotNull LivingEntity entity, @NotNull DifficultyInstance instance) {
 		WeightCollection<Item> itemWeights = ItemWeightHelper.getCrossbowWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			return new ItemStack(itemWeights.next());
@@ -64,7 +65,7 @@ public class ItemStackHelper {
 		return new ItemStack(Items.CROSSBOW);
 	}
 	
-	public static ItemStack getAxeForDifficulty(LivingEntity entity, DifficultyInstance instance) {
+	public static @NotNull ItemStack getAxeForDifficulty(@NotNull LivingEntity entity, @NotNull DifficultyInstance instance) {
 		WeightCollection<List<Item>> itemWeights = ItemWeightHelper.getWeaponWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			List<Item> weapons = itemWeights.next();

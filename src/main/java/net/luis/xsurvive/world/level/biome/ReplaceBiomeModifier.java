@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +39,7 @@ public record ReplaceBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeat
 	});
 	
 	@Override
-	public void modify(Holder<Biome> biome, Phase phase, Builder builder) {
+	public void modify(@NotNull Holder<Biome> biome, @NotNull Phase phase, @NotNull Builder builder) {
 		if (this.biomes.contains(biome)) {
 			MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 			if (server != null) {
@@ -52,7 +53,7 @@ public record ReplaceBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeat
 		}
 	}
 	
-	private HolderSet<PlacedFeature> getHolderSet(RegistryAccess registryAccess, List<ResourceLocation> locations) {
+	private @NotNull HolderSet<PlacedFeature> getHolderSet(@NotNull RegistryAccess registryAccess, @NotNull List<ResourceLocation> locations) {
 		List<Holder<PlacedFeature>> features = Lists.newArrayList();
 		Registry<PlacedFeature> registry = registryAccess.registryOrThrow(Registries.PLACED_FEATURE);
 		for (ResourceLocation location : locations) {
@@ -61,18 +62,18 @@ public record ReplaceBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeat
 		return HolderSet.direct(features);
 	}
 	
-	private void addFeatures(Builder builder, HolderSet<PlacedFeature> features) {
+	private void addFeatures(@NotNull Builder builder, @NotNull HolderSet<PlacedFeature> features) {
 		for (Holder<PlacedFeature> holder : features) {
 			builder.getGenerationSettings().addFeature(Decoration.UNDERGROUND_ORES, holder);
 		}
 	}
 	
-	private void removeFeatures(Builder builder, HolderSet<PlacedFeature> features) {
+	private void removeFeatures(@NotNull Builder builder, @NotNull HolderSet<PlacedFeature> features) {
 		builder.getGenerationSettings().getFeatures(Decoration.UNDERGROUND_ORES).removeIf(features::contains);
 	}
 	
 	@Override
-	public Codec<ReplaceBiomeModifier> codec() {
+	public @NotNull Codec<ReplaceBiomeModifier> codec() {
 		return XSBiomeModifiers.MOD_BASED_BIOME_MODIFIER.get();
 	}
 }

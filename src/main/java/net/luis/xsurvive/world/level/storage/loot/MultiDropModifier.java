@@ -32,12 +32,12 @@ public class MultiDropModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<MultiDropModifier> codec() {
+	public @NotNull Codec<MultiDropModifier> codec() {
 		return XSGlobalLootModifiers.MULTI_DROP_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
 		generatedLoot.forEach((stack) -> {
 			if (context.hasParam(LootContextParams.TOOL)) {
@@ -49,7 +49,7 @@ public class MultiDropModifier extends LootModifier {
 		return loot;
 	}
 	
-	private List<ItemStack> multiplyItem(ItemStack stack, int level) {
+	private @NotNull List<ItemStack> multiplyItem(@NotNull ItemStack stack, int level) {
 		List<ItemStack> loot = Lists.newArrayList();
 		if (level == 0) {
 			loot.add(stack);
@@ -76,7 +76,7 @@ public class MultiDropModifier extends LootModifier {
 		return loot;
 	}
 	
-	private ItemStack copy(ItemStack stack, int count) {
+	private @NotNull ItemStack copy(@NotNull ItemStack stack, int count) {
 		ItemStack lootStack = stack.copy();
 		lootStack.setCount(count);
 		return lootStack;

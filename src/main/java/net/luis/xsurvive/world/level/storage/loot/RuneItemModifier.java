@@ -41,19 +41,19 @@ public class RuneItemModifier extends LootModifier {
 	}
 	
 	@Override
-	public Codec<RuneItemModifier> codec() {
+	public @NotNull Codec<RuneItemModifier> codec() {
 		return XSGlobalLootModifiers.RUNE_ITEM_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		for (int i = 0; i < this.runeCount; i++) {
 			generatedLoot.add(this.getRandomRune());
 		}
 		return generatedLoot;
 	}
 	
-	private ItemStack getRandomRune() {
+	private @NotNull ItemStack getRandomRune() {
 		RarityList<Item> runes = RarityList.copy(this.runeWeights.next());
 		return new ItemStack(runes.get(RNG.nextInt(runes.size())));
 	}

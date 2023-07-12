@@ -6,6 +6,7 @@ import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -82,7 +83,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();
 		tag.putInt("next_phantom_reset", this.nextPhantomReset);
 		tag.putInt("last_sync", this.lastSync);
@@ -91,7 +92,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public void deserializeDisk(CompoundTag tag) {
+	public void deserializeDisk(@NotNull CompoundTag tag) {
 		super.deserializeDisk(tag);
 		this.nextPhantomReset = tag.getInt("next_phantom_reset");
 		this.lastSync = tag.getInt("last_sync");
@@ -99,12 +100,12 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public void deserializeNetwork(CompoundTag tag) {
+	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		
 	}
 	
 	@Override
-	public CompoundTag serializePersistent() {
+	public @NotNull CompoundTag serializePersistent() {
 		CompoundTag tag = super.serializePersistent();
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
@@ -112,7 +113,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public void deserializePersistent(CompoundTag tag) {
+	public void deserializePersistent(@NotNull CompoundTag tag) {
 		super.deserializePersistent(tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");

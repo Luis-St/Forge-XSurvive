@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -42,7 +43,7 @@ public class XSVillagerProfessions {
 		return register("nether_trader", null);
 	});
 	
-	private static VillagerProfession register(String name, @Nullable SoundEvent workSound) {
+	private static @NotNull VillagerProfession register(@NotNull String name, @Nullable SoundEvent workSound) {
 		ResourceLocation location = new ResourceLocation(XSurvive.MOD_ID, name);
 		return new VillagerProfession(location.toString(), (holder) -> holder.is(location), (holder) -> holder.is(location), ImmutableSet.of(), ImmutableSet.of(), workSound);
 	}

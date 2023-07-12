@@ -32,7 +32,7 @@ public class EnderChestScreen extends AbstractContainerScreen<EnderChestMenu> {
 	}
 	
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(@NotNull GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		graphics.blit(TEXTURE, i, j, 0, 0, this.imageWidth, 125);

@@ -7,6 +7,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -18,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 public class RegisterModEventHandler {
 	
 	@SubscribeEvent
-	public static void buildContents(BuildCreativeModeTabContentsEvent event) {
+	public static void buildContents(@NotNull BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
 			event.accept(XSItems.HONEY_MELON_SLICE);
 			event.accept(XSItems.DIAMOND_APPLE);

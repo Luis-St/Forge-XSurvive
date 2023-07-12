@@ -29,7 +29,7 @@ public class GlintColorItem extends Item implements IGlintColor {
 	}
 	
 	@Override
-	public int getGlintColor(ItemStack stack) {
+	public int getGlintColor(@NotNull ItemStack stack) {
 		return this.glintColor.getGlintColor(stack);
 	}
 }

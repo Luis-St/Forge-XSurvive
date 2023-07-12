@@ -5,6 +5,7 @@ import net.minecraft.server.commands.RaidCommand;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 public class RegisterEventHandler {
 	
 	@SubscribeEvent
-	public static void registerClientCommands(RegisterCommandsEvent event) {
+	public static void registerClientCommands(@NotNull RegisterCommandsEvent event) {
 		RaidCommand.register(event.getDispatcher());
 	}
 }

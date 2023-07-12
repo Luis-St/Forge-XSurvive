@@ -4,6 +4,7 @@ import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.IEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -22,7 +23,7 @@ public class AbstractEntityHandler implements IEntity {
 	}
 	
 	@Override
-	public Entity getEntity() {
+	public @NotNull Entity getEntity() {
 		return this.entity;
 	}
 	
@@ -32,7 +33,7 @@ public class AbstractEntityHandler implements IEntity {
 	}
 	
 	@Override
-	public EntityFireType getFireType() {
+	public @NotNull EntityFireType getFireType() {
 		return this.fireType;
 	}
 	
@@ -49,22 +50,22 @@ public class AbstractEntityHandler implements IEntity {
 	}
 	
 	@Override
-	public CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk() {
 		return this.serialize();
 	}
 	
 	@Override
-	public void deserializeDisk(CompoundTag tag) {
+	public void deserializeDisk(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 	}
 	
 	@Override
-	public CompoundTag serializeNetwork() {
+	public @NotNull CompoundTag serializeNetwork() {
 		return this.serialize();
 	}
 	
 	@Override
-	public void deserializeNetwork(CompoundTag tag) {
+	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 	}
 }

@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientSetupEventHandler {
 	
 	@SubscribeEvent
-	public static void clientSetup(FMLClientSetupEvent event) {
+	public static void clientSetup(@NotNull FMLClientSetupEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		event.enqueueWork(() -> {
 			MenuScreens.register(XSMenuTypes.SMELTING_FURNACE.get(), SmeltingFurnaceScreen::new);
@@ -43,7 +44,7 @@ public class ClientSetupEventHandler {
 		XSurvive.LOGGER.info("Glint strength is now {}", minecraft.options.glintStrength.get());
 	}
 	
-	private static void replaceGammaOption(Minecraft minecraft) {
+	private static void replaceGammaOption(@NotNull Minecraft minecraft) {
 		minecraft.options.gamma = new OptionInstance<>("options.gamma", OptionInstance.noTooltip(), (component, value) -> {
 			int gamma = (int) (value * 100.0);
 			if (gamma == 0) {
@@ -62,7 +63,7 @@ public class ClientSetupEventHandler {
 		});
 	}
 	
-	private static void replaceGlintOptions(Minecraft minecraft) {
+	private static void replaceGlintOptions(@NotNull Minecraft minecraft) {
 		minecraft.options.glintSpeed = new OptionInstance<>("options.glintSpeed", OptionInstance.cachedConstantTooltip(Component.translatable("options.glintSpeed.tooltip")), (component, value) -> {
 			int glint = (int) (value * 100.0);
 			if (glint == 0) {

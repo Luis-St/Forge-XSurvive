@@ -1,6 +1,7 @@
 package net.luis.xsurvive.capability;
 
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -10,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public interface ICapability {
 	
-	CompoundTag serializeDisk();
+	@NotNull CompoundTag serializeDisk();
 	
-	void deserializeDisk(CompoundTag tag);
+	void deserializeDisk(@NotNull CompoundTag tag);
 }

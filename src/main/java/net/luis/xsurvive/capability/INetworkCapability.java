@@ -1,6 +1,7 @@
 package net.luis.xsurvive.capability;
 
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -18,7 +19,7 @@ public interface INetworkCapability extends ICapability {
 		
 	}
 	
-	CompoundTag serializeNetwork();
+	@NotNull CompoundTag serializeNetwork();
 	
-	void deserializeNetwork(CompoundTag tag);
+	void deserializeNetwork(@NotNull CompoundTag tag);
 }

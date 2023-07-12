@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -16,9 +17,9 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 @AutoRegisterCapability
 public interface IPlayer extends INetworkCapability {
 	
-	Player getPlayer();
+	@NotNull Player getPlayer();
 	
-	default Level getLevel() {
+	default @NotNull Level getLevel() {
 		return this.getPlayer().level();
 	}
 	
@@ -40,9 +41,9 @@ public interface IPlayer extends INetworkCapability {
 	
 	double getEndAspectPercent();
 	
-	CombinedInvWrapper getCombinedInventory();
+	@NotNull CombinedInvWrapper getCombinedInventory();
 	
-	CompoundTag serializePersistent();
+	@NotNull CompoundTag serializePersistent();
 	
-	void deserializePersistent(CompoundTag tag);
+	void deserializePersistent(@NotNull CompoundTag tag);
 }

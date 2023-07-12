@@ -7,6 +7,7 @@ import net.luis.xsurvive.world.entity.EntityFireType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -42,7 +43,7 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	}
 	
 	@Override
-	public void setFireType(EntityFireType fireType) {
+	public void setFireType(@NotNull EntityFireType fireType) {
 		this.fireType = fireType == null ? EntityFireType.NONE : fireType;
 		this.setChanged();
 	}
@@ -59,7 +60,7 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	}
 	
 	@Override
-	public CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
@@ -67,14 +68,14 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	}
 	
 	@Override
-	public void deserializeDisk(CompoundTag tag) {
+	public void deserializeDisk(@NotNull CompoundTag tag) {
 		super.deserializeDisk(tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}
 	
 	@Override
-	public void deserializeNetwork(CompoundTag tag) {
+	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		
 	}
 }

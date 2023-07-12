@@ -27,11 +27,11 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 		this.optional = LazyOptional.of(() -> this.playerCapability);
 	}
 	
-	public static IPlayer get(Player player) {
+	public static @NotNull IPlayer get(@NotNull Player player) {
 		return player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static LocalPlayerHandler getLocal(Player player) {
+	public static @NotNull LocalPlayerHandler getLocal(@NotNull Player player) {
 		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof LocalPlayerHandler handler) {
 			return handler;
@@ -41,7 +41,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 		throw new IllegalStateException("Unknown network side");
 	}
 	
-	public static ServerPlayerHandler getServer(Player player) {
+	public static @NotNull ServerPlayerHandler getServer(@NotNull Player player) {
 		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof LocalPlayerHandler handler) {
 			throw new RuntimeException("Fail to get ServerPlayerHandler from client");
@@ -57,12 +57,12 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public CompoundTag serializeNBT() {
+	public @NotNull CompoundTag serializeNBT() {
 		return this.playerCapability.serializeDisk();
 	}
 	
 	@Override
-	public void deserializeNBT(CompoundTag tag) {
+	public void deserializeNBT(@NotNull CompoundTag tag) {
 		this.playerCapability.deserializeDisk(tag);
 	}
 }

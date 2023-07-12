@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ import java.util.Objects;
 public class ClientEventHandler {
 	
 	@SubscribeEvent
-	public static void screenInit(ScreenEvent.Init.Post event) {
+	public static void screenInit(@NotNull ScreenEvent.Init.Post event) {
 		if (event.getScreen() instanceof ChatReportScreen screen) {
 			Minecraft minecraft = screen.getMinecraft();
 			screen.sendButton = Button.builder(Component.translatable("gui.chatReport.send"), (button) -> {

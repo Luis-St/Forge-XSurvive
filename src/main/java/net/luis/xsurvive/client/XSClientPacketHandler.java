@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -21,13 +22,13 @@ import java.util.Objects;
 
 public class XSClientPacketHandler {
 	
-	public static void handlePlayerCapabilityUpdate(CompoundTag tag) {
+	public static void handlePlayerCapabilityUpdate(@NotNull CompoundTag tag) {
 		LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
 		LocalPlayerHandler handler = PlayerProvider.getLocal(player);
 		handler.deserializeNetwork(tag);
 	}
 	
-	public static void handleTridentGlintColorUpdate(int tridentEntityId, ItemStack tridentStack) {
+	public static void handleTridentGlintColorUpdate(int tridentEntityId, @NotNull ItemStack tridentStack) {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null) {
 			if (level.getEntity(tridentEntityId) instanceof ThrownTrident trident) {
@@ -36,7 +37,7 @@ public class XSClientPacketHandler {
 		}
 	}
 	
-	public static void handleEntityCapabilityUpdate(int entityId, CompoundTag tag) {
+	public static void handleEntityCapabilityUpdate(int entityId, @NotNull CompoundTag tag) {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null) {
 			Entity entity = level.getEntity(entityId);

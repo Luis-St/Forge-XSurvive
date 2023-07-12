@@ -4,6 +4,7 @@ import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class ItemWeightHelper {
 	
-	public static WeightCollection<List<Item>> getWeaponWeightsForDifficulty(double difficulty) {
+	public static @NotNull WeightCollection<List<Item>> getWeaponWeightsForDifficulty(double difficulty) {
 		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
 		if (difficulty >= 5.5) {
 			itemWeights.add(1, ItemHelper.getEnderiteWeapons());
@@ -41,7 +42,7 @@ public class ItemWeightHelper {
 		return itemWeights;
 	}
 	
-	public static WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
+	public static @NotNull WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
 		WeightCollection<Item> itemWeights = new WeightCollection<>();
 		itemWeights.add(10, XOItems.NIGHT_CROSSBOW.get());
 		itemWeights.add(30, XOItems.ENDERITE_CROSSBOW.get());
@@ -49,7 +50,7 @@ public class ItemWeightHelper {
 		return itemWeights;
 	}
 	
-	public static WeightCollection<List<Item>> getArmorWeightsForDifficulty(double difficulty) {
+	public static @NotNull WeightCollection<List<Item>> getArmorWeightsForDifficulty(double difficulty) {
 		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
 		if (difficulty >= 5.5) {
 			itemWeights.add(1, ItemHelper.getEnderiteArmor());

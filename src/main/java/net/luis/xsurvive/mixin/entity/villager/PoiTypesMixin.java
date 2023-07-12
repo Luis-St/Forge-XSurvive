@@ -27,5 +27,4 @@ public abstract class PoiTypesMixin {
 			callback.setReturnValue(ImmutableSet.of());
 		}
 	}
-	
 }

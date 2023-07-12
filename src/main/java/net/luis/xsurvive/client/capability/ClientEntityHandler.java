@@ -3,6 +3,7 @@ package net.luis.xsurvive.client.capability;
 import net.luis.xsurvive.capability.handler.AbstractEntityHandler;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ClientEntityHandler extends AbstractEntityHandler {
 	}
 	
 	@Override
-	public CompoundTag serializeNetwork() {
+	public @NotNull CompoundTag serializeNetwork() {
 		return new CompoundTag();
 	}
 }

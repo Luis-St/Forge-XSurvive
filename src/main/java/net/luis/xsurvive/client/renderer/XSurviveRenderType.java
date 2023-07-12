@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public abstract class XSurviveRenderType extends RenderType {
 		super(name, format, mode, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
 	}
 	
-	public static void addGlintTypes(Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> map) {
+	public static void addGlintTypes(@NotNull Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> map) {
 		addGlintTypes(map, glint);
 		addGlintTypes(map, glintTranslucent);
 		addGlintTypes(map, entityGlint);
@@ -44,7 +45,7 @@ public abstract class XSurviveRenderType extends RenderType {
 		addGlintTypes(map, armorEntityGlint);
 	}
 	
-	private static List<RenderType> newRenderList(Function<String, RenderType> function) {
+	private static @NotNull List<RenderType> newRenderList(@NotNull Function<String, RenderType> function) {
 		ArrayList<RenderType> list = Lists.newArrayList();
 		for (DyeColor color : DyeColor.values()) {
 			list.add(function.apply(color.getName()));
@@ -53,7 +54,7 @@ public abstract class XSurviveRenderType extends RenderType {
 		return list;
 	}
 	
-	private static void addGlintTypes(Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> map, List<RenderType> renderTypes) {
+	private static void addGlintTypes(@NotNull Object2ObjectLinkedOpenHashMap<RenderType, BufferBuilder> map, @NotNull List<RenderType> renderTypes) {
 		for (RenderType renderType : renderTypes) {
 			if (!map.containsKey(renderType)) {
 				map.put(renderType, new BufferBuilder(renderType.bufferSize()));
@@ -61,7 +62,7 @@ public abstract class XSurviveRenderType extends RenderType {
 		}
 	}
 	
-	private static RenderType glintRenderType(String name) {
+	private static @NotNull RenderType glintRenderType(String name) {
 		return RenderType.create("glint_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_GLINT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL)
@@ -69,42 +70,42 @@ public abstract class XSurviveRenderType extends RenderType {
 				.createCompositeState(false));
 	}
 	
-	private static RenderType glintTranslucentRenderType(String name) {
+	private static @NotNull RenderType glintTranslucentRenderType(String name) {
 		return RenderType.create("glint_translucent_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_GLINT_TRANSLUCENT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
 				.setTexturingState(RenderStateShard.GLINT_TEXTURING).createCompositeState(false));
 	}
 	
-	private static RenderType entityGlintRenderType(String name) {
+	private static @NotNull RenderType entityGlintRenderType(String name) {
 		return RenderType.create("entity_glint_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_ENTITY_GLINT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setOutputState(RenderStateShard.ITEM_ENTITY_TARGET)
 				.setTexturingState(RenderStateShard.ENTITY_GLINT_TEXTURING).createCompositeState(false));
 	}
 	
-	private static RenderType glintDirectRenderType(String name) {
+	private static @NotNull RenderType glintDirectRenderType(String name) {
 		return RenderType.create("glint_direct_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_GLINT_DIRECT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setTexturingState(RenderStateShard.GLINT_TEXTURING)
 				.createCompositeState(false));
 	}
 	
-	private static RenderType entityGlintDriectRenderType(String name) {
+	private static @NotNull RenderType entityGlintDriectRenderType(String name) {
 		return RenderType.create("entity_glint_direct_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_ENTITY_GLINT_DIRECT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setTexturingState(RenderStateShard.ENTITY_GLINT_TEXTURING)
 				.createCompositeState(false));
 	}
 	
-	private static RenderType armorGlintRenderType(String name) {
+	private static @NotNull RenderType armorGlintRenderType(String name) {
 		return RenderType.create("armor_glint_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_ARMOR_GLINT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setTexturingState(RenderStateShard.ENTITY_GLINT_TEXTURING)
 				.setLayeringState(RenderStateShard.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
 	}
 	
-	private static RenderType armorEntityGlintRenderType(String name) {
+	private static @NotNull RenderType armorEntityGlintRenderType(String name) {
 		return RenderType.create("armor_entity_glint_" + name, DefaultVertexFormat.POSITION_TEX, VertexFormat.Mode.QUADS, 256, false, false,
 			CompositeState.builder().setShaderState(RenderStateShard.RENDERTYPE_ARMOR_ENTITY_GLINT_SHADER).setTextureState(new TextureStateShard(texture(name), true, false)).setWriteMaskState(RenderStateShard.COLOR_WRITE)
 				.setCullState(RenderStateShard.NO_CULL).setDepthTestState(RenderStateShard.EQUAL_DEPTH_TEST).setTransparencyState(RenderStateShard.GLINT_TRANSPARENCY).setTexturingState(RenderStateShard.ENTITY_GLINT_TEXTURING)

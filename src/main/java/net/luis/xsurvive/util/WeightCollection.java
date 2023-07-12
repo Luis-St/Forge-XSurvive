@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -30,13 +31,13 @@ public class WeightCollection<T> {
 		this.random = random;
 	}
 	
-	private WeightCollection(List<Pair<Integer, T>> list) {
+	private WeightCollection(@NotNull List<Pair<Integer, T>> list) {
 		this.map = Maps.newTreeMap();
 		this.random = new Random();
 		list.forEach((pair) -> this.add(pair.getFirst(), pair.getSecond()));
 	}
 	
-	public static <E> Codec<WeightCollection<E>> codec(Codec<E> codec) {
+	public static <E> @NotNull Codec<WeightCollection<E>> codec(Codec<E> codec) {
 		return RecordCodecBuilder.create((instance) -> {
 			return instance.group(Codec.pair(Codec.INT.fieldOf("weight").codec(), codec.fieldOf("value").codec()).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
 		});
@@ -59,7 +60,7 @@ public class WeightCollection<T> {
 		return this.map.isEmpty();
 	}
 	
-	private List<Pair<Integer, T>> asList() {
+	private @NotNull List<Pair<Integer, T>> asList() {
 		List<Pair<Integer, T>> list = Lists.newArrayList();
 		for (Entry<Integer, Pair<Integer, T>> entry : this.map.entrySet()) {
 			list.add(Pair.of(entry.getValue().getFirst(), entry.getValue().getSecond()));

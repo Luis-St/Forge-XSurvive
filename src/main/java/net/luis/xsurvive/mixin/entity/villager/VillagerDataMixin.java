@@ -28,5 +28,4 @@ public abstract class VillagerDataMixin {
 	private static void getMaxXpPerLevel(int level, CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(canLevelUp(level) ? NEXT_LEVEL_XP_THRESHOLDS[level] * 5 : 0);
 	}
-	
 }

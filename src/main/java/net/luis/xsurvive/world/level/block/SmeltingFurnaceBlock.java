@@ -47,13 +47,13 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 	}
 	
 	@Override
-	protected void openContainer(Level level, @NotNull BlockPos pos, @NotNull Player player) {
+	protected void openContainer(@NotNull Level level, @NotNull BlockPos pos, @NotNull Player player) {
 		if (level.getBlockEntity(pos) instanceof SmeltingFurnaceBlockEntity smeltingBlockEntity) {
 			player.openMenu(smeltingBlockEntity);
 		}
 	}
 	
-	public void animateTick(BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource rng) {
+	public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource rng) {
 		if (state.getValue(LIT)) {
 			double x = pos.getX() + 0.5;
 			double y = pos.getY();
@@ -72,7 +72,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 	}
 	
 	@Override
-	public void add(WikiFileBuilder wikiBuilder) {
+	public void add(@NotNull WikiFileBuilder wikiBuilder) {
 		wikiBuilder.lines((builder) -> {
 			builder.append("The smelting furnace works similarly to the vanilla blast furnace or the smoker.").endLine();
 			builder.append("The furnace provides faster recipes for the following blocks:").endLine();
@@ -84,7 +84,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 		});
 	}
 	
-	private List<String> getRecipes() {
+	private @NotNull List<String> getRecipes() {
 		return ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(XSRecipeTypes.SMELTING.get()).stream().map(SmeltingRecipe::getId).map(XSLanguageProvider::getName).map((name) -> {
 			return name.replace("From Smelting", "").trim();
 		}).collect(Collectors.toList());

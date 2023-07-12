@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.*;
 import net.minecraftforge.network.simple.SimpleChannel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.*;
@@ -44,34 +45,34 @@ public enum XSNetworkHandler {
 		this.simpleChannel.messageBuilder(clazz, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
 	}
 	
-	public SimpleChannel getChannel() {
+	public @NotNull SimpleChannel getChannel() {
 		return this.simpleChannel;
 	}
 	
-	public <T extends NetworkPacket> void sendToServer(T packet) {
+	public <T extends NetworkPacket> void sendToServer(@NotNull T packet) {
 		this.getChannel().sendToServer(packet);
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayer(Player player, T packet) {
+	public <T extends NetworkPacket> void sendToPlayer(@NotNull Player player, @NotNull T packet) {
 		if (player instanceof ServerPlayer serverPlayer) {
 			this.sendToPlayer(serverPlayer, packet);
 		}
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayer(ServerPlayer player, T packet) {
+	public <T extends NetworkPacket> void sendToPlayer(@NotNull ServerPlayer player, @NotNull T packet) {
 		this.getChannel().send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayers(T packet) {
+	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet) {
 		this.getChannel().send(PacketDistributor.ALL.noArg(), packet);
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayers(T packet, ServerPlayer... players) {
+	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet, ServerPlayer... players) {
 		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> player.connection.connection).collect(Collectors.toList());
 		this.getChannel().send(PacketDistributor.NMLIST.with(() -> connections), packet);
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayersInLevel(ServerLevel level, T packet) {
+	public <T extends NetworkPacket> void sendToPlayersInLevel(@NotNull ServerLevel level, @NotNull T packet) {
 		this.getChannel().send(PacketDistributor.DIMENSION.with(level::dimension), packet);
 	}
 }
