@@ -32,7 +32,7 @@ public abstract class TridentImpalerEnchantmentMixin extends Enchantment {
 	}
 	
 	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof SwordItem) {
 			return true;
 		} else if (stack.getItem() instanceof AxeItem) {
@@ -44,7 +44,7 @@ public abstract class TridentImpalerEnchantmentMixin extends Enchantment {
 	}
 	
 	@Inject(method = "getDamageBonus", at = @At("HEAD"), cancellable = true)
-	public void getDamageBonus(int level, MobType mobType, CallbackInfoReturnable<Float> callback) {
+	public void getDamageBonus(int level, MobType mobType, @NotNull CallbackInfoReturnable<Float> callback) {
 		callback.setReturnValue(0.0F);
 	}
 }

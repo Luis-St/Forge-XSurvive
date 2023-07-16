@@ -56,8 +56,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 						duration = 40;
 						amplifier = 2;
 					}
-					default -> {
-					}
+					default -> {}
 				}
 				if (duration > 0) {
 					livingTarget.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * duration, 1 + amplifier), this.getEffectSource());

@@ -30,9 +30,7 @@ public abstract class ItemStackMixin {
 		if (entity instanceof LivingEntity livingEntity) {
 			int breakingCurse = ((ItemStack) (Object) this).getEnchantmentLevel(XSEnchantments.CURSE_OF_BREAKING.get());
 			if (breakingCurse > 0 && level.getGameTime() % 100 == 0) {
-				this.hurtAndBreak(breakingCurse * 2, livingEntity, (e) -> {
-					
-				});
+				this.hurtAndBreak(breakingCurse * 2, livingEntity, (e) -> {});
 			}
 		}
 	}

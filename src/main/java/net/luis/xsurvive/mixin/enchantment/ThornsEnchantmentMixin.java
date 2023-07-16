@@ -7,6 +7,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ThornsEnchantment;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,12 +33,12 @@ public abstract class ThornsEnchantmentMixin {
 	}
 	
 	@Inject(method = "getMaxLevel", at = @At("HEAD"), cancellable = true)
-	public void getMaxLevel(CallbackInfoReturnable<Integer> callback) {
+	public void getMaxLevel(@NotNull CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(4);
 	}
 	
 	@Inject(method = "doPostHurt", at = @At("HEAD"), cancellable = true)
-	public void doPostHurt(LivingEntity target, Entity attacker, int level, CallbackInfo callback) {
+	public void doPostHurt(@NotNull LivingEntity target, Entity attacker, int level, CallbackInfo callback) {
 		RandomSource rng = target.getRandom();
 		List<Entry<EquipmentSlot, ItemStack>> thornsEquipment = this.getThornsEquipment(target);
 		if (shouldHit(level, rng)) {
@@ -54,11 +55,11 @@ public abstract class ThornsEnchantmentMixin {
 		callback.cancel();
 	}
 	
-	private int getThornsLevel(LivingEntity entity, EquipmentSlot slot) {
+	private int getThornsLevel(@NotNull LivingEntity entity, EquipmentSlot slot) {
 		return entity.getItemBySlot(slot).getEnchantmentLevel((ThornsEnchantment) (Object) this);
 	}
 	
-	private List<Entry<EquipmentSlot, ItemStack>> getThornsEquipment(LivingEntity entity) {
+	private @NotNull List<Entry<EquipmentSlot, ItemStack>> getThornsEquipment(LivingEntity entity) {
 		List<Entry<EquipmentSlot, ItemStack>> thornsEquipment = Lists.newArrayList();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot.getType() == Type.ARMOR && this.getThornsLevel(entity, slot) > 0) {

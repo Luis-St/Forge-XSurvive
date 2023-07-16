@@ -18,6 +18,7 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +39,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	}
 	
 	@Inject(method = "populateDefaultEquipmentSlots", at = @At("HEAD"), cancellable = true)
-	protected void populateDefaultEquipmentSlots(RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {
+	protected void populateDefaultEquipmentSlots(@NotNull RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {
 		if (0.25 > rng.nextDouble()) {
 			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
 		} else {
@@ -54,7 +55,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	}
 	
 	@Inject(method = "populateDefaultEquipmentEnchantments", at = @At("HEAD"))
-	protected void populateDefaultEquipmentEnchantments(RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {
+	protected void populateDefaultEquipmentEnchantments(RandomSource rng, @NotNull DifficultyInstance instance, CallbackInfo callback) {
 		ItemStack stack = ItemStackHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
 		XSEnchantmentHelper.removeEnchantment(Enchantments.FLAMING_ARROWS, stack);
 		this.setItemSlot(EquipmentSlot.MAINHAND, stack);

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +28,7 @@ import java.util.Optional;
 public abstract class AssignProfessionFromJobSiteMixin {
 	
 	@Inject(method = "create", at = @At(value = "HEAD"), cancellable = true)
-	private static void create(CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
+	private static void create(@NotNull CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
 		callback.setReturnValue(
 			BehaviorBuilder.create((builder) -> builder.group(builder.present(MemoryModuleType.POTENTIAL_JOB_SITE), builder.registered(MemoryModuleType.JOB_SITE)).apply(builder, (memory, accessor) -> (level, villager, seed) -> {
 				GlobalPos pos = builder.get(memory);

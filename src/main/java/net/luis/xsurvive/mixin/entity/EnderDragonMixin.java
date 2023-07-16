@@ -18,6 +18,7 @@ import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -82,7 +83,7 @@ public abstract class EnderDragonMixin extends Mob {
 		callback.cancel();
 	}
 	
-	private void addDragonExperience(List<Player> players, int experience) {
+	private void addDragonExperience(@NotNull List<Player> players, int experience) {
 		for (Player player : players) {
 			int xp = experience;
 			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, XSEnchantmentHelper.getItemsWith(Enchantments.MENDING, player, ItemStack::isDamaged))) {
@@ -120,5 +121,4 @@ public abstract class EnderDragonMixin extends Mob {
 		this.nearestCrystal = nearestCrystal;
 		callback.cancel();
 	}
-	
 }

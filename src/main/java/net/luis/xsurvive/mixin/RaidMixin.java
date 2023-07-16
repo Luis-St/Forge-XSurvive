@@ -4,6 +4,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.raid.Raid;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,7 +34,7 @@ public abstract class RaidMixin {
 	@Shadow private int numGroups;
 	
 	@Inject(method = "getDefaultNumSpawns", at = @At("HEAD"), cancellable = true)
-	private void getDefaultNumSpawns(Raid.RaiderType raiderType, int wave, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
+	private void getDefaultNumSpawns(Raid.@NotNull RaiderType raiderType, int wave, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
 		RandomSource rng = RandomSource.create();
 		int spawns = bonusWave ? raiderType.spawnsPerWaveBeforeBonus[this.numGroups] : raiderType.spawnsPerWaveBeforeBonus[wave];
 		switch (raiderType) {
@@ -46,7 +47,7 @@ public abstract class RaidMixin {
 	}
 	
 	@Inject(method = "getPotentialBonusSpawns", at = @At("HEAD"), cancellable = true)
-	private void getPotentialBonusSpawns(Raid.RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
+	private void getPotentialBonusSpawns(Raid.@NotNull RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave, @NotNull CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(0);
 		switch (raiderType) {
 			case VINDICATOR, EVOKER -> callback.setReturnValue(0);

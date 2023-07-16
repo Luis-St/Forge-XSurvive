@@ -1,7 +1,6 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import com.google.common.collect.*;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -126,7 +125,6 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK);
 				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? area * 2 : area));
 				int amplifier = beaconLevel >= 4 && primary == secondary ? 1 : 0;
-				XSurvive.LOGGER.info("Beacon at {} is {}full of diamond blocks, applying {} at amplifier {}", pos, diamond ? "" : "not ", primary, diamond ? 4 : amplifier);
 				for (Player player : players) {
 					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? 4 : getAmplifier(player.getOnPos(), (ServerLevel) player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
 				}

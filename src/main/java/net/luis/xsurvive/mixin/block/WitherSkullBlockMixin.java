@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPattern.BlockPatternMatch;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,7 +43,7 @@ public abstract class WitherSkullBlockMixin {
 	}
 	
 	@Inject(method = "checkSpawn", at = @At("HEAD"), cancellable = true)
-	private static void checkSpawn(Level level, BlockPos pos, SkullBlockEntity blockEntity, CallbackInfo callback) {
+	private static void checkSpawn(@NotNull Level level, BlockPos pos, SkullBlockEntity blockEntity, CallbackInfo callback) {
 		if (!level.isClientSide) {
 			BlockState state = blockEntity.getBlockState();
 			boolean witherSkull = state.is(Blocks.WITHER_SKELETON_SKULL) || state.is(Blocks.WITHER_SKELETON_WALL_SKULL);
@@ -51,13 +52,13 @@ public abstract class WitherSkullBlockMixin {
 				BlockPatternMatch patternMatch = pattern.find(level, pos);
 				if (patternMatch != null) {
 					if (level.getBiome(pos).is(Biomes.THE_END)) {
-						XSurvive.LOGGER.debug("Can not spawn the wither in the end biome");
+						XSurvive.LOGGER.info("Can not spawn the wither in the end biome");
 					} else if (level.getBiome(pos).is(BiomeTags.IS_NETHER) && !checkNetherSpawn(pos)) {
-						XSurvive.LOGGER.debug("Can not spawn the wither in the nether at height {}", pos.getY());
+						XSurvive.LOGGER.info("Can not spawn the wither in the nether at height {}", pos.getY());
 					} else if (level.getBiome(pos).is(BiomeTags.IS_OVERWORLD) && -59 > pos.getY()) {
-						XSurvive.LOGGER.debug("Can not spawn the wither in the overworld at height {}", pos.getY());
+						XSurvive.LOGGER.info("Can not spawn the wither in the overworld at height {}", pos.getY());
 					} else if (checkSpawnArea(level, patternMatch)) {
-						XSurvive.LOGGER.debug("Can not spawn the wither at position {}, since there is not enough space around", patternMatch.getBlock(1, 1, 0).getPos().toShortString());
+						XSurvive.LOGGER.info("Can not spawn the wither at position {}, since there is not enough space around", patternMatch.getBlock(1, 1, 0).getPos().toShortString());
 					} else {
 						for (int width = 0; width < pattern.getWidth(); ++width) {
 							for (int height = 0; height < pattern.getHeight(); ++height) {
@@ -87,7 +88,7 @@ public abstract class WitherSkullBlockMixin {
 		callback.cancel();
 	}
 	
-	private static boolean checkNetherSpawn(BlockPos pos) {
+	private static boolean checkNetherSpawn(@NotNull BlockPos pos) {
 		if (pos.getY() > 128) {
 			return true;
 		} else if (128 >= pos.getY() && pos.getY() >= 121) {
@@ -97,7 +98,7 @@ public abstract class WitherSkullBlockMixin {
 		}
 	}
 	
-	private static boolean checkSpawnArea(Level level, BlockPatternMatch patternMatch) {
+	private static boolean checkSpawnArea(@NotNull Level level, @NotNull BlockPatternMatch patternMatch) {
 		BlockPos pos = patternMatch.getBlock(1, 1, 0).getPos();
 		return level.getBlockStates(new AABB(pos.below().south().west(), pos.above().north().east())).anyMatch((state) -> {
 			return !state.isAir() && !state.is(Blocks.WITHER_SKELETON_SKULL) && !state.is(Blocks.WITHER_SKELETON_WALL_SKULL) && !state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);

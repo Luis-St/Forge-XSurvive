@@ -11,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,7 +34,7 @@ public abstract class ServerPlayerGameModeMixin {
 	@Shadow protected ServerPlayer player;
 	
 	@Inject(method = "destroyBlock", at = @At(value = "RETURN", ordinal = 5), locals = LocalCapture.CAPTURE_FAILHARD)
-	public void destroyBlock(BlockPos pos, CallbackInfoReturnable<Boolean> callback, BlockState state) {
+	public void destroyBlock(@NotNull BlockPos pos, CallbackInfoReturnable<Boolean> callback, BlockState state) {
 		BlockState belowState = this.level.getBlockState(pos.below());
 		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.REPLANTING.get(), this.player);
 		int replanting = entry.getValue().getEnchantmentLevel(XSEnchantments.REPLANTING.get());

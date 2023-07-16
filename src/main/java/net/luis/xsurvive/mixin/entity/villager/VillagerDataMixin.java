@@ -1,6 +1,7 @@
 package net.luis.xsurvive.mixin.entity.villager;
 
 import net.minecraft.world.entity.npc.VillagerData;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +25,7 @@ public abstract class VillagerDataMixin {
 	}
 	
 	@Inject(method = "getMaxXpPerLevel", at = @At("HEAD"), cancellable = true)
-	private static void getMaxXpPerLevel(int level, CallbackInfoReturnable<Integer> callback) {
+	private static void getMaxXpPerLevel(int level, @NotNull CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(canLevelUp(level) ? NEXT_LEVEL_XP_THRESHOLDS[level] * 5 : 0);
 	}
 }

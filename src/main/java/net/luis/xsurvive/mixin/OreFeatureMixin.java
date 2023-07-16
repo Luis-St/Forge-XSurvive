@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.TargetBlockState;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -37,7 +38,7 @@ public abstract class OreFeatureMixin extends Feature<OreConfiguration> {
 	}
 	
 	@Inject(method = "canPlaceOre", at = @At("HEAD"), cancellable = true)
-	private static void canPlaceOre(BlockState blockState, Function<BlockPos, BlockState> function, RandomSource rng, OreConfiguration config, TargetBlockState targetState, MutableBlockPos pos, CallbackInfoReturnable<Boolean> callback) {
+	private static void canPlaceOre(BlockState blockState, Function<BlockPos, BlockState> function, RandomSource rng, OreConfiguration config, @NotNull TargetBlockState targetState, MutableBlockPos pos, CallbackInfoReturnable<Boolean> callback) {
 		if (!targetState.target.test(blockState, rng)) {
 			callback.setReturnValue(false);
 		} else if (shouldSkipAirCheck(rng, config.discardChanceOnAirExposure)) {

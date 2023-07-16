@@ -15,6 +15,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,13 +31,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 public abstract class EntityRenderDispatcherMixin {
 	
-	private static final Material FIRE_0 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("block/fire_0"));
-	private static final Material FIRE_1 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("block/fire_1"));
-	private static final Material SOUL_FIRE_0 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("block/soul_fire_0"));
-	private static final Material SOUL_FIRE_1 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation("block/soul_fire_1"));
-	private static final Material MYSTIC_FIRE_0 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(XSurvive.MOD_ID, "block/mystic_fire_0"));
-	private static final Material MYSTIC_FIRE_1 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(XSurvive.MOD_ID, "block/mystic_fire_1"));
-	
 	@Shadow public Camera camera;
 	
 	@Shadow
@@ -45,10 +39,10 @@ public abstract class EntityRenderDispatcherMixin {
 	}
 	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
-	private void renderFlame(PoseStack stack, MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {
+	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {
 		EntityFireType fireType = EntityProvider.get(entity).getFireType();
-		TextureAtlasSprite fireTextureSprite0 = getFireTextureSprite0(entity, fireType);
-		TextureAtlasSprite fireTextureSprite1 = getFireTextureSprite1(entity, fireType);
+		TextureAtlasSprite fireTextureSprite0 = EntityFireType.getFireTextureSprite0(entity, fireType);
+		TextureAtlasSprite fireTextureSprite1 = EntityFireType.getFireTextureSprite1(entity, fireType);
 		stack.pushPose();
 		float width = entity.getBbWidth() * 1.4F;
 		stack.scale(width, width, width);
@@ -82,39 +76,5 @@ public abstract class EntityRenderDispatcherMixin {
 		}
 		stack.popPose();
 		callback.cancel();
-	}
-	
-	private TextureAtlasSprite getFireTextureSprite0(Entity entity, EntityFireType entityFireType) {
-		EntityFireType blockFireType = EntityFireType.byBlock(entity.getFeetBlockState().getBlock());
-		if (blockFireType == EntityFireType.NONE || blockFireType == entityFireType) {
-			return switch (entityFireType) {
-				case SOUL_FIRE -> SOUL_FIRE_0.sprite();
-				case MYSTIC_FIRE -> MYSTIC_FIRE_0.sprite();
-				default -> FIRE_0.sprite();
-			};
-		} else {
-			return switch (blockFireType) {
-				case SOUL_FIRE -> SOUL_FIRE_0.sprite();
-				case MYSTIC_FIRE -> MYSTIC_FIRE_0.sprite();
-				default -> FIRE_0.sprite();
-			};
-		}
-	}
-	
-	private TextureAtlasSprite getFireTextureSprite1(Entity entity, EntityFireType entityFireType) {
-		EntityFireType blockFireType = EntityFireType.byBlock(entity.getFeetBlockState().getBlock());
-		if (blockFireType == EntityFireType.NONE || blockFireType == entityFireType) {
-			return switch (entityFireType) {
-				case SOUL_FIRE -> SOUL_FIRE_1.sprite();
-				case MYSTIC_FIRE -> MYSTIC_FIRE_1.sprite();
-				default -> FIRE_1.sprite();
-			};
-		} else {
-			return switch (blockFireType) {
-				case SOUL_FIRE -> SOUL_FIRE_1.sprite();
-				case MYSTIC_FIRE -> MYSTIC_FIRE_1.sprite();
-				default -> FIRE_1.sprite();
-			};
-		}
 	}
 }

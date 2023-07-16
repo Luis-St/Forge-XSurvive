@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.SoulFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +35,7 @@ public abstract class BaseFireBlockMixin {
 	}
 	
 	@Inject(method = "entityInside", at = @At("TAIL"))
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, CallbackInfo callback) {
+	public void entityInside(BlockState state, @NotNull Level level, BlockPos pos, Entity entity, CallbackInfo callback) {
 		if (!level.isClientSide) {
 			EntityProvider.getSafe(entity).ifPresent((handler) -> {
 				if (state.getBlock() instanceof SoulFireBlock) {

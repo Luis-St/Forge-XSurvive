@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +36,7 @@ public abstract class ZombieVillagerMixin extends Zombie {
 	protected abstract void startConverting(UUID uuid, int time);
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
-	public void mobInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
+	public void mobInteract(@NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.ENCHANTED_GOLDEN_APPLE)) {
 			if (this.hasEffect(MobEffects.WEAKNESS)) {

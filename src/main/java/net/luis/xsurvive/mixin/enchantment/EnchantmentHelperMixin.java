@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,7 +30,7 @@ import java.util.*;
 public abstract class EnchantmentHelperMixin {
 	
 	@Inject(method = "getEnchantments", at = @At("HEAD"), cancellable = true)
-	private static void getEnchantments(ItemStack stack, CallbackInfoReturnable<Map<Enchantment, Integer>> callback) {
+	private static void getEnchantments(@NotNull ItemStack stack, CallbackInfoReturnable<Map<Enchantment, Integer>> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			Map<Enchantment, Integer> enchantments = Maps.newLinkedHashMap();
 			CompoundTag tag = stack.getTag() != null ? stack.getTag().getCompound(XSurvive.MOD_NAME + "GoldenEnchantments") : null;
@@ -41,7 +42,7 @@ public abstract class EnchantmentHelperMixin {
 	}
 	
 	@Inject(method = "setEnchantments", at = @At("TAIL"))
-	private static void setEnchantments(Map<Enchantment, Integer> enchantments, ItemStack stack, CallbackInfo callback) {
+	private static void setEnchantments(Map<Enchantment, Integer> enchantments, @NotNull ItemStack stack, CallbackInfo callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			if (enchantments.size() == 1) {
 				Enchantment enchantment = enchantments.keySet().stream().toList().get(0);
@@ -65,7 +66,7 @@ public abstract class EnchantmentHelperMixin {
 	}
 	
 	@Inject(method = "enchantItem", at = @At("HEAD"), cancellable = true)
-	private static void enchantItem(RandomSource rng, ItemStack stack, int cost, boolean treasure, CallbackInfoReturnable<ItemStack> callback) {
+	private static void enchantItem(RandomSource rng, @NotNull ItemStack stack, int cost, boolean treasure, CallbackInfoReturnable<ItemStack> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			List<Enchantment> enchantments = ForgeRegistries.ENCHANTMENTS.getValues().stream().filter((enchantment) -> {
 				if (enchantment instanceof IEnchantment ench) {

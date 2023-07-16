@@ -39,7 +39,7 @@ public abstract class BlockItemMixin extends Item {
 	public abstract Block getBlock();
 	
 	@Inject(method = "canFitInsideContainerItems", at = @At("HEAD"), cancellable = true)
-	public void canFitInsideContainerItems(CallbackInfoReturnable<Boolean> callback) {
+	public void canFitInsideContainerItems(@NotNull CallbackInfoReturnable<Boolean> callback) {
 		callback.setReturnValue(true);
 	}
 	

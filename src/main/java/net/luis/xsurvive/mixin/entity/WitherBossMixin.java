@@ -11,6 +11,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -71,14 +72,14 @@ public abstract class WitherBossMixin extends Monster {
 	}
 	
 	@Inject(method = "makeInvulnerable", at = @At("HEAD"), cancellable = true)
-	public void makeInvulnerable(CallbackInfo callback) {
+	public void makeInvulnerable(@NotNull CallbackInfo callback) {
 		this.setInvulnerableTicks(80);
 		this.bossEvent.setProgress(0.0F);
 		callback.cancel();
 	}
 	
 	@Inject(method = "isPowered", at = @At("HEAD"), cancellable = true)
-	public void isPowered(CallbackInfoReturnable<Boolean> callback) {
+	public void isPowered(@NotNull CallbackInfoReturnable<Boolean> callback) {
 		callback.setReturnValue(true);
 	}
 }
