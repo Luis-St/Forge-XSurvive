@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,12 +32,12 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity {
 		this.spawner.minSpawnDelay = 50;
 		this.spawner.maxSpawnDelay = 200;
 		this.spawner.spawnCount = 8;
-		this.spawner.requiredPlayerRange = 32;
+		this.spawner.requiredPlayerRange = 64;
 		this.spawner.maxNearbyEntities = 12;
 	}
 	
 	@Inject(method = "load", at = @At("HEAD"))
-	public void load(CompoundTag tag, CallbackInfo callback) {
+	public void load(@NotNull CompoundTag tag, CallbackInfo callback) {
 		if (tag.contains("MinSpawnDelay")) {
 			tag.remove("MinSpawnDelay");
 			tag.putShort("MinSpawnDelay", (short) 50);
@@ -51,7 +52,7 @@ public abstract class SpawnerBlockEntityMixin extends BlockEntity {
 		}
 		if (tag.contains("RequiredPlayerRange")) {
 			tag.remove("RequiredPlayerRange");
-			tag.putShort("RequiredPlayerRange", (short) 32);
+			tag.putShort("RequiredPlayerRange", (short) 64);
 		}
 		if (tag.contains("MaxNearbyEntities")) {
 			tag.remove("MaxNearbyEntities");

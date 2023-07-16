@@ -8,6 +8,8 @@ import net.luis.xsurvive.world.entity.monster.ICreeper;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.entity.projectile.IArrow;
 import net.luis.xsurvive.world.item.ItemStackHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.LevelHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -25,9 +27,12 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -145,6 +150,14 @@ public class EntityEventHandler {
 			if (instance.getEffectiveDifficulty() > 0.0) {
 				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
 			}
+		} else if (entity instanceof AbstractArrow abstractArrow && abstractArrow instanceof IArrow arrow) {
+			if (abstractArrow.getOwner() instanceof LivingEntity user && user.getMainHandItem().getItem() instanceof BowItem) {
+				int explosion = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPLOSION.get(), user);
+				if (explosion > 0) {
+					arrow.setExplosionLevel(explosion);
+					user.getMainHandItem().hurtAndBreak(3, user, (e) -> e.broadcastBreakEvent(user.getUsedItemHand()));
+				}
+			}
 		}
 		EntityProvider.get(entity).broadcastChanges();
 	}
@@ -173,11 +186,13 @@ public class EntityEventHandler {
 	
 	@SubscribeEvent
 	public static void projectileImpact(@NotNull ProjectileImpactEvent event) {
-		if (event.getProjectile() instanceof IArrow arrow) {
+		Projectile projectile = event.getProjectile();
+		if (projectile instanceof IArrow arrow) {
 			int explosionLevel = arrow.getExplosionLevel();
 			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {
 				Vec3 location = hitResult.getLocation();
-				event.getProjectile().level().explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.BLOCK);
+				projectile.level().explode(projectile.getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.BLOCK);
+				projectile.discard();
 			}
 		}
 	}
