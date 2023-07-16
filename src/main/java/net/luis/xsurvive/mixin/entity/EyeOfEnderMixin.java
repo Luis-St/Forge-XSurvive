@@ -20,8 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EyeOfEnder.class)
 public abstract class EyeOfEnderMixin extends Entity {
 	
-	@Shadow
-	private boolean surviveAfterDeath;
+	@Shadow private boolean surviveAfterDeath;
 	
 	private EyeOfEnderMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);

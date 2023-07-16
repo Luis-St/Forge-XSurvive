@@ -31,12 +31,9 @@ import java.util.Map;
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
-	@Shadow
-	private String itemName;
-	@Shadow
-	private DataSlot cost;
-	@Shadow
-	public int repairItemCountCost;
+	@Shadow private String itemName;
+	@Shadow private DataSlot cost;
+	@Shadow public int repairItemCountCost;
 	
 	private AnvilMenuMixin(MenuType<?> menuType, int id, Inventory inventory, ContainerLevelAccess levelAccess) {
 		super(menuType, id, inventory, levelAccess);

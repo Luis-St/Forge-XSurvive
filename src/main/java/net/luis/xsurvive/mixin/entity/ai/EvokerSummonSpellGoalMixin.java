@@ -23,8 +23,7 @@ import java.util.Objects;
 @Mixin(targets = "net.minecraft.world.entity.monster.Evoker$EvokerSummonSpellGoal")
 public abstract class EvokerSummonSpellGoalMixin {
 	
-	@Shadow
-	private Evoker this$0;
+	@Shadow private Evoker this$0;
 	
 	@Inject(method = "performSpellCasting", at = @At("HEAD"), cancellable = true)
 	protected void performSpellCasting(CallbackInfo callback) {

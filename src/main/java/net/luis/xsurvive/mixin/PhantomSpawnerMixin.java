@@ -30,8 +30,7 @@ import java.util.Objects;
 @Mixin(PhantomSpawner.class)
 public class PhantomSpawnerMixin {
 	
-	@Shadow
-	private int nextTick;
+	@Shadow private int nextTick;
 	
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void tick(ServerLevel level, boolean spawnEnemies, boolean spawnFriendlies, CallbackInfoReturnable<Integer> callback) {

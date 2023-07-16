@@ -28,8 +28,7 @@ public abstract class ServerEntityMixin {
 	
 	private static final Map<ThrownTrident, ItemStack> TRIDENT_STACK_REFERENCES = new WeakHashMap<>();
 	
-	@Shadow
-	private Entity entity;
+	@Shadow private Entity entity;
 	
 	@Shadow
 	protected abstract void broadcastAndSend(Packet<?> packet);

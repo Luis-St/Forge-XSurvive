@@ -29,10 +29,8 @@ public abstract class RaidMixin {
 		1, 1, 2, 3, 4, 5, 6, 7
 	};
 	
-	@Shadow
-	private ServerLevel level;
-	@Shadow
-	private int numGroups;
+	@Shadow private ServerLevel level;
+	@Shadow private int numGroups;
 	
 	@Inject(method = "getDefaultNumSpawns", at = @At("HEAD"), cancellable = true)
 	private void getDefaultNumSpawns(Raid.RaiderType raiderType, int wave, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {

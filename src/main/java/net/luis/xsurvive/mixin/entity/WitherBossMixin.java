@@ -27,12 +27,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WitherBoss.class)
 public abstract class WitherBossMixin extends Monster {
 	
-	@Shadow
-	private int[] idleHeadUpdates;
-	@Shadow
-	private int destroyBlocksTick;
-	@Shadow
-	private ServerBossEvent bossEvent;
+	@Shadow private int[] idleHeadUpdates;
+	@Shadow private int destroyBlocksTick;
+	@Shadow private ServerBossEvent bossEvent;
 	
 	private WitherBossMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);

@@ -19,20 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MerchantOffer.class)
 public abstract class MerchantOfferMixin {
 	
-	@Shadow
-	private ItemStack baseCostA;
-	@Shadow
-	private int uses;
-	@Shadow
-	private int maxUses;
-	@Shadow
-	private int specialPriceDiff;
-	@Shadow
-	private int demand;
-	@Shadow
-	private float priceMultiplier;
-	@Shadow
-	private int xp;
+	@Shadow private ItemStack baseCostA;
+	@Shadow private int uses;
+	@Shadow private int maxUses;
+	@Shadow private int specialPriceDiff;
+	@Shadow private int demand;
+	@Shadow private float priceMultiplier;
+	@Shadow private int xp;
 	
 	@Shadow
 	public abstract int getMaxUses();

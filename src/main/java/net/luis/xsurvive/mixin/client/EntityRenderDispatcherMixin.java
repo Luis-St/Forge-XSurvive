@@ -37,8 +37,7 @@ public abstract class EntityRenderDispatcherMixin {
 	private static final Material MYSTIC_FIRE_0 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(XSurvive.MOD_ID, "block/mystic_fire_0"));
 	private static final Material MYSTIC_FIRE_1 = new Material(InventoryMenu.BLOCK_ATLAS, new ResourceLocation(XSurvive.MOD_ID, "block/mystic_fire_1"));
 	
-	@Shadow
-	public Camera camera;
+	@Shadow public Camera camera;
 	
 	@Shadow
 	private static void fireVertex(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {

@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(VillagerData.class)
 public abstract class VillagerDataMixin {
 	
-	@Shadow
-	private static int[] NEXT_LEVEL_XP_THRESHOLDS;
+	@Shadow private static int[] NEXT_LEVEL_XP_THRESHOLDS;
 	
 	@Shadow
 	private static boolean canLevelUp(int level) {

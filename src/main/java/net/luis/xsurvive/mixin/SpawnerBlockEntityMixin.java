@@ -20,8 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SpawnerBlockEntity.class)
 public abstract class SpawnerBlockEntityMixin extends BlockEntity {
 	
-	@Shadow
-	private BaseSpawner spawner;
+	@Shadow private BaseSpawner spawner;
 	
 	private SpawnerBlockEntityMixin(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
 		super(entityType, pos, state);

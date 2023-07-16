@@ -24,8 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AnvilScreen.class)
 public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	
-	@Shadow
-	private Player player;
+	@Shadow private Player player;
 	
 	private AnvilScreenMixin(AnvilMenu anvilMenu, Inventory inventory, Component component, ResourceLocation location) {
 		super(anvilMenu, inventory, component, location);

@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ProtectionEnchantment.class)
 public abstract class ProtectionEnchantmentMixin extends Enchantment {
 	
-	@Shadow
-	public ProtectionEnchantment.Type type;
+	@Shadow public ProtectionEnchantment.Type type;
 	
 	private ProtectionEnchantmentMixin(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
