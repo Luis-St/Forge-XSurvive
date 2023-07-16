@@ -8,6 +8,7 @@
     "block.BaseFireBlockMixin",
     "block.SugarCaneBlockMixin",
     "block.WitherSkullBlockMixin",
+		"block.entity.BeaconBlockEntityMixin",
     "block.entity.ConduitBlockEntityMixin",
     "enchantment.EnchantmentMixin",
     "enchantment.EnchantmentHelperMixin",

@@ -9,12 +9,15 @@ import net.luis.xsurvive.world.entity.npc.VillagerProvider;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.GlintColorProvider;
 import net.luis.xsurvive.world.item.IGlintColor;
+import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,6 +52,13 @@ public class AttachCapabilitiesEventHandler {
 		ItemStack stack = event.getObject();
 		if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE) {
 			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "enchanted_golden_apple_glint"), new GlintColorProvider(IGlintColor.simple(DyeColor.YELLOW)));
+		}
+	}
+	
+	@SubscribeEvent
+	public static void attachLevelCapabilities(@NotNull AttachCapabilitiesEvent<Level> event) {
+		if (event.getObject() instanceof ServerLevel level) {
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "enchanted_golden_apple_glint"), new LevelProvider(new ServerLevelHandler(level)));
 		}
 	}
 	
