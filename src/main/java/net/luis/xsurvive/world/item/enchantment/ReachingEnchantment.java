@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
@@ -15,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class ReachingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class ReachingEnchantment extends Enchantment implements IEnchantment {
 	
 	public ReachingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -79,12 +77,5 @@ public class ReachingEnchantment extends Enchantment implements IEnchantment, Wi
 	@Override
 	public int getMaxUpgradeLevel() {
 		return this.getMaxLevel();
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When applied to a sword or tool, this Enchantment increases the range by half a block per level.").endLine();
-		});
 	}
 }

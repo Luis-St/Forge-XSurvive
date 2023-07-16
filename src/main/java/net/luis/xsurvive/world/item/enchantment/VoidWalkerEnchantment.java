@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry {
+public class VoidWalkerEnchantment extends Enchantment {
 	
 	public VoidWalkerEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -51,13 +49,5 @@ public class VoidWalkerEnchantment extends Enchantment implements WikiFileEntry 
 	@Override
 	public boolean isDiscoverable() {
 		return false;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("If a entity wears boots with this enchantment, that entity can fly.").endLine();
-			builder.append("If a player is sneaking while flying, they will slowly float down.").endLine();
-		});
 	}
 }

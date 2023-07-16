@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class MultiDropEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class MultiDropEnchantment extends Enchantment implements IEnchantment {
 	
 	public MultiDropEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -64,12 +62,5 @@ public class MultiDropEnchantment extends Enchantment implements IEnchantment, W
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When a block is destroyed by an item with this enchantment, the loot from the block is multiplied by the level of the enchantment.").endLine();
-		});
 	}
 }

@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class BlastingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class BlastingEnchantment extends Enchantment implements IEnchantment {
 	
 	public BlastingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -47,14 +44,5 @@ public class BlastingEnchantment extends Enchantment implements IEnchantment, Wi
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When a block is destroyed by an item with this enchantment, an explosion occurs at the location of the destroyed block.").endLine();
-			builder.append("The strength of the explosion is calculated as follows:").endLine();
-			builder.appendFormatted("2 * (BlastingLevel + 1)", WikiFormat.CODE).endLine();
-		});
 	}
 }

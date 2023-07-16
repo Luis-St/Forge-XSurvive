@@ -37,7 +37,8 @@ import java.util.stream.Stream;
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBeaconBlockEntity {
 	
-	private static final MobEffect[] EFFECTS = {MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION};
+	private static final MobEffect[] ALL_EFFECTS = {MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.JUMP, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION};
+	private static final MobEffect[] DEFAULT_EFFECTS = {MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION};
 	
 	@Shadow private int levels;
 	@Shadow private MobEffect primaryPower;
@@ -117,7 +118,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 			int area = beaconLevel * 20 + 20;
 			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) {
 				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, area * 3))) {
-					for (MobEffect effect : EFFECTS) {
+					for (MobEffect effect : primary == MobEffects.JUMP && primary == secondary ? ALL_EFFECTS : DEFAULT_EFFECTS) {
 						player.addEffect(new MobEffectInstance(effect, (10 + beaconLevel * 10) * 20, beaconLevel, true, true));
 					}
 				}

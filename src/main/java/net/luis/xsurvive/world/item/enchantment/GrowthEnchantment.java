@@ -1,11 +1,8 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -13,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class GrowthEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class GrowthEnchantment extends Enchantment implements IEnchantment {
 	
 	public GrowthEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -37,12 +34,5 @@ public class GrowthEnchantment extends Enchantment implements IEnchantment, Wiki
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When a entity wears armor with this enchantment, the entities health is increased by the sum of the enchantment levels of all armor items.").endLine();
-		});
 	}
 }

@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class FrostAspectEnchantment extends FireAspectEnchantment implements WikiFileEntry {
+public class FrostAspectEnchantment extends FireAspectEnchantment {
 	
 	public FrostAspectEnchantment(Rarity rarity, EquipmentSlot... slots) {
 		super(rarity, slots);
@@ -25,13 +22,5 @@ public class FrostAspectEnchantment extends FireAspectEnchantment implements Wik
 			return enchantment != Enchantments.FIRE_ASPECT;
 		}
 		return super.checkCompatibility(enchantment);
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When an entity is struck by an item with this enchantment, the struck entity gains the frost effect, the duration of the effect calculated as follows:").endLine();
-			builder.appendFormatted("100 * FrostAspectLevel", WikiFormat.CODE).endLine();
-		});
 	}
 }

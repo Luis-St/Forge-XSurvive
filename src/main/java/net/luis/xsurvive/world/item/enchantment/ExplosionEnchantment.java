@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class ExplosionEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class ExplosionEnchantment extends Enchantment implements IEnchantment {
 	
 	public ExplosionEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -49,12 +47,5 @@ public class ExplosionEnchantment extends Enchantment implements IEnchantment, W
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When applied to a bow, this enchantment causes the arrow to explode when it hits a block.").endLine();
-		});
 	}
 }

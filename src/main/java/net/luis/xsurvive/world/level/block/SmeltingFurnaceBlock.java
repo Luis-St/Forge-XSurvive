@@ -1,8 +1,6 @@
 package net.luis.xsurvive.world.level.block;
 
 import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
  *
  */
 
-public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFileEntry {
+public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 	
 	public SmeltingFurnaceBlock(Properties properties) {
 		super(properties);
@@ -69,24 +67,5 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock implements WikiFi
 			double zOffset = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : offset;
 			level.addParticle(ParticleTypes.SMOKE, x + xOffset, y + yOffset, z + zOffset, 0.0D, 0.0D, 0.0D);
 		}
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("The smelting furnace works similarly to the vanilla blast furnace or the smoker.").endLine();
-			builder.append("The furnace provides faster recipes for the following blocks:").endLine();
-		});
-		wikiBuilder.pointList((builder) -> {
-			for (String recipe : this.getRecipes()) {
-				builder.append(recipe).endLine();
-			}
-		});
-	}
-	
-	private @NotNull List<String> getRecipes() {
-		return ServerLifecycleHooks.getCurrentServer().getRecipeManager().getAllRecipesFor(XSRecipeTypes.SMELTING.get()).stream().map(SmeltingRecipe::getId).map(XSLanguageProvider::getName).map((name) -> {
-			return name.replace("From Smelting", "").trim();
-		}).collect(Collectors.toList());
 	}
 }

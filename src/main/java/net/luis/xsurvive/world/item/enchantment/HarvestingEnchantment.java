@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class HarvestingEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class HarvestingEnchantment extends Enchantment implements IEnchantment {
 	
 	public HarvestingEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -50,14 +47,5 @@ public class HarvestingEnchantment extends Enchantment implements IEnchantment, 
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		return true;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When a entity destroys a block of wood in a tree with an item with this enchantment, the tree is automatically cut down to a certain height.").endLine();
-			builder.append("The felled height is calculated as follows:").endLine();
-			builder.appendFormatted("HarvestingLevel * 4 + (HarvestingLevel / 2)", WikiFormat.CODE).endLine();
-		});
 	}
 }

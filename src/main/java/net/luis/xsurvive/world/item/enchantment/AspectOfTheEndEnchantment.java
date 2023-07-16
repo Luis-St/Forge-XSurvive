@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.WikiFormat;
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
@@ -16,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantment, WikiFileEntry {
+public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantment {
 	
 	public AspectOfTheEndEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -80,15 +77,5 @@ public class AspectOfTheEndEnchantment extends Enchantment implements IEnchantme
 	@Override
 	public int getMaxUpgradeLevel() {
 		return this.getMaxLevel();
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When an item with this enchantment is right-clicked, the player is teleported in the direction they're looking.").endLine();
-			builder.append("After the teleport, all items with this enchantment have a 1 second cooldown.").endLine();
-			builder.append("The teleport distance is calculated as follows:").endLine();
-			builder.appendFormatted("6.0 * AspectOfTheEndLevel", WikiFormat.CODE).endLine();
-		});
 	}
 }

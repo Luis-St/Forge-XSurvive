@@ -1,7 +1,5 @@
 package net.luis.xsurvive.world.item.enchantment;
 
-import net.luis.xsurvive.wiki.file.WikiFileBuilder;
-import net.luis.xsurvive.wiki.file.WikiFileEntry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
@@ -13,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry {
+public class ThunderboltEnchantment extends Enchantment {
 	
 	public ThunderboltEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
@@ -43,12 +41,5 @@ public class ThunderboltEnchantment extends Enchantment implements WikiFileEntry
 	@Override
 	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
-	}
-	
-	@Override
-	public void add(@NotNull WikiFileBuilder wikiBuilder) {
-		wikiBuilder.lines((builder) -> {
-			builder.append("When an entity is hit by an item with this enchantment, a bolt of lightning strikes the entity's location.").endLine();
-		});
 	}
 }
