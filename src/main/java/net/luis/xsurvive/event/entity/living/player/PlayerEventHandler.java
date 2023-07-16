@@ -88,18 +88,7 @@ public class PlayerEventHandler {
 				if (right.getItem() instanceof IGlintColor glintColor && !left.is(Items.ENCHANTED_BOOK)) {
 					int color = glintColor.getGlintColor(right);
 					if (17 >= color && color >= 0) {
-						CompoundTag tag = result.getOrCreateTag();
-						if (tag.contains(XSurvive.MOD_NAME)) {
-							CompoundTag modTag = tag.getCompound(XSurvive.MOD_NAME);
-							tag.remove(XSurvive.MOD_NAME);
-							modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-							tag.put(XSurvive.MOD_NAME, modTag);
-						} else {
-							CompoundTag modTag = new CompoundTag();
-							modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-							tag.put(XSurvive.MOD_NAME, modTag);
-						}
-						result.setTag(tag);
+						result.setTag(IGlintColor.createGlintTag(result.getOrCreateTag(), color));
 						event.setOutput(result);
 						event.setCost(5);
 					}
@@ -259,6 +248,13 @@ public class PlayerEventHandler {
 			} else {
 				event.setCanceled(true);
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void arrowLoose(@NotNull ArrowLooseEvent event) {
+		if (event.getEntity().isUnderWater()) {
+			event.setCharge((int) (event.getCharge() * 0.35));
 		}
 	}
 }

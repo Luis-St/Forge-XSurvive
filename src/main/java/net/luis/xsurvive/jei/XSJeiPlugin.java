@@ -89,7 +89,7 @@ public class XSJeiPlugin implements IModPlugin {
 		registration.addRecipes(RecipeTypes.ANVIL, recipes);
 	}
 	
-	private ItemStack enchantItem(@NotNull ItemStack stack, @NotNull Enchantment enchantment, int level) {
+	private @NotNull ItemStack enchantItem(@NotNull ItemStack stack, @NotNull Enchantment enchantment, int level) {
 		ItemStack copy = stack.copy();
 		copy.removeTagKey("Enchantments");
 		copy.removeTagKey("StoredEnchantments");
@@ -111,7 +111,7 @@ public class XSJeiPlugin implements IModPlugin {
 		registration.addRecipes(RecipeTypes.ANVIL, recipes);
 	}
 	
-	private ItemStack enchantItemRandomly(@NotNull ItemStack stack) {
+	private @NotNull ItemStack enchantItemRandomly(@NotNull ItemStack stack) {
 		ItemStack copy = stack.copy();
 		copy.removeTagKey("Enchantments");
 		copy.removeTagKey("StoredEnchantments");
@@ -123,20 +123,9 @@ public class XSJeiPlugin implements IModPlugin {
 		return copy;
 	}
 	
-	private ItemStack createResultForRune(@NotNull ItemStack stack, int color) {
+	private @NotNull ItemStack createResultForRune(@NotNull ItemStack stack, int color) {
 		ItemStack result = stack.copy();
-		CompoundTag tag = result.getOrCreateTag();
-		if (tag.contains(XSurvive.MOD_NAME)) {
-			CompoundTag modTag = tag.getCompound(XSurvive.MOD_NAME);
-			tag.remove(XSurvive.MOD_NAME);
-			modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-			tag.put(XSurvive.MOD_NAME, modTag);
-		} else {
-			CompoundTag modTag = new CompoundTag();
-			modTag.putInt(XSurvive.MOD_NAME + "GlintColor", color);
-			tag.put(XSurvive.MOD_NAME, modTag);
-		}
-		result.setTag(tag);
+		result.setTag(IGlintColor.createGlintTag(result.getOrCreateTag(), color));
 		return result;
 	}
 	

@@ -177,7 +177,7 @@ public class EntityEventHandler {
 			int explosionLevel = arrow.getExplosionLevel();
 			if (explosionLevel > 0 && event.getRayTraceResult() instanceof BlockHitResult hitResult) {
 				Vec3 location = hitResult.getLocation();
-				event.getProjectile().level().explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.NONE);
+				event.getProjectile().level().explode(event.getProjectile().getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.BLOCK);
 			}
 		}
 	}
