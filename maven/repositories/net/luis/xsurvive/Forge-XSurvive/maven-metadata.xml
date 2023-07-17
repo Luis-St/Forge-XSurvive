@@ -3,8 +3,8 @@
   <groupId>net.luis.xsurvive</groupId>
   <artifactId>Forge-XSurvive</artifactId>
   <versioning>
-    <latest>1.20.1-2.3</latest>
-    <release>1.20.1-2.3</release>
+    <latest>1.20.1-2.4</latest>
+    <release>1.20.1-2.4</release>
     <versions>
       <version>1.19-1.0</version>
       <version>1.19-1.1</version>
@@ -41,7 +41,8 @@
       <version>1.20.1-2.1</version>
       <version>1.20.1-2.2</version>
       <version>1.20.1-2.3</version>
+      <version>1.20.1-2.4</version>
     </versions>
-    <lastUpdated>20230716182613</lastUpdated>
+    <lastUpdated>20230717160633</lastUpdated>
   </versioning>
 </metadata>
