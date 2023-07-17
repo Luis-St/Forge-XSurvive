@@ -36,8 +36,8 @@ import java.util.List;
 @Mixin(EnderDragon.class)
 public abstract class EnderDragonMixin extends Mob {
 	
-	@Shadow private EndDragonFight dragonFight;
 	@Shadow(remap = false) private final Player unlimitedLastHurtByPlayer = null;
+	@Shadow private EndDragonFight dragonFight;
 	@Shadow public EndCrystal nearestCrystal;
 	@Shadow public int dragonDeathTime;
 	

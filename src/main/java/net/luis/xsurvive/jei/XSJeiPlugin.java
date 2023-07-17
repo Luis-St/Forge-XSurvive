@@ -14,7 +14,6 @@ import net.luis.xsurvive.world.item.*;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.level.block.XSBlocks;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;

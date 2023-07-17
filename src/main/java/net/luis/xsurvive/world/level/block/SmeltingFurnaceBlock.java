@@ -1,8 +1,5 @@
 package net.luis.xsurvive.world.level.block;
 
-import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
-import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -16,11 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.server.ServerLifecycleHooks;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  *

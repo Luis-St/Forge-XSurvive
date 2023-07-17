@@ -1,7 +1,6 @@
 package net.luis.xsurvive.server.capability;
 
 import com.google.common.collect.Lists;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.ILevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

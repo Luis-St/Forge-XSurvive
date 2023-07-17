@@ -13,7 +13,6 @@ import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.enchantment.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

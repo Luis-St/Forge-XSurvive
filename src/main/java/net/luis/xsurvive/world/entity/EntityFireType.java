@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
