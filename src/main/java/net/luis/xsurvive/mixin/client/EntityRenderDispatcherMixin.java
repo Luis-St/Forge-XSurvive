@@ -3,6 +3,7 @@ package net.luis.xsurvive.mixin.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.luis.xsurvive.client.EntityFireTypeHelper;
 import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.minecraft.client.Camera;
@@ -37,8 +38,8 @@ public abstract class EntityRenderDispatcherMixin {
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
 	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {
 		EntityFireType fireType = EntityProvider.get(entity).getFireType();
-		TextureAtlasSprite fireTextureSprite0 = EntityFireType.getFireTextureSprite0(entity, fireType);
-		TextureAtlasSprite fireTextureSprite1 = EntityFireType.getFireTextureSprite1(entity, fireType);
+		TextureAtlasSprite fireTextureSprite0 = EntityFireTypeHelper.getFireTextureSprite0(entity, fireType);
+		TextureAtlasSprite fireTextureSprite1 = EntityFireTypeHelper.getFireTextureSprite1(entity, fireType);
 		stack.pushPose();
 		float width = entity.getBbWidth() * 1.4F;
 		stack.scale(width, width, width);

@@ -3,6 +3,7 @@ package net.luis.xsurvive.mixin.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import net.luis.xsurvive.client.EntityFireTypeHelper;
 import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.minecraft.client.Minecraft;
@@ -36,7 +37,7 @@ public abstract class ScreenEffectRendererMixin {
 		RenderSystem.depthMask(false);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		TextureAtlasSprite textureSprite = EntityFireType.getFireTextureSprite1(Objects.requireNonNull(minecraft.player), EntityProvider.get(minecraft.player).getFireType());
+		TextureAtlasSprite textureSprite = EntityFireTypeHelper.getFireTextureSprite1(Objects.requireNonNull(minecraft.player), EntityProvider.get(minecraft.player).getFireType());
 		RenderSystem.setShaderTexture(0, textureSprite.atlasLocation());
 		float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;
 		float textureSpriteV = (textureSprite.getV0() + textureSprite.getV1()) / 2.0F;
