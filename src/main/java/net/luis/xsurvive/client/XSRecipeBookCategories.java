@@ -16,4 +16,8 @@ public class XSRecipeBookCategories {
 	public static final RecipeBookCategories SMELTING_FURNACE_SEARCH = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_search", new ItemStack(Items.COMPASS));
 	public static final RecipeBookCategories SMELTING_FURNACE_BLOCKS = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_blocks", new ItemStack(Items.DEEPSLATE));
 	public static final RecipeBookCategories SMELTING_FURNACE_MISC = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_misc", new ItemStack(Items.BRICK));
+	
+	public static void register() {
+	
+	}
 }

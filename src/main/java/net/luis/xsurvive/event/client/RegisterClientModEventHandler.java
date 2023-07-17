@@ -1,7 +1,7 @@
 package net.luis.xsurvive.event.client;
 
 import com.google.common.collect.Lists;
-import net.luis.xbackpack.XBackpack;
+import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.gui.screens.inventory.tooltip.ClientShulkerBoxTooltip;
 import net.luis.xsurvive.client.renderer.gui.overlay.FrostMobEffectOverlay;
 import net.luis.xsurvive.client.renderer.item.XSItemDecorator;
@@ -31,7 +31,7 @@ import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
  *
  */
 
-@Mod.EventBusSubscriber(modid = XBackpack.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RegisterClientModEventHandler {
 	
 	@SubscribeEvent
@@ -76,7 +76,7 @@ public class RegisterClientModEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void registerClientCommands(@NotNull EntityRenderersEvent.RegisterRenderers event) {
+	public static void registerRenderers(@NotNull EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(XSEntityTypes.CURSED_ENDER_EYE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
 	}
 }

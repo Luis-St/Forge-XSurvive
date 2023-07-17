@@ -1,6 +1,7 @@
 package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
+import net.luis.xsurvive.client.XSRecipeBookCategories;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -22,7 +23,9 @@ import net.luis.xsurvive.world.level.levelgen.feature.XSOreFeatures;
 import net.luis.xsurvive.world.level.levelgen.placement.XSOrePlacements;
 import net.luis.xsurvive.world.level.storage.loot.XSGlobalLootModifiers;
 import net.luis.xsurvive.world.level.storage.loot.predicates.XSLootItemConditions;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -62,7 +65,8 @@ public class XSurvive {
 		XSOreFeatures.register();
 		XSOrePlacements.register();
 		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
-		XSRecipeBookTypes.register();
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookTypes::register);
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookCategories::register);
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}

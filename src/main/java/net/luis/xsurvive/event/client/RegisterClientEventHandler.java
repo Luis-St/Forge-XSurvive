@@ -1,6 +1,6 @@
 package net.luis.xsurvive.event.client;
 
-import net.luis.xbackpack.XBackpack;
+import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.commands.GammaCommand;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-@EventBusSubscriber(modid = XBackpack.MOD_ID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = XSurvive.MOD_ID, value = Dist.CLIENT)
 public class RegisterClientEventHandler {
 	
 	@SubscribeEvent
