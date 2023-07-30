@@ -92,7 +92,7 @@ public class AbstractPlayerHandler implements IPlayer {
 		return this.combinedInventory.get();
 	}
 	
-	private CompoundTag serialize() {
+	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
 		tag.putInt("frost_time", this.frostTime);
@@ -102,7 +102,7 @@ public class AbstractPlayerHandler implements IPlayer {
 		return tag;
 	}
 	
-	private void deserialize(CompoundTag tag) {
+	private void deserialize(@NotNull CompoundTag tag) {
 		this.tick = tag.getInt("tick");
 		this.frostTime = tag.getInt("frost_time");
 		this.startFrostTime = tag.getInt("start_frost_time");

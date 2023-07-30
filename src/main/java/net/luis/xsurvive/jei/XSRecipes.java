@@ -18,17 +18,9 @@ import java.util.List;
 
 public class XSRecipes {
 	
-	private final RecipeManager recipeManager;
+	private static final RecipeManager RECIPE_MANAGER = Minecraft.getInstance().level.getRecipeManager();
 	
-	public XSRecipes() {
-		this.recipeManager = Minecraft.getInstance().level.getRecipeManager();
-	}
-	
-	private static <C extends Container, T extends Recipe<C>> @NotNull List<T> getValidHandledRecipes(@NotNull RecipeManager recipeManager, RecipeType<T> recipeType) {
-		return recipeManager.getAllRecipesFor(recipeType);
-	}
-	
-	public List<SmeltingRecipe> getSmeltingRecipes(IRecipeCategory<SmeltingRecipe> smeltingCategory) {
-		return getValidHandledRecipes(this.recipeManager, XSRecipeTypes.SMELTING.get());
+	public static @NotNull List<SmeltingRecipe> getSmeltingRecipes(@NotNull IRecipeCategory<SmeltingRecipe> smeltingCategory) {
+		return RECIPE_MANAGER.getAllRecipesFor(XSRecipeTypes.SMELTING.get());
 	}
 }

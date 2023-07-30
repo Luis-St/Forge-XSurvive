@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,13 +42,13 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "updateHunting", at = @At("HEAD"), cancellable = true)
-	private static void updateHunting(ConduitBlockEntity blockEntity, List<BlockPos> shapeBlocks, CallbackInfo callback) {
+	private static void updateHunting(@NotNull ConduitBlockEntity blockEntity, @NotNull List<BlockPos> shapeBlocks, @NotNull CallbackInfo callback) {
 		blockEntity.setHunting(shapeBlocks.size() >= 30);
 		callback.cancel();
 	}
 	
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
-	private static void applyEffects(Level level, BlockPos pos, List<BlockPos> shapeBlocks, CallbackInfo callback) {
+	private static void applyEffects(@NotNull Level level, @NotNull BlockPos pos, @NotNull List<BlockPos> shapeBlocks, CallbackInfo callback) {
 		int range = (shapeBlocks.size() / 7 * 16) * 2;
 		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).expandTowards(0.0, level.getHeight(), 0.0);
 		for (Player player : level.getEntitiesOfClass(Player.class, aabb)) {
@@ -59,7 +60,7 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "updateDestroyTarget", at = @At("HEAD"), cancellable = true)
-	private static void updateDestroyTarget(Level level, BlockPos pos, BlockState state, List<BlockPos> shapeBlocks, ConduitBlockEntity blockEntity, CallbackInfo callback) {
+	private static void updateDestroyTarget(Level level, BlockPos pos, BlockState state, @NotNull List<BlockPos> shapeBlocks, @NotNull ConduitBlockEntity blockEntity, CallbackInfo callback) {
 		LivingEntity destroyTarget = blockEntity.destroyTarget;
 		if (30 > shapeBlocks.size()) {
 			blockEntity.destroyTarget = null;
@@ -88,7 +89,7 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "getDestroyRangeAABB", at = @At("HEAD"), cancellable = true)
-	private static void getDestroyRangeAABB(BlockPos pos, CallbackInfoReturnable<AABB> callback) {
+	private static void getDestroyRangeAABB(BlockPos pos, @NotNull CallbackInfoReturnable<AABB> callback) {
 		callback.setReturnValue(new AABB(pos).inflate(24.0));
 	}
 }

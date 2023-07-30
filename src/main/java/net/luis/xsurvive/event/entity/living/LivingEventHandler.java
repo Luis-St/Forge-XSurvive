@@ -22,6 +22,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -93,19 +94,18 @@ public class LivingEventHandler {
 	public static void livingDamage(@NotNull LivingDamageEvent event) {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
-		float amount = event.getAmount();
-		float newAmount = amount;
+		float newAmount = event.getAmount();
 		if (source.getEntity() instanceof Player player) {
 			int enderSlayer = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.ENDER_SLAYER.get(), player);
 			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player);
 			if (enderSlayer > 0 && EntityHelper.isAffectedByEnderSlayer(target)) {
-				newAmount = (float) (amount * 2.5);
+				newAmount *= 2.5F;
 			}
 			if (impaling > 0 && EntityHelper.isAffectedByImpaling(target)) {
-				newAmount = (float) (amount * 2.5);
+				newAmount *= 2.5F;
 			}
 		}
-		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && amount > 0) {
+		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && newAmount > 0) {
 			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get(), player);
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
@@ -115,7 +115,7 @@ public class LivingEventHandler {
 					case 4 -> 0.2F;
 					default -> 0.0F;
 				};
-				newAmount = amount * percent;
+				newAmount *= percent;
 			}
 		}
 		event.setAmount(newAmount);
@@ -192,8 +192,9 @@ public class LivingEventHandler {
 	
 	@SubscribeEvent
 	public static void shieldBlock(@NotNull ShieldBlockEvent event) {
-		if (event.getEntity() instanceof Player) {
-			if (event.getDamageSource().isIndirect() && event.getDamageSource().getEntity() instanceof Blaze) {
+		if (event.getEntity() instanceof Player && event.getDamageSource().isIndirect()) {
+			Entity attacker = event.getDamageSource().getEntity();
+			if (attacker instanceof Blaze || attacker instanceof Ghast) {
 				event.setCanceled(true);
 			}
 		}

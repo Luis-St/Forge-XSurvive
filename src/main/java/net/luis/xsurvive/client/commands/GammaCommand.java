@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class GammaCommand {
 	
-	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+	public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher) {
 		dispatcher.register(Commands.literal("gamma").executes((command) -> {
 			return getGamma(command.getSource(), Minecraft.getInstance());
 		}).then(Commands.argument("value", DoubleArgumentType.doubleArg(0.0, 100.0)).executes((command) -> {

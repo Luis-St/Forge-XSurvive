@@ -56,11 +56,8 @@ public class LevelEventHandler {
 		if (blasting > 0) {
 			player.level().explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.NONE);
 		}
-		if (harvesting > 0) {
-			if (event.getState().is(BlockTags.LOGS)) {
-				WoodHarvester harvester = new WoodHarvester((Level) event.getLevel(), pos, state, harvesting, player);
-				harvester.harvest();
-			}
+		if (harvesting > 0 && event.getState().is(BlockTags.LOGS) && event.getLevel() instanceof Level level) {
+			new WoodHarvester(level, pos, state, harvesting, player).harvest();
 		}
 	}
 	

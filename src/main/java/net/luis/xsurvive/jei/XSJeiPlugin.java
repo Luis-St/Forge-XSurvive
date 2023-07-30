@@ -57,8 +57,7 @@ public class XSJeiPlugin implements IModPlugin {
 	
 	@Override
 	public void registerRecipes(@NotNull IRecipeRegistration registration) {
-		XSRecipes recipes = new XSRecipes();
-		registration.addRecipes(XSJeiRecipeTypes.SMELTING, recipes.getSmeltingRecipes(this.smeltingCategory));
+		registration.addRecipes(XSJeiRecipeTypes.SMELTING, XSRecipes.getSmeltingRecipes(this.smeltingCategory));
 		registerGoldenBookAnvilRecipes(registration, registration.getVanillaRecipeFactory());
 		registerRuneAnvilRecipes(registration, registration.getVanillaRecipeFactory());
 	}
@@ -118,8 +117,7 @@ public class XSJeiPlugin implements IModPlugin {
 			copy.enchant(Enchantments.UNBREAKING, 3);
 			return copy;
 		}
-		EnchantmentHelper.enchantItem(RandomSource.create(), copy, 20, false);
-		return copy;
+		return EnchantmentHelper.enchantItem(RandomSource.create(), copy, 20, false);
 	}
 	
 	private @NotNull ItemStack createResultForRune(@NotNull ItemStack stack, int color) {

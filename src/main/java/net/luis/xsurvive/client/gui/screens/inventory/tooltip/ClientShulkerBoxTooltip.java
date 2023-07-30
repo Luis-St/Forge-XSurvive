@@ -22,7 +22,7 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	
 	private final List<ItemStack> stacks;
 	
-	public ClientShulkerBoxTooltip(ShulkerBoxTooltip tooltip) {
+	public ClientShulkerBoxTooltip(@NotNull ShulkerBoxTooltip tooltip) {
 		this.stacks = tooltip.stacks();
 	}
 	

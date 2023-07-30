@@ -37,14 +37,14 @@ public class AbstractEntityHandler implements IEntity {
 		return this.fireType;
 	}
 	
-	private CompoundTag serialize() {
+	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
 		tag.putInt("fire_type", this.fireType.ordinal());
 		return tag;
 	}
 	
-	private void deserialize(CompoundTag tag) {
+	private void deserialize(@NotNull CompoundTag tag) {
 		this.tick = tag.getInt("tick");
 		this.fireType = EntityFireType.byOrdinal(tag.getInt("fire_type"), EntityFireType.NONE);
 	}

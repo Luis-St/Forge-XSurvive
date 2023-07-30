@@ -69,7 +69,7 @@ public abstract class WitherSkullBlockMixin {
 						}
 						WitherBoss wither = Objects.requireNonNull(EntityType.WITHER.create(level));
 						BlockPos spawnPos = patternMatch.getBlock(1, 2, 0).getPos();
-						wither.moveTo((double) spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
+						wither.moveTo(spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
 						wither.yBodyRot = patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;
 						wither.makeInvulnerable();
 						for (ServerPlayer player : level.getEntitiesOfClass(ServerPlayer.class, wither.getBoundingBox().inflate(75.0))) {

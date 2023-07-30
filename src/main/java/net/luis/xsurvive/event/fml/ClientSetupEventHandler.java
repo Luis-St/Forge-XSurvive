@@ -58,9 +58,7 @@ public class ClientSetupEventHandler {
 			} else {
 				return Options.genericValueLabel(component, gamma);
 			}
-		}, DoubleRangeOption.forGamma(0.0, 100.0), 0.5, (value) -> {
-			
-		});
+		}, DoubleRangeOption.forGamma(0.0, 100.0), 0.5, (value) -> {});
 	}
 	
 	private static void replaceGlintOptions(@NotNull Minecraft minecraft) {
@@ -77,9 +75,7 @@ public class ClientSetupEventHandler {
 			} else {
 				return Options.percentValueLabel(component, value);
 			}
-		}, DoubleRangeOption.forGlint(0.0, 2.0), 0.5, (value) -> {
-		
-		});
+		}, DoubleRangeOption.forGlint(0.0, 2.0), 0.5, (value) -> {});
 		minecraft.options.glintStrength = new OptionInstance<>("options.glintStrength", OptionInstance.cachedConstantTooltip(Component.translatable("options.damageTiltStrength.tooltip")), (component, value) -> {
 			int glint = (int) (value * 100.0);
 			if (glint == 0) {
