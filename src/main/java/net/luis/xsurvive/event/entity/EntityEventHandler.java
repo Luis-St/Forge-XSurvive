@@ -25,6 +25,8 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -167,7 +169,7 @@ public class EntityEventHandler {
 		Entity entity = event.getEntity();
 		Entity vehicle = event.getEntityBeingMounted();
 		if (event.isMounting()) {
-			if (entity instanceof EnderMan) {
+			if (entity instanceof EnderMan || entity instanceof AbstractPiglin || entity instanceof ZombifiedPiglin) {
 				if (vehicle instanceof Boat || vehicle instanceof AbstractMinecart) {
 					event.setCanceled(true);
 				}
