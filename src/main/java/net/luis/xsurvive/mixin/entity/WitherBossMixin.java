@@ -46,7 +46,7 @@ public abstract class WitherBossMixin extends Monster {
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {
 		if (this.isInvulnerableTo(source)) {
 			callback.setReturnValue(false);
-		} else if (source.is(DamageTypeTags.IS_DROWNING) && !(source.getEntity() instanceof WitherBoss)) {
+		} else if (!source.is(DamageTypeTags.IS_DROWNING) && !(source.getEntity() instanceof WitherBoss)) {
 			if (this.getInvulnerableTicks() > 0 && source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
 				callback.setReturnValue(false);
 			} else {
