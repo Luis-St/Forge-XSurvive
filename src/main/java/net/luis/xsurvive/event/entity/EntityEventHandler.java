@@ -58,31 +58,22 @@ public class EntityEventHandler {
 	
 	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
 	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
-	public static final UUID ARMOR_UUID = UUID.fromString("5C22132F-8448-438A-B060-99B748897CC4");
 	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
 	
 	@SubscribeEvent
 	public static void entityJoinLevel(@NotNull EntityJoinLevelEvent event) {
 		if (event.getEntity() instanceof LivingEntity entity) {
 			if (!(entity instanceof Player)) {
-				if (entity instanceof EnderDragon) {
+				if (entity instanceof EnderDragon || entity instanceof WitherBoss || entity instanceof ElderGuardian || entity instanceof Warden) {
 					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
-				} else if (entity instanceof WitherBoss) {
-					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
-				} else if (entity instanceof ElderGuardian) {
-					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
-				} else if (entity instanceof Warden) {
-					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
-				} else if (entity instanceof Enemy) {
+					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 2.0, Operation.MULTIPLY_TOTAL)); // *= 3.0
+				} else if (entity instanceof Enemy || entity instanceof AbstractGolem) {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
+					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 2.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
-				} else if (entity instanceof AbstractGolem) {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0
 				} else {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				}
-				EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
-				EntityHelper.addAttributeModifier(entity, Attributes.ARMOR, new AttributeModifier(ARMOR_UUID, "IncreaseArmorAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
 				entity.setHealth(entity.getMaxHealth());
 			}
 		}
@@ -93,8 +84,8 @@ public class EntityEventHandler {
 		} else if (entity instanceof Blaze blaze) {
 			blaze.goalSelector.removeAllGoals(goal -> true);
 			blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
-			blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0D));
-			blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0D, 0.0F));
+			blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0));
+			blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0, 0.0F));
 			blaze.goalSelector.addGoal(8, new LookAtPlayerGoal(blaze, Player.class, 8.0F));
 			blaze.goalSelector.addGoal(8, new RandomLookAroundGoal(blaze));
 		} else if (entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.DROWNED || entity.getType() == EntityType.HUSK) {
@@ -116,7 +107,7 @@ public class EntityEventHandler {
 			spider.goalSelector.addGoal(1, new FloatGoal(spider));
 			spider.goalSelector.addGoal(3, new LeapAtTargetGoal(spider, 0.4F));
 			spider.goalSelector.addGoal(4, new XSSpiderAttackGoal(spider));
-			spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8D));
+			spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8));
 			spider.goalSelector.addGoal(6, new LookAtPlayerGoal(spider, Player.class, 8.0F));
 			spider.goalSelector.addGoal(6, new RandomLookAroundGoal(spider));
 			spider.targetSelector.removeAllGoals(goal -> true);
