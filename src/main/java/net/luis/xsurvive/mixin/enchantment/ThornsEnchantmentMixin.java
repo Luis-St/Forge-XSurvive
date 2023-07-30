@@ -43,8 +43,7 @@ public abstract class ThornsEnchantmentMixin {
 		List<Entry<EquipmentSlot, ItemStack>> thornsEquipment = this.getThornsEquipment(target);
 		if (shouldHit(level, rng)) {
 			if (attacker != null) {
-				int thornsLevel = this.getThornsLevel(target);
-				attacker.hurt(target.damageSources().thorns(attacker), (0.2F * level) * thornsLevel);
+				attacker.hurt(target.damageSources().thorns(attacker), this.getThornsLevel(target));
 			}
 			for (Entry<EquipmentSlot, ItemStack> entry : thornsEquipment) {
 				entry.getValue().hurtAndBreak(1, target, (entity) -> {
