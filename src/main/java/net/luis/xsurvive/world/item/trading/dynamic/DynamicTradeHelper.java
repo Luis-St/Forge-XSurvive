@@ -29,7 +29,7 @@ class DynamicTradeHelper {
 	
 	static @NotNull List<Enchantment> getValidEnchantments(@NotNull List<Rarity> rarities) {
 		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> {
-			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
+			return enchantment.isTradeable() && !enchantment.isCurse();
 		}).collect(Collectors.toList());
 	}
 	
