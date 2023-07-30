@@ -44,9 +44,13 @@ public class ItemWeightHelper {
 	
 	public static @NotNull WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
 		WeightCollection<Item> itemWeights = new WeightCollection<>();
-		itemWeights.add(10, XOItems.NIGHT_CROSSBOW.get());
-		itemWeights.add(30, XOItems.ENDERITE_CROSSBOW.get());
-		itemWeights.add(60, Items.CROSSBOW);
+		if (difficulty >= 5.5) {
+			itemWeights.add(10, XOItems.ENDERITE_CROSSBOW.get());
+		}
+		if (difficulty >= 4.0) {
+			itemWeights.add(30, XOItems.NETHERITE_CROSSBOW.get());
+		}
+		itemWeights.add(4.0 >= difficulty ? 50 : 80, Items.CROSSBOW);
 		return itemWeights;
 	}
 	

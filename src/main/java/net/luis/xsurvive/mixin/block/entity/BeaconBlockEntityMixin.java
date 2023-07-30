@@ -36,9 +36,6 @@ import java.util.stream.Stream;
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBeaconBlockEntity {
 	
-	private static final MobEffect[] ALL_EFFECTS = {MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.JUMP, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION};
-	private static final MobEffect[] DEFAULT_EFFECTS = {MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION};
-	
 	@Shadow private int levels;
 	@Shadow private MobEffect primaryPower;
 	@Shadow private MobEffect secondaryPower;
@@ -51,22 +48,22 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	private static void applyEffects(@NotNull Level level, BlockPos pos, int beaconLevel, @Nullable MobEffect primary, @Nullable MobEffect secondary, CallbackInfo callback) {
 		if (level instanceof ServerLevel && primary != null && level.getBlockEntity(pos) instanceof IBeaconBlockEntity beacon) {
 			int area = beaconLevel * 20 + 20;
-			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) {
+			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared()) {
 				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, area * 3))) {
-					for (MobEffect effect : primary == MobEffects.JUMP && primary == secondary ? ALL_EFFECTS : DEFAULT_EFFECTS) {
+					for (MobEffect effect : getEffects(beaconLevel, primary == MobEffects.JUMP)) {
 						player.addEffect(new MobEffectInstance(effect, (10 + beaconLevel * 10) * 20, beaconLevel, true, true));
 					}
 				}
 			} else {
-				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK);
+				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK) && !beacon.isBeaconBaseShared();
 				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? area * 2 : area));
 				int amplifier = beaconLevel >= 4 && primary == secondary ? 1 : 0;
 				for (Player player : players) {
-					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? 4 : getAmplifier(player.getOnPos(), (ServerLevel) player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
+					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : getAmplifier(player.getOnPos(), (ServerLevel) player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
 				}
 				if (beaconLevel >= 4 && primary != secondary && secondary != null) {
 					for (Player player : players) {
-						player.addEffect(new MobEffectInstance(secondary, (10 + beaconLevel * 10) * 20, diamond ? 4 : 0, true, true));
+						player.addEffect(new MobEffectInstance(secondary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : 0, true, true));
 					}
 				}
 			}
@@ -76,6 +73,20 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	private static @NotNull AABB getArea(@NotNull Level level, BlockPos pos, int area) {
 		return new AABB(pos).inflate(area).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
+	}
+	
+	private static @NotNull List<MobEffect> getEffects(int beaconLevel, boolean includeJump) {
+		List<MobEffect> effects = switch (beaconLevel) {
+			case 1 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED);
+			case 2 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE);
+			case 3 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST);
+			case 4 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION);
+			default -> Lists.newArrayList();
+		};
+		if (includeJump && beaconLevel >= 2) {
+			effects.add(MobEffects.JUMP);
+		}
+		return effects;
 	}
 	
 	private static int getAmplifier(BlockPos playerPos, ServerLevel level, BlockPos current, int beaconLevel, int area, MobEffect primaryEffect, int defaultAmplifier) {
