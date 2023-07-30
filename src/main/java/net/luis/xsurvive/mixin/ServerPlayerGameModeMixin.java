@@ -72,6 +72,10 @@ public abstract class ServerPlayerGameModeMixin {
 						this.level.destroyBlock(pos.above(), true, player);
 					}
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
+				} else if (state.getBlock() == Blocks.TORCHFLOWER) {
+					replanted = this.level.setBlock(pos, Blocks.TORCHFLOWER_CROP.defaultBlockState(), 3);
+				} else if (state.getBlock() == Blocks.PITCHER_CROP && state.getValue(PitcherCropBlock.AGE) >= 4) {
+					replanted = this.level.setBlock(pos, Blocks.PITCHER_CROP.defaultBlockState(), 3);
 				}
 				if (replanted) {
 					entry.getValue().hurtAndBreak(3, this.player, (player) -> {
