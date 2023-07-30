@@ -13,6 +13,8 @@ import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
+import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
+import net.minecraftforge.eventbus.api.Event;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,8 +51,11 @@ public class PhantomSpawnerMixin {
 				for (ServerPlayer player : level.players()) {
 					if (!player.isSpectator() && !player.isCreative()) {
 						BlockPos playerPos = player.blockPosition();
-						if (!level.dimensionType().hasSkyLight() || playerPos.getY() >= level.getSeaLevel() && level.canSeeSky(playerPos)) {
-							DifficultyInstance instance = level.getCurrentDifficultyAt(playerPos);
+						DifficultyInstance instance = level.getCurrentDifficultyAt(playerPos);
+						PlayerSpawnPhantomsEvent event = new PlayerSpawnPhantomsEvent(player, 2 + rng.nextInt(instance.getDifficulty().getId() + 2));
+						if (event.getResult() == Event.Result.DENY) {
+							continue;
+						} else if (event.getResult() == Event.Result.ALLOW || !level.dimensionType().hasSkyLight() || playerPos.getY() >= level.getSeaLevel() && level.canSeeSky(playerPos)) {
 							if (instance.isHarderThan(rng.nextFloat() * 3.0F)) {
 								ServerStatsCounter statsCounter = player.getStats();
 								int j = Mth.clamp(statsCounter.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
@@ -58,14 +63,14 @@ public class PhantomSpawnerMixin {
 									BlockPos spawnPos = playerPos.above(20 + rng.nextInt(15)).east(-10 + rng.nextInt(21)).south(-10 + rng.nextInt(21));
 									if (NaturalSpawner.isValidEmptySpawnBlock(level, spawnPos, level.getBlockState(spawnPos), level.getFluidState(spawnPos), EntityType.PHANTOM)) {
 										SpawnGroupData spawnGroup = null;
-										int maxSpawnCount = 2 + rng.nextInt(instance.getDifficulty().getId() + 2);
-										for (int count = 0; count < maxSpawnCount; ++count) {
+										int spawnCount = event.getPhantomsToSpawn();
+										for (int count = 0; count < spawnCount; ++count) {
 											Phantom phantom = Objects.requireNonNull(EntityType.PHANTOM.create(level));
 											phantom.moveTo(spawnPos, 0.0F, 0.0F);
 											spawnGroup = phantom.finalizeSpawn(level, instance, MobSpawnType.NATURAL, spawnGroup, null);
 											level.addFreshEntityWithPassengers(phantom);
 										}
-										spawnedPhantoms += maxSpawnCount;
+										spawnedPhantoms += spawnCount;
 									}
 								}
 							}
