@@ -1,6 +1,7 @@
 package net.luis.xsurvive.world.item.enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,6 +35,11 @@ public class VoidWalkerEnchantment extends Enchantment {
 			return false;
 		}
 		return super.checkCompatibility(enchantment);
+	}
+	
+	@Override
+	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
+		return false;
 	}
 	
 	@Override

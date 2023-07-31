@@ -38,4 +38,9 @@ public class ReplantingEnchantment extends Enchantment {
 	public boolean canApplyAtEnchantingTable(@NotNull ItemStack stack) {
 		return false;
 	}
+	
+	@Override
+	public boolean isTradeable() {
+		return false;
+	}
 }

@@ -31,8 +31,7 @@ public class ThunderboltEnchantment extends Enchantment {
 	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {
 		if (enchantment == Enchantments.KNOCKBACK) {
 			return false;
-		}
-		if (enchantment instanceof FireAspectEnchantment) {
+		} else if (enchantment instanceof FireAspectEnchantment) {
 			return false;
 		}
 		return super.checkCompatibility(enchantment);

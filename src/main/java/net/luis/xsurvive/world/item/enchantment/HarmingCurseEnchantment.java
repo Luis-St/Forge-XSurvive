@@ -35,4 +35,9 @@ public class HarmingCurseEnchantment extends Enchantment {
 	public boolean isCurse() {
 		return true;
 	}
+	
+	@Override
+	public boolean isTradeable() {
+		return false;
+	}
 }

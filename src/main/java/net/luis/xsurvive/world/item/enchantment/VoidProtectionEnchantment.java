@@ -85,11 +85,6 @@ public class VoidProtectionEnchantment extends Enchantment implements IEnchantme
 	}
 	
 	@Override
-	public int getMaxGoldenBookLevel() {
-		return 5;
-	}
-	
-	@Override
 	public int getMinUpgradeLevel() {
 		return this.getMinLevel();
 	}

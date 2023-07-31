@@ -28,11 +28,11 @@ public class LootModifierHelper {
 	}
 	
 	public static @NotNull RarityList<Enchantment> getVeryRareEnchantments() {
-		return RarityList.of(Rarity.VERY_RARE, Lists.newArrayList(FALL_PROTECTION, RESPIRATION, DEPTH_STRIDER, SWEEPING_EDGE, UNBREAKING, BLOCK_FORTUNE, MOB_LOOTING, LOYALTY, RIPTIDE, QUICK_CHARGE, FISHING_LUCK, FISHING_SPEED));
+		return RarityList.of(Rarity.VERY_RARE, Lists.newArrayList(FALL_PROTECTION, RESPIRATION, DEPTH_STRIDER, SWEEPING_EDGE, UNBREAKING, BLOCK_FORTUNE, MOB_LOOTING, LOYALTY, RIPTIDE, QUICK_CHARGE, FISHING_LUCK, FISHING_SPEED, REPLANTING.get()));
 	}
 	
 	public static @NotNull RarityList<Enchantment> getTreasureEnchantments() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(MULTI_DROP.get()));
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(MULTI_DROP.get(), REACHING.get()));
 	}
 	
 	public static @NotNull RarityList<Enchantment> getExtraOverworldTreasure() {
@@ -56,8 +56,7 @@ public class LootModifierHelper {
 	}
 	
 	public static @NotNull RarityList<Item> getRareRunes() {
-		return RarityList.of(Rarity.RARE,
-			Lists.newArrayList(ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(), PINK_RUNE.get(), CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(), RED_RUNE.get()));
+		return RarityList.of(Rarity.RARE, Lists.newArrayList(ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(), PINK_RUNE.get(), CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(), RED_RUNE.get()));
 	}
 	
 	public static @NotNull RarityList<Item> getTreasureRunes() {
