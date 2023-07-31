@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	}
 	
 	@Override
-	public void setFireType(@NotNull EntityFireType fireType) {
+	public void setFireType(@Nullable EntityFireType fireType) {
 		this.fireType = fireType == null ? EntityFireType.NONE : fireType;
 		this.setChanged();
 	}

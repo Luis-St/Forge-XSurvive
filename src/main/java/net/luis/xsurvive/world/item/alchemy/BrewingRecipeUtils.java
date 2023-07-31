@@ -15,12 +15,12 @@ import org.jetbrains.annotations.NotNull;
 public class BrewingRecipeUtils {
 	
 	public static void addRecipes(@NotNull Item baseItem, @NotNull Potion potion, @NotNull Potion longPotion, @NotNull Potion strongPotion) {
-		simpleRecipe(baseItem, potion);
+		basicRecipe(baseItem, potion);
 		longRecipe(potion, longPotion);
 		strongRecipe(potion, strongPotion);
 	}
 	
-	public static void simpleRecipe(@NotNull Item baseItem, @NotNull Potion resultPotion) {
+	public static void basicRecipe(@NotNull Item baseItem, @NotNull Potion resultPotion) {
 		BrewingRecipeRegistry.addRecipe(Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)), Ingredient.of(baseItem), PotionUtils.setPotion(new ItemStack(Items.POTION), resultPotion));
 	}
 	

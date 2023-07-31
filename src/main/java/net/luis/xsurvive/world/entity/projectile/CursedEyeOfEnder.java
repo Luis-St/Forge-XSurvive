@@ -31,8 +31,7 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 	
 	@Override
 	public void signalTo(@NotNull BlockPos pos) {
-		super.signalTo(this.blockPosition().offset(0, 10, 0));
-		this.surviveAfterDeath = false;
+		super.signalTo(this.blockPosition().offset(0, 15, 0));
 	}
 	
 	@Override
@@ -70,9 +69,6 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 			if (this.life > 100 && !this.level().isClientSide) {
 				this.playSound(SoundEvents.ENDER_EYE_DEATH, 1.0F, 1.0F);
 				this.discard();
-				if (this.surviveAfterDeath) {
-					this.level().addFreshEntity(new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), this.getItem()));
-				}
 			}
 		} else {
 			this.setPosRaw(x, y, z);

@@ -8,7 +8,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ public class EnchantedGoldenBookItem extends Item {
 		super(properties);
 	}
 	
-	public static ItemStack createForEnchantment(Enchantment enchantment) {
+	public static @NotNull ItemStack createForEnchantment(Enchantment enchantment) {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
 		return stack;
@@ -60,8 +59,7 @@ public class EnchantedGoldenBookItem extends Item {
 		return 0;
 	}
 	
-	@Nullable
-	public Enchantment getEnchantment(ItemStack stack) {
+	public Enchantment getEnchantment(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 			if (enchantments.size() == 1) {
@@ -71,7 +69,7 @@ public class EnchantedGoldenBookItem extends Item {
 		return null;
 	}
 	
-	public void setEnchantment(ItemStack stack, Enchantment enchantment) {
+	public void setEnchantment(@NotNull ItemStack stack, Enchantment enchantment) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			EnchantmentHelper.setEnchantments(Map.of(enchantment, 1), stack);
 		}

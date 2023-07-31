@@ -32,13 +32,11 @@ public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 		return this.key;
 	}
 	
-	@Nullable
 	@Override
 	public V getValue() {
 		return this.value;
 	}
 	
-	@Nullable
 	@Override
 	public V setValue(V value) {
 		V oldValue = this.value;
