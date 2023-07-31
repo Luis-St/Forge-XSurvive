@@ -28,13 +28,13 @@ public class XSVillagerProfessions {
 		return register("enchanter", SoundEvents.ENCHANTMENT_TABLE_USE);
 	});
 	public static final RegistryObject<VillagerProfession> END_TRADER = VILLAGER_PROFESSIONS.register("end_trader", () -> {
-		return register("end_trader", null);
+		return register("end_trader", SoundEvents.ENDER_CHEST_OPEN);
 	});
 	public static final RegistryObject<VillagerProfession> LUMBERJACK = VILLAGER_PROFESSIONS.register("lumberjack", () -> {
 		return register("lumberjack", SoundEvents.AXE_STRIP);
 	});
 	public static final RegistryObject<VillagerProfession> MINER = VILLAGER_PROFESSIONS.register("miner", () -> {
-		return register("miner", null);
+		return register("miner", SoundEvents.STONE_BREAK);
 	});
 	public static final RegistryObject<VillagerProfession> MOB_HUNTER = VILLAGER_PROFESSIONS.register("mob_hunter", () -> {
 		return register("mob_hunter", SoundEvents.ANVIL_USE);
