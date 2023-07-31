@@ -1,4 +1,4 @@
-package net.luis.xsurvive.event.entity.living;
+package net.luis.xsurvive.event.entity;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;

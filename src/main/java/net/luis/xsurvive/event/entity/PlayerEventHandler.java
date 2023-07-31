@@ -1,4 +1,4 @@
-package net.luis.xsurvive.event.entity.living.player;
+package net.luis.xsurvive.event.entity;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
@@ -217,14 +217,12 @@ public class PlayerEventHandler {
 	public static void rightClickItem(PlayerInteractEvent.@NotNull RightClickItem event) {
 		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.ASPECT_OF_THE_END.get(), event.getEntity());
 		int aspectOfTheEnd = entry.getValue().getEnchantmentLevel(XSEnchantments.ASPECT_OF_THE_END.get());
-		if (event.getEntity() instanceof ServerPlayer player) {
-			if (aspectOfTheEnd > 0) {
-				if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
-					Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level(), 6.0 * aspectOfTheEnd);
-					player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
-					entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
-					PlayerProvider.getServer(player).setEndAspectCooldown(20);
-				}
+		if (event.getEntity() instanceof ServerPlayer player && aspectOfTheEnd > 0 && entry.getValue().getItem() instanceof SwordItem) {
+			if (0 >= PlayerProvider.getServer(player).getEndAspectCooldown()) {
+				Vec3 clipVector = EntityHelper.clipWithDistance(player, player.level(), 6.0 * aspectOfTheEnd);
+				player.teleportToWithTicket(clipVector.x, clipVector.y, clipVector.z);
+				entry.getValue().hurtAndBreak(aspectOfTheEnd * 2, player, (p) -> p.broadcastBreakEvent(entry.getKey()));
+				PlayerProvider.getServer(player).setEndAspectCooldown(20);
 			}
 		}
 	}
