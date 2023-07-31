@@ -6,7 +6,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

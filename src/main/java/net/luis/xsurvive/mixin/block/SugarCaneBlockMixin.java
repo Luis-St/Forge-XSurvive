@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

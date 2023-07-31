@@ -5,7 +5,7 @@ import net.minecraftforge.fml.ModList;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

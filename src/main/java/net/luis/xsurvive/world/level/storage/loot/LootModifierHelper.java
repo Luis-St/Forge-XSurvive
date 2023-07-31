@@ -13,7 +13,7 @@ import static net.minecraft.world.item.enchantment.Enchantments.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

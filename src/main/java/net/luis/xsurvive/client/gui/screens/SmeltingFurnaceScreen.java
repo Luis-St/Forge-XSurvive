@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

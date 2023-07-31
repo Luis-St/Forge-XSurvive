@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

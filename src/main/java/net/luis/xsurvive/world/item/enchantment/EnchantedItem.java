@@ -4,7 +4,7 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

@@ -4,7 +4,7 @@ import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

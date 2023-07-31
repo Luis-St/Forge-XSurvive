@@ -24,7 +24,7 @@ import static mezz.jei.api.recipe.RecipeIngredientRole.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

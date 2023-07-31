@@ -4,7 +4,7 @@ import net.minecraft.world.inventory.RecipeBookType;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

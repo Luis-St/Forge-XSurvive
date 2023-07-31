@@ -9,7 +9,7 @@ import net.minecraftforge.common.capabilities.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

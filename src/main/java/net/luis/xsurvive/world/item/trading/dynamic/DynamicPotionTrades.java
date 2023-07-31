@@ -15,7 +15,7 @@ import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

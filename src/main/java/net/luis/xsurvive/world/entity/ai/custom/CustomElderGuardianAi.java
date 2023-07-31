@@ -15,7 +15,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

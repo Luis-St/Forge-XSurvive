@@ -27,7 +27,7 @@ import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

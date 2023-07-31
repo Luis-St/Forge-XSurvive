@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

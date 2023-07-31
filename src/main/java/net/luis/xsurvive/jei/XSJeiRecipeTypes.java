@@ -6,7 +6,7 @@ import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

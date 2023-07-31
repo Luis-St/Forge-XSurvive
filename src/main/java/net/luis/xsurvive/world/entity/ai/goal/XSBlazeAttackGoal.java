@@ -10,7 +10,7 @@ import java.util.EnumSet;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

@@ -12,7 +12,7 @@ import static net.luis.xsurvive.world.item.XSItems.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

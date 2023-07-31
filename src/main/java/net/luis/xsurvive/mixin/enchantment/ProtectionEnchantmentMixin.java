@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

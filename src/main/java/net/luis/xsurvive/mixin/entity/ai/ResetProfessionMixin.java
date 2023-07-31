@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

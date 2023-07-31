@@ -5,7 +5,7 @@ import net.minecraft.world.item.enchantment.FireAspectEnchantment;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

@@ -8,7 +8,7 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

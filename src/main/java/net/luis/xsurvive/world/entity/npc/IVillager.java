@@ -4,7 +4,7 @@ import net.luis.xsurvive.capability.ICapability;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

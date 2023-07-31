@@ -8,7 +8,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

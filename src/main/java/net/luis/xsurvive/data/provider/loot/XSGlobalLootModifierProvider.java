@@ -19,7 +19,7 @@ import static net.minecraft.world.level.storage.loot.BuiltInLootTables.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

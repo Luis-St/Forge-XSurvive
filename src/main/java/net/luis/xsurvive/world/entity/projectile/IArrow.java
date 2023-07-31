@@ -2,7 +2,7 @@ package net.luis.xsurvive.world.entity.projectile;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

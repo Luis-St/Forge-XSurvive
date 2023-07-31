@@ -2,7 +2,7 @@ package net.luis.xsurvive.world.entity.ai.custom;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 

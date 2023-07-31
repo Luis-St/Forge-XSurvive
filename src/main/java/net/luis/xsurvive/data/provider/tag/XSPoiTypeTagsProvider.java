@@ -15,7 +15,7 @@ import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.*;
 
 /**
  *
- * @author Luis-st
+ * @author Luis-St
  *
  */
 
