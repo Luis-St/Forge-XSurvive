@@ -17,10 +17,10 @@ import java.util.Map;
  *
  */
 
-public class EnchantedGoldenBookItem extends Item {
+public class EnchantedGoldenBookItem extends GlintColorItem {
 	
 	public EnchantedGoldenBookItem(Properties properties) {
-		super(properties);
+		super(properties, DyeColor.YELLOW.getId());
 	}
 	
 	public static @NotNull ItemStack createForEnchantment(Enchantment enchantment) {
