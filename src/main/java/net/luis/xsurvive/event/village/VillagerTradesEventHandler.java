@@ -7,7 +7,6 @@ import net.luis.xores.world.level.block.XOBlocks;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.item.trading.AdvancedTradeBuilder;
 import net.luis.xsurvive.world.item.trading.SimpleTradeBuilder;
 import net.luis.xsurvive.world.item.trading.dynamic.DynamicEnchantedTrades;
@@ -178,8 +177,6 @@ public class VillagerTradesEventHandler {
 			
 			trade5.add(SimpleTradeBuilder.item(4, Items.ENDER_EYE, 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
-			trade5.add(AdvancedTradeBuilder.enchantedBook(XSEnchantments.VOID_WALKER.get(), 1).defaultValues(5).maxUses(1).build()); // TODO: rare chance in loot table (end city)
-			trade5.add(AdvancedTradeBuilder.enchantedGoldenBook(XSEnchantments.VOID_PROTECTION.get()).defaultValues(5).maxUses(1).build()); // TODO: rare chance in loot table (end city)
 			trade5.add(SimpleTradeBuilder.emerald(XOItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
 		} else if (event.getType() == XSVillagerProfessions.LUMBERJACK.get()) {

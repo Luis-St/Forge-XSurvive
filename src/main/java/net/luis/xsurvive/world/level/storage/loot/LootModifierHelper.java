@@ -44,7 +44,7 @@ public class LootModifierHelper {
 	}
 	
 	public static @NotNull RarityList<Enchantment> getExtraEndTreasure() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_PROTECTION.get(), ASPECT_OF_THE_END.get()));
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_WALKER.get(), VOID_PROTECTION.get(), ASPECT_OF_THE_END.get()));
 	}
 	
 	public static @NotNull RarityList<Enchantment> getAllTreasureEnchantments() {
