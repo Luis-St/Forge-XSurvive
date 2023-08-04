@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public class XSItemModelProvider extends ItemModelProvider {
 	
-	public XSItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+	public XSItemModelProvider(@NotNull DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID, existingFileHelper);
 	}
 	

@@ -29,11 +29,11 @@ import java.util.Objects;
 
 public class XSLanguageProvider extends LanguageProvider {
 	
-	public XSLanguageProvider(DataGenerator generator) {
+	public XSLanguageProvider(@NotNull DataGenerator generator) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID, "en_us");
 	}
 	
-	public static String getName(ResourceLocation location) {
+	public static @NotNull String getName(ResourceLocation location) {
 		StringBuilder name = new StringBuilder();
 		if (location != null) {
 			String[] nameParts = location.getPath().split("_");
@@ -45,7 +45,7 @@ public class XSLanguageProvider extends LanguageProvider {
 		return name.toString().trim();
 	}
 	
-	public static String getLocalizedName(ResourceLocation location) {
+	public static @NotNull String getLocalizedName(ResourceLocation location) {
 		String name = getName(location);
 		if (name.contains(" Of ")) {
 			return name.replace(" Of ", " of ");
@@ -104,7 +104,7 @@ public class XSLanguageProvider extends LanguageProvider {
 		this.add("item.minecraft.tipped_arrow.effect." + potionName, "Arrow of " + this.getPotionName(location));
 	}
 	
-	private String getPotionName(ResourceLocation location) {
+	private @NotNull String getPotionName(@NotNull ResourceLocation location) {
 		if (location.getPath().startsWith("long_")) {
 			String path = location.getPath();
 			return getName(new ResourceLocation(location.getNamespace(), path.replace("long_", "")));

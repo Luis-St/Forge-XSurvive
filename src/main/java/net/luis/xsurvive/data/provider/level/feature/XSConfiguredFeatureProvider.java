@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -64,7 +65,7 @@ public class XSConfiguredFeatureProvider {
 		return List.of(OreConfiguration.target(new TagMatchTest(Tags.Blocks.END_STONES), XOBlocks.ENDERITE_ORE.get().defaultBlockState()));
 	};
 	
-	public static void create(BootstapContext<ConfiguredFeature<?, ?>> context) {
+	public static void create(@NotNull BootstapContext<ConfiguredFeature<?, ?>> context) {
 		context.register(XSOreFeatures.COAL_ORE, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(COAL_ORE_TARGETS.get(), 9))); // 17
 		context.register(XSOreFeatures.COAL_ORE_BURIED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(COAL_ORE_TARGETS.get(), 12, 0.8F))); // 17, 0.5
 		context.register(XSOreFeatures.COPPER_ORE_SMALL, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(COPPER_ORE_TARGETS.get(), 5))); // 10

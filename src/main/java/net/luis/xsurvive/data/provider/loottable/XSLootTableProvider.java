@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class XSLootTableProvider extends LootTableProvider {
 	
-	public XSLootTableProvider(DataGenerator generator) {
+	public XSLootTableProvider(@NotNull DataGenerator generator) {
 		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)));
 	}
 	

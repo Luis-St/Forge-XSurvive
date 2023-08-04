@@ -29,7 +29,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	
 	protected final ExistingFileHelper existingFileHelper;
 	
-	public XSBlockStateProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
+	public XSBlockStateProvider(@NotNull DataGenerator generator, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID, existingFileHelper);
 		this.existingFileHelper = existingFileHelper;
 	}
@@ -166,7 +166,7 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		// @formatter:on
 	}
 	
-	private int getYRotation(Direction direction) {
+	private int getYRotation(@NotNull Direction direction) {
 		return switch (direction) {
 			case NORTH -> 0;
 			case EAST -> 90;
@@ -176,11 +176,11 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		};
 	}
 	
-	private ModelFile blockModel(Block block) {
+	private @NotNull ModelFile blockModel(Block block) {
 		return this.blockModel(block, null);
 	}
 	
-	private ModelFile blockModel(Block block, String addition) {
+	private @NotNull ModelFile blockModel(Block block, String addition) {
 		ResourceLocation name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
 		if (addition == null || addition.isEmpty()) {
 			return new UncheckedModelFile(new ResourceLocation(name.getNamespace(), "block/" + name.getPath()));

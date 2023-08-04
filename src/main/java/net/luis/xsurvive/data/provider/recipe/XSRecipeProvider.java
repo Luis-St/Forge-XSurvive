@@ -26,15 +26,15 @@ import java.util.function.Consumer;
 
 public class XSRecipeProvider extends RecipeProvider {
 	
-	public XSRecipeProvider(DataGenerator generator) {
+	public XSRecipeProvider(@NotNull DataGenerator generator) {
 		super(generator.getPackOutput());
 	}
 	
-	private static String getId(ItemLike item) {
+	private static @NotNull String getId(@NotNull ItemLike item) {
 		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item.asItem())).getPath();
 	}
 	
-	private static String getGroup(ItemLike item) {
+	private static @NotNull String getGroup(ItemLike item) {
 		String path = getId(item);
 		if (!path.contains("_")) {
 			return path;
@@ -108,14 +108,14 @@ public class XSRecipeProvider extends RecipeProvider {
 			.save(consumer, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
 	}
 	
-	private RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, ItemLike... unlockCriterions) {
+	private @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, ItemLike @NotNull ... unlockCriterions) {
 		for (ItemLike unlockCriterion : unlockCriterions) {
 			builder.unlockedBy("has_" + getId(unlockCriterion), has(unlockCriterion));
 		}
 		return builder.group(group);
 	}
 	
-	private RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, Ingredient ingredientCriterion, Item itemCriterion) {
+	private @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, @NotNull Ingredient ingredientCriterion, Item itemCriterion) {
 		for (Ingredient.Value value : ingredientCriterion.values) {
 			if (value instanceof Ingredient.ItemValue itemValue) {
 				builder.unlockedBy("has_" + getId(itemValue.item.getItem()), has(itemValue.item.getItem()));

@@ -25,7 +25,7 @@ import static net.minecraft.world.level.storage.loot.BuiltInLootTables.*;
 
 public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 	
-	public XSGlobalLootModifierProvider(DataGenerator generator) {
+	public XSGlobalLootModifierProvider(@NotNull DataGenerator generator) {
 		super(generator.getPackOutput(), XSurvive.MOD_ID);
 	}
 	

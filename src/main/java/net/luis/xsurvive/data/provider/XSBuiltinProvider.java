@@ -7,6 +7,7 @@ import net.luis.xsurvive.data.provider.level.placement.XSPlacedFeatureProvider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -16,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class XSBuiltinProvider {
 	
-	public static RegistrySetBuilder createProvider() {
+	public static @NotNull RegistrySetBuilder createProvider() {
 		RegistrySetBuilder builder = new RegistrySetBuilder();
 		builder.add(Registries.CONFIGURED_FEATURE, XSConfiguredFeatureProvider::create);
 		builder.add(Registries.PLACED_FEATURE, XSPlacedFeatureProvider::create);

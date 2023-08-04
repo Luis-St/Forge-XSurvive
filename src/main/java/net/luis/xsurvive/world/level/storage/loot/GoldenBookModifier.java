@@ -19,6 +19,7 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -72,13 +73,12 @@ public class GoldenBookModifier extends LootModifier {
 		for (int i = 0; i < this.goldenBookCount; i++) {
 			generatedLoot.add(this.getGoldenBook(context));
 		}
-		
 		return generatedLoot;
 	}
 	
 	private @NotNull ItemStack getGoldenBook(@NotNull LootContext context) {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
-		Enchantment enchantment = this.getRandomEnchantment(context.getQueriedLootTableId());
+		Enchantment enchantment = this.getRandomEnchantment(context.getQueriedLootTableId(), 0);
 		if (enchantment != null && stack.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 			goldenBook.setEnchantment(stack, enchantment);
 			return stack;
@@ -87,7 +87,7 @@ public class GoldenBookModifier extends LootModifier {
 		return ItemStack.EMPTY;
 	}
 	
-	private Enchantment getRandomEnchantment(@NotNull ResourceLocation location) {
+	private @Nullable Enchantment getRandomEnchantment(@NotNull ResourceLocation location, int tries) {
 		RarityList<Enchantment> enchantments = RarityList.copy(this.enchantmentWeights.next());
 		if (enchantments.getRarity() == this.extraNetherTreasure.getRarity() && location.equals(BuiltInLootTables.BASTION_TREASURE)) {
 			enchantments.addAll(this.extraNetherTreasure);
@@ -96,14 +96,16 @@ public class GoldenBookModifier extends LootModifier {
 		} else if (enchantments.getRarity() == this.extraOverworldTreasure.getRarity()) {
 			enchantments.addAll(this.extraOverworldTreasure);
 		}
-		
 		Enchantment enchantment = enchantments.get(RNG.nextInt(enchantments.size()));
 		if (enchantment instanceof IEnchantment ench) {
 			if (ench.isAllowedOnGoldenBooks()) {
 				return enchantment;
-			} else {
+			} else if (10 > tries) {
 				XSurvive.LOGGER.warn("Enchantment {} is not allowed on golden books", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-				return getRandomEnchantment(location);
+				return this.getRandomEnchantment(location, tries + 1);
+			} else {
+				XSurvive.LOGGER.error("Found no valid enchantment for the enchanted golden book in loot table {} after 10 tries", location);
+				return null;
 			}
 		}
 		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));

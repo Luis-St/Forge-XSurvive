@@ -21,7 +21,7 @@ import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.*;
 
 public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
 	
-	public XSPoiTypeTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+	public XSPoiTypeTagsProvider(@NotNull DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
 	

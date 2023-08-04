@@ -36,7 +36,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	@Nullable
 	private String group;
 	
-	public SmeltingRecipeBuilder(RecipeCategory category, CookingBookCategory bookCategory, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+	public SmeltingRecipeBuilder(RecipeCategory category, CookingBookCategory bookCategory, Ingredient ingredient, @NotNull ItemLike result, float experience, int cookingTime) {
 		this.category = category;
 		this.bookCategory = bookCategory;
 		this.ingredient = ingredient;
@@ -45,11 +45,11 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		this.cookingTime = cookingTime;
 	}
 	
-	public static SmeltingRecipeBuilder of(RecipeCategory category, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+	public static @NotNull SmeltingRecipeBuilder of(RecipeCategory category, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
 		return new SmeltingRecipeBuilder(category, determineRecipeCategory(result.asItem()), ingredient, result, experience, 100);
 	}
 	
-	private static CookingBookCategory determineRecipeCategory(Item result) {
+	private static @NotNull CookingBookCategory determineRecipeCategory(@NotNull Item result) {
 		if (result.isEdible()) {
 			return CookingBookCategory.FOOD;
 		} else {
@@ -72,7 +72,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	}
 	
 	@Override
-	public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
+	public void save(@NotNull Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
 		this.ensureValid(id);
 		this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
 		consumer.accept(

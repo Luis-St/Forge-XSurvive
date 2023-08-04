@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class XSBlockTagsProvider extends BlockTagsProvider {
 	
-	public XSBlockTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+	public XSBlockTagsProvider(@NotNull DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
 	

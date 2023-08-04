@@ -23,7 +23,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class XSItemTagsProvider extends ItemTagsProvider {
 	
-	public XSItemTagsProvider(DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagsProvider, ExistingFileHelper existingFileHelper) {
+	public XSItemTagsProvider(@NotNull DataGenerator generator, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagsProvider, ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, blockTagsProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
 	
