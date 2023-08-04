@@ -7,8 +7,7 @@
         "minecraft:chests/stronghold_library",
         "minecraft:chests/bastion_treasure",
         "minecraft:chests/end_city_treasure",
-        "minecraft:chests/ancient_city",
-        "minecraft:chests/ancient_city_ice_box"
+        "minecraft:chests/ancient_city"
       ]
     }
   ],
@@ -63,7 +62,8 @@
             "minecraft:riptide",
             "minecraft:quick_charge",
             "minecraft:luck_of_the_sea",
-            "minecraft:lure"
+            "minecraft:lure",
+            "xsurvive:replanting"
           ]
         },
         "weight": 25
@@ -72,7 +72,8 @@
         "value": {
           "rarity": "treasure",
           "values": [
-            "xsurvive:multi_drop"
+            "xsurvive:multi_drop",
+            "xsurvive:reaching"
           ]
         },
         "weight": 15
@@ -82,6 +83,7 @@
   "extra_end_treasure": {
     "rarity": "treasure",
     "values": [
+      "xsurvive:void_walker",
       "xsurvive:void_protection",
       "xsurvive:aspect_of_the_end"
     ]

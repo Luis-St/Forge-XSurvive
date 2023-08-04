@@ -46,7 +46,7 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 			collection.add(20, LootModifierHelper.getTreasureRunes());
 		})));
 		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[] {
-			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).add(ANCIENT_CITY_ICE_BOX).build()
+			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(BASTION_TREASURE).add(END_CITY_TREASURE).add(ANCIENT_CITY).build()
 		}, 1, Util.make(new WeightCollection<>(), (collection) -> {
 			collection.add(20, LootModifierHelper.getCommonEnchantments());
 			collection.add(40, LootModifierHelper.getRareEnchantments());
@@ -55,16 +55,10 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 		}), LootModifierHelper.getExtraOverworldTreasure(), LootModifierHelper.getExtraNetherTreasure(), LootModifierHelper.getExtraEndTreasure()));
 		this.add("diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(BASTION_OTHER).add(BASTION_HOGLIN_STABLE).add(IGLOO_CHEST).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(STRONGHOLD_CROSSING).add(UNDERWATER_RUIN_BIG).add(WOODLAND_MANSION).build()
-		}, XSItems.DIAMOND_APPLE.get(), Chance.of(0.06)));
+		}, XSItems.DIAMOND_APPLE.get(), Chance.of(0.05)));
 		this.add("enchanted_diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder(SIMPLE_DUNGEON).add(ABANDONED_MINESHAFT).add(ANCIENT_CITY).add(BASTION_TREASURE).add(DESERT_PYRAMID).add(RUINED_PORTAL).add(WOODLAND_MANSION).build()
-		}, XSItems.ENCHANTED_DIAMOND_APPLE.get(), Chance.of(0.02)));
-		this.add("void_walker_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
-			new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
-		}, XSEnchantments.VOID_WALKER.get(), Chance.of(0.08), false));
-		this.add("void_protection_modifier", new EndEnchantmentsModifier(new LootItemCondition[] {
-			new LootTableIdsCondition.Builder(END_CITY_TREASURE).build()
-		}, XSEnchantments.VOID_PROTECTION.get(), Chance.of(0.02), true));
+		}, XSItems.ENCHANTED_DIAMOND_APPLE.get(), Chance.of(0.01)));
 	}
 	
 	@Override
