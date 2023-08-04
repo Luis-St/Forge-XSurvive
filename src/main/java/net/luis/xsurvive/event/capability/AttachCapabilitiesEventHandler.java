@@ -51,14 +51,14 @@ public class AttachCapabilitiesEventHandler {
 	public static void attachItemCapabilities(@NotNull AttachCapabilitiesEvent<ItemStack> event) {
 		ItemStack stack = event.getObject();
 		if (stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE) {
-			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "enchanted_golden_apple_glint"), new GlintColorProvider(IGlintColor.simple(DyeColor.YELLOW)));
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "glint_capability"), new GlintColorProvider(IGlintColor.simple(DyeColor.YELLOW)));
 		}
 	}
 	
 	@SubscribeEvent
 	public static void attachLevelCapabilities(@NotNull AttachCapabilitiesEvent<Level> event) {
 		if (event.getObject() instanceof ServerLevel level) {
-			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "enchanted_golden_apple_glint"), new LevelProvider(new ServerLevelHandler(level)));
+			event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "level_capability"), new LevelProvider(new ServerLevelHandler(level)));
 		}
 	}
 	
