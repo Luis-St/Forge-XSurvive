@@ -1,4 +1,4 @@
-package net.luis.xsurvive.data.provider.level.placement;
+package net.luis.xsurvive.data.provider.level;
 
 import net.luis.xsurvive.world.level.levelgen.feature.XSOreFeatures;
 import net.luis.xsurvive.world.level.levelgen.placement.XSOrePlacements;
@@ -41,10 +41,10 @@ public class XSPlacedFeatureProvider {
 		context.register(XSOrePlacements.GOLD_ORE_LOWER, new PlacedFeature(registry.getOrThrow(XSOreFeatures.GOLD_ORE_BURIED), orePlacement(CountPlacement.of(UniformInt.of(0, 1)), RANGE_64_48)));
 		context.register(XSOrePlacements.LAPIS_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.LAPIS_ORE), triangleOrePlacement(1, -32, 32))); // 2, -32, 32
 		context.register(XSOrePlacements.LAPIS_ORE_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.LAPIS_ORE_BURIED), uniformOrePlacement(3, -64, 64))); // 4, -64, 64
-		context.register(XSOrePlacements.REDSTONE_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.REDSTONE_ORE), uniformOrePlacement(3, -64, 15))); // 4, -64, 15
+		context.register(XSOrePlacements.REDSTONE_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.REDSTONE_ORE), uniformOrePlacement(3, -64, 16))); // 4, -64, 15
 		context.register(XSOrePlacements.REDSTONE_ORE_LOWER, new PlacedFeature(registry.getOrThrow(XSOreFeatures.REDSTONE_ORE), buriedOrePlacement(6, -32))); // 8, -32
 		context.register(XSOrePlacements.DIAMOND_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.DIAMOND_ORE_SMALL), buriedOrePlacement(5, 16))); // 7, 16
-		context.register(XSOrePlacements.DIAMOND_ORE_LARGE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.DIAMOND_ORE_LARGE), orePlacement(RarityFilter.onAverageOnceEvery(9), RANGE_144_16))); // 9
+		context.register(XSOrePlacements.DIAMOND_ORE_LARGE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.DIAMOND_ORE_LARGE), orePlacement(RarityFilter.onAverageOnceEvery(10), RANGE_144_16))); // 9
 		context.register(XSOrePlacements.DIAMOND_ORE_BURIED, new PlacedFeature(registry.getOrThrow(XSOreFeatures.DIAMOND_ORE_BURIED), buriedOrePlacement(3, 16))); // 4, 16
 		context.register(XSOrePlacements.EMERALD_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.EMERALD_ORE), triangleOrePlacement(66, -16, 480))); // 100, -16, 480
 		context.register(XSOrePlacements.NETHER_GOLD_ORE, new PlacedFeature(registry.getOrThrow(XSOreFeatures.NETHER_GOLD_ORE), orePlacement(CountPlacement.of(7), PlacementUtils.RANGE_10_10))); // 10

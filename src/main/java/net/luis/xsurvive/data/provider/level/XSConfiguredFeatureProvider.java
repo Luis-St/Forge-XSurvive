@@ -1,4 +1,4 @@
-package net.luis.xsurvive.data.provider.level.feature;
+package net.luis.xsurvive.data.provider.level;
 
 import net.luis.xores.world.level.block.XOBlocks;
 import net.luis.xsurvive.world.level.levelgen.feature.XSOreFeatures;
@@ -21,6 +21,7 @@ import java.util.function.Supplier;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSConfiguredFeatureProvider {
 	
 	private static final RuleTest STONE_ORE_REPLACEABLES = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
@@ -90,9 +91,9 @@ public class XSConfiguredFeatureProvider {
 		context.register(XSOreFeatures.SAPHIRE_ORE_RARE_UPPER, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(SAPHIRE_ORE_TARGETS.get(), 1))); // 2
 		context.register(XSOreFeatures.SAPHIRE_ORE, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(SAPHIRE_ORE_TARGETS.get(), 3, 0.4F))); // 5, 0.0
 		context.register(XSOreFeatures.SAPHIRE_ORE_BURIED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(SAPHIRE_ORE_TARGETS.get(), 4, 1.0F))); // 7, 1.0
-		context.register(XSOreFeatures.LIMONITE_ORE_BURIED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(LIMONITE_ORE_TARGETS.get(), 2, 0.5F))); // 4, 1.0
+		context.register(XSOreFeatures.LIMONITE_ORE_BURIED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(LIMONITE_ORE_TARGETS.get(), 2, 0.75F))); // 4, 0.5
 		context.register(XSOreFeatures.LIMONITE_ORE_DEEP_BURIED, new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(LIMONITE_ORE_TARGETS.get(), 5, 1.0F))); // 10, 1.0
-		context.register(XSOreFeatures.ENDERITE_ORE_RARE, new ConfiguredFeature<>(Feature.SCATTERED_ORE, new OreConfiguration(ENDERITE_ORE_TARGETS.get(), 1, 0.4F))); // 1, 0.0		
+		context.register(XSOreFeatures.ENDERITE_ORE_RARE, new ConfiguredFeature<>(Feature.SCATTERED_ORE, new OreConfiguration(ENDERITE_ORE_TARGETS.get(), 1, 0.4F))); // 1, 0.0
 		context.register(XSOreFeatures.ENDERITE_ORE_BURIED, new ConfiguredFeature<>(Feature.SCATTERED_ORE, new OreConfiguration(ENDERITE_ORE_TARGETS.get(), 2, 1.0F))); // 3, 1.0
 	}
 }

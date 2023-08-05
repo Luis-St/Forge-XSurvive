@@ -1,4 +1,4 @@
-package net.luis.xsurvive.data.provider.level.biome;
+package net.luis.xsurvive.data.provider.level;
 
 import com.google.common.collect.Lists;
 import net.luis.xores.XOres;

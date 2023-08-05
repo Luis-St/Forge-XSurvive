@@ -1,9 +1,9 @@
 package net.luis.xsurvive.data.provider;
 
 import net.luis.xsurvive.data.provider.damagesource.XSDamageTypeProvider;
-import net.luis.xsurvive.data.provider.level.biome.XSBiomeModifierProvider;
-import net.luis.xsurvive.data.provider.level.feature.XSConfiguredFeatureProvider;
-import net.luis.xsurvive.data.provider.level.placement.XSPlacedFeatureProvider;
+import net.luis.xsurvive.data.provider.level.XSBiomeModifierProvider;
+import net.luis.xsurvive.data.provider.level.XSConfiguredFeatureProvider;
+import net.luis.xsurvive.data.provider.level.XSPlacedFeatureProvider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraftforge.registries.ForgeRegistries;
