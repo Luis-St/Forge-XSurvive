@@ -1,7 +1,7 @@
 {
   "type": "xsurvive:additional_chance_item_modifier",
   "additional_item": "xsurvive:diamond_apple",
-  "chance": 0.06,
+  "chance": 0.05,
   "conditions": [
     {
       "condition": "xsurvive:loot_table_ids",
