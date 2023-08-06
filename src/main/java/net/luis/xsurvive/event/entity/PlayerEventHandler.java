@@ -7,7 +7,8 @@ import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.inventory.EnderChestMenu;
-import net.luis.xsurvive.world.item.*;
+import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
+import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.enchantment.*;
 import net.minecraft.ChatFormatting;
@@ -137,7 +138,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerBreakSpeed(@NotNull PlayerEvent.BreakSpeed event) {
+	public static void playerBreakSpeed(PlayerEvent.@NotNull BreakSpeed event) {
 		Player player = event.getEntity();
 		if (!player.onGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
 			event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
@@ -157,7 +158,7 @@ public class PlayerEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void playerClone(@NotNull PlayerEvent.Clone event) {
+	public static void playerClone(PlayerEvent.@NotNull Clone event) {
 		if (event.getOriginal() instanceof ServerPlayer original && event.getEntity() instanceof ServerPlayer player) {
 			original.reviveCaps();
 			IPlayer originalHandler = PlayerProvider.get(original);

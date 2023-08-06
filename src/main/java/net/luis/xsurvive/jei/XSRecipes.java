@@ -4,8 +4,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.RecipeManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

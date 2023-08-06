@@ -82,6 +82,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		this.changed = false;
 	}
 	
+	//region Tag serialization
 	@Override
 	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();
@@ -118,4 +119,5 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}
+	//endregion
 }

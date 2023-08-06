@@ -2,7 +2,6 @@ package net.luis.xsurvive.util;
 
 import net.luis.xsurvive.XSurvive;
 
-import javax.annotation.Nullable;
 import java.util.Map;
 
 /**

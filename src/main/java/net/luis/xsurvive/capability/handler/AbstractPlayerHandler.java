@@ -92,6 +92,7 @@ public class AbstractPlayerHandler implements IPlayer {
 		return this.combinedInventory.get();
 	}
 	
+	//region Tag serialization
 	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
@@ -146,4 +147,5 @@ public class AbstractPlayerHandler implements IPlayer {
 		this.tick = tag.getInt("tick");
 		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
 	}
+	//endregion
 }

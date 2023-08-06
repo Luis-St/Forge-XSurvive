@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.luis.xsurvive.client.EntityFireTypeHelper;
-import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
