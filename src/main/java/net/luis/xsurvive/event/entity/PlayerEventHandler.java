@@ -4,6 +4,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.luis.xsurvive.world.entity.EntityHelper;
+import net.luis.xsurvive.world.entity.EntityProvider;
 import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.inventory.EnderChestMenu;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -232,18 +234,21 @@ public class PlayerEventHandler {
 		BlockPos pos = event.getPos();
 		Level level = event.getLevel();
 		BlockState state = level.getBlockState(pos);
-		if (state.getBlock() == Blocks.ENDER_CHEST && event.getEntity() instanceof ServerPlayer player) {
-			if (!player.isShiftKeyDown()) {
-				event.setUseBlock(Event.Result.DENY);
-				if (!player.getItemInHand(event.getHand()).isEmpty()) {
-					event.setUseItem(Event.Result.DENY);
+		if (event.getEntity() instanceof ServerPlayer player) {
+			PlayerProvider.getServer(player).setContainerPos(pos);
+			if (state.getBlock() == Blocks.ENDER_CHEST) {
+				if (!player.isShiftKeyDown()) {
+					event.setUseBlock(Event.Result.DENY);
+					if (!player.getItemInHand(event.getHand()).isEmpty()) {
+						event.setUseItem(Event.Result.DENY);
+					}
+					NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST), pos);
+					player.awardStat(Stats.OPEN_ENDERCHEST);
+					PiglinAi.angerNearbyPiglins(player, true);
+					level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
+				} else {
+					event.setCanceled(true);
 				}
-				NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST), pos);
-				player.awardStat(Stats.OPEN_ENDERCHEST);
-				PiglinAi.angerNearbyPiglins(player, true);
-				level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
-			} else {
-				event.setCanceled(true);
 			}
 		}
 	}
@@ -252,6 +257,33 @@ public class PlayerEventHandler {
 	public static void arrowLoose(@NotNull ArrowLooseEvent event) {
 		if (event.getEntity().isUnderWater()) {
 			event.setCharge((int) (event.getCharge() * 0.35));
+		}
+	}
+	
+	@SubscribeEvent
+	public static void open(PlayerContainerEvent.@NotNull Open event) {
+		Player player = event.getEntity();
+		if (!(event.getContainer() instanceof InventoryMenu) && player instanceof ServerPlayer) {
+			PlayerProvider.getServer(player).confirmContainerPos();
+		}
+	}
+	
+	@SubscribeEvent
+	public static void close(PlayerContainerEvent.@NotNull Close event) {
+		Player player = event.getEntity();
+		if (!(event.getContainer() instanceof InventoryMenu) && player instanceof ServerPlayer) {
+			PlayerProvider.getSafe(player).ifPresent(handler -> {
+				if (handler instanceof ServerPlayerHandler serverHandler) {
+					serverHandler.resetContainerPos();
+				}
+			});
+		}
+	}
+	
+	@SubscribeEvent
+	public static void startTracking(PlayerEvent.@NotNull StartTracking event) {
+		if (event.getEntity() instanceof ServerPlayer) {
+			EntityProvider.getServer(event.getTarget()).broadcastChanges();
 		}
 	}
 }

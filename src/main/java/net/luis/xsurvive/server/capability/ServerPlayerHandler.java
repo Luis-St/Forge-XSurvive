@@ -4,6 +4,7 @@ import net.luis.xsurvive.capability.handler.AbstractPlayerHandler;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +20,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	private int nextPhantomReset = 0;
 	private int lastSync;
 	private boolean changed = false;
+	private BlockPos possibleContainerPos;
 	
 	public ServerPlayerHandler(ServerPlayer player) {
 		super(player);
@@ -69,6 +71,26 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	
 	public boolean canResetPhantomSpawn() {
 		return 0 >= this.nextPhantomReset;
+	}
+	
+	public void setContainerPos(BlockPos pos) {
+		this.possibleContainerPos = pos == null ? null : pos.immutable();
+	}
+	
+	public void confirmContainerPos() {
+		if (this.possibleContainerPos != null) {
+			this.containerPos = this.possibleContainerPos;
+			this.possibleContainerPos = null;
+			this.setChanged();
+		}
+	}
+	
+	public void resetContainerPos() {
+		if (this.containerPos != null) {
+			this.containerPos = null;
+			this.setChanged();
+		}
+		this.possibleContainerPos = null;
 	}
 	
 	@Override

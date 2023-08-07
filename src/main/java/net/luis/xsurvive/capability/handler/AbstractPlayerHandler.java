@@ -1,7 +1,9 @@
 package net.luis.xsurvive.capability.handler;
 
 import net.luis.xsurvive.world.entity.player.IPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -9,7 +11,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -28,6 +32,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	protected int startFrostTime;
 	protected int endAspectCooldown;
 	protected int startEndAspectCooldown;
+	protected BlockPos containerPos;
 	
 	protected AbstractPlayerHandler(Player player) {
 		this.player = player;
@@ -93,7 +98,10 @@ public class AbstractPlayerHandler implements IPlayer {
 		return this.combinedInventory.get();
 	}
 	
-	//region Tag serialization
+	public @NotNull Optional<@Nullable BlockPos> getContainerPos() {
+		return Optional.ofNullable(this.containerPos);
+	}
+	
 	//region NBT
 	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
@@ -128,12 +136,21 @@ public class AbstractPlayerHandler implements IPlayer {
 	
 	@Override
 	public @NotNull CompoundTag serializeNetwork() {
-		return this.serialize();
+		CompoundTag tag = this.serialize();
+		if (this.containerPos != null) {
+			tag.put("container_pos", NbtUtils.writeBlockPos(this.containerPos));
+		}
+		return tag;
 	}
 	
 	@Override
 	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
+		if (tag.contains("container_pos")) {
+			this.containerPos = NbtUtils.readBlockPos(tag.getCompound("container_pos"));
+		} else {
+			this.containerPos = null;
+		}
 	}
 	
 	@Override
