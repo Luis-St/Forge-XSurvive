@@ -1,8 +1,7 @@
 package net.luis.xsurvive.event.capability;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.client.capability.ClientEntityHandler;
-import net.luis.xsurvive.client.capability.LocalPlayerHandler;
+import net.luis.xsurvive.client.capability.*;
 import net.luis.xsurvive.server.capability.*;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.luis.xsurvive.world.entity.npc.VillagerProvider;
@@ -10,6 +9,7 @@ import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.GlintColorProvider;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.level.LevelProvider;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -73,6 +73,13 @@ public class AttachCapabilitiesEventHandler {
 			}
 			if (entity.level().isClientSide) {
 				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "client_entity_capability"), new EntityProvider(new ClientEntityHandler(entity)));
+			}
+		}
+		
+		@SubscribeEvent
+		public static void attachLevelCapabilities(@NotNull AttachCapabilitiesEvent<Level> event) {
+			if (event.getObject() instanceof ClientLevel level) {
+				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "level_capability"), new LevelProvider(new ClientLevelHandler(level)));
 			}
 		}
 	}

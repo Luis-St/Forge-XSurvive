@@ -1,12 +1,12 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import com.google.common.collect.*;
+import net.luis.xsurvive.server.capability.ServerLevelHandler;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
 
 /**
  *
@@ -55,11 +57,11 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 					}
 				}
 			} else {
-				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK) && !beacon.isBeaconBaseShared();
+				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared();
 				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? area * 2 : area));
 				int amplifier = beaconLevel >= 4 && primary == secondary ? 1 : 0;
 				for (Player player : players) {
-					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : getAmplifier(player.getOnPos(), (ServerLevel) player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
+					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : getAmplifier(player.getOnPos(), player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
 				}
 				if (beaconLevel >= 4 && primary != secondary && secondary != null) {
 					for (Player player : players) {
@@ -89,34 +91,27 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 		return effects;
 	}
 	
-	private static int getAmplifier(BlockPos playerPos, ServerLevel level, BlockPos current, int beaconLevel, int area, MobEffect primaryEffect, int defaultAmplifier) {
-		List<BlockPos> positions = LevelProvider.get(level).getBeaconPositions(playerPos, area);
-		positions.remove(current);
-		int amplifier = 0;
-		for (BlockPos position : positions) {
-			if (level.getBlockEntity(position) instanceof IBeaconBlockEntity beacon && beacon.getPrimaryEffect() == primaryEffect) {
-				amplifier++;
-			}
+	@Inject(method = "setLevel", at = @At("RETURN"))
+	public void setLevel(Level level, CallbackInfo callback) {
+		if (level instanceof ServerLevel) {
+			ServerLevelHandler handler = LevelProvider.getServer((ServerLevel) level);
+			handler.addBeaconPosition(this.getBlockPos());
+			handler.setBeaconEffects(this.getBlockPos(), this.primaryPower, this.secondaryPower);
 		}
-		if (amplifier == 0) {
-			return defaultAmplifier;
+	}
+	
+	@Inject(method = "setRemoved", at = @At("HEAD"))
+	public void setRemoved(CallbackInfo callback) {
+		if (this.getLevel() instanceof ServerLevel level) {
+			ServerLevelHandler handler = LevelProvider.getServer((ServerLevel) level);
+			handler.removeBeaconPosition(this.getBlockPos());
+			handler.removeBeaconEffects(this.getBlockPos());
 		}
-		return Mth.clamp(amplifier, 0, beaconLevel);
 	}
 	
 	@Override
 	public int getBeaconLevel() {
 		return this.levels;
-	}
-	
-	@Override
-	public MobEffect getPrimaryEffect() {
-		return this.primaryPower;
-	}
-	
-	@Override
-	public MobEffect getSecondaryEffect() {
-		return this.secondaryPower;
 	}
 	
 	@Override
@@ -146,25 +141,5 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 			BlockPos.betweenClosedStream(new AABB(p.getX() - 6, p.getY() - 2, p.getZ() - 6, p.getX() + 7, p.getY() - 2, p.getZ() + 7)).map(BlockPos::immutable),
 			BlockPos.betweenClosedStream(new AABB(p.getX() - 5, p.getY() - 3, p.getZ() - 5, p.getX() + 6, p.getY() - 3, p.getZ() + 6)).map(BlockPos::immutable));
 		return positions.map(this.level::getBlockState).filter(state -> state.is(Blocks.BEACON)).count() > 1;
-	}
-	
-	@Override
-	public boolean isBaseFullOf(Block block) {
-		List<Block> blocks = this.getBeaconBaseBlocks();
-		return blocks.size() == 1 && blocks.get(0) == block;
-	}
-	
-	@Inject(method = "setLevel", at = @At("RETURN"))
-	public void setLevel(Level level, CallbackInfo callback) {
-		if (level instanceof ServerLevel) {
-			LevelProvider.get((ServerLevel) level).addBeaconPosition(this.getBlockPos());
-		}
-	}
-	
-	@Inject(method = "setRemoved", at = @At("HEAD"))
-	public void setRemoved(CallbackInfo callback) {
-		if (this.getLevel() instanceof ServerLevel level) {
-			LevelProvider.get(level).removeBeaconPosition(this.getBlockPos());
-		}
 	}
 }

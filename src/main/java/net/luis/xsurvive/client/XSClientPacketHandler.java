@@ -3,6 +3,7 @@ package net.luis.xsurvive.client;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
+import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -42,6 +43,13 @@ public class XSClientPacketHandler {
 			if (entity != null) {
 				EntityProvider.getClient(entity).deserializeNetwork(tag);
 			}
+		}
+	}
+	
+	public static void handleLevelCapabilityUpdate(@NotNull CompoundTag tag) {
+		ClientLevel level = Minecraft.getInstance().level;
+		if (level != null) {
+			LevelProvider.getClient(level).deserializeNetwork(tag);
 		}
 	}
 }

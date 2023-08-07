@@ -12,6 +12,7 @@ import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.IGlintColor;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.enchantment.*;
+import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -156,6 +157,7 @@ public class PlayerEventHandler {
 	public static void playerChangedDimension(@NotNull PlayerChangedDimensionEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			PlayerProvider.getServer(player).broadcastChanges();
+			LevelProvider.getServer(player.serverLevel()).broadcastChanges();
 		}
 	}
 	

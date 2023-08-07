@@ -11,6 +11,7 @@ import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.LevelHelper;
+import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -152,6 +153,7 @@ public class EntityEventHandler {
 			}
 		}
 		EntityProvider.get(entity).broadcastChanges();
+		LevelProvider.get(entity.level()).broadcastChanges();
 	}
 	
 	@SubscribeEvent

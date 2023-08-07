@@ -1,13 +1,15 @@
 package net.luis.xsurvive.server.capability;
 
-import com.google.common.collect.Lists;
-import net.luis.xsurvive.world.level.ILevel;
+import com.mojang.datafixers.util.Pair;
+import net.luis.xsurvive.capability.handler.AbstractLevelHandler;
+import net.luis.xsurvive.network.XSNetworkHandler;
+import net.luis.xsurvive.network.packet.UpdateLevelCapabilityPacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 /**
  *
@@ -15,48 +17,49 @@ import java.util.List;
  *
  */
 
-public class ServerLevelHandler implements ILevel {
+public class ServerLevelHandler extends AbstractLevelHandler {
 	
-	private final ServerLevel level;
-	private final List<BlockPos> beaconPositions = Lists.newArrayList();
-	
-	public ServerLevelHandler(ServerLevel level) {
-		this.level = level;
+	public ServerLevelHandler(Level level) {
+		super(level);
 	}
 	
-	@Override
-	public @NotNull ServerLevel getLevel() {
-		return this.level;
-	}
-	
-	@Override
-	public @NotNull List<BlockPos> getBeaconPositions() {
-		return List.copyOf(this.beaconPositions);
-	}
-	
-	@Override
-	public @NotNull List<BlockPos> getBeaconPositions(@NotNull BlockPos pos, int range) {
-		return this.getBeaconPositions(new AABB(pos).inflate(range).setMinY(this.level.getMinBuildHeight()).setMaxY(this.level.getMaxBuildHeight()));
-	}
-	
-	@Override
-	public @NotNull List<BlockPos> getBeaconPositions(@NotNull AABB area) {
-		List<BlockPos> positions = Lists.newArrayList();
-		for (BlockPos position : this.beaconPositions) {
-			if (area.contains(position.getX(), position.getY(), position.getZ())) {
-				positions.add(position);
-			}
-		}
-		return positions;
-	}
-	
-	@Override
 	public void addBeaconPosition(@NotNull BlockPos pos) {
 		this.beaconPositions.add(pos);
+		this.broadcastChanges();
+	}
+	
+	public void removeBeaconPosition(BlockPos pos) {
+		this.beaconPositions.remove(pos);
+		this.broadcastChanges();
+	}
+	
+	public void setBeaconEffects(@NotNull BlockPos pos, MobEffect primaryEffect, MobEffect secondaryEffect) {
+		int primaryId = MobEffect.getIdFromNullable(primaryEffect);
+		int secondaryId = MobEffect.getIdFromNullable(secondaryEffect);
+		if (this.beaconEffects.containsKey(pos)) {
+			Pair<Integer, Integer> pair = this.beaconEffects.get(pos);
+			if (pair.getFirst() == primaryId && pair.getSecond() == secondaryId) {
+				return;
+			}
+		}
+		this.beaconEffects.put(pos, new Pair<>(primaryId, secondaryId));
+		this.broadcastChanges();
+	}
+	
+	public void removeBeaconEffects(BlockPos pos) {
+		this.beaconEffects.remove(pos);
+		this.broadcastChanges();
 	}
 	
 	@Override
-	public void removeBeaconPosition(BlockPos pos) {
-		this.beaconPositions.remove(pos);
+	public void broadcastChanges() {
+		XSNetworkHandler.INSTANCE.sendToPlayersInLevel((ServerLevel) this.getLevel(), new UpdateLevelCapabilityPacket(this.serializeNetwork()));
 	}
+	
+	//region NBT
+	@Override
+	public void deserializeNetwork(@NotNull CompoundTag tag) {
+	
+	}
+	//endregion
 }

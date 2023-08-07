@@ -27,7 +27,7 @@ public enum XSNetworkHandler {
 	
 	INSTANCE();
 	
-	private static final String VERSION = "2";
+	private static final String VERSION = "3";
 	private int id = 0;
 	private SimpleChannel simpleChannel;
 	
@@ -39,6 +39,7 @@ public enum XSNetworkHandler {
 		this.registerPacket(UpdatePlayerCapabilityPacket.class, UpdatePlayerCapabilityPacket::encode, UpdatePlayerCapabilityPacket::new, UpdatePlayerCapabilityPacket::handle);
 		this.registerPacket(UpdateTridentGlintColorPacket.class, UpdateTridentGlintColorPacket::encode, UpdateTridentGlintColorPacket::new, UpdateTridentGlintColorPacket::handle);
 		this.registerPacket(UpdateEntityCapabilityPacket.class, UpdateEntityCapabilityPacket::encode, UpdateEntityCapabilityPacket::new, UpdateEntityCapabilityPacket::handle);
+		this.registerPacket(UpdateLevelCapabilityPacket.class, UpdateLevelCapabilityPacket::encode, UpdateLevelCapabilityPacket::new, UpdateLevelCapabilityPacket::handle);
 	}
 	
 	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {
