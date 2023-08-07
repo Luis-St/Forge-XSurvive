@@ -19,9 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Phantom.class)
 public abstract class PhantomMixin extends FlyingMob {
 	
+	//region Mixin
 	private PhantomMixin(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
 	public void aiStep(@NotNull CallbackInfo callback) {

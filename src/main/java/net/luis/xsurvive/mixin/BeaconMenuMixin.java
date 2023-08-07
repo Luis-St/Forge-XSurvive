@@ -22,7 +22,9 @@ import java.util.Optional;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class BeaconMenuMixin {
 	
+	//region Mixin
 	@Shadow private ContainerLevelAccess access;
+	//endregion
 	
 	@Inject(method = "updateEffects", at = @At("TAIL"))
 	public void updateEffects(Optional<MobEffect> primary, Optional<MobEffect> secondary, CallbackInfo callback) {

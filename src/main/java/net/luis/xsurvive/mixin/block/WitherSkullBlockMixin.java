@@ -37,10 +37,12 @@ import java.util.Objects;
 @Mixin(WitherSkullBlock.class)
 public abstract class WitherSkullBlockMixin {
 	
+	//region Mixin
 	@Shadow
 	private static BlockPattern getOrCreateWitherFull() {
 		return null;
 	}
+	//endregion
 	
 	@Inject(method = "checkSpawn", at = @At("HEAD"), cancellable = true)
 	private static void checkSpawn(@NotNull Level level, BlockPos pos, SkullBlockEntity blockEntity, CallbackInfo callback) {

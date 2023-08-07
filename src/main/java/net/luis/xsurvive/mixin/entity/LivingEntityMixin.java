@@ -20,11 +20,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements ILivingEntity {
 	
+	//region Mixin
 	private CustomAi customAi;
 	
 	public LivingEntityMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	private void init(CallbackInfo callback) {

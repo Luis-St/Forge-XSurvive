@@ -31,6 +31,7 @@ import java.util.Map;
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
+	//region Mixin
 	@Shadow private String itemName;
 	@Shadow private DataSlot cost;
 	@Shadow public int repairItemCountCost;
@@ -43,6 +44,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	public static int calculateIncreasedRepairCost(int cost) {
 		return 0;
 	}
+	//endregion
 	
 	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
 	public void createResult(CallbackInfo callback) {

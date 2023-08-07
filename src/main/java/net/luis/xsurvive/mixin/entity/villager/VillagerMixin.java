@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Villager.class)
 public abstract class VillagerMixin extends AbstractVillager {
 	
+	//region Mixin
 	private VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
 	}
@@ -35,6 +36,7 @@ public abstract class VillagerMixin extends AbstractVillager {
 	
 	@Shadow
 	public abstract void setVillagerData(VillagerData villagerData);
+	//endregion
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
 	public void mobInteract(@NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {

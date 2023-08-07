@@ -28,6 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WitherBoss.class)
 public abstract class WitherBossMixin extends Monster {
 	
+	//region Mixin
 	@Shadow private int[] idleHeadUpdates;
 	@Shadow private int destroyBlocksTick;
 	@Shadow private ServerBossEvent bossEvent;
@@ -41,6 +42,7 @@ public abstract class WitherBossMixin extends Monster {
 	
 	@Shadow
 	public abstract void setInvulnerableTicks(int invulnerableTicks);
+	//endregion
 	
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {

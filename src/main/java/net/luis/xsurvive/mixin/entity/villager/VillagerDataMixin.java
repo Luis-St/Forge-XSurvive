@@ -17,12 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(VillagerData.class)
 public abstract class VillagerDataMixin {
 	
+	//region Mixin
 	@Shadow private static int[] NEXT_LEVEL_XP_THRESHOLDS;
 	
 	@Shadow
 	private static boolean canLevelUp(int level) {
 		return false;
 	}
+	//endregion
 	
 	@Inject(method = "getMaxXpPerLevel", at = @At("HEAD"), cancellable = true)
 	private static void getMaxXpPerLevel(int level, @NotNull CallbackInfoReturnable<Integer> callback) {

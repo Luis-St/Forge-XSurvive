@@ -17,11 +17,13 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ProtectionEnchantment.class)
 public abstract class ProtectionEnchantmentMixin extends Enchantment {
 	
+	//region Mixin
 	@Shadow public ProtectionEnchantment.Type type;
 	
 	private ProtectionEnchantmentMixin(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
+	//endregion
 	
 	@Override
 	public boolean canEnchant(@NotNull ItemStack stack) {

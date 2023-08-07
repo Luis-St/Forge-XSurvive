@@ -20,11 +20,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EyeOfEnder.class)
 public abstract class EyeOfEnderMixin extends Entity {
 	
+	//region Mixin
 	@Shadow private boolean surviveAfterDeath;
 	
 	private EyeOfEnderMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "signalTo", at = @At("TAIL"))
 	public void signalTo(BlockPos pos, CallbackInfo callback) {

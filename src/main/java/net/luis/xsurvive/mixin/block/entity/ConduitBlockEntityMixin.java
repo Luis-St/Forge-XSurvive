@@ -31,6 +31,7 @@ import java.util.*;
 @Mixin(ConduitBlockEntity.class)
 public abstract class ConduitBlockEntityMixin {
 	
+	//region Mixin
 	@Shadow
 	private static LivingEntity findDestroyTarget(Level level, BlockPos pos, UUID uuid) {
 		return null;
@@ -40,6 +41,7 @@ public abstract class ConduitBlockEntityMixin {
 	private static AABB getDestroyRangeAABB(BlockPos pos) {
 		return null;
 	}
+	//endregion
 	
 	@Inject(method = "updateHunting", at = @At("HEAD"), cancellable = true)
 	private static void updateHunting(@NotNull ConduitBlockEntity blockEntity, @NotNull List<BlockPos> shapeBlocks, @NotNull CallbackInfo callback) {

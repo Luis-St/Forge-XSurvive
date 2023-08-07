@@ -29,10 +29,12 @@ public abstract class ServerEntityMixin {
 	
 	private static final Map<ThrownTrident, ItemStack> TRIDENT_STACK_REFERENCES = new WeakHashMap<>();
 	
+	//region Mixin
 	@Shadow private Entity entity;
 	
 	@Shadow
 	protected abstract void broadcastAndSend(Packet<?> packet);
+	//endregion
 	
 	@Inject(method = "sendDirtyEntityData", at = @At("HEAD"))
 	private void sendDirtyEntityData(CallbackInfo callback) {

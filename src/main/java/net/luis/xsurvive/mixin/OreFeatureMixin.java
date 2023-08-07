@@ -28,6 +28,7 @@ import java.util.function.Function;
 @Mixin(OreFeature.class)
 public abstract class OreFeatureMixin extends Feature<OreConfiguration> {
 	
+	//region Mixin
 	private OreFeatureMixin(Codec<OreConfiguration> codec) {
 		super(codec);
 	}
@@ -36,6 +37,7 @@ public abstract class OreFeatureMixin extends Feature<OreConfiguration> {
 	private static boolean shouldSkipAirCheck(RandomSource rng, float chance) {
 		return false;
 	}
+	//endregion
 	
 	@Inject(method = "canPlaceOre", at = @At("HEAD"), cancellable = true)
 	private static void canPlaceOre(BlockState blockState, Function<BlockPos, BlockState> function, RandomSource rng, OreConfiguration config, @NotNull TargetBlockState targetState, MutableBlockPos pos, CallbackInfoReturnable<Boolean> callback) {

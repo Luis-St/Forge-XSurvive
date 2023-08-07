@@ -22,12 +22,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EndCrystal.class)
 public abstract class EndCrystalMixin extends Entity {
 	
+	//region Mixin
 	private EndCrystalMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
 	
 	@Shadow
 	protected abstract void onDestroyedBy(DamageSource source);
+	//endregion
 	
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {

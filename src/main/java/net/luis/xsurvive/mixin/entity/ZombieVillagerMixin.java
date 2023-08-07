@@ -28,12 +28,14 @@ import java.util.UUID;
 @Mixin(ZombieVillager.class)
 public abstract class ZombieVillagerMixin extends Zombie {
 	
+	//region Mixin
 	private ZombieVillagerMixin(EntityType<? extends Zombie> entityType, Level level) {
 		super(entityType, level);
 	}
 	
 	@Shadow
 	protected abstract void startConverting(UUID uuid, int time);
+	//endregion
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
 	public void mobInteract(@NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {

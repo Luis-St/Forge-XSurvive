@@ -31,12 +31,14 @@ import java.util.Optional;
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin extends Item {
 	
+	//region Mixin
 	private BlockItemMixin(Properties properties) {
 		super(properties);
 	}
 	
 	@Shadow
 	public abstract Block getBlock();
+	//endregion
 	
 	@Inject(method = "canFitInsideContainerItems", at = @At("HEAD"), cancellable = true)
 	public void canFitInsideContainerItems(@NotNull CallbackInfoReturnable<Boolean> callback) {

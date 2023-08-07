@@ -34,6 +34,7 @@ import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
 @Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$BeaconPowerButton")
 public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenButton {
 	
+	//region Mixin
 	@Shadow private BeaconScreen this$0;
 	@Shadow private MobEffect effect;
 	
@@ -43,10 +44,11 @@ public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenBu
 	
 	@Shadow
 	protected abstract MutableComponent createEffectDescription(MobEffect effect);
+	//endregion
 	
 	@Inject(at = @At("HEAD"), method = "updateStatus")
 	public void updateStatus(int beaconLevel, CallbackInfo callback) {
-		this.setTooltip(Tooltip.create(this.createEffectDescription(this.effect), (Component) null));
+		this.setTooltip(Tooltip.create(this.createEffectDescription(this.effect), null));
 	}
 	
 	@Inject(at = @At("HEAD"), method = "createEffectDescription", cancellable = true)

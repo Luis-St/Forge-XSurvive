@@ -27,10 +27,12 @@ import java.util.Map.Entry;
 @Mixin(ThornsEnchantment.class)
 public abstract class ThornsEnchantmentMixin {
 	
+	//region Mixin
 	@Shadow
 	public static boolean shouldHit(int level, RandomSource rng) {
 		return false;
 	}
+	//endregion
 	
 	@Inject(method = "getMaxLevel", at = @At("HEAD"), cancellable = true)
 	public void getMaxLevel(@NotNull CallbackInfoReturnable<Integer> callback) {

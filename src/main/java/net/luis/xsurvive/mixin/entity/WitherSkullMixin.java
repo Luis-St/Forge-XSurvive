@@ -22,9 +22,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(WitherSkull.class)
 public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 	
+	//region Mixin
 	private WitherSkullMixin(EntityType<? extends AbstractHurtingProjectile> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "onHitEntity", at = @At("HEAD"), cancellable = true)
 	protected void onHitEntity(EntityHitResult hitResult, CallbackInfo callback) {

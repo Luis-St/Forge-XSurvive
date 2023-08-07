@@ -36,6 +36,7 @@ import java.util.List;
 @Mixin(EnderDragon.class)
 public abstract class EnderDragonMixin extends Mob {
 	
+	//region Mixin
 	@Shadow(remap = false) private final Player unlimitedLastHurtByPlayer = null;
 	@Shadow private EndDragonFight dragonFight;
 	@Shadow public EndCrystal nearestCrystal;
@@ -44,6 +45,7 @@ public abstract class EnderDragonMixin extends Mob {
 	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "tickDeath", at = @At("HEAD"), cancellable = true)
 	protected void tickDeath(CallbackInfo callback) {

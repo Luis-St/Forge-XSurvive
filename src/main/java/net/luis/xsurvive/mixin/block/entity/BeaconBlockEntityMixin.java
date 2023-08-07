@@ -38,6 +38,7 @@ import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
 @Mixin(BeaconBlockEntity.class)
 public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBeaconBlockEntity {
 	
+	//region Mixin
 	@Shadow private int levels;
 	@Shadow private MobEffect primaryPower;
 	@Shadow private MobEffect secondaryPower;
@@ -45,6 +46,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	private BeaconBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
+	//endregion
 	
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
 	private static void applyEffects(@NotNull Level level, BlockPos pos, int beaconLevel, @Nullable MobEffect primary, @Nullable MobEffect secondary, CallbackInfo callback) {
@@ -94,7 +96,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	@Inject(method = "setLevel", at = @At("RETURN"))
 	public void setLevel(Level level, CallbackInfo callback) {
 		if (level instanceof ServerLevel) {
-			ServerLevelHandler handler = LevelProvider.getServer((ServerLevel) level);
+			ServerLevelHandler handler = LevelProvider.getServer(level);
 			handler.addBeaconPosition(this.getBlockPos());
 			handler.setBeaconEffects(this.getBlockPos(), this.primaryPower, this.secondaryPower);
 		}
@@ -103,7 +105,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	@Inject(method = "setRemoved", at = @At("HEAD"))
 	public void setRemoved(CallbackInfo callback) {
 		if (this.getLevel() instanceof ServerLevel level) {
-			ServerLevelHandler handler = LevelProvider.getServer((ServerLevel) level);
+			ServerLevelHandler handler = LevelProvider.getServer(level);
 			handler.removeBeaconPosition(this.getBlockPos());
 			handler.removeBeaconEffects(this.getBlockPos());
 		}

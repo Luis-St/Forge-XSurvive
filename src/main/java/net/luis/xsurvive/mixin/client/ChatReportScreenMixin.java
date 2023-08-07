@@ -9,8 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Objects;
-
 /**
  *
  * @author Luis-St
@@ -20,13 +18,17 @@ import java.util.Objects;
 @Mixin(value = ChatReportScreen.class, priority = Integer.MIN_VALUE)
 public abstract class ChatReportScreenMixin extends Screen {
 	
+	//region Mixin
 	private ChatReportScreenMixin(Component component) {
 		super(component);
 	}
+	//endregion
 	
 	@Inject(method = "sendReport", at = @At("HEAD"))
 	private void sendReport(CallbackInfo callback) {
 		Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
-		Objects.requireNonNull(Objects.requireNonNull(this.minecraft).player).sendSystemMessage(component);
+		if (this.getMinecraft().player != null) {
+			this.getMinecraft().player.sendSystemMessage(component);
+		}
 	}
 }

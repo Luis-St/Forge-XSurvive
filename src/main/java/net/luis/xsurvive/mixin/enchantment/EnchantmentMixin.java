@@ -23,11 +23,13 @@ import java.util.List;
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin implements IEnchantment {
 	
+	//region Mixin
 	@Shadow
 	public abstract int getMaxLevel();
 	
 	@Shadow
 	public abstract String getDescriptionId();
+	//endregion
 	
 	@Inject(method = "isCompatibleWith", at = @At("HEAD"), cancellable = true)
 	public void isCompatibleWith(Enchantment enchantment, CallbackInfoReturnable<Boolean> callback) {

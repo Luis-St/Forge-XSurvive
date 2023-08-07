@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(Creeper.class)
 public abstract class CreeperMixin extends Monster implements ICreeper {
 	
+	//region Mixin
 	@Shadow private static EntityDataAccessor<Boolean> DATA_IS_POWERED;
 	
 	@Shadow private int explosionRadius = 3;
@@ -25,6 +26,7 @@ public abstract class CreeperMixin extends Monster implements ICreeper {
 	private CreeperMixin(EntityType<? extends Monster> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Override
 	public int getExplosionRadius() {

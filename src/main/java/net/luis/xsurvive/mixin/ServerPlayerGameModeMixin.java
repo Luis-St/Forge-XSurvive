@@ -30,8 +30,10 @@ import java.util.Map.Entry;
 @Mixin(ServerPlayerGameMode.class)
 public abstract class ServerPlayerGameModeMixin {
 	
+	//region Mixin
 	@Shadow protected ServerLevel level;
 	@Shadow protected ServerPlayer player;
+	//endregion
 	
 	@Inject(method = "destroyBlock", at = @At(value = "RETURN", ordinal = 5), locals = LocalCapture.CAPTURE_FAILHARD)
 	public void destroyBlock(@NotNull BlockPos pos, CallbackInfoReturnable<Boolean> callback, BlockState state) {

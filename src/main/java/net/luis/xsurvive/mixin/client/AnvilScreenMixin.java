@@ -24,11 +24,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AnvilScreen.class)
 public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	
+	//region Mixin
 	@Shadow private Player player;
 	
 	private AnvilScreenMixin(AnvilMenu anvilMenu, Inventory inventory, Component component, ResourceLocation location) {
 		super(anvilMenu, inventory, component, location);
 	}
+	//endregion
 	
 	@Inject(method = "renderLabels", at = @At("HEAD"), cancellable = true)
 	protected void renderLabels(GuiGraphics graphics, int x, int y, CallbackInfo callback) {

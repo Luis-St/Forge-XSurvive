@@ -30,11 +30,13 @@ import java.util.Optional;
 @Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$BeaconUpgradePowerButton")
 public abstract class BeaconUpgradePowerButtonMixin extends BeaconScreen.BeaconScreenButton {
 	
+	//region Mixin
 	@Shadow private BeaconScreen this$0;
 	
 	private BeaconUpgradePowerButtonMixin(int x, int y) {
 		super(x, y);
 	}
+	//endregion
 	
 	@Inject(at = @At("HEAD"), method = "createEffectDescription", cancellable = true)
 	protected void createEffectDescription(MobEffect effect, CallbackInfoReturnable<MutableComponent> callback) {

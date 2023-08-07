@@ -22,8 +22,10 @@ import java.util.function.Consumer;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 	
+	//region Mixin
 	@Shadow
 	public abstract <T extends LivingEntity> void hurtAndBreak(int damage, T livingEntity, Consumer<T> consumer);
+	//endregion
 	
 	@Inject(method = "inventoryTick", at = @At("TAIL"))
 	public void inventoryTick(Level level, Entity entity, int slot, boolean selected, CallbackInfo callback) {

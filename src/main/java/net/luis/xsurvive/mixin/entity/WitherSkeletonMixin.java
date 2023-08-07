@@ -34,9 +34,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WitherSkeleton.class)
 public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	
+	//region Mixin
 	private WitherSkeletonMixin(EntityType<? extends AbstractSkeleton> entityType, Level level) {
 		super(entityType, level);
 	}
+	//endregion
 	
 	@Inject(method = "populateDefaultEquipmentSlots", at = @At("HEAD"), cancellable = true)
 	protected void populateDefaultEquipmentSlots(@NotNull RandomSource rng, DifficultyInstance instance, CallbackInfo callback) {

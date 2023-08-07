@@ -28,12 +28,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(EntityRenderDispatcher.class)
 public abstract class EntityRenderDispatcherMixin {
 	
+	//region Mixin
 	@Shadow public Camera camera;
 	
 	@Shadow
 	private static void fireVertex(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {
 		
 	}
+	//endregion
 	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
 	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {

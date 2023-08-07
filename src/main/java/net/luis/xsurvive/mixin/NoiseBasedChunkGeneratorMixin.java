@@ -2,10 +2,8 @@ package net.luis.xsurvive.mixin;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.StructureManager;
-import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
@@ -24,11 +22,7 @@ import java.util.concurrent.Executor;
  */
 
 @Mixin(NoiseBasedChunkGenerator.class)
-public abstract class NoiseBasedChunkGeneratorMixin extends ChunkGenerator {
-	
-	private NoiseBasedChunkGeneratorMixin(BiomeSource source) {
-		super(source);
-	}
+public abstract class NoiseBasedChunkGeneratorMixin {
 	
 	@Inject(method = "fillFromNoise", at = @At("HEAD"), cancellable = true)
 	public void fillFromNoise(Executor executor, Blender blender, RandomState rng, StructureManager structureManager, ChunkAccess chunk, CallbackInfoReturnable<CompletableFuture<ChunkAccess>> callback) {

@@ -36,9 +36,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EnderEyeItem.class)
 public abstract class EnderEyeItemMixin extends Item {
 	
+	//region Mixin
 	private EnderEyeItemMixin(Properties properties) {
 		super(properties);
 	}
+	//endregion
 	
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
 	public void use(Level level, @NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callback) {

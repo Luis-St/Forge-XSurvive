@@ -19,9 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(TridentImpalerEnchantment.class)
 public abstract class TridentImpalerEnchantmentMixin extends Enchantment {
 	
+	//region Mixin
 	private TridentImpalerEnchantmentMixin(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots) {
 		super(rarity, category, slots);
 	}
+	//endregion
 	
 	@Override
 	protected boolean checkCompatibility(@NotNull Enchantment enchantment) {

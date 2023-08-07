@@ -3,7 +3,7 @@ package net.luis.xsurvive.mixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.BaseSpawner;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,13 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(SpawnerBlockEntity.class)
-public abstract class SpawnerBlockEntityMixin extends BlockEntity {
+public abstract class SpawnerBlockEntityMixin {
 	
+	//region Mixin
 	@Shadow private BaseSpawner spawner;
-	
-	private SpawnerBlockEntityMixin(BlockEntityType<?> entityType, BlockPos pos, BlockState state) {
-		super(entityType, pos, state);
-	}
+	//endregion
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	public void init(BlockPos pos, BlockState state, CallbackInfo callback) {

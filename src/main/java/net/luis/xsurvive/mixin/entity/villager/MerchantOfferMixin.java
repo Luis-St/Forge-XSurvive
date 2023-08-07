@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MerchantOffer.class)
 public abstract class MerchantOfferMixin {
 	
+	//region Mixin
 	@Shadow private ItemStack baseCostA;
 	@Shadow private int uses;
 	@Shadow private int maxUses;
@@ -30,6 +31,7 @@ public abstract class MerchantOfferMixin {
 	
 	@Shadow
 	public abstract int getMaxUses();
+	//endregion
 	
 	@Inject(method = "getCostA", at = @At("TAIL"), cancellable = true)
 	public void getCostA(@NotNull CallbackInfoReturnable<ItemStack> callback) {
