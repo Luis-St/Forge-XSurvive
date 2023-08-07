@@ -153,7 +153,9 @@ public class EntityEventHandler {
 			}
 		}
 		EntityProvider.get(entity).broadcastChanges();
-		LevelProvider.get(entity.level()).broadcastChanges();
+		if (entity instanceof Player) {
+			LevelProvider.get(entity.level()).broadcastChanges();
+		}
 	}
 	
 	@SubscribeEvent
