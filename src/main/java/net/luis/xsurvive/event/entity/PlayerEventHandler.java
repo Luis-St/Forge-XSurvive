@@ -22,6 +22,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -287,5 +288,12 @@ public class PlayerEventHandler {
 		if (event.getEntity() instanceof ServerPlayer) {
 			EntityProvider.getServer(event.getTarget()).broadcastChanges();
 		}
+	}
+	
+	@SubscribeEvent
+	public static void playerSpawnPhantoms(@NotNull PlayerSpawnPhantomsEvent event) {
+		Player player = event.getEntity();
+		DifficultyInstance instance = player.level().getCurrentDifficultyAt(player.blockPosition());
+		event.setPhantomsToSpawn(2 + player.getRandom().nextInt(instance.getDifficulty().getId() + 2));
 	}
 }

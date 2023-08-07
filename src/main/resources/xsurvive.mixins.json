@@ -45,7 +45,6 @@
 		"EndDragonFightMixin",
 		"NoiseBasedChunkGeneratorMixin",
 		"OreFeatureMixin",
-		"PhantomSpawnerMixin",
 		"RaidMixin",
 		"ServerPlayerGameModeMixin",
 		"SpawnerBlockEntityMixin"
