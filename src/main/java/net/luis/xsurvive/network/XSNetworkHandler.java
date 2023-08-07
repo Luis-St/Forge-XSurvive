@@ -32,7 +32,7 @@ public enum XSNetworkHandler {
 	private SimpleChannel simpleChannel;
 	
 	public void initChannel() {
-		this.simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_chnanel"), () -> VERSION, VERSION::equals, VERSION::equals);
+		this.simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_channel"), () -> VERSION, VERSION::equals, VERSION::equals);
 	}
 	
 	public void registerPackets() {

@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(Phantom.class)
-public class PhantomMixin extends FlyingMob {
+public abstract class PhantomMixin extends FlyingMob {
 	
 	private PhantomMixin(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);

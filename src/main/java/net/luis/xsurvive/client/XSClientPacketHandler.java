@@ -12,8 +12,6 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  *
  * @author Luis-St
@@ -23,17 +21,17 @@ import java.util.Objects;
 public class XSClientPacketHandler {
 	
 	public static void handlePlayerCapabilityUpdate(@NotNull CompoundTag tag) {
-		LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
-		LocalPlayerHandler handler = PlayerProvider.getLocal(player);
-		handler.deserializeNetwork(tag);
+		LocalPlayer player = Minecraft.getInstance().player;
+		if (player != null) {
+			LocalPlayerHandler handler = PlayerProvider.getLocal(player);
+			handler.deserializeNetwork(tag);
+		}
 	}
 	
 	public static void handleTridentGlintColorUpdate(int tridentEntityId, @NotNull ItemStack tridentStack) {
 		ClientLevel level = Minecraft.getInstance().level;
-		if (level != null) {
-			if (level.getEntity(tridentEntityId) instanceof ThrownTrident trident) {
-				trident.tridentItem = tridentStack;
-			}
+		if (level != null && level.getEntity(tridentEntityId) instanceof ThrownTrident trident) {
+			trident.tridentItem = tridentStack;
 		}
 	}
 	

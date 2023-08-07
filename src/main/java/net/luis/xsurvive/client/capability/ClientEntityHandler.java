@@ -17,8 +17,10 @@ public class ClientEntityHandler extends AbstractEntityHandler {
 		super(entity);
 	}
 	
+	//region NBT
 	@Override
 	public @NotNull CompoundTag serializeNetwork() {
 		return new CompoundTag();
 	}
+	//endregion
 }

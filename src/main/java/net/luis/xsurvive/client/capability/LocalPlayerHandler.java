@@ -17,8 +17,10 @@ public class LocalPlayerHandler extends AbstractPlayerHandler {
 		super(player);
 	}
 	
+	//region NBT
 	@Override
 	public @NotNull CompoundTag serializeNetwork() {
 		return new CompoundTag();
 	}
+	//endregion
 }

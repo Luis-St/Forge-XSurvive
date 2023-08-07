@@ -60,6 +60,7 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 		this.changed = false;
 	}
 	
+	//region NBT
 	@Override
 	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();
@@ -79,4 +80,5 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		
 	}
+	//endregion
 }

@@ -34,10 +34,10 @@ public class ClientSetupEventHandler {
 			MenuScreens.register(XSMenuTypes.ENDER_CHEST.get(), EnderChestScreen::new);
 		});
 		replaceGammaOption(minecraft);
-		XSurvive.LOGGER.info("Replaced gamma option");
+		XSurvive.LOGGER.debug("Replaced gamma option");
 		replaceGlintOptions(minecraft);
-		XSurvive.LOGGER.info("Replaced glint options");
-		XSurvive.LOGGER.debug("Reload options");
+		XSurvive.LOGGER.debug("Replaced glint options");
+		XSurvive.LOGGER.info("Reload options");
 		minecraft.options.load();
 		XSurvive.LOGGER.info("Gamma is now {}", minecraft.options.gamma.get());
 		XSurvive.LOGGER.info("Glint speed is now {}", minecraft.options.glintSpeed.get());

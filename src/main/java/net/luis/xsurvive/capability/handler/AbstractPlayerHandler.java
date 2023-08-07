@@ -29,7 +29,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	protected int endAspectCooldown;
 	protected int startEndAspectCooldown;
 	
-	public AbstractPlayerHandler(Player player) {
+	protected AbstractPlayerHandler(Player player) {
 		this.player = player;
 	}
 	
@@ -55,6 +55,7 @@ public class AbstractPlayerHandler implements IPlayer {
 			this.endAspectCooldown--;
 		} else {
 			this.endAspectCooldown = 0;
+			this.startEndAspectCooldown = 0;
 		}
 	}
 	
@@ -93,6 +94,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	//region Tag serialization
+	//region NBT
 	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);

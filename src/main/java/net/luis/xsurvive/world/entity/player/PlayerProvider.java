@@ -10,6 +10,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -29,6 +30,10 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	
 	public static @NotNull IPlayer get(@NotNull Player player) {
 		return player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
+	}
+	
+	public static @NotNull LazyOptional<@Nullable IPlayer> getSafe(@NotNull Player player) {
+		return player.getCapability(XSCapabilities.PLAYER, null);
 	}
 	
 	public static @NotNull LocalPlayerHandler getLocal(@NotNull Player player) {

@@ -29,6 +29,7 @@ public class ServerVillagerHandler implements IVillager {
 		this.resetCount++;
 	}
 	
+	//region NBT
 	@Override
 	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = new CompoundTag();
@@ -40,4 +41,5 @@ public class ServerVillagerHandler implements IVillager {
 	public void deserializeDisk(@NotNull CompoundTag tag) {
 		this.resetCount = tag.getInt("reset_count");
 	}
+	//endregion
 }

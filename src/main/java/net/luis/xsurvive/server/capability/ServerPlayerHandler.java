@@ -82,7 +82,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		this.changed = false;
 	}
 	
-	//region Tag serialization
+	//region NBT
 	@Override
 	public @NotNull CompoundTag serializeDisk() {
 		CompoundTag tag = super.serializeDisk();

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public interface INetworkCapability extends ICapability {
+public interface INetworkCapability {
 	
 	default void setChanged() {
 		

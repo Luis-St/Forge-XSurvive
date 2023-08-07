@@ -18,7 +18,7 @@ public class AbstractEntityHandler implements IEntity {
 	private int tick;
 	protected EntityFireType fireType = EntityFireType.NONE;
 	
-	public AbstractEntityHandler(Entity entity) {
+	protected AbstractEntityHandler(Entity entity) {
 		this.entity = entity;
 	}
 	
@@ -37,6 +37,7 @@ public class AbstractEntityHandler implements IEntity {
 		return this.fireType;
 	}
 	
+	//region NBT
 	private @NotNull CompoundTag serialize() {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
@@ -68,4 +69,5 @@ public class AbstractEntityHandler implements IEntity {
 	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 	}
+	//endregion
 }

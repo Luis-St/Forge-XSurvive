@@ -30,7 +30,7 @@ import java.util.Objects;
  */
 
 @Mixin(PhantomSpawner.class)
-public class PhantomSpawnerMixin {
+public abstract class PhantomSpawnerMixin {
 	
 	@Shadow private int nextTick;
 	

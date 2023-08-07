@@ -66,7 +66,7 @@ public class AttachCapabilitiesEventHandler {
 	public static class Client {
 		
 		@SubscribeEvent
-		public static void AttachCapabilities(@NotNull AttachCapabilitiesEvent<Entity> event) {
+		public static void attachEntityCapabilities(@NotNull AttachCapabilitiesEvent<Entity> event) {
 			Entity entity = event.getObject();
 			if (entity instanceof LocalPlayer player) {
 				event.addCapability(new ResourceLocation(XSurvive.MOD_ID, "local_player_capability"), new PlayerProvider(new LocalPlayerHandler(player)));
