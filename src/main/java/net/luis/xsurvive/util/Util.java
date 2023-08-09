@@ -2,11 +2,15 @@ package net.luis.xsurvive.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -35,5 +39,39 @@ public class Util {
 			mapped.put(function.apply(entry.getKey()), entry.getValue());
 		}
 		return mapped;
+	}
+	
+	public static @NotNull List<Vec3> circlePoints(double radius, @NotNull Vec3 center, int numOfPoints) {
+		List<Vec3> points = Lists.newArrayList();
+		double slice = 2 * Math.PI / numOfPoints;
+		double offset = Math.random() * (2 * Math.PI);
+		for (int i = 0; i < numOfPoints; i++) {
+			double angle = slice * i + offset;
+			double newX = center.x() + radius * Math.cos(angle);
+			double newZ = center.z() + radius * Math.sin(angle);
+			points.add(new Vec3(newX, 0.00, newZ));
+		}
+		return points;
+	}
+	
+	public static @NotNull Vec3 offsetPointCircular(double radius, @NotNull Vec3 center) {
+		Random random = new Random();
+		double angle = Math.toRadians(random.nextFloat() * 360);
+		double newX = center.x() + radius * Math.cos(angle);
+		double newZ = center.z() + radius * Math.sin(angle);
+		return new Vec3(newX, 0.0, newZ);
+	}
+	
+	public static @NotNull List<Integer> split(int value, int parts) {
+		int partValue = value / parts;
+		int remaining = value % parts;
+		return IntStream.range(0, parts).map(i -> i < remaining ? partValue + 1 : partValue).boxed().collect(Collectors.toList());
+	}
+	
+	public static int getSafeOrElseLast(int @NotNull [] array, int index, @NotNull int fallback) {
+		if (array.length == 0) {
+			return fallback;
+		}
+		return array.length > index && index >= 0 ? array[index] : array[array.length - 1];
 	}
 }

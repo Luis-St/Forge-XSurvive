@@ -25,10 +25,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.Potion;
@@ -238,6 +240,7 @@ public class PlayerEventHandler {
 		Level level = event.getLevel();
 		BlockState state = level.getBlockState(pos);
 		if (event.getEntity() instanceof ServerPlayer player) {
+			ServerLevel serverLevel = player.serverLevel();
 			PlayerProvider.getServer(player).setContainerPos(pos);
 			if (state.getBlock() == Blocks.ENDER_CHEST) {
 				if (!player.isShiftKeyDown()) {
@@ -251,6 +254,11 @@ public class PlayerEventHandler {
 					level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
 				} else {
 					event.setCanceled(true);
+				}
+			} else if (state.getBlock() == Blocks.BELL) {
+				Raid raid = serverLevel.getRaidAt(pos);
+				if (raid != null) {
+					raid.getAllRaiders().forEach(raider -> raider.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 1)));
 				}
 			}
 		}

@@ -1,15 +1,30 @@
 package net.luis.xsurvive.mixin;
 
+import com.google.common.collect.Maps;
+import net.luis.xsurvive.world.level.LevelHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.raid.Raid;
+import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.*;
+
+import static net.luis.xsurvive.util.Util.*;
 
 /**
  *
@@ -18,42 +33,207 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(Raid.class)
+@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused"})
 public abstract class RaidMixin {
 	
+	// @formatter:off
 	private static final int[] VINDICATOR_SPAWNS = new int[] {
-		1, 3, 8, 12, 15, 20, 24, 29
+		// 0, 0, 2, 0, 1,  4,  2,  5 -> Max: 64
+		   0, 3, 5, 6, 9, 11, 13, 16
+	};
+	private static final int[] EVOKER_SPAWNS = new int[] {
+		// 0, 0, 0, 0, 0, 1, 1, 2 -> Max: 12
+		   0, 0, 1, 1, 2, 2, 3, 3
 	};
 	private static final int[] PILLAGER_SPAWNS = new int[] {
-		3, 5, 11, 15, 19, 24, 30, 34
+		// 0, 4, 3,  3,  4,  4,  4,  2 -> Max: 104
+		   0, 6, 9, 13, 17, 21, 24, 26
 	};
 	private static final int[] WITCH_SPAWNS = new int[] {
-		1, 1, 2, 3, 4, 5, 6, 7
+		// 0, 0, 0, 0, 3, 0, 0, 1 -> Max: 25
+		   0, 1, 1, 2, 3, 3, 4, 5
 	};
+	private static final int[] RAVAGER_SPAWNS = new int[] {
+		// 0, 0, 0, 1, 0, 1, 0, 2 -> Max: 12
+		   0, 0, 1, 1, 1, 2, 2, 3
+	};
+	// @formatter:on
 	
+	//region Mixin
+	@Shadow private static Component RAID_NAME_COMPONENT;
+	
+	@Shadow private BlockPos center;
 	@Shadow private ServerLevel level;
+	@Shadow private float totalHealth;
+	@Shadow private int groupsSpawned;
+	@Shadow
+	@Mutable
+	private ServerBossEvent raidEvent;
+	@Shadow private RandomSource random;
 	@Shadow private int numGroups;
+	@Shadow private Optional<BlockPos> waveSpawnPos;
+	
+	@Shadow
+	protected abstract boolean shouldSpawnBonusGroup();
+	
+	@Shadow
+	public abstract void joinRaid(int wave, Raider raider, @Nullable BlockPos pos, boolean p_37717_);
+	
+	@Shadow
+	public abstract void updateBossbar();
+	
+	@Shadow
+	public abstract int getTotalRaidersAlive();
+	
+	@Shadow
+	protected abstract void setDirty();
+	
+	@Shadow
+	protected abstract int getDefaultNumSpawns(Raid.RaiderType raiderType, int wave, boolean bonusWave);
+	
+	@Shadow
+	protected abstract int getPotentialBonusSpawns(Raid.RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave);
+	
+	@Shadow
+	public abstract void setLeader(int wave, Raider raider);
+	
+	@Shadow
+	public abstract int getNumGroups(Difficulty difficulty);
+	//endregion
+	
+	private int totalRaiders;
+	
+	@Inject(method = "<init>*", at = @At("RETURN"))
+	public void init(int id, ServerLevel level, BlockPos pos, CallbackInfo callback) {
+		this.raidEvent = new ServerBossEvent(RAID_NAME_COMPONENT, BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
+	}
+	
+	@Inject(at = @At("HEAD"), method = "spawnGroup", cancellable = true)
+	private void spawnGroup(BlockPos pos, CallbackInfo callback) {
+		this.totalHealth = 0.0F;
+		this.totalRaiders = 0;
+		int waveGroupCount = 5;
+		int wave = this.groupsSpawned + 1;
+		boolean bonusWave = this.shouldSpawnBonusGroup();
+		Map<Raid.RaiderType, List<Integer>> spawnGroups = Maps.newEnumMap(Raid.RaiderType.class);
+		for (Raid.RaiderType raiderType : Raid.RaiderType.values()) {
+			int defaultSpawns = this.getDefaultNumSpawns(raiderType, wave, bonusWave);
+			int potentialBonusSpawns = this.getPotentialBonusSpawns(raiderType, this.random, wave, LevelHelper.getCurrentDifficultyAt(this.level, pos), bonusWave);
+			this.totalRaiders += defaultSpawns + potentialBonusSpawns;
+			List<Integer> split = split(defaultSpawns + potentialBonusSpawns, waveGroupCount);
+			spawnGroups.put(raiderType, split);
+		}
+		boolean hasLeader = false;
+		List<Vec3> spawnPositions = circlePoints(75.0, this.center.getCenter(), waveGroupCount).stream().map(vec -> offsetPointCircular(15.0, vec)).map(vec -> {
+			int y = this.level.getHeight(Heightmap.Types.WORLD_SURFACE, (int) vec.x(), (int) vec.z());
+			return new Vec3(vec.x(), y + 1, vec.z());
+		}).toList();
+		for (int i = 0; i < waveGroupCount; i++) {
+			for (Map.Entry<Raid.RaiderType, List<Integer>> entry : spawnGroups.entrySet()) {
+				List<Integer> spawns = entry.getValue();
+				if (spawns.size() <= i) {
+					continue;
+				}
+				hasLeader |= this.spawnRaiderType(wave, BlockPos.containing(spawnPositions.get(i)), spawns.get(i), entry.getKey(), hasLeader);
+			}
+		}
+		this.waveSpawnPos = Optional.empty();
+		++this.groupsSpawned;
+		this.updateBossbar();
+		this.setDirty();
+		callback.cancel();
+	}
+	
+	private boolean spawnRaiderType(int wave, BlockPos pos, int spawnCount, Raid.@NotNull RaiderType raiderType, boolean hasLeader) {
+		int riders = 0;
+		for (int i = 0; i < spawnCount; i++) {
+			Raider raider = raiderType.entityType.create(this.level);
+			if (raider == null) {
+				break;
+			}
+			if (!hasLeader && raider.canBeLeader()) {
+				raider.setPatrolLeader(true);
+				this.setLeader(wave, raider);
+				hasLeader = true;
+			}
+			this.joinRaid(wave, raider, pos, false);
+			if (raiderType.entityType == EntityType.RAVAGER) {
+				Raider ravagerRider = this.getRavagerRider(wave, riders);
+				if (ravagerRider != null) {
+					this.joinRaid(wave, ravagerRider, pos, false);
+					ravagerRider.moveTo(pos, 0.0F, 0.0F);
+					ravagerRider.startRiding(raider);
+					++riders;
+				}
+			}
+		}
+		return hasLeader;
+	}
+	
+	private @Nullable Raider getRavagerRider(int wave, int riders) {
+		return switch (this.level.getDifficulty()) {
+			case EASY -> EntityType.PILLAGER.create(this.level);
+			case NORMAL -> {
+				if (wave > this.getDefaultNumGroups(Difficulty.NORMAL)) {
+					yield this.random.nextInt(5) == 0 ? EntityType.VINDICATOR.create(this.level) : EntityType.PILLAGER.create(this.level);
+				}
+				yield EntityType.PILLAGER.create(this.level);
+			}
+			case HARD -> {
+				if (wave > this.getDefaultNumGroups(Difficulty.HARD) && 2 > riders) {
+					yield EntityType.EVOKER.create(this.level);
+				}
+				yield this.random.nextInt(3) == 0 ? EntityType.VINDICATOR.create(this.level) : EntityType.PILLAGER.create(this.level);
+			}
+			default -> null;
+		};
+	}
+	
+	@Inject(method = "updateBossbar", at = @At("HEAD"), cancellable = true)
+	public void updateBossbar(@NotNull CallbackInfo callback) {
+		this.raidEvent.setProgress(Mth.clamp(this.getTotalRaidersAlive() / (float) this.totalRaiders, 0.0F, 1.0F));
+		callback.cancel();
+	}
+	
+	@Inject(method = "getNumGroups", at = @At("HEAD"), cancellable = true)
+	public void getNumGroups(@NotNull Difficulty difficulty, @NotNull CallbackInfoReturnable<Integer> callback) {
+		callback.setReturnValue(Math.max(6, this.getDefaultNumGroups(difficulty) * difficulty.getId()));
+		callback.cancel();
+	}
+	
+	private int getDefaultNumGroups(@NotNull Difficulty difficulty) {
+		return difficulty.getId() * 2 + 1;
+	}
 	
 	@Inject(method = "getDefaultNumSpawns", at = @At("HEAD"), cancellable = true)
 	private void getDefaultNumSpawns(Raid.@NotNull RaiderType raiderType, int wave, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
-		RandomSource rng = RandomSource.create();
-		int spawns = bonusWave ? raiderType.spawnsPerWaveBeforeBonus[this.numGroups] : raiderType.spawnsPerWaveBeforeBonus[wave];
-		switch (raiderType) {
-			case VINDICATOR -> callback.setReturnValue(VINDICATOR_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
-			case EVOKER, RAVAGER -> callback.setReturnValue(wave + rng.nextInt(Math.max(1, wave)));
-			case PILLAGER -> callback.setReturnValue(PILLAGER_SPAWNS[bonusWave ? this.numGroups : wave] + rng.nextInt(Math.max(1, wave)));
-			case WITCH -> callback.setReturnValue(WITCH_SPAWNS[bonusWave ? this.numGroups : wave]);
-			default -> callback.setReturnValue(spawns + rng.nextInt(Math.max(1, spawns / 2)));
+		int waveSpawns = this.getNumSpawns(raiderType, wave);
+		for (int j = 0; j < (wave / 8); j++) {
+			waveSpawns += this.getNumSpawns(raiderType, 7);
 		}
+		callback.setReturnValue(waveSpawns);
+		callback.cancel();
+	}
+	
+	private int getNumSpawns(Raid.@NotNull RaiderType raiderType, int wave) {
+		int index = wave > 7 ? (wave % 8) + 1 : wave;
+		return switch (raiderType) {
+			case VINDICATOR -> VINDICATOR_SPAWNS[index];
+			case EVOKER -> EVOKER_SPAWNS[index];
+			case PILLAGER -> PILLAGER_SPAWNS[index];
+			case WITCH -> WITCH_SPAWNS[index];
+			case RAVAGER -> RAVAGER_SPAWNS[index];
+			default -> getSafeOrElseLast(raiderType.spawnsPerWaveBeforeBonus, index, 10) * 2;
+		};
 	}
 	
 	@Inject(method = "getPotentialBonusSpawns", at = @At("HEAD"), cancellable = true)
 	private void getPotentialBonusSpawns(Raid.@NotNull RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave, @NotNull CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(0);
-		switch (raiderType) {
-			case VINDICATOR, EVOKER -> callback.setReturnValue(0);
-			case PILLAGER, WITCH -> callback.setReturnValue(1);
-			case RAVAGER -> callback.setReturnValue(rng.nextInt(3) == 0 && bonusWave ? 1 : 0);
-			default -> callback.setReturnValue(rng.nextInt(wave));
-		}
+		callback.setReturnValue(switch (raiderType) {
+			case VINDICATOR, PILLAGER -> rng.nextInt(Math.max(1, this.getNumSpawns(raiderType, wave) / 2));
+			case EVOKER, RAVAGER, WITCH -> rng.nextInt((wave / 8) + 1) + rng.nextInt((wave / 8) + 1);
+			default -> rng.nextInt((wave / 8) + 1);
+		});
+		callback.cancel();
 	}
 }

@@ -32,7 +32,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 		return player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static @NotNull LazyOptional<@Nullable IPlayer> getSafe(@NotNull Player player) {
+	public static @NotNull LazyOptional<IPlayer> getSafe(@NotNull Player player) {
 		return player.getCapability(XSCapabilities.PLAYER, null);
 	}
 	
