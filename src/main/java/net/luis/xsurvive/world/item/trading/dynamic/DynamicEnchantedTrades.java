@@ -46,7 +46,7 @@ public class DynamicEnchantedTrades {
 			if (enchantment instanceof IEnchantment) {
 				return new MerchantOffer(new ItemStack(Items.EMERALD, 64), stack, EnchantedGoldenBookItem.createForEnchantment(enchantment), 1, getVillagerXp(villagerLevel), 0.02F);
 			} else {
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				return randomEnchantedBook(villagerLevel, Lists.newArrayList(Rarity.COMMON, Rarity.RARE)).getOffer(villager, rng);
 			}
 		};

@@ -28,15 +28,11 @@ public class LevelProvider implements ICapabilityProvider {
 		return level.getCapability(XSCapabilities.LEVEL, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static @NotNull LazyOptional<ILevel> getSafe(@NotNull Level level) {
-		return level.getCapability(XSCapabilities.LEVEL, null);
-	}
-	
 	public static @NotNull ClientLevelHandler getClient(@NotNull Level level) {
 		ILevel capability = level.getCapability(XSCapabilities.LEVEL, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof ClientLevelHandler handler) {
 			return handler;
-		} else if (capability instanceof ServerLevelHandler handler) {
+		} else if (capability instanceof ServerLevelHandler) {
 			throw new RuntimeException("Fail to get LocalPlayerHandler from server");
 		}
 		throw new IllegalStateException("Unknown network side");
@@ -44,7 +40,7 @@ public class LevelProvider implements ICapabilityProvider {
 	
 	public static @NotNull ServerLevelHandler getServer(@NotNull Level level) {
 		ILevel capability = level.getCapability(XSCapabilities.LEVEL, null).orElseThrow(NullPointerException::new);
-		if (capability instanceof ClientLevelHandler handler) {
+		if (capability instanceof ClientLevelHandler) {
 			throw new RuntimeException("Fail to get ServerPlayerHandler from client");
 		} else if (capability instanceof ServerLevelHandler handler) {
 			return handler;

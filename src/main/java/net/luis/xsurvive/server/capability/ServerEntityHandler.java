@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 public class ServerEntityHandler extends AbstractEntityHandler {
 	
 	private int lastSync;
-	private boolean changed = false;
+	private boolean changed;
 	
 	public ServerEntityHandler(Entity entity) {
 		super(entity);

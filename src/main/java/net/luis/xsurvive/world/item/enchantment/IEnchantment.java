@@ -40,10 +40,10 @@ public interface IEnchantment {
 					return new EnchantedItem(result, 10);
 				}
 			}
-			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			return EnchantedItem.EMPTY;
 		}
-		XSurvive.LOGGER.error("Can not merge {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
+		XSurvive.LOGGER.error("Can not merge '{}' with '{}', since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
 		return EnchantedItem.EMPTY;
 	}
 	
@@ -55,15 +55,15 @@ public interface IEnchantment {
 				int level = result.getEnchantmentLevel(enchantment);
 				if (ench.isUpgradeEnchantment() && ench.getMaxUpgradeLevel() > level) {
 					XSEnchantmentHelper.increaseEnchantment(enchantment, result, false);
-					return new EnchantedItem(result, ench.getUpgradeCost(level));
+					return new EnchantedItem(result, ench.getUpgradeCost());
 				} else {
 					return merge(left, right);
 				}
 			}
-			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			return EnchantedItem.EMPTY;
 		}
-		XSurvive.LOGGER.error("Can not upgrade {} with {}, since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
+		XSurvive.LOGGER.error("Can not upgrade '{}' with '{}', since the right Item must be a instance of EnchantedGoldenBookItem", ForgeRegistries.ITEMS.getKey(left.getItem()), ForgeRegistries.ITEMS.getKey(left.getItem()));
 		return EnchantedItem.EMPTY;
 	}
 	
@@ -108,11 +108,7 @@ public interface IEnchantment {
 		return this.isAllowedOnGoldenBooks() && this.getMinUpgradeLevel() > 0 && this.getMaxUpgradeLevel() > 0;
 	}
 	
-	default boolean isUpgradeLevel(int level) {
-		return this.isUpgradeEnchantment() && this.getMaxGoldenBookLevel() >= level && level >= this.getMinGoldenBookLevel();
-	}
-	
-	default int getUpgradeCost(int level) {
+	default int getUpgradeCost() {
 		return 30;
 	}
 	

@@ -40,7 +40,7 @@ public class CustomElderGuardianAi extends AbstractCustomAi<ElderGuardian> {
 				for (int y = Mth.floor(boundingBox.minY); y <= Mth.floor(boundingBox.maxY); ++y) {
 					for (int z = Mth.floor(boundingBox.minZ); z <= Mth.floor(boundingBox.maxZ); ++z) {
 						BlockPos pos = new BlockPos(x, y, z);
-						BlockState state = level.getBlockState(pos);
+						BlockState state = this.level.getBlockState(pos);
 						if (!state.isAir() && !state.is(Blocks.WATER) && !state.is(XSBlockTags.OCEAN_MONUMENT_BLOCKS)) {
 							this.level.destroyBlock(pos, true, this.entity);
 							this.level.setBlock(pos, Blocks.WATER.defaultBlockState(), Block.UPDATE_CLIENTS);

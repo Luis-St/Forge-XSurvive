@@ -64,7 +64,7 @@ public abstract class WitherBossMixin extends Monster {
 						for (int i = 0; i < this.idleHeadUpdates.length; ++i) {
 							this.idleHeadUpdates[i] += 3;
 						}
-						callback.setReturnValue(super.hurt(source, amount));
+						callback.setReturnValue(hurt(source, amount));
 					}
 				}
 			}

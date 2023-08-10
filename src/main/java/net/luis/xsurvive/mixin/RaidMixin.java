@@ -33,27 +33,27 @@ import static net.luis.xsurvive.util.Util.*;
  */
 
 @Mixin(Raid.class)
-@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused"})
+@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused", "BooleanMethodNameMustStartWithQuestion", "NonConstantFieldWithUpperCaseName"})
 public abstract class RaidMixin {
 	
 	// @formatter:off
-	private static final int[] VINDICATOR_SPAWNS = new int[] {
+	private static final int[] VINDICATOR_SPAWNS = {
 		// 0, 0, 2, 0, 1,  4,  2,  5 -> Max: 64
 		   0, 3, 5, 6, 9, 11, 13, 16
 	};
-	private static final int[] EVOKER_SPAWNS = new int[] {
+	private static final int[] EVOKER_SPAWNS = {
 		// 0, 0, 0, 0, 0, 1, 1, 2 -> Max: 12
 		   0, 0, 1, 1, 2, 2, 3, 3
 	};
-	private static final int[] PILLAGER_SPAWNS = new int[] {
+	private static final int[] PILLAGER_SPAWNS = {
 		// 0, 4, 3,  3,  4,  4,  4,  2 -> Max: 104
 		   0, 6, 9, 13, 17, 21, 24, 26
 	};
-	private static final int[] WITCH_SPAWNS = new int[] {
+	private static final int[] WITCH_SPAWNS = {
 		// 0, 0, 0, 0, 3, 0, 0, 1 -> Max: 25
 		   0, 1, 1, 2, 3, 3, 4, 5
 	};
-	private static final int[] RAVAGER_SPAWNS = new int[] {
+	private static final int[] RAVAGER_SPAWNS = {
 		// 0, 0, 0, 1, 0, 1, 0, 2 -> Max: 12
 		   0, 0, 1, 1, 1, 2, 2, 3
 	};
@@ -77,7 +77,7 @@ public abstract class RaidMixin {
 	protected abstract boolean shouldSpawnBonusGroup();
 	
 	@Shadow
-	public abstract void joinRaid(int wave, Raider raider, @Nullable BlockPos pos, boolean p_37717_);
+	public abstract void joinRaid(int wave, Raider raider, @Nullable BlockPos pos, boolean hasLeader);
 	
 	@Shadow
 	public abstract void updateBossbar();

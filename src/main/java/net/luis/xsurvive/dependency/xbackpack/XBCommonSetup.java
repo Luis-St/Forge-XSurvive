@@ -12,7 +12,7 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
  *
  */
 
-public class XBackpackCommonSetup {
+public class XBCommonSetup {
 	
 	public static void commonSetup() {
 		BackpackConstants.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.SMELTING.get());

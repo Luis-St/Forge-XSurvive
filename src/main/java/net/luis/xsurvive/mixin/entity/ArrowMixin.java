@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(Arrow.class)
 public abstract class ArrowMixin implements IArrow {
 	
-	private int explosionLevel = 0;
+	private int explosionLevel;
 	
 	@Override
 	public int getExplosionLevel() {

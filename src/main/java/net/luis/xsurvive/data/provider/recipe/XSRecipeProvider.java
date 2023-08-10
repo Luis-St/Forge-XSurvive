@@ -24,6 +24,7 @@ import java.util.function.Consumer;
  *
  */
 
+@SuppressWarnings("SameParameterValue")
 public class XSRecipeProvider extends RecipeProvider {
 	
 	public XSRecipeProvider(@NotNull DataGenerator generator) {
@@ -100,11 +101,11 @@ public class XSRecipeProvider extends RecipeProvider {
 	}
 	
 	private void smeltingFurnaceRecipe(Consumer<FinishedRecipe> consumer, RecipeCategory category, Item input, Item result) {
-		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F, 100), getGroup(input), input, result).save(consumer, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
+		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F), getGroup(input), input, result).save(consumer, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
 	}
 	
 	private void smeltingFurnaceRecipe(Consumer<FinishedRecipe> consumer, RecipeCategory category, TagKey<Item> input, Item result) {
-		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F, 100), input.location().getPath(), Ingredient.of(input), result)
+		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F), input.location().getPath(), Ingredient.of(input), result)
 			.save(consumer, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
 	}
 	

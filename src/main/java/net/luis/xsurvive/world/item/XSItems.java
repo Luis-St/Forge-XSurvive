@@ -14,6 +14,7 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSItems {
 	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, XSurvive.MOD_ID);

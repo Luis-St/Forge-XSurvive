@@ -1,7 +1,5 @@
 package net.luis.xsurvive.util;
 
-import java.util.Objects;
-
 /**
  *
  * @author Luis-St
@@ -42,11 +40,6 @@ public class MinMax {
 		
 		if (this.min != minMax.min) return false;
 		return this.max == minMax.max;
-	}
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.min, this.max);
 	}
 	
 	@Override

@@ -17,6 +17,7 @@ import java.util.function.Supplier;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class UpdateTridentGlintColorPacket implements NetworkPacket {
 	
 	private final int tridentEntityId;

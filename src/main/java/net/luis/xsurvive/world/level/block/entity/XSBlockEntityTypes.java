@@ -11,6 +11,7 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings({"CodeBlock2Expr", "DataFlowIssue"})
 public class XSBlockEntityTypes {
 	
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, XSurvive.MOD_ID);

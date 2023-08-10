@@ -39,10 +39,10 @@ public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 	@Override
 	public V setValue(V value) {
 		V oldValue = this.value;
-		if (!this.muted) {
-			this.value = value;
-		} else {
+		if (this.muted) {
 			XSurvive.LOGGER.info("Unable to set value of entry to {}, since the entry is muted", value);
+		} else {
+			this.value = value;
 		}
 		return oldValue;
 	}

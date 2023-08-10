@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
  */
 
 @Mixin(ElytraLayer.class)
+@SuppressWarnings("unused")
 public abstract class ElytraLayerMixin<T extends LivingEntity, M extends EntityModel<T>> {
 	
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"), locals = LocalCapture.CAPTURE_FAILHARD)

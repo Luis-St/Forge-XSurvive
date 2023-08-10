@@ -51,11 +51,11 @@ public abstract class BeaconUpgradePowerButtonMixin extends BeaconScreen.BeaconS
 					if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) {
 						if (this.this$0.primary == MobEffects.JUMP) {
 							this.visible = true;
-							suffix = getLevel(beacon.getBeaconLevel());
+							suffix = this.getLevel(beacon.getBeaconLevel());
 						} else {
 							this.visible = false;
 						}
-					} else if (beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK) || IBeaconBlockEntity.isEffectStacked(player.getOnPos(), level, containerPos, beaconLevel, beaconLevel * 20 + 20, effect)) {
+					} else if (beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK) || IBeaconBlockEntity.isEffectStacked(player.getOnPos(), level, containerPos, beaconLevel * 20 + 20, effect)) {
 						this.visible = false;
 					}
 				}

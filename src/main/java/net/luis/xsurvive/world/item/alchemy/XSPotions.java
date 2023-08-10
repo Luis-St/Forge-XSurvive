@@ -13,6 +13,7 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSPotions {
 	
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, XSurvive.MOD_ID);

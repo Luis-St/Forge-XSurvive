@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public record IfElseBiomeModifier(HolderSet<Biome> levelBiomes, HolderSet<Biome> conditionBiomes, HolderSet<PlacedFeature> ifFeatures, HolderSet<PlacedFeature> elseFeatures) implements BiomeModifier {
 	
 	public static final Codec<IfElseBiomeModifier> CODEC = RecordCodecBuilder.create((instance) -> {

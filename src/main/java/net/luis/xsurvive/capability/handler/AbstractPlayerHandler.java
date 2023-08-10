@@ -32,7 +32,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	protected int startFrostTime;
 	protected int endAspectCooldown;
 	protected int startEndAspectCooldown;
-	protected BlockPos containerPos;
+	@Nullable protected BlockPos containerPos;
 	
 	protected AbstractPlayerHandler(Player player) {
 		this.player = player;
@@ -71,8 +71,8 @@ public class AbstractPlayerHandler implements IPlayer {
 	
 	@Override
 	public double getFrostPercent() {
-		double showStartTime = ((double) this.startFrostTime - (double) this.frostTime) / 20.0;
-		double showEndTime = ((double) this.frostTime) / 20.0;
+		double showStartTime = (this.startFrostTime - (double) this.frostTime) / 20.0;
+		double showEndTime = this.frostTime / 20.0;
 		if (showStartTime > 5.0 && showEndTime > 5.0) {
 			return 1.0F;
 		} else if (5.0 >= showStartTime) {
@@ -90,7 +90,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	
 	@Override
 	public double getEndAspectPercent() {
-		return Mth.clamp((double) this.endAspectCooldown / (double) this.startEndAspectCooldown, 0.0, 1.0);
+		return Mth.clamp(this.endAspectCooldown / (double) this.startEndAspectCooldown, 0.0, 1.0);
 	}
 	
 	@Override

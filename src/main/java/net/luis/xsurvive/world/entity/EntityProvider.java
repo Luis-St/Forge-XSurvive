@@ -39,7 +39,7 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 		IEntity capability = entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof ClientEntityHandler handler) {
 			return handler;
-		} else if (capability instanceof ServerEntityHandler handler) {
+		} else if (capability instanceof ServerEntityHandler) {
 			throw new RuntimeException("Fail to get ClientEntityHandler from server");
 		}
 		throw new IllegalStateException("Unknown network side");
@@ -47,7 +47,7 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	
 	public static @NotNull ServerEntityHandler getServer(@NotNull Entity entity) {
 		IEntity capability = entity.getCapability(XSCapabilities.ENTITY, null).orElseThrow(NullPointerException::new);
-		if (capability instanceof ClientEntityHandler handler) {
+		if (capability instanceof ClientEntityHandler) {
 			throw new RuntimeException("Fail to get ServerEntityHandler from client");
 		} else if (capability instanceof ServerEntityHandler handler) {
 			return handler;

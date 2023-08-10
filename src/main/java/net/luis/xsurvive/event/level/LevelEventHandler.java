@@ -77,7 +77,7 @@ public class LevelEventHandler {
 				BlockPos spawnPos = getSpawnPos(level, pos);
 				if (spawnPos != null) {
 					event.getSettings().setSpawn(spawnPos, 0.0F);
-					XSurvive.LOGGER.info("Set world spawn to {}", spawnPos.toShortString());
+					XSurvive.LOGGER.info("Set world spawn to '{}'", spawnPos.toShortString());
 					event.setCanceled(true);
 				}
 			}

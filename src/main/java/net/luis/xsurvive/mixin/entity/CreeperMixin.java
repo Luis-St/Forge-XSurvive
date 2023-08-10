@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
  */
 
 @Mixin(Creeper.class)
+@SuppressWarnings("NonConstantFieldWithUpperCaseName")
 public abstract class CreeperMixin extends Monster implements ICreeper {
 	
 	//region Mixin
@@ -27,11 +28,6 @@ public abstract class CreeperMixin extends Monster implements ICreeper {
 		super(entityType, level);
 	}
 	//endregion
-	
-	@Override
-	public int getExplosionRadius() {
-		return this.explosionRadius;
-	}
 	
 	@Override
 	public void setExplosionRadius(int explosionRadius) {

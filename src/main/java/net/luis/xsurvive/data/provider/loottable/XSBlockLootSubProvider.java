@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSBlockLootSubProvider extends BlockLootSubProvider {
 	
 	XSBlockLootSubProvider() {
@@ -32,14 +33,14 @@ public class XSBlockLootSubProvider extends BlockLootSubProvider {
 	protected void generate() {
 		this.dropSelf(XSBlocks.SMELTING_FURNACE.get());
 		this.add(XSBlocks.HONEY_MELON.get(), (block) -> {
-			return createSilkTouchDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(XSItems.HONEY_MELON_SLICE.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 7.0F)))
+			return createSilkTouchDispatchTable(block, this.applyExplosionDecay(block, LootItem.lootTableItem(XSItems.HONEY_MELON_SLICE.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 7.0F)))
 				.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)).apply(LimitCount.limitCount(IntRange.upperBound(9)))));
 		});
 		this.add(XSBlocks.HONEY_MELON_STEM.get(), (block) -> {
-			return createStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());
+			return this.createStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());
 		});
 		this.add(XSBlocks.ATTACHED_HONEY_MELON_STEM.get(), (block) -> {
-			return createAttachedStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());
+			return this.createAttachedStemDrops(block, XSItems.HONEY_MELON_SEEDS.get());
 		});
 		this.add(XSBlocks.MYSTIC_FIRE.get(), noDrop());
 	}

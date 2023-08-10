@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class AdditionalChanceItemModifier extends LootModifier {
 	
 	public static final Codec<AdditionalChanceItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {

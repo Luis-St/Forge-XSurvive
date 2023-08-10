@@ -32,6 +32,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	
 	private static final ResourceLocation RECIPE_GUI_VANILLA = new ResourceLocation(ModIds.JEI_ID, "textures/gui/gui_vanilla.png");
 	
+	private final Minecraft minecraft = Minecraft.getInstance();
 	private final IDrawableAnimated animatedFlame;
 	private final IDrawable background;
 	private final IDrawable icon;
@@ -90,8 +91,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		float experience = recipe.getExperience();
 		if (experience > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.experience", experience);
-			Minecraft minecraft = Minecraft.getInstance();
-			Font font = minecraft.font;
+			Font font = this.minecraft.font;
 			graphics.drawString(font, component, this.background.getWidth() - font.width(component), 0, 0xFF808080);
 		}
 	}
@@ -100,8 +100,7 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 		int cookTime = recipe.getCookingTime();
 		if (cookTime > 0) {
 			Component component = Component.translatable("gui.jei.category.smelting.time.seconds", (cookTime / 20));
-			Minecraft minecraft = Minecraft.getInstance();
-			Font font = minecraft.font;
+			Font font = this.minecraft.font;
 			graphics.drawString(font, component, this.background.getWidth() - font.width(component), 45, 0xFF808080);
 		}
 	}
@@ -109,7 +108,9 @@ public class SmeltingCategory implements IRecipeCategory<SmeltingRecipe> {
 	@Override
 	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull SmeltingRecipe recipe, @NotNull IFocusGroup focuses) {
 		builder.addSlot(INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
-		builder.addSlot(OUTPUT, 61, 19).addItemStack(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()));
+		if (this.minecraft.level != null) {
+			builder.addSlot(OUTPUT, 61, 19).addItemStack(recipe.getResultItem(this.minecraft.level.registryAccess()));
+		}
 	}
 	
 	@Override

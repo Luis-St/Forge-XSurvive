@@ -29,10 +29,6 @@ public class VillagerProvider implements ICapabilitySerializable<CompoundTag> {
 		return villager.getCapability(XSCapabilities.VILLAGER, null).orElseThrow(NullPointerException::new);
 	}
 	
-	public static @NotNull LazyOptional<IVillager> getSafe(@NotNull Villager villager) {
-		return villager.getCapability(XSCapabilities.VILLAGER, null);
-	}
-	
 	@Override
 	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
 		return XSCapabilities.VILLAGER.orEmpty(capability, this.optional);

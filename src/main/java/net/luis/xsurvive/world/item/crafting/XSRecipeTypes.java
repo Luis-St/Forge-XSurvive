@@ -11,6 +11,7 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSRecipeTypes {
 	
 	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, XSurvive.MOD_ID);

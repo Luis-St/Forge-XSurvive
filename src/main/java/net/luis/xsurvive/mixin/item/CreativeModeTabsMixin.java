@@ -33,7 +33,7 @@ public abstract class CreativeModeTabsMixin {
 						}
 					}
 				} else {
-					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 					XSurvive.LOGGER.info("A deprecate vanilla logic is called");
 					for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
 						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)), visibility);
@@ -53,7 +53,7 @@ public abstract class CreativeModeTabsMixin {
 						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
 					}
 				} else {
-					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 					XSurvive.LOGGER.info("A deprecate vanilla logic is called");
 					if (enchantment.allowedInCreativeTab(Items.ENCHANTED_BOOK, categories)) {
 						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));

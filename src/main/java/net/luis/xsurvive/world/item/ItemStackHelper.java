@@ -57,7 +57,7 @@ public class ItemStackHelper {
 		return new ItemStack(Items.IRON_SWORD);
 	}
 	
-	public static @NotNull ItemStack getCrossbowForDifficulty(@NotNull LivingEntity entity, @NotNull DifficultyInstance instance) {
+	public static @NotNull ItemStack getCrossbowForDifficulty(@NotNull DifficultyInstance instance) {
 		WeightCollection<Item> itemWeights = ItemWeightHelper.getCrossbowWeightsForDifficulty(instance.getEffectiveDifficulty());
 		if (!itemWeights.isEmpty()) {
 			return new ItemStack(itemWeights.next());

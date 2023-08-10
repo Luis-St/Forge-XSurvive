@@ -18,6 +18,7 @@ import java.util.function.Supplier;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSBlocks {
 	
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, XSurvive.MOD_ID);

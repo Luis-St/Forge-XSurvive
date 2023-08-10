@@ -25,6 +25,7 @@ import java.util.Objects;
  *
  */
 
+@SuppressWarnings("SameParameterValue")
 public class XSBlockStateProvider extends BlockStateProvider {
 	
 	protected final ExistingFileHelper existingFileHelper;
@@ -41,7 +42,6 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		this.stemAgeBlock(XSBlocks.HONEY_MELON_STEM.get(), 7);
 		this.attachedStemBlock(XSBlocks.ATTACHED_HONEY_MELON_STEM.get());
 		this.floorAndSideFireBlock(XSBlocks.MYSTIC_FIRE.get());
-		
 		for (BlockItem item : XSBlocks.ITEMS.getEntries().stream().map(RegistryObject::get).filter(BlockItem.class::isInstance).map(BlockItem.class::cast).toList()) {
 			this.simpleBlockItem(item.getBlock(), this.blockModel(item.getBlock()));
 		}
@@ -53,8 +53,8 @@ public class XSBlockStateProvider extends BlockStateProvider {
 		this.models().orientable(name + "_on", this.modLoc("block/" + name + "_side"), this.modLoc("block/" + name + "_front_on"), this.modLoc("block/" + name + "_top"));
 		VariantBlockStateBuilder builder = this.getVariantBuilder(block);
 		for (Direction direction : Lists.newArrayList(Direction.Plane.HORIZONTAL.iterator())) {
-			builder.partialState().with(AbstractFurnaceBlock.FACING, direction).with(AbstractFurnaceBlock.LIT, true).modelForState().modelFile(this.blockModel(block, "on")).rotationY(getYRotation(direction)).addModel();
-			builder.partialState().with(AbstractFurnaceBlock.FACING, direction).with(AbstractFurnaceBlock.LIT, false).modelForState().modelFile(this.blockModel(block)).rotationY(getYRotation(direction)).addModel();
+			builder.partialState().with(AbstractFurnaceBlock.FACING, direction).with(AbstractFurnaceBlock.LIT, true).modelForState().modelFile(this.blockModel(block, "on")).rotationY(this.getYRotation(direction)).addModel();
+			builder.partialState().with(AbstractFurnaceBlock.FACING, direction).with(AbstractFurnaceBlock.LIT, false).modelForState().modelFile(this.blockModel(block)).rotationY(this.getYRotation(direction)).addModel();
 		}
 	}
 	
@@ -86,17 +86,37 @@ public class XSBlockStateProvider extends BlockStateProvider {
 	
 	private void floorAndSideFireBlock(Block block) {
 		String name = Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)).getPath();
-		this.models().getBuilder(name + "_floor0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
-		this.models().getBuilder(name + "_floor1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
-		this.models().getBuilder(name + "_side0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
-		this.models().getBuilder(name + "_side1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
-		this.models().getBuilder(name + "_side_alt0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
-		this.models().getBuilder(name + "_side_alt1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
-		this.models().getBuilder(name + "_up0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
-		this.models().getBuilder(name + "_up1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
-		this.models().getBuilder(name + "_up_alt0").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
-		this.models().getBuilder(name + "_up_alt1").parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper)).texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
 		// @formatter:off
+		this.models().getBuilder(name + "_floor0")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_floor1")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_floor"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_side0")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_side1")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_side_alt0")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_side_alt1")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_side_alt"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_up0")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_up1")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
+		this.models().getBuilder(name + "_up_alt0")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_0")).renderType("cutout");
+		this.models().getBuilder(name + "_up_alt1")
+			.parent(new ExistingModelFile(new ResourceLocation("block/template_fire_up_alt"), this.existingFileHelper))
+			.texture("fire", this.modLoc("block/" + name + "_1")).renderType("cutout");
 		this.getMultipartBuilder(block)
 				.part().modelFile(this.blockModel(block, "floor0")).nextModel()
 				.modelFile(this.blockModel(block, "floor1")).addModel()

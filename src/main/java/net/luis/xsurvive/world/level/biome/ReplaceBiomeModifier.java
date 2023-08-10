@@ -24,6 +24,7 @@ import java.util.Objects;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public record ReplaceBiomeModifier(HolderSet<Biome> biomes, HolderSet<PlacedFeature> featuresToAdd, /*HolderSet<PlacedFeature> featuresToRemove*/List<ResourceLocation> featuresToRemove) implements BiomeModifier {
 	
 	public static final Codec<ReplaceBiomeModifier> CODEC = RecordCodecBuilder.create((instance) -> {

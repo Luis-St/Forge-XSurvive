@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSEnchantmentCategory {
 	
 	public static final EnchantmentCategory HOE = EnchantmentCategory.create(new ResourceLocation(XSurvive.MOD_ID, "hoe").toString(), (item) -> {

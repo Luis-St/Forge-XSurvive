@@ -20,6 +20,7 @@ import java.util.function.Consumer;
  */
 
 @Mixin(ItemStack.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class ItemStackMixin {
 	
 	//region Mixin

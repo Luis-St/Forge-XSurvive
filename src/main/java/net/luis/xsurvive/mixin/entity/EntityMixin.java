@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(Entity.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class EntityMixin {
 	
 	@Inject(method = "tick", at = @At("HEAD"))

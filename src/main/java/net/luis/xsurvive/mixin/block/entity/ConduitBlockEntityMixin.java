@@ -20,7 +20,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -29,6 +30,7 @@ import java.util.*;
  */
 
 @Mixin(ConduitBlockEntity.class)
+@SuppressWarnings({"DataFlowIssue", "ReturnOfNull"})
 public abstract class ConduitBlockEntityMixin {
 	
 	//region Mixin
@@ -70,9 +72,7 @@ public abstract class ConduitBlockEntityMixin {
 			blockEntity.destroyTarget = findDestroyTarget(level, pos, blockEntity.destroyTargetUUID);
 			blockEntity.destroyTargetUUID = null;
 		} else if (blockEntity.destroyTarget == null) {
-			List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, Objects.requireNonNull(getDestroyRangeAABB(pos)), (entity) -> {
-				return entity instanceof Enemy && entity.isInWaterOrRain();
-			});
+			List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, getDestroyRangeAABB(pos), (entity) -> entity instanceof Enemy && entity.isInWaterOrRain());
 			if (!entities.isEmpty()) {
 				blockEntity.destroyTarget = entities.get(level.random.nextInt(entities.size()));
 			}

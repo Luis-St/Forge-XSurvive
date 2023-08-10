@@ -19,6 +19,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,12 +35,14 @@ import java.util.List;
  */
 
 @Mixin(EnderDragon.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class EnderDragonMixin extends Mob {
 	
 	//region Mixin
-	@Shadow(remap = false) private final Player unlimitedLastHurtByPlayer = null;
+	@Shadow(remap = false) private Player unlimitedLastHurtByPlayer;
 	@Shadow private EndDragonFight dragonFight;
-	@Shadow public EndCrystal nearestCrystal;
+	@Shadow
+	public @Nullable EndCrystal nearestCrystal;
 	@Shadow public int dragonDeathTime;
 	
 	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {

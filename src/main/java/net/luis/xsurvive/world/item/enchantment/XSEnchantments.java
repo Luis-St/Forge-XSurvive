@@ -13,9 +13,10 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSEnchantments {
 	
-	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
+	private static final EquipmentSlot[] ARMOR_SLOTS = {
 		EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
 	};
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, XSurvive.MOD_ID);

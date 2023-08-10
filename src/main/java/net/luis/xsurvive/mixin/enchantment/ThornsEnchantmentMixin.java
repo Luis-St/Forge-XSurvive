@@ -24,6 +24,7 @@ import java.util.Map.Entry;
  *
  */
 
+@SuppressWarnings("DataFlowIssue")
 @Mixin(ThornsEnchantment.class)
 public abstract class ThornsEnchantmentMixin {
 	
@@ -48,9 +49,7 @@ public abstract class ThornsEnchantmentMixin {
 				attacker.hurt(target.damageSources().thorns(attacker), this.getThornsLevel(target));
 			}
 			for (Entry<EquipmentSlot, ItemStack> entry : thornsEquipment) {
-				entry.getValue().hurtAndBreak(1, target, (entity) -> {
-					entity.broadcastBreakEvent(entry.getKey());
-				});
+				entry.getValue().hurtAndBreak(1, target, entity -> entity.broadcastBreakEvent(entry.getKey()));
 			}
 		}
 		callback.cancel();

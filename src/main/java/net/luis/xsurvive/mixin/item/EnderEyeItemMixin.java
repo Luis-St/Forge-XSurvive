@@ -34,6 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(EnderEyeItem.class)
+@SuppressWarnings("ConstantValue")
 public abstract class EnderEyeItemMixin extends Item {
 	
 	//region Mixin

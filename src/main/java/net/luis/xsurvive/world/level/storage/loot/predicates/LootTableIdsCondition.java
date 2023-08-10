@@ -38,10 +38,6 @@ public class LootTableIdsCondition implements LootItemCondition {
 		
 		private final List<ResourceLocation> lootTables;
 		
-		public Builder(String lootTable) {
-			this(new ResourceLocation(lootTable));
-		}
-		
 		public Builder(ResourceLocation lootTable) {
 			this.lootTables = Lists.newArrayList();
 			this.add(lootTable);

@@ -6,6 +6,7 @@ import net.luis.xsurvive.world.entity.ai.custom.CustomAiManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,12 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(LivingEntity.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class LivingEntityMixin extends Entity implements ILivingEntity {
 	
 	//region Mixin
-	private CustomAi customAi;
+	private @Nullable CustomAi customAi;
 	
-	public LivingEntityMixin(EntityType<?> entityType, Level level) {
+	protected LivingEntityMixin(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 	}
 	//endregion

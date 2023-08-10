@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class CustomEnderManAi extends AbstractCustomAi<EnderMan> {
 	
 	public CustomEnderManAi(EnderMan entity, ServerLevel level) {

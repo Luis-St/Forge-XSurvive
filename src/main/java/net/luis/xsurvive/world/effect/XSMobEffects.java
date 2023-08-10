@@ -13,6 +13,7 @@ import net.minecraftforge.registries.*;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSMobEffects {
 	
 	public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, XSurvive.MOD_ID);

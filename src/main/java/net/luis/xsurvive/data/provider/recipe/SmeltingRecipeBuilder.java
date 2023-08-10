@@ -45,7 +45,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		this.cookingTime = cookingTime;
 	}
 	
-	public static @NotNull SmeltingRecipeBuilder of(RecipeCategory category, Ingredient ingredient, ItemLike result, float experience, int cookingTime) {
+	public static @NotNull SmeltingRecipeBuilder of(RecipeCategory category, Ingredient ingredient, ItemLike result, float experience) {
 		return new SmeltingRecipeBuilder(category, determineRecipeCategory(result.asItem()), ingredient, result, experience, 100);
 	}
 	

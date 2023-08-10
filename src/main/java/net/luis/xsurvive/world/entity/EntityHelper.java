@@ -57,9 +57,9 @@ public class EntityHelper {
 		return growth;
 	}
 	
-	public static void updateAttributeModifier(@NotNull Player player, @NotNull Attribute attribute, @NotNull Operation operation, @NotNull UUID uuid, @NotNull String name, double to, double from) {
+	public static void updateAttributeModifier(@NotNull Player player, @NotNull Attribute attribute, @NotNull Operation operation, @NotNull UUID uuid, @NotNull String name, int to, int from, double multiplier) {
 		AttributeInstance instance = Objects.requireNonNull(player.getAttribute(attribute));
-		AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to, operation);
+		AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to * multiplier, operation);
 		boolean hasModifier = instance.getModifier(uuid) != null;
 		if (to == from && !hasModifier) {
 			instance.addTransientModifier(modifier);

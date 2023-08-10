@@ -9,8 +9,6 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-
 import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
 
 /**
@@ -30,15 +28,4 @@ public class DynamicPotionTrades {
 		};
 	}
 	
-	public static @NotNull ItemListing randomPotion(int emeralds, int villagerLevel) {
-		return randomPotion(emeralds, ForgeRegistries.POTIONS.getValues(), villagerLevel);
-	}
-	
-	public static @NotNull ItemListing randomPotion(int emeralds, @NotNull Collection<Potion> potions, int villagerLevel) {
-		return (villager, rng) -> {
-			Potion potion = random(Lists.newArrayList(potions), rng);
-			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), PotionUtils.setPotion(new ItemStack(Items.POTION), potion), 16, getVillagerXp(villagerLevel),
-				0.2F);
-		};
-	}
 }

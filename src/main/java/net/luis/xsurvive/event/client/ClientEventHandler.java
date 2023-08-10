@@ -13,8 +13,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 /**
  *
  * @author Luis-St
@@ -29,9 +27,10 @@ public class ClientEventHandler {
 		if (event.getScreen() instanceof ChatReportScreen screen) {
 			Minecraft minecraft = screen.getMinecraft();
 			screen.sendButton = Button.builder(Component.translatable("gui.chatReport.send"), (button) -> {
-				Component component =
-					Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
-				Objects.requireNonNull(minecraft.player).sendSystemMessage(component);
+				Component comp = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
+				if (minecraft.player != null) {
+					minecraft.player.sendSystemMessage(comp);
+				}
 			}).pos((screen.width / 2) + 10, Math.min((screen.height + 300) / 2, screen.height) - 30).size(120, 20).tooltip(Tooltip.create(Component.literal("Disabled for several reasons").withStyle(ChatFormatting.RED))).build();
 		}
 	}

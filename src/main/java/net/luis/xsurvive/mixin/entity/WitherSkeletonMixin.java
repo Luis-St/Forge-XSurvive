@@ -32,6 +32,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(WitherSkeleton.class)
+@SuppressWarnings("UnnecessarySuperQualifier")
 public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	
 	//region Mixin

@@ -6,7 +6,6 @@ import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.trading.Trade;
 import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
@@ -28,9 +27,7 @@ import java.util.stream.Collectors;
 class DynamicTradeHelper {
 	
 	static @NotNull List<Enchantment> getValidEnchantments(@NotNull List<Rarity> rarities) {
-		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> {
-			return enchantment.isTradeable() && !enchantment.isCurse();
-		}).collect(Collectors.toList());
+		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> enchantment.isTradeable() && !enchantment.isCurse()).collect(Collectors.toList());
 	}
 	
 	private static @NotNull List<Enchantment> getEnchantmentsForRarity(@NotNull List<Rarity> rarities) {
@@ -51,61 +48,13 @@ class DynamicTradeHelper {
 	}
 	
 	static @NotNull List<Enchantment> getValidGoldenEnchantments(@NotNull Collection<Enchantment> enchantments) {
-		return enchantments.stream().filter((enchantment) -> {
-			return enchantment.isTradeable() && !enchantment.isCurse() && !enchantment.isTreasureOnly();
-		}).filter((enchantment) -> {
+		return enchantments.stream().filter((enchantment) -> enchantment.isTradeable() && !enchantment.isCurse()).filter((enchantment) -> {
 			if (enchantment instanceof IEnchantment ench) {
 				return ench.isAllowedOnGoldenBooks();
 			}
-			XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+			XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			return false;
 		}).collect(Collectors.toList());
-	}
-	
-	static int clampLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int minLevel, int maxLevel) {
-		int min = Math.max(minLevel, enchantment.getMinLevel());
-		int max = Math.min(maxLevel, enchantment.getMaxLevel());
-		if (min == max) {
-			return min;
-		}
-		return Mth.randomBetweenInclusive(rng, min, max);
-	}
-	
-	static int modifyLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int level, int villagerLevel) {
-		int minLevel = enchantment.getMinLevel();
-		int maxLevel = enchantment.getMaxLevel();
-		if (minLevel == maxLevel) {
-			return level;
-		} else if (level == maxLevel) {
-			return level;
-		} else {
-			double d = rng.nextDouble();
-			return switch (villagerLevel) {
-				case 2 -> d >= 0.75 ? Mth.clamp(level + 1, minLevel, maxLevel) : level;
-				case 3 -> d >= 0.5 ? Mth.clamp(level + 1, minLevel, maxLevel) : level;
-				case 4 -> {
-					if (level == minLevel) {
-						yield Mth.clamp(level + rng.nextInt(2), minLevel, maxLevel);
-					} else if (d >= 0.75) {
-						yield Mth.clamp(level + 2, minLevel, maxLevel);
-					}
-					yield d >= 0.25 ? Mth.clamp(level + 1, minLevel, maxLevel) : level;
-				}
-				case 5 -> {
-					if (level == minLevel) {
-						yield Mth.clamp(level + rng.nextInt(4), minLevel, maxLevel);
-					} else if (d >= 0.75) {
-						yield Mth.clamp(level + 3, minLevel, maxLevel);
-					}
-					yield d >= 0.5 ? Mth.clamp(level + 2, minLevel, maxLevel) : Mth.clamp(level + 1, minLevel, maxLevel);
-				}
-				default -> level;
-			};
-		}
-	}
-	
-	static int getRandomLevel(@NotNull RandomSource rng, @NotNull Enchantment enchantment, int minLevel, int maxLevel, int villagerLevel) {
-		return modifyLevel(rng, enchantment, clampLevel(rng, enchantment, minLevel, maxLevel), villagerLevel);
 	}
 	
 	static int getEmeraldCount(@NotNull RandomSource rng, int level) {

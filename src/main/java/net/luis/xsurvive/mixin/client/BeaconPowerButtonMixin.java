@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
 import java.util.Optional;
 
 import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
@@ -61,21 +60,17 @@ public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenBu
 				String suffix = "";
 				if (!beacon.isBeaconBaseShared()) {
 					if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) {
-						suffix = getLevel(beacon.getBeaconLevel());
+						suffix = this.getLevel(beacon.getBeaconLevel());
 					} else if (beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK)) {
-						suffix = getLevel(beacon.getBeaconLevel());
+						suffix = this.getLevel(beacon.getBeaconLevel());
 					} else {
 						int beaconLevel = beacon.getBeaconLevel();
-						suffix = getLevel(getAmplifier(player.getOnPos(), level, containerPos, beaconLevel, beaconLevel * 20 + 20, effect, 0));
+						suffix = this.getLevel(getAmplifier(player.getOnPos(), level, containerPos, beaconLevel, beaconLevel * 20 + 20, effect, 0));
 					}
 				}
 				callback.setReturnValue(Component.translatable(effect.getDescriptionId()).append(suffix));
 			}
 		}
-	}
-	
-	private boolean isNoneSelected() {
-		return ((List<?>) (this.this$0.beaconButtons)).stream().map(BeaconScreen.BeaconScreenButton.class::cast).noneMatch(BeaconScreen.BeaconScreenButton::isSelected);
 	}
 	
 	private @NotNull String getLevel(int beaconLevel) {

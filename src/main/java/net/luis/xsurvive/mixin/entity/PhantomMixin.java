@@ -27,7 +27,7 @@ public abstract class PhantomMixin extends FlyingMob {
 	
 	@Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
 	public void aiStep(@NotNull CallbackInfo callback) {
-		super.aiStep();
+		aiStep();
 		callback.cancel();
 	}
 }

@@ -14,6 +14,7 @@ import java.util.Set;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSPoiTypes {
 	
 	public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, XSurvive.MOD_ID);

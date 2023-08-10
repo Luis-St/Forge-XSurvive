@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSVillagerProfessions {
 	
 	public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, XSurvive.MOD_ID);

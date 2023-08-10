@@ -55,23 +55,23 @@ public abstract class ServerPlayerGameModeMixin {
 					if (block.seedSupplier.get() instanceof BlockItem blockItem && blockItem.getBlock() instanceof StemBlock stemBlock) {
 						replanted = this.level.setBlock(pos, stemBlock.defaultBlockState(), 3);
 					}
-				} else if (state.getBlock() instanceof CocoaBlock block && state.getValue(CocoaBlock.AGE) >= 2) {
+				} else if (state.getBlock() instanceof CocoaBlock && state.getValue(CocoaBlock.AGE) >= 2) {
 					replanted = this.level.setBlock(pos, state.setValue(CocoaBlock.AGE, 0), 3);
-				} else if (state.getBlock() instanceof BambooSaplingBlock block && this.level.getBlockState(pos.below()).is(BlockTags.BAMBOO_PLANTABLE_ON)) {
+				} else if (state.getBlock() instanceof BambooSaplingBlock && this.level.getBlockState(pos.below()).is(BlockTags.BAMBOO_PLANTABLE_ON)) {
 					replanted = this.level.setBlock(pos, Blocks.BAMBOO_SAPLING.defaultBlockState(), 3);
-				} else if (state.getBlock() instanceof BambooStalkBlock block && !(belowState.getBlock() instanceof BambooStalkBlock) && belowState.is(BlockTags.BAMBOO_PLANTABLE_ON)) {
+				} else if (state.getBlock() instanceof BambooStalkBlock && !(belowState.getBlock() instanceof BambooStalkBlock) && belowState.is(BlockTags.BAMBOO_PLANTABLE_ON)) {
 					if (this.level.getBlockState(pos.above()).getBlock() instanceof BambooStalkBlock) {
-						this.level.destroyBlock(pos.above(), true, player);
+						this.level.destroyBlock(pos.above(), true, this.player);
 					}
 					replanted = this.level.setBlock(pos, Blocks.BAMBOO_SAPLING.defaultBlockState(), 3);
 				} else if (state.getBlock() instanceof CactusBlock block && !(belowState.getBlock() instanceof CactusBlock) && (belowState.is(Blocks.SAND) || belowState.is(Blocks.RED_SAND))) {
 					if (this.level.getBlockState(pos.above()).getBlock() instanceof CactusBlock) {
-						this.level.destroyBlock(pos.above(), true, player);
+						this.level.destroyBlock(pos.above(), true, this.player);
 					}
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
-				} else if (state.getBlock() instanceof SugarCaneBlock block && !(belowState.getBlock() instanceof SugarCaneBlock) && block.canSurvive(state, level, pos)) {
+				} else if (state.getBlock() instanceof SugarCaneBlock block && !(belowState.getBlock() instanceof SugarCaneBlock) && block.canSurvive(state, this.level, pos)) {
 					if (this.level.getBlockState(pos.above()).getBlock() instanceof SugarCaneBlock) {
-						this.level.destroyBlock(pos.above(), true, player);
+						this.level.destroyBlock(pos.above(), true, this.player);
 					}
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
 				} else if (state.getBlock() == Blocks.TORCHFLOWER) {

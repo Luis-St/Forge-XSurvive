@@ -49,7 +49,7 @@ public abstract class EntityRenderDispatcherMixin {
 		float height = entity.getBbHeight() / width;
 		float yOffset = 0.0F;
 		stack.mulPose(Axis.YP.rotationDegrees(-this.camera.getYRot()));
-		stack.translate(0.0, 0.0, -0.3F + (float) ((int) height) * 0.02F);
+		stack.translate(0.0, 0.0, -0.3F + ((int) height) * 0.02F);
 		float zOffset = 0.0F;
 		int index = 0;
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(Sheets.cutoutBlockSheet());

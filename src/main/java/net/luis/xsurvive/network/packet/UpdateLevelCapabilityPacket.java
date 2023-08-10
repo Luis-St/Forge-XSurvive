@@ -17,6 +17,7 @@ import java.util.function.Supplier;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class UpdateLevelCapabilityPacket implements NetworkPacket {
 	
 	private final CompoundTag tag;

@@ -14,7 +14,7 @@ public abstract class AbstractCustomAi<T extends LivingEntity> implements Custom
 	protected final T entity;
 	protected final ServerLevel level;
 	
-	public AbstractCustomAi(T entity, ServerLevel level) {
+	protected AbstractCustomAi(T entity, ServerLevel level) {
 		this.entity = entity;
 		this.level = level;
 	}

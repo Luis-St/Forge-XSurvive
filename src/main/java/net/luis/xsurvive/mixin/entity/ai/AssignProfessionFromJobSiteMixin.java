@@ -24,10 +24,11 @@ import java.util.Optional;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 @Mixin(AssignProfessionFromJobSite.class)
 public abstract class AssignProfessionFromJobSiteMixin {
 	
-	@Inject(method = "create", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "create", at = @At("HEAD"), cancellable = true)
 	private static void create(@NotNull CallbackInfoReturnable<BehaviorControl<Villager>> callback) {
 		callback.setReturnValue(
 			BehaviorBuilder.create((builder) -> builder.group(builder.present(MemoryModuleType.POTENTIAL_JOB_SITE), builder.registered(MemoryModuleType.JOB_SITE)).apply(builder, (memory, accessor) -> (level, villager, seed) -> {

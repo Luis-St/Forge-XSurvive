@@ -35,6 +35,7 @@ import java.util.Objects;
  */
 
 @Mixin(WitherSkullBlock.class)
+@SuppressWarnings({"CodeBlock2Expr", "ReturnOfNull"})
 public abstract class WitherSkullBlockMixin {
 	
 	//region Mixin

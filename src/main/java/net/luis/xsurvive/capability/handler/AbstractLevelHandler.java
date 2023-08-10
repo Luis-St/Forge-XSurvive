@@ -9,7 +9,8 @@ import net.minecraft.nbt.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,6 @@ public abstract class AbstractLevelHandler implements ILevel {
 	}
 	
 	@Override
-	public @Unmodifiable @NotNull List<BlockPos> getBeaconPositions() {
-		return List.copyOf(this.beaconPositions);
-	}
-	
-	@Override
 	public @NotNull List<BlockPos> getBeaconPositions(@NotNull AABB area) {
 		List<BlockPos> positions = Lists.newArrayList();
 		for (BlockPos position : this.beaconPositions) {
@@ -49,15 +45,6 @@ public abstract class AbstractLevelHandler implements ILevel {
 			}
 		}
 		return positions;
-	}
-	
-	@Override
-	public @NotNull Map<BlockPos, Pair<@Nullable MobEffect, @Nullable MobEffect>> getBeaconEffects() {
-		Map<BlockPos, Pair<@Nullable MobEffect, @Nullable MobEffect>> effects = Maps.newHashMap();
-		for (Map.Entry<BlockPos, Pair<Integer, Integer>> beaconEffect : this.beaconEffects.entrySet()) {
-			effects.put(beaconEffect.getKey(), new Pair<>(MobEffect.byId(beaconEffect.getValue().getFirst()), MobEffect.byId(beaconEffect.getValue().getSecond())));
-		}
-		return effects;
 	}
 	
 	@Override

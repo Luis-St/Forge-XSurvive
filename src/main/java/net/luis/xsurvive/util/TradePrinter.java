@@ -10,6 +10,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -18,6 +19,7 @@ import java.util.Map;
  *
  */
 
+@SuppressWarnings("unused")
 public class TradePrinter {
 	
 	public static void print(Villager villager) {
@@ -25,7 +27,7 @@ public class TradePrinter {
 		for (Map.Entry<VillagerProfession, Int2ObjectMap<VillagerTrades.ItemListing[]>> entry1 : VillagerTrades.TRADES.entrySet()) {
 			System.out.println("VillagerProfession: " + StringUtils.capitalize(entry1.getKey().name()));
 			var list = Lists.newArrayList(entry1.getValue().int2ObjectEntrySet());
-			list.sort((o1, o2) -> Integer.compare(o1.getIntKey(), o2.getIntKey()));
+			list.sort(Comparator.comparingInt(Int2ObjectMap.Entry::getIntKey));
 			for (Int2ObjectMap.Entry<VillagerTrades.ItemListing[]> entry2 : list) {
 				System.out.println("Level: " + entry2.getIntKey());
 				for (VillagerTrades.ItemListing listing : entry2.getValue()) {

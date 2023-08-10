@@ -41,7 +41,7 @@ public interface IBeaconBlockEntity {
 		return Mth.clamp(amplifier, 0, beaconLevel);
 	}
 	
-	static boolean isEffectStacked(BlockPos playerPos, Level level, BlockPos current, int beaconLevel, int area, MobEffect effect) {
+	static boolean isEffectStacked(BlockPos playerPos, Level level, BlockPos current, int area, MobEffect effect) {
 		ILevel iLevel = LevelProvider.get(level);
 		List<BlockPos> positions = iLevel.getBeaconPositions(playerPos, area);
 		positions.remove(current);

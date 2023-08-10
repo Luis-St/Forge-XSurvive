@@ -34,7 +34,6 @@ import java.util.List;
 public class XSJeiPlugin implements IModPlugin {
 	
 	private final ResourceLocation pluginId;
-	private SmeltingCategory smeltingCategory;
 	
 	public XSJeiPlugin() {
 		this.pluginId = new ResourceLocation(XSurvive.MOD_ID, "jei");
@@ -52,14 +51,14 @@ public class XSJeiPlugin implements IModPlugin {
 	
 	@Override
 	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
-		registration.addRecipeCategories(this.smeltingCategory = new SmeltingCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new SmeltingCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 	
 	@Override
 	public void registerRecipes(@NotNull IRecipeRegistration registration) {
-		registration.addRecipes(XSJeiRecipeTypes.SMELTING, XSRecipes.getSmeltingRecipes(this.smeltingCategory));
-		registerGoldenBookAnvilRecipes(registration, registration.getVanillaRecipeFactory());
-		registerRuneAnvilRecipes(registration, registration.getVanillaRecipeFactory());
+		registration.addRecipes(XSJeiRecipeTypes.SMELTING, XSRecipes.getSmeltingRecipes());
+		this.registerGoldenBookAnvilRecipes(registration, registration.getVanillaRecipeFactory());
+		this.registerRuneAnvilRecipes(registration, registration.getVanillaRecipeFactory());
 	}
 	
 	private void registerGoldenBookAnvilRecipes(@NotNull IRecipeRegistration registration, @NotNull IVanillaRecipeFactory recipeFactory) {
@@ -81,7 +80,7 @@ public class XSJeiPlugin implements IModPlugin {
 					}
 				}
 			} else {
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			}
 		}
 		registration.addRecipes(RecipeTypes.ANVIL, recipes);

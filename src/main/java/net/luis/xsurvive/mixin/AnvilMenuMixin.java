@@ -11,6 +11,7 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,6 +30,7 @@ import java.util.Map;
  */
 
 @Mixin(AnvilMenu.class)
+@SuppressWarnings({"DataFlowIssue", "DuplicatedCode"})
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
 	//region Mixin
@@ -63,13 +65,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
 			boolean enchantedBook;
-			boolean decreaseRepairCost = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.resultSlots.setItem(0, ItemStack.EMPTY);
 				this.cost.set(0);
+				callback.cancel();
 				return;
 			} else {
-				if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, leftStack, rightStack, this.resultSlots, this.itemName, repairCost, this.player)) {
+				if (!ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, leftStack, rightStack, this.resultSlots, this.itemName, repairCost, this.player)) {
 					return;
 				}
 				enchantedBook = rightStack.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(rightStack).isEmpty();
@@ -78,6 +80,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					if (damage <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
+						callback.cancel();
 						return;
 					}
 					int currentRepairCost;
@@ -92,14 +95,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					if (!enchantedBook && (!resultStack.is(rightStack.getItem()) || !resultStack.isDamageableItem())) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
+						callback.cancel();
 						return;
 					}
 					if (resultStack.isDamageableItem() && !enchantedBook) {
 						int leftDamage = leftStack.getMaxDamage() - leftStack.getDamageValue();
 						int rightDamage = rightStack.getMaxDamage() - rightStack.getDamageValue();
 						int resultDamage = rightDamage + resultStack.getMaxDamage() * 12 / 100;
-						int combindedDamage = leftDamage + resultDamage;
-						int damage = resultStack.getMaxDamage() - combindedDamage;
+						int combinedDamage = leftDamage + resultDamage;
+						int damage = resultStack.getMaxDamage() - combinedDamage;
 						if (damage < 0) {
 							damage = 0;
 						}
@@ -108,13 +112,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 							enchantCost += 2;
 						}
 					}
-					Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(rightStack);
-					boolean canEnchant = false;
 					boolean survival = false;
-					for (Enchantment rightEnchantment : rightEnchantments.keySet()) {
+					Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(rightStack);
+					for (Map.Entry<Enchantment, Integer> entry : rightEnchantments.entrySet()) {
+						Enchantment rightEnchantment = entry.getKey();
 						if (rightEnchantment != null) {
 							int resultLevel = resultEnchantments.getOrDefault(rightEnchantment, 0);
-							int rightLevel = rightEnchantments.get(rightEnchantment);
+							int rightLevel = entry.getValue();
 							if (rightEnchantment instanceof IEnchantment ench) {
 								if (resultLevel == rightLevel) {
 									if (!ench.isGoldenLevel(resultLevel) && rightEnchantment.getMaxLevel() > rightLevel) {
@@ -124,7 +128,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 									rightLevel = Math.max(rightLevel, resultLevel);
 								}
 							} else {
-								XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(rightEnchantment));
+								XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(rightEnchantment));
 								XSurvive.LOGGER.info("A deprecate vanilla logic is called");
 								rightLevel = resultLevel == rightLevel ? rightLevel + 1 : Math.max(rightLevel, resultLevel);
 							}
@@ -138,9 +142,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 									++enchantCost;
 								}
 							}
-							if (!canEnchantOrCreative) {
-								survival = true;
-							} else {
+							if (canEnchantOrCreative) {
 								resultEnchantments.put(rightEnchantment, rightLevel);
 								int rarityCost = switch (rightEnchantment.getRarity()) {
 									case COMMON -> 1;
@@ -155,12 +157,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 								if (leftStack.getCount() > 1) {
 									enchantCost = 40;
 								}
+							} else {
+								survival = true;
 							}
 						}
 					}
-					if (survival && !canEnchant) {
+					if (survival) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
+						callback.cancel();
 						return;
 					}
 					
@@ -180,10 +185,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			if (enchantedBook && !resultStack.isBookEnchantable(rightStack)) {
 				resultStack = ItemStack.EMPTY;
 			}
-			if (!decreaseRepairCost) {
-				this.cost.set(repairCost + enchantCost);
-			}
-			if (enchantCost <= 0 && !decreaseRepairCost) {
+			this.cost.set(repairCost + enchantCost);
+			if (0 >= enchantCost) {
 				resultStack = ItemStack.EMPTY;
 			}
 			if (renameCost == enchantCost && renameCost > 0 && this.cost.get() >= 60) {
@@ -209,9 +212,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				if (renameCost != enchantCost || renameCost == 0) {
 					baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
 				}
-				if (!decreaseRepairCost) {
-					resultStack.setRepairCost(baseRepairCost);
-				}
+				resultStack.setRepairCost(baseRepairCost);
 				EnchantmentHelper.setEnchantments(resultEnchantments, resultStack);
 			}
 			this.resultSlots.setItem(0, resultStack);

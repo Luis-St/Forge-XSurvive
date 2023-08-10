@@ -21,6 +21,7 @@ import java.util.Random;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class RuneItemModifier extends LootModifier {
 	
 	private static final Random RNG = new Random();

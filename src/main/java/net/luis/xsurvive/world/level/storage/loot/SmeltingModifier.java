@@ -12,6 +12,7 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("CodeBlock2Expr")
 /**
  *
  * @author Luis-St
@@ -36,7 +37,7 @@ public class SmeltingModifier extends LootModifier {
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
-		generatedLoot.forEach(stack -> loot.add(SmeltingModifier.this.smelt(stack, context)));
+		generatedLoot.forEach(stack -> loot.add(this.smelt(stack, context)));
 		return loot;
 	}
 	

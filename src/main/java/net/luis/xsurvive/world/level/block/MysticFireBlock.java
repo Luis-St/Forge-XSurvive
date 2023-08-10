@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  *
  */
 
+@SuppressWarnings({"CodeBlock2Expr", "deprecation"})
 public class MysticFireBlock extends BaseFireBlock {
 	
 	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((direction) -> {
@@ -89,7 +90,9 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	public @NotNull BlockState getStateForPlacement(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
-		if (!this.canCatchFire(blockGetter, pos, Direction.DOWN)) {
+		if (this.canCatchFire(blockGetter, pos, Direction.DOWN)) {
+			return this.defaultBlockState();
+		} else {
 			BlockState state = this.defaultBlockState();
 			for (Direction direction : Direction.values()) {
 				BooleanProperty property = PROPERTY_BY_DIRECTION.get(direction);
@@ -98,8 +101,6 @@ public class MysticFireBlock extends BaseFireBlock {
 				}
 			}
 			return state;
-		} else {
-			return this.defaultBlockState();
 		}
 	}
 	

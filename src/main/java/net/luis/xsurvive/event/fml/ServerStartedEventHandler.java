@@ -7,8 +7,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-
 /**
  *
  * @author Luis-St
@@ -18,7 +16,7 @@ import java.io.IOException;
 public class ServerStartedEventHandler {
 	
 	@SubscribeEvent
-	public static void serverStarted(@NotNull ServerStartedEvent event) throws IOException {
+	public static void serverStarted(@NotNull ServerStartedEvent event) {
 		MinecraftServer server = event.getServer();
 		if (server != null && !server.isFlightAllowed()) {
 			server.setFlightAllowed(true);

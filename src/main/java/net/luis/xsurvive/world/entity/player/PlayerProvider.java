@@ -10,7 +10,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -40,7 +39,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
 		if (capability instanceof LocalPlayerHandler handler) {
 			return handler;
-		} else if (capability instanceof ServerPlayerHandler handler) {
+		} else if (capability instanceof ServerPlayerHandler) {
 			throw new RuntimeException("Fail to get LocalPlayerHandler from server");
 		}
 		throw new IllegalStateException("Unknown network side");
@@ -48,7 +47,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	
 	public static @NotNull ServerPlayerHandler getServer(@NotNull Player player) {
 		IPlayer capability = player.getCapability(XSCapabilities.PLAYER, null).orElseThrow(NullPointerException::new);
-		if (capability instanceof LocalPlayerHandler handler) {
+		if (capability instanceof LocalPlayerHandler) {
 			throw new RuntimeException("Fail to get ServerPlayerHandler from client");
 		} else if (capability instanceof ServerPlayerHandler handler) {
 			return handler;

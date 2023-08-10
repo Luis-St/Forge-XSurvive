@@ -61,10 +61,10 @@ public class XSurvive {
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSEntityTypes.ENTITY_TYPES.register(eventBus);
+		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		XSDamageTypes.register();
 		XSOreFeatures.register();
 		XSOrePlacements.register();
-		XSBiomeModifiers.BIOME_MODIFIERS.register(eventBus);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookTypes::register);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookCategories::register);
 		XSNetworkHandler.INSTANCE.initChannel();

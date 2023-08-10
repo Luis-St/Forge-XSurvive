@@ -28,7 +28,7 @@ public enum XSNetworkHandler {
 	INSTANCE();
 	
 	private static final String VERSION = "3";
-	private int id = 0;
+	private int id;
 	private SimpleChannel simpleChannel;
 	
 	public void initChannel() {
@@ -43,7 +43,7 @@ public enum XSNetworkHandler {
 	}
 	
 	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {
-		this.simpleChannel.messageBuilder(clazz, id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
+		this.simpleChannel.messageBuilder(clazz, this.id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
 	}
 	
 	public @NotNull SimpleChannel getChannel() {

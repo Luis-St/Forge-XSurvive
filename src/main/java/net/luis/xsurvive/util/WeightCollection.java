@@ -16,11 +16,12 @@ import java.util.Map.Entry;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class WeightCollection<T> {
 	
 	private final NavigableMap<Integer, Pair<Integer, T>> map;
 	private final Random random;
-	private int total = 0;
+	private int total;
 	
 	public WeightCollection() {
 		this(new Random());
@@ -52,7 +53,7 @@ public class WeightCollection<T> {
 	}
 	
 	public T next() {
-		int value = (int) (this.random.nextDouble() * this.total);
+		int value = this.random.nextInt(this.total);
 		return this.map.higherEntry(value).getValue().getSecond();
 	}
 	

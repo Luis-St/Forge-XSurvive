@@ -12,6 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class XSLootItemConditions {
 	
 	public static final DeferredRegister<LootItemConditionType> LOOT_ITEM_CONDITIONS = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, XSurvive.MOD_ID);

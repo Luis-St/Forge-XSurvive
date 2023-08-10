@@ -34,17 +34,6 @@ public class XSEnchantmentHelper {
 		return enchantments.contains(enchantment);
 	}
 	
-	public static boolean hasGoldenEnchantment(@NotNull ItemStack stack) {
-		return !getGoldenEnchantments(stack).isEmpty();
-	}
-	
-	public static boolean hasMinEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
-		if (hasEnchantment(enchantment, stack)) {
-			return stack.getEnchantmentLevel(enchantment) == enchantment.getMinLevel();
-		}
-		return false;
-	}
-	
 	public static boolean hasMaxEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
 			return stack.getEnchantmentLevel(enchantment) == enchantment.getMaxLevel();
@@ -57,7 +46,7 @@ public class XSEnchantmentHelper {
 			if (enchantment instanceof IEnchantment ench) {
 				return stack.getEnchantmentLevel(enchantment) == ench.getMaxGoldenBookLevel();
 			} else {
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			}
 		}
 		return false;
@@ -75,7 +64,7 @@ public class XSEnchantmentHelper {
 					enchantments.add(enchantment);
 				}
 			} else {
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			}
 		}
 		return enchantments;
@@ -143,20 +132,10 @@ public class XSEnchantmentHelper {
 					return new EnchantmentInstance(instance.enchantment, instance.level + 1);
 				}
 			} else {
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(instance.enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(instance.enchantment));
 			}
 		}
 		return instance;
-	}
-	
-	public static void decreaseEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
-		if (hasEnchantment(enchantment, stack)) {
-			if (hasMinEnchantment(enchantment, stack)) {
-				removeEnchantment(enchantment, stack);
-			} else {
-				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) - 1), stack);
-			}
-		}
 	}
 	
 	public static @NotNull Map<EquipmentSlot, ItemStack> getItemsWith(@NotNull Enchantment enchantment, @NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
@@ -171,9 +150,7 @@ public class XSEnchantmentHelper {
 	}
 	
 	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
-		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> {
-			return enchantment.canEnchant(new ItemStack(item));
-		}).map(ItemStack::new).collect(Collectors.toList());
+		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> enchantment.canEnchant(new ItemStack(item))).map(ItemStack::new).collect(Collectors.toList());
 	}
 	
 	public static void enchantItem(RandomSource rng, ItemStack stack, int count, int cost, boolean treasure, boolean golden) {
@@ -181,7 +158,7 @@ public class XSEnchantmentHelper {
 		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, treasure);
 		Consumer<? super EnchantmentInstance> action = (instance) -> {
 			if (golden) {
-				instances.add(increaseEnchantment(instance, golden));
+				instances.add(increaseEnchantment(instance, true));
 			} else {
 				instances.add(instance);
 			}

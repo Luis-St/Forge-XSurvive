@@ -46,9 +46,7 @@ public abstract class OreFeatureMixin extends Feature<OreConfiguration> {
 		} else if (shouldSkipAirCheck(rng, config.discardChanceOnAirExposure)) {
 			callback.setReturnValue(true);
 		} else {
-			callback.setReturnValue(!checkNeighbors(function, pos.immutable(), (state) -> {
-				return state.isAir() || state.getBlock() instanceof LiquidBlock;
-			}));
+			callback.setReturnValue(!checkNeighbors(function, pos.immutable(), state -> state.isAir() || state.getBlock() instanceof LiquidBlock));
 		}
 	}
 }

@@ -20,6 +20,7 @@ import java.util.Objects;
  *
  */
 
+@SuppressWarnings("DollarSignInName")
 @Mixin(targets = "net.minecraft.world.entity.monster.Evoker$EvokerSummonSpellGoal")
 public abstract class EvokerSummonSpellGoalMixin {
 	

@@ -7,6 +7,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -27,11 +28,6 @@ public class EnchantedGoldenBookItem extends GlintColorItem {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
 		return stack;
-	}
-	
-	@Override
-	public boolean isFoil(@NotNull ItemStack stack) {
-		return true;
 	}
 	
 	@Override
@@ -59,7 +55,7 @@ public class EnchantedGoldenBookItem extends GlintColorItem {
 		return 0;
 	}
 	
-	public Enchantment getEnchantment(@NotNull ItemStack stack) {
+	public @Nullable Enchantment getEnchantment(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 			if (enchantments.size() == 1) {

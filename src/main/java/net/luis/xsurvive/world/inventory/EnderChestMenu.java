@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.inventory;
 
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -18,10 +17,6 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class EnderChestMenu extends AbstractContainerMenu {
-	
-	public EnderChestMenu(int id, Inventory inventory, FriendlyByteBuf data) {
-		this(id, inventory);
-	}
 	
 	public EnderChestMenu(int id, @NotNull Inventory inventory) {
 		super(XSMenuTypes.ENDER_CHEST.get(), id);

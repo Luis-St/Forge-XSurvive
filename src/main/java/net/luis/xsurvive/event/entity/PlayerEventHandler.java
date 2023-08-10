@@ -72,13 +72,7 @@ public class PlayerEventHandler {
 		ItemStack right = event.getRight();
 		if (!left.isEmpty()) {
 			ItemStack result = left.copy();
-			if (right.isEmpty()) {
-				if ((left.isDamageableItem() || left.isEnchantable() || left.isEnchanted()) && left.getBaseRepairCost() > 1) {
-					event.setCost(5);
-					result.setRepairCost(result.getBaseRepairCost() / 2);
-					event.setOutput(result);
-				}
-			} else if (left.getItem() instanceof EnchantedGoldenBookItem) {
+			if (left.getItem() instanceof EnchantedGoldenBookItem) {
 				event.setCanceled(true);
 			} else if ((left.isEnchantable() || left.isEnchanted()) && right.getItem() instanceof EnchantedGoldenBookItem goldenBook) {
 				Enchantment enchantment = goldenBook.getEnchantment(right);
@@ -87,16 +81,14 @@ public class PlayerEventHandler {
 					event.setOutput(enchantedItem.stack());
 					event.setCost(enchantedItem.cost());
 				} else {
-					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				}
-			} else if (left.isEnchanted() || left.getItem().isFoil(left)) {
-				if (right.getItem() instanceof IGlintColor glintColor && !left.is(Items.ENCHANTED_BOOK)) {
-					int color = glintColor.getGlintColor(right);
-					if (17 >= color && color >= 0) {
-						result.setTag(IGlintColor.createGlintTag(result.getOrCreateTag(), color));
-						event.setOutput(result);
-						event.setCost(5);
-					}
+			} else if ((left.isEnchanted() || left.getItem().isFoil(left)) && right.getItem() instanceof IGlintColor glintColor && !left.is(Items.ENCHANTED_BOOK)) {
+				int color = glintColor.getGlintColor(right);
+				if (17 >= color && color >= 0) {
+					result.setTag(IGlintColor.createGlintTag(result.getOrCreateTag(), color));
+					event.setOutput(result);
+					event.setCost(5);
 				}
 			}
 		}
@@ -149,11 +141,7 @@ public class PlayerEventHandler {
 		if (!player.onGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
 			event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
 		}
-		float breakSpeed = event.getOriginalSpeed();
-		if (breakSpeed != event.getNewSpeed() && event.getNewSpeed() > 0.0F) {
-			breakSpeed = event.getNewSpeed();
-		}
-		event.setNewSpeed(breakSpeed * 0.75F);
+		event.setNewSpeed(event.getNewSpeed() * 0.75F);
 	}
 	
 	@SubscribeEvent
@@ -243,7 +231,9 @@ public class PlayerEventHandler {
 			ServerLevel serverLevel = player.serverLevel();
 			PlayerProvider.getServer(player).setContainerPos(pos);
 			if (state.getBlock() == Blocks.ENDER_CHEST) {
-				if (!player.isShiftKeyDown()) {
+				if (player.isShiftKeyDown()) {
+					event.setCanceled(true);
+				} else {
 					event.setUseBlock(Event.Result.DENY);
 					if (!player.getItemInHand(event.getHand()).isEmpty()) {
 						event.setUseItem(Event.Result.DENY);
@@ -252,8 +242,6 @@ public class PlayerEventHandler {
 					player.awardStat(Stats.OPEN_ENDERCHEST);
 					PiglinAi.angerNearbyPiglins(player, true);
 					level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
-				} else {
-					event.setCanceled(true);
 				}
 			} else if (state.getBlock() == Blocks.BELL) {
 				Raid raid = serverLevel.getRaidAt(pos);

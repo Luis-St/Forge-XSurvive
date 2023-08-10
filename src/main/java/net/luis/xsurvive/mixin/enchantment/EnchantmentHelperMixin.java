@@ -52,14 +52,14 @@ public abstract class EnchantmentHelperMixin {
 						tag.putString("enchantment", Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)).toString());
 						stack.getOrCreateTag().put(XSurvive.MOD_NAME + "GoldenEnchantments", tag);
 					} else {
-						XSurvive.LOGGER.info("The Enchantment {} which should be set is no allowed on EnchantedGoldenBookItems", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+						XSurvive.LOGGER.info("The Enchantment '{}' which should be set is no allowed on EnchantedGoldenBookItems", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 					}
 				} else {
-					XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				}
 				
 			} else {
-				XSurvive.LOGGER.error("Fail to set the Enchantment (" + enchantments + ") for a EnchantedGoldenBookItem, since the given Map size must be 1");
+				XSurvive.LOGGER.error("Fail to set the Enchantment ({}) for a EnchantedGoldenBookItem, since the given Map size must be 1", enchantments);
 			}
 			stack.removeTagKey("Enchantments");
 		}
@@ -72,7 +72,7 @@ public abstract class EnchantmentHelperMixin {
 				if (enchantment instanceof IEnchantment ench) {
 					return ench.isAllowedOnGoldenBooks();
 				}
-				XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				return false;
 			}).toList();
 			EnchantmentHelper.setEnchantments(Map.of(enchantments.get(rng.nextInt(enchantments.size())), 1), stack);

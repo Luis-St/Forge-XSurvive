@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -17,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ServerPlayerHandler extends AbstractPlayerHandler {
 	
-	private int nextPhantomReset = 0;
+	private int nextPhantomReset;
 	private int lastSync;
-	private boolean changed = false;
-	private BlockPos possibleContainerPos;
+	private boolean changed;
+	private @Nullable BlockPos possibleContainerPos;
 	
 	public ServerPlayerHandler(ServerPlayer player) {
 		super(player);

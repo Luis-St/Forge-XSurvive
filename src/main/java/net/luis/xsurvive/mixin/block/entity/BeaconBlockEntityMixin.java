@@ -36,6 +36,7 @@ import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
  */
 
 @Mixin(BeaconBlockEntity.class)
+@SuppressWarnings({"PatternVariableHidesField", "DataFlowIssue"})
 public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBeaconBlockEntity {
 	
 	//region Mixin

@@ -21,6 +21,7 @@ import java.util.List;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class MultiDropModifier extends LootModifier {
 	
 	public static final Codec<MultiDropModifier> CODEC = RecordCodecBuilder.create((instance) -> {
@@ -41,9 +42,9 @@ public class MultiDropModifier extends LootModifier {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
 		generatedLoot.forEach((stack) -> {
 			if (context.hasParam(LootContextParams.TOOL)) {
-				loot.addAll(MultiDropModifier.this.multiplyItem(stack, context.getParam(LootContextParams.TOOL).getEnchantmentLevel(XSEnchantments.MULTI_DROP.get())));
+				loot.addAll(this.multiplyItem(stack, context.getParam(LootContextParams.TOOL).getEnchantmentLevel(XSEnchantments.MULTI_DROP.get())));
 			} else {
-				XSurvive.LOGGER.error("Could not apply the MultiDrop logic on LootTable {}, since there is no Tool in the LootContext present", context.getQueriedLootTableId());
+				XSurvive.LOGGER.error("Could not apply the MultiDrop logic on LootTable '{}', since there is no Tool in the LootContext present", context.getQueriedLootTableId());
 			}
 		});
 		return loot;

@@ -2,7 +2,6 @@ package net.luis.xsurvive.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +67,7 @@ public class Util {
 		return IntStream.range(0, parts).map(i -> i < remaining ? partValue + 1 : partValue).boxed().collect(Collectors.toList());
 	}
 	
-	public static int getSafeOrElseLast(int @NotNull [] array, int index, @NotNull int fallback) {
+	public static int getSafeOrElseLast(int @NotNull [] array, int index, int fallback) {
 		if (array.length == 0) {
 			return fallback;
 		}

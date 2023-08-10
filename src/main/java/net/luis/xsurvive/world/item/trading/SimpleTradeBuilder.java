@@ -63,10 +63,6 @@ public class SimpleTradeBuilder {
 		return this.multiplier(0.05F);
 	}
 	
-	public @NotNull SimpleTradeBuilder toolMultiplier() {
-		return this.multiplier(0.2F);
-	}
-	
 	public @NotNull SimpleTradeBuilder multiplier(float priceMultiplier) {
 		this.priceMultiplier = priceMultiplier;
 		return this;

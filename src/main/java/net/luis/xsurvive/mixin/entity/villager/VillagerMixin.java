@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(Villager.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class VillagerMixin extends AbstractVillager {
 	
 	//region Mixin

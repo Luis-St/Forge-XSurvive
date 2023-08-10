@@ -29,6 +29,7 @@ import java.util.Random;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class GoldenBookModifier extends LootModifier {
 	
 	private static final Random RNG = new Random();
@@ -83,7 +84,7 @@ public class GoldenBookModifier extends LootModifier {
 			goldenBook.setEnchantment(stack, enchantment);
 			return stack;
 		}
-		XSurvive.LOGGER.error("Fail to get a golden enchantment for the enchanted golden book in loot table {}", context.getQueriedLootTableId());
+		XSurvive.LOGGER.error("Fail to get a golden enchantment for the enchanted golden book in loot table '{}'", context.getQueriedLootTableId());
 		return ItemStack.EMPTY;
 	}
 	
@@ -101,14 +102,14 @@ public class GoldenBookModifier extends LootModifier {
 			if (ench.isAllowedOnGoldenBooks()) {
 				return enchantment;
 			} else if (10 > tries) {
-				XSurvive.LOGGER.warn("Enchantment {} is not allowed on golden books", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+				XSurvive.LOGGER.warn("Enchantment '{}' is not allowed on golden books", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 				return this.getRandomEnchantment(location, tries + 1);
 			} else {
 				XSurvive.LOGGER.error("Found no valid enchantment for the enchanted golden book in loot table {} after 10 tries", location);
 				return null;
 			}
 		}
-		XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
+		XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 		return null;
 	}
 }

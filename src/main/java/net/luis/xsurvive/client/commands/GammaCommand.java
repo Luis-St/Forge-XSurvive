@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class GammaCommand {
 	
 	public static void register(@NotNull CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -40,12 +41,7 @@ public class GammaCommand {
 	
 	private static int setGamma(@NotNull CommandSourceStack source, @NotNull Minecraft minecraft, double value) {
 		minecraft.options.gamma.set(value);
-		if (minecraft.options.gamma.get() == value) {
-			source.sendSuccess(() -> Component.translatable(XSurvive.MOD_ID + ".commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
-			return 1;
-		} else {
-			source.sendFailure(Component.translatable(XSurvive.MOD_ID + ".commands.gamma.failure", Double.toString(value)));
-			return 0;
-		}
+		source.sendSuccess(() -> Component.translatable(XSurvive.MOD_ID + ".commands.gamma.success", Double.toString(minecraft.options.gamma.get())), false);
+		return 1;
 	}
 }

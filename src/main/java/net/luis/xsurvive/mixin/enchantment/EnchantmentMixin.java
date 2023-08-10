@@ -21,6 +21,7 @@ import java.util.List;
  */
 
 @Mixin(Enchantment.class)
+@SuppressWarnings("DataFlowIssue")
 public abstract class EnchantmentMixin implements IEnchantment {
 	
 	//region Mixin

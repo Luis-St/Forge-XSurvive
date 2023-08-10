@@ -59,7 +59,7 @@ public class LivingEventHandler {
 				int harmingCurse = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.CURSE_OF_HARMING.get(), player);
 				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT.get(), player);
 				if (harmingCurse > 0) {
-					float damage = (amount / 2.0F) * (float) harmingCurse;
+					float damage = (amount / 2.0F) * harmingCurse;
 					if (player.hurt(new DamageSource(player.level().registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
 						event.setCanceled(true);
 					}
@@ -129,16 +129,16 @@ public class LivingEventHandler {
 			if (event.getSlot() == EquipmentSlot.FEET) {
 				int voidWalkerTo = toStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
 				int voidWalkerFrom = fromStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
-				EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_GRAVITY.get(), Operation.MULTIPLY_TOTAL, GRAVITY_MODIFIER_UUID, "EntityGravity", voidWalkerTo, voidWalkerFrom);
+				EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_GRAVITY.get(), Operation.MULTIPLY_TOTAL, GRAVITY_MODIFIER_UUID, "EntityGravity", voidWalkerTo, voidWalkerFrom, 1.0);
 			}
 			int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
 			int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
-			EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom);
+			EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom, 1.0);
 			player.setHealth(Math.min(player.getHealth(), (float) Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).getValue()));
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
-			EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_REACH.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom);
-			EntityHelper.updateAttributeModifier(player, ForgeMod.BLOCK_REACH.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", 0.5 * reachingTo, 0.5 * reachingFrom);
+			EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_REACH.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom, 0.5);
+			EntityHelper.updateAttributeModifier(player, ForgeMod.BLOCK_REACH.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", reachingTo, reachingFrom, 0.5);
 		}
 	}
 	

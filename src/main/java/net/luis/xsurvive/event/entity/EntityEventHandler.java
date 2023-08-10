@@ -136,7 +136,7 @@ public class EntityEventHandler {
 		} else if (entity instanceof Pillager pillager) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level(), pillager.blockPosition());
 			if (instance.getEffectiveDifficulty() > 0.0) {
-				pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, ItemStackHelper.getCrossbowForDifficulty(pillager, instance), instance.getSpecialMultiplier()));
+				pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, ItemStackHelper.getCrossbowForDifficulty(instance), instance.getSpecialMultiplier()));
 			}
 		} else if (entity instanceof Vindicator vindicator) {
 			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level(), vindicator.blockPosition());

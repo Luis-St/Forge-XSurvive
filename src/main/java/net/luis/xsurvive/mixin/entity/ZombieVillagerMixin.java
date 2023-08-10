@@ -26,6 +26,7 @@ import java.util.UUID;
  */
 
 @Mixin(ZombieVillager.class)
+@SuppressWarnings("UnnecessarySuperQualifier")
 public abstract class ZombieVillagerMixin extends Zombie {
 	
 	//region Mixin

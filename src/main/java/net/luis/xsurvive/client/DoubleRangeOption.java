@@ -14,6 +14,7 @@ import java.util.function.Function;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Double> {
 	
 	private final double min;

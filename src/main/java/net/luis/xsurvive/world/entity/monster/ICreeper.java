@@ -8,8 +8,6 @@ package net.luis.xsurvive.world.entity.monster;
 
 public interface ICreeper {
 	
-	int getExplosionRadius();
-	
 	void setExplosionRadius(int explosionRadius);
 	
 	void setPowered(boolean powered);

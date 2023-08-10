@@ -38,6 +38,7 @@ import java.util.function.Consumer;
  *
  */
 
+@SuppressWarnings({"DuplicatedCode", "deprecation"})
 public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	
 	private final CraftingHandler handler;
@@ -78,7 +79,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			
 			@Override
 			public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
-				XSAnvilExtensionMenu.this.onTake(player, stack);
+				XSAnvilExtensionMenu.this.onTake(player);
 				super.onTake(player, stack);
 			}
 		});
@@ -88,7 +89,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 		return (player.getAbilities().instabuild || player.experienceLevel >= this.cost) && this.cost > 0;
 	}
 	
-	private void onTake(@NotNull Player player, @NotNull ItemStack stack) {
+	private void onTake(@NotNull Player player) {
 		if (player instanceof ServerPlayer serverPlayer) {
 			if (!serverPlayer.getAbilities().instabuild) {
 				serverPlayer.giveExperienceLevels(-this.cost);
@@ -128,7 +129,6 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 		this.cost = 1;
 		int enchantCost = 0;
 		int repairCost = 0;
-		int renameCost = 0;
 		if (leftStack.isEmpty()) {
 			this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
 			this.cost = 0;
@@ -139,13 +139,12 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
 			boolean enchantedBook;
-			boolean decreaseRepairCost = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
 				this.cost = 0;
 				return;
 			} else {
-				if (!this.onAnvilUpdate(leftStack, rightStack, repairCost)) {
+				if (!this.isEventCanceled(leftStack, rightStack, repairCost)) {
 					return;
 				}
 				enchantedBook = rightStack.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(rightStack).isEmpty();
@@ -174,8 +173,8 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 						int leftDamage = leftStack.getMaxDamage() - leftStack.getDamageValue();
 						int rightDamage = rightStack.getMaxDamage() - rightStack.getDamageValue();
 						int resultDamage = rightDamage + resultStack.getMaxDamage() * 12 / 100;
-						int combindedDamage = leftDamage + resultDamage;
-						int damage = resultStack.getMaxDamage() - combindedDamage;
+						int combinedDamage = leftDamage + resultDamage;
+						int damage = resultStack.getMaxDamage() - combinedDamage;
 						if (damage < 0) {
 							damage = 0;
 						}
@@ -184,13 +183,13 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 							enchantCost += 2;
 						}
 					}
-					Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(rightStack);
-					boolean canEnchant = false;
 					boolean survival = false;
-					for (Enchantment rightEnchantment : rightEnchantments.keySet()) {
+					Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(rightStack);
+					for (Map.Entry<Enchantment, Integer> entry : rightEnchantments.entrySet()) {
+						Enchantment rightEnchantment = entry.getKey();
 						if (rightEnchantment != null) {
 							int resultLevel = resultEnchantments.getOrDefault(rightEnchantment, 0);
-							int rightLevel = rightEnchantments.get(rightEnchantment);
+							int rightLevel = entry.getValue();
 							if (rightEnchantment instanceof IEnchantment ench) {
 								if (resultLevel == rightLevel) {
 									if (!ench.isGoldenLevel(resultLevel) && rightEnchantment.getMaxLevel() > rightLevel) {
@@ -200,7 +199,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 									rightLevel = Math.max(rightLevel, resultLevel);
 								}
 							} else {
-								XSurvive.LOGGER.error("Enchantment {} is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(rightEnchantment));
+								XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(rightEnchantment));
 								XSurvive.LOGGER.info("A deprecate vanilla logic is called");
 								rightLevel = resultLevel == rightLevel ? rightLevel + 1 : Math.max(rightLevel, resultLevel);
 							}
@@ -214,9 +213,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 									++enchantCost;
 								}
 							}
-							if (!canEnchantOrCreative) {
-								survival = true;
-							} else {
+							if (canEnchantOrCreative) {
 								resultEnchantments.put(rightEnchantment, rightLevel);
 								int rarityCost = switch (rightEnchantment.getRarity()) {
 									case COMMON -> 1;
@@ -231,10 +228,12 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 								if (leftStack.getCount() > 1) {
 									enchantCost = 40;
 								}
+							} else {
+								survival = true;
 							}
 						}
 					}
-					if (survival && !canEnchant) {
+					if (survival) {
 						this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
 						this.cost = 0;
 						return;
@@ -245,10 +244,8 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			if (enchantedBook && !resultStack.isBookEnchantable(rightStack)) {
 				resultStack = ItemStack.EMPTY;
 			}
-			if (!decreaseRepairCost) {
-				this.cost = repairCost + enchantCost;
-			}
-			if (enchantCost <= 0 && !decreaseRepairCost) {
+			this.cost = repairCost + enchantCost;
+			if (0 >= enchantCost) {
 				resultStack = ItemStack.EMPTY;
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
@@ -265,9 +262,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 					baseRepairCost = rightStack.getBaseRepairCost();
 				}
 				baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
-				if (!decreaseRepairCost) {
-					resultStack.setRepairCost(baseRepairCost);
-				}
+				resultStack.setRepairCost(baseRepairCost);
 				EnchantmentHelper.setEnchantments(resultEnchantments, resultStack);
 			}
 			this.handler.getResultHandler().setStackInSlot(0, resultStack);
@@ -276,14 +271,14 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	}
 	
 	private void broadcastChanges() {
-		XBNetworkHandler.INSTANCE.sendToPlayer(player, new UpdateAnvilPacket(this.cost));
+		XBNetworkHandler.INSTANCE.sendToPlayer(this.player, new UpdateAnvilPacket(this.cost));
 	}
 	
 	public int getCost() {
 		return this.cost;
 	}
 	
-	private boolean onAnvilUpdate(@NotNull ItemStack leftStack, @NotNull ItemStack rightStack, int repairCost) {
+	private boolean isEventCanceled(@NotNull ItemStack leftStack, @NotNull ItemStack rightStack, int repairCost) {
 		AnvilUpdateEvent event = new AnvilUpdateEvent(leftStack, rightStack, leftStack.getDisplayName().getString(), repairCost, this.player);
 		if (MinecraftForge.EVENT_BUS.post(event)) {
 			return false;

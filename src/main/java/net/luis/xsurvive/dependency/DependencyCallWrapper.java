@@ -1,6 +1,6 @@
 package net.luis.xsurvive.dependency;
 
-import net.luis.xsurvive.dependency.xbackpack.XBackpackCommonSetup;
+import net.luis.xsurvive.dependency.xbackpack.XBCommonSetup;
 import net.minecraftforge.fml.ModList;
 
 /**
@@ -13,7 +13,7 @@ public class DependencyCallWrapper {
 	
 	public static void wrapCommonSetup() {
 		if (ModList.get().isLoaded("xbackpack")) {
-			XBackpackCommonSetup.commonSetup();
+			XBCommonSetup.commonSetup();
 		}
 	}
 }
