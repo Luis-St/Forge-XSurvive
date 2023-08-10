@@ -25,6 +25,7 @@
 		"entity.boss.WitherBossMixin",
 		"entity.monster.CreeperMixin",
 		"entity.monster.PhantomMixin",
+		"entity.monster.VexMixin",
 		"entity.monster.WitherSkeletonMixin",
 		"entity.monster.ZombieVillagerMixin",
 		"entity.projectile.ArrowMixin",
