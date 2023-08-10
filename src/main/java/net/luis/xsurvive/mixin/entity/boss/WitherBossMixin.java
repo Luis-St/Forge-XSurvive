@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.boss;
 
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.tags.DamageTypeTags;

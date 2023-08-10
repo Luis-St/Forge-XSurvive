@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.monster;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(Phantom.class)
+@SuppressWarnings("UnnecessarySuperQualifier")
 public abstract class PhantomMixin extends FlyingMob {
 	
 	//region Mixin
@@ -27,7 +28,7 @@ public abstract class PhantomMixin extends FlyingMob {
 	
 	@Inject(method = "aiStep", at = @At("HEAD"), cancellable = true)
 	public void aiStep(@NotNull CallbackInfo callback) {
-		aiStep();
+		super.aiStep();
 		callback.cancel();
 	}
 }

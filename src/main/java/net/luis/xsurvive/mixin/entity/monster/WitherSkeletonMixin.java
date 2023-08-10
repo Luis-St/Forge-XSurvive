@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.monster;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.ItemStackHelper;

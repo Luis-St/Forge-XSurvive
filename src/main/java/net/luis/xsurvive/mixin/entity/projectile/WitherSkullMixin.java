@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.projectile;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

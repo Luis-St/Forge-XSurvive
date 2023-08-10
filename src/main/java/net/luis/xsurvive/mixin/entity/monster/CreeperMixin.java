@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.monster;
 
 import net.luis.xsurvive.world.entity.monster.ICreeper;
 import net.minecraft.network.syncher.EntityDataAccessor;

@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.menu;
 
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.world.effect.MobEffect;

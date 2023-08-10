@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.boss;
 
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.Util;

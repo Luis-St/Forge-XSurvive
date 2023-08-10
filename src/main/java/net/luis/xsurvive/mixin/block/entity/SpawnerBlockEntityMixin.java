@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

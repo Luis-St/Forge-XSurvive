@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.monster;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

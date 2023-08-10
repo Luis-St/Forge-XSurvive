@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin;
+package net.luis.xsurvive.mixin.menu;
 
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;

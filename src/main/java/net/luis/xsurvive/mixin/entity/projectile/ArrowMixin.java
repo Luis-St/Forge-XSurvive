@@ -1,4 +1,4 @@
-package net.luis.xsurvive.mixin.entity;
+package net.luis.xsurvive.mixin.entity.projectile;
 
 import net.luis.xsurvive.world.entity.projectile.IArrow;
 import net.minecraft.world.entity.projectile.Arrow;
