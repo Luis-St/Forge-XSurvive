@@ -35,12 +35,12 @@ import java.util.Objects;
  */
 
 @Mixin(WitherSkullBlock.class)
-@SuppressWarnings({"CodeBlock2Expr", "ReturnOfNull"})
+@SuppressWarnings({"CodeBlock2Expr", "ReturnOfNull", "DataFlowIssue"})
 public abstract class WitherSkullBlockMixin {
 	
 	//region Mixin
 	@Shadow
-	private static BlockPattern getOrCreateWitherFull() {
+	private static @NotNull BlockPattern getOrCreateWitherFull() {
 		return null;
 	}
 	//endregion
@@ -51,7 +51,7 @@ public abstract class WitherSkullBlockMixin {
 			BlockState state = blockEntity.getBlockState();
 			boolean witherSkull = state.is(Blocks.WITHER_SKELETON_SKULL) || state.is(Blocks.WITHER_SKELETON_WALL_SKULL);
 			if (witherSkull && pos.getY() >= level.getMinBuildHeight() && level.getDifficulty() != Difficulty.PEACEFUL) {
-				BlockPattern pattern = Objects.requireNonNull(getOrCreateWitherFull());
+				BlockPattern pattern = getOrCreateWitherFull();
 				BlockPatternMatch patternMatch = pattern.find(level, pos);
 				if (patternMatch != null) {
 					if (level.getBiome(pos).is(Biomes.THE_END)) {

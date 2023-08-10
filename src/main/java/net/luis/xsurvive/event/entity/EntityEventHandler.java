@@ -16,9 +16,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -65,7 +64,10 @@ public class EntityEventHandler {
 		if (event.getEntity() instanceof LivingEntity entity) {
 			if (!(entity instanceof Player)) {
 				if (entity instanceof EnderDragon || entity instanceof WitherBoss || entity instanceof ElderGuardian || entity instanceof Warden) {
-					Objects.requireNonNull(entity.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(1000.0);
+					AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
+					if (instance != null) {
+						instance.setBaseValue(1000.0);
+					}
 					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 2.0, Operation.MULTIPLY_TOTAL)); // *= 3.0
 				} else if (entity instanceof Enemy || entity instanceof AbstractGolem) {
 					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 4.0, Operation.MULTIPLY_TOTAL)); // *= 5.0

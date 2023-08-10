@@ -26,9 +26,9 @@ public class AdvancedTradeBuilder {
 	private int villagerXp;
 	private float priceMultiplier;
 	
-	private AdvancedTradeBuilder(ItemStack cost, ItemStack secondCost, ItemStack result) {
-		this.cost = Objects.requireNonNull(cost);
-		this.secondCost = Objects.requireNonNull(secondCost);
+	private AdvancedTradeBuilder(@NotNull ItemStack cost, @NotNull ItemStack secondCost, @NotNull ItemStack result) {
+		this.cost = cost;
+		this.secondCost = secondCost;
 		this.result = result;
 	}
 	

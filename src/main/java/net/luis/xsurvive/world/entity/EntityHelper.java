@@ -58,17 +58,19 @@ public class EntityHelper {
 	}
 	
 	public static void updateAttributeModifier(@NotNull Player player, @NotNull Attribute attribute, @NotNull Operation operation, @NotNull UUID uuid, @NotNull String name, int to, int from, double multiplier) {
-		AttributeInstance instance = Objects.requireNonNull(player.getAttribute(attribute));
-		AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to * multiplier, operation);
-		boolean hasModifier = instance.getModifier(uuid) != null;
-		if (to == from && !hasModifier) {
-			instance.addTransientModifier(modifier);
-		} else if (to != from) {
-			if (hasModifier) {
-				instance.removeModifier(uuid);
+		AttributeInstance instance = player.getAttribute(attribute);
+		if (instance != null) {
+			AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to * multiplier, operation);
+			boolean hasModifier = instance.getModifier(uuid) != null;
+			if (to == from && !hasModifier) {
 				instance.addTransientModifier(modifier);
-			} else {
-				instance.addTransientModifier(modifier);
+			} else if (to != from) {
+				if (hasModifier) {
+					instance.removeModifier(uuid);
+					instance.addTransientModifier(modifier);
+				} else {
+					instance.addTransientModifier(modifier);
+				}
 			}
 		}
 	}
@@ -98,8 +100,8 @@ public class EntityHelper {
 	public static void addAttributeModifier(@NotNull LivingEntity entity, @NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
 		AttributeMap attributes = entity.getAttributes();
 		if (attributes.hasAttribute(attribute)) {
-			AttributeInstance instance = Objects.requireNonNull(attributes.getInstance(attribute));
-			if (instance.getModifier(modifier.getId()) == null) {
+			AttributeInstance instance = attributes.getInstance(attribute);
+			if (instance != null && instance.getModifier(modifier.getId()) == null) {
 				instance.addTransientModifier(modifier);
 			}
 		}

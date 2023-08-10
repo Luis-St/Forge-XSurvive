@@ -11,7 +11,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -40,8 +39,8 @@ public class GlintColorHandler {
 				return optional.orElseThrow(NullPointerException::new).getGlintColor(stack);
 			} else if (stack.getItem() instanceof IGlintColor glintColor) {
 				return glintColor.getGlintColor(stack);
-			} else if (stack.hasTag() && Objects.requireNonNull(stack.getTag()).contains(XSurvive.MOD_NAME)) {
-				CompoundTag tag = stack.getTag().getCompound(XSurvive.MOD_NAME);
+			} else if (stack.hasTag() && stack.getOrCreateTag().contains(XSurvive.MOD_NAME)) {
+				CompoundTag tag = stack.getOrCreateTag().getCompound(XSurvive.MOD_NAME);
 				if (tag.contains(XSurvive.MOD_NAME + "GlintColor")) {
 					return tag.getInt(XSurvive.MOD_NAME + "GlintColor");
 				} else if (tag.contains(XSurvive.MOD_NAME + "ItemColor")) {

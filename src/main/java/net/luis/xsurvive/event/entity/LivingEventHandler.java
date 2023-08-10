@@ -19,6 +19,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Blaze;
@@ -134,7 +135,10 @@ public class LivingEventHandler {
 			int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
 			int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
 			EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom, 1.0);
-			player.setHealth(Math.min(player.getHealth(), (float) Objects.requireNonNull(player.getAttribute(Attributes.MAX_HEALTH)).getValue()));
+			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
+			if (instance != null) {
+				instance.setBaseValue(Math.min(player.getHealth(), (float) instance.getValue()));
+			}
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_REACH.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom, 0.5);
