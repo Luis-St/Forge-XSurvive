@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(VillagerData.class)
-@SuppressWarnings("DataFlowIssue")
+@SuppressWarnings({"StaticVariableUsedBeforeInitialization", "NonConstantFieldWithUpperCaseName"})
 public abstract class VillagerDataMixin {
 	
 	//region Mixin
-	@Shadow private static final int[] NEXT_LEVEL_XP_THRESHOLDS = {};
+	@Shadow private static int[] NEXT_LEVEL_XP_THRESHOLDS;
 	
 	@Shadow
 	private static boolean canLevelUp(int level) {

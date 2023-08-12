@@ -36,8 +36,8 @@ public class EntityHelper {
 		return entity instanceof EnderMan || entity instanceof Endermite || entity instanceof Shulker;
 	}
 	
-	public static boolean isAffectedByImpaling(@NotNull Entity entity) {
-		return entity instanceof AbstractFish || entity instanceof Dolphin || entity instanceof Squid || entity instanceof Guardian || entity instanceof Drowned || entity instanceof Turtle;
+	public static boolean isAffectedByImpaling(@NotNull LivingEntity entity) {
+		return entity instanceof WaterAnimal || entity.getMobType() == MobType.WATER;
 	}
 	
 	public static boolean isAffectedByFrost(@NotNull Entity entity) {

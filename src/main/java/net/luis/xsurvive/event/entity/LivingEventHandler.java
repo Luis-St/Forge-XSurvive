@@ -93,7 +93,7 @@ public class LivingEventHandler {
 	
 	@SubscribeEvent
 	public static void livingDamage(@NotNull LivingDamageEvent event) {
-		Entity target = event.getEntity();
+		LivingEntity target = event.getEntity();
 		DamageSource source = event.getSource();
 		float newAmount = event.getAmount();
 		if (source.getEntity() instanceof Player player) {

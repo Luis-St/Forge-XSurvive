@@ -198,7 +198,6 @@ public abstract class RaidMixin {
 	@Inject(method = "getNumGroups", at = @At("HEAD"), cancellable = true)
 	public void getNumGroups(@NotNull Difficulty difficulty, @NotNull CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(Math.max(6, this.getDefaultNumGroups(difficulty) * difficulty.getId()));
-		callback.cancel();
 	}
 	
 	private int getDefaultNumGroups(@NotNull Difficulty difficulty) {
@@ -212,7 +211,6 @@ public abstract class RaidMixin {
 			waveSpawns += this.getNumSpawns(raiderType, 7);
 		}
 		callback.setReturnValue(waveSpawns);
-		callback.cancel();
 	}
 	
 	private int getNumSpawns(Raid.@NotNull RaiderType raiderType, int wave) {
@@ -234,6 +232,5 @@ public abstract class RaidMixin {
 			case EVOKER, RAVAGER, WITCH -> rng.nextInt((wave / 8) + 1) + rng.nextInt((wave / 8) + 1);
 			default -> rng.nextInt((wave / 8) + 1);
 		});
-		callback.cancel();
 	}
 }
