@@ -6,7 +6,7 @@ plugins {
 	id "org.spongepowered.mixin" version "0.7.+"
 }
 
-version = ModVersion
+version = "${MinecraftVersion}-${ModVersion}"
 group = "net.luis.xsurvive"
 
 base {
@@ -152,7 +152,7 @@ jar {
 	manifest {
 		attributes([
 			"Specification-Title"     : "XSurvive",
-			"Specification-Version"   : "${ModVersion}",
+			"Specification-Version"   : "${MinecraftVersion}-${ModVersion}",
 			"Implementation-Title"    : project.name,
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd HH:mm:ssZ")
 		])

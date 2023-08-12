@@ -4,7 +4,7 @@ license = "All rights reserved"
 
 [[mods]]
 modId = "xsurvive"
-version = "${ModVersion}"
+version = "${MinecraftVersion}-${ModVersion}"
 displayName = "XSurvive"
 credits = "Thanks for downloading my Mod"
 authors = "Luis"
