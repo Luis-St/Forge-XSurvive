@@ -1,6 +1,7 @@
 package net.luis.xsurvive.world.entity;
 
 import net.luis.xsurvive.world.entity.ai.custom.CustomAi;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -12,5 +13,5 @@ public interface ILivingEntity {
 	
 	boolean hasCustomAi();
 	
-	CustomAi getCustomAi();
+	@Nullable CustomAi getCustomAi();
 }

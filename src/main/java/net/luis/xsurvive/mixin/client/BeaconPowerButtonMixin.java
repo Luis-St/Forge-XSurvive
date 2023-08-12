@@ -30,6 +30,7 @@ import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
  *
  */
 
+@SuppressWarnings("DollarSignInName")
 @Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$BeaconPowerButton")
 public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenButton {
 	

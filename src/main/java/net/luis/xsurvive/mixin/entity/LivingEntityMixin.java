@@ -45,7 +45,7 @@ public abstract class LivingEntityMixin extends Entity implements ILivingEntity 
 	}
 	
 	@Override
-	public CustomAi getCustomAi() {
+	public @Nullable CustomAi getCustomAi() {
 		return !this.level().isClientSide ? this.customAi : null;
 	}
 }

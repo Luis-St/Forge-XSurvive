@@ -36,7 +36,7 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	@Inject(method = "renderLabels", at = @At("HEAD"), cancellable = true)
 	protected void renderLabels(GuiGraphics graphics, int x, int y, CallbackInfo callback) {
 		RenderSystem.disableBlend();
-		renderLabels(graphics, x, y);
+		super.renderLabels(graphics, x, y);
 		int cost = this.menu.getCost();
 		if (cost > 0) {
 			int color = 8453920;

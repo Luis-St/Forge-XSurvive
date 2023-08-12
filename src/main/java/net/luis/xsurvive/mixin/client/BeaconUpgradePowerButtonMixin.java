@@ -27,6 +27,7 @@ import java.util.Optional;
  *
  */
 
+@SuppressWarnings("DollarSignInName")
 @Mixin(targets = "net.minecraft.client.gui.screens.inventory.BeaconScreen$BeaconUpgradePowerButton")
 public abstract class BeaconUpgradePowerButtonMixin extends BeaconScreen.BeaconScreenButton {
 	
