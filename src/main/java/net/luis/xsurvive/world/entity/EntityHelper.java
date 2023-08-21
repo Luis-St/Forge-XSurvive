@@ -103,7 +103,7 @@ public class EntityHelper {
 		if (attributes.hasAttribute(attribute)) {
 			AttributeInstance instance = attributes.getInstance(attribute);
 			if (instance != null && instance.getModifier(modifier.getId()) == null) {
-				instance.addTransientModifier(modifier);
+				instance.addPermanentModifier(modifier);
 			}
 		}
 	}
