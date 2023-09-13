@@ -64,13 +64,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			Map<Enchantment, Integer> resultEnchantments = EnchantmentHelper.getEnchantments(resultStack);
 			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
 			this.repairItemCountCost = 0;
-			boolean enchantedBook;
+			boolean enchantedBook = false;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
 				this.resultSlots.setItem(0, ItemStack.EMPTY);
 				this.cost.set(0);
 				callback.cancel();
 				return;
-			} else {
+			} else if (!rightStack.isEmpty()) {
 				if (!ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, leftStack, rightStack, this.resultSlots, this.itemName, repairCost, this.player)) {
 					return;
 				}
@@ -168,7 +168,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 						callback.cancel();
 						return;
 					}
-					
 				}
 			}
 			if (StringUtils.isBlank(this.itemName)) {
