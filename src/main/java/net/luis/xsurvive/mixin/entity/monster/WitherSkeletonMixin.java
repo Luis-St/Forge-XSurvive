@@ -1,7 +1,7 @@
 package net.luis.xsurvive.mixin.entity.monster;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.ItemStackHelper;
+import net.luis.xsurvive.world.item.ItemStackEquipmentHelper;
 import net.luis.xsurvive.world.item.ItemEquipmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.util.RandomSource;
@@ -59,7 +59,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	
 	@Inject(method = "populateDefaultEquipmentEnchantments", at = @At("HEAD"))
 	protected void populateDefaultEquipmentEnchantments(RandomSource rng, @NotNull DifficultyInstance instance, CallbackInfo callback) {
-		ItemStack stack = ItemStackHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
+		ItemStack stack = ItemStackEquipmentHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
 		XSEnchantmentHelper.removeEnchantment(Enchantments.FLAMING_ARROWS, stack);
 		this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 	}

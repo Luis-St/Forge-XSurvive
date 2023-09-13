@@ -29,6 +29,7 @@ public class TestCommand {
 			source.sendFailure(Component.literal("Can not execute this command from a none player context"));
 			return 0;
 		}
+		source.sendSuccess(() -> Component.literal("Equipment value: " + EntityEquipmentHelper.getPlayerEquipment(player)), true);
 		return 1;
 	}
 }
