@@ -1,4 +1,4 @@
-package net.luis.xsurvive.event.register;
+package net.luis.xsurvive.event.registry;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
