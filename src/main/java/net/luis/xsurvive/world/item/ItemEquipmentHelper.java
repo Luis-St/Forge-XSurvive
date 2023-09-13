@@ -14,7 +14,7 @@ import java.util.List;
  *
  */
 
-public class ItemWeightHelper {
+public class ItemEquipmentHelper {
 	
 	public static @NotNull WeightCollection<List<Item>> getWeaponWeightsForDifficulty(double difficulty) {
 		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();

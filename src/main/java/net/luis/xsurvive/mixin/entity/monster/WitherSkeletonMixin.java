@@ -2,7 +2,7 @@ package net.luis.xsurvive.mixin.entity.monster;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.ItemStackHelper;
-import net.luis.xsurvive.world.item.ItemWeightHelper;
+import net.luis.xsurvive.world.item.ItemEquipmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -46,7 +46,7 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 		if (0.25 > rng.nextDouble()) {
 			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
 		} else {
-			Item weapon = ItemWeightHelper.getWeaponWeightsForDifficulty(Math.max(2.75, instance.getEffectiveDifficulty())).next().get(0);
+			Item weapon = ItemEquipmentHelper.getWeaponWeightsForDifficulty(Math.max(2.75, instance.getEffectiveDifficulty())).next().get(0);
 			if (weapon instanceof SwordItem) {
 				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(weapon));
 			} else {
