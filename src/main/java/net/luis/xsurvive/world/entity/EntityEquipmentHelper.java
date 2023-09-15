@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.entity.player.PlayerHelper;
 import net.luis.xsurvive.world.item.*;
+import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -14,11 +16,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -103,20 +108,40 @@ public class EntityEquipmentHelper {
 		} else if (stack.getItem() instanceof DiggerItem item) {
 			value = (1 + item.getAttackDamage()) * durability;
 		} else if (stack.getItem() instanceof ShieldItem item) {
-			value = 75 * durability;
+			value = 45 * durability;
 		} else if (stack.getItem() instanceof BowItem item) {
-			value = 50 * durability;
+			value = 25 * durability;
 		} else if (stack.getItem() instanceof CrossbowItem item) {
-			value = 100 * durability;
+			value = 35 * durability;
 		} else if (stack.getItem() instanceof TridentItem item) {
-			value = 150 * durability;
+			value = 75 * durability;
 		} else if (stack.getItem() instanceof PotionItem item) {
 			value = PotionUtils.getMobEffects(stack).stream().mapToInt(MobEffectInstance::getAmplifier).sum();
 		}
+		int curseCount = 0;
 		if (stack.isEnchanted()) {
-			value *= 2;
+			double enchantmentValue = 0.0;
+			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+			for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+				Enchantment enchantment = entry.getKey();
+				if (enchantment.isCurse()) {
+					curseCount++;
+				}
+				double tempValue = 1 + enchantment.getRarity().ordinal();
+				if (!enchantment.isTradeable() && !enchantment.isDiscoverable() && enchantment.isTreasureOnly()) {
+					tempValue *= 3;
+				} else if ((!enchantment.isTradeable() && !enchantment.isDiscoverable()) || enchantment.isTreasureOnly()) {
+					tempValue *= 2;
+				}
+				if (enchantment instanceof IEnchantment ench && ench.isGoldenLevel(entry.getValue())) {
+					tempValue *= 2;
+				}
+				enchantmentValue += tempValue * entry.getValue();
+				
+			}
+			value += enchantmentValue;
 		}
-		return value;
+		return value * (1 - (0.3 * curseCount));
 	}
 	
 	/*
