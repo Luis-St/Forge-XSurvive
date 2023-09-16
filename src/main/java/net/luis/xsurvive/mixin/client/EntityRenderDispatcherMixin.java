@@ -41,9 +41,8 @@ public abstract class EntityRenderDispatcherMixin {
 	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
 	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {
-		Optional<IEntity> optional = EntityProvider.getSafe(entity).resolve();
-		if (optional.isPresent()) {
-			EntityFireType fireType = optional.get().getFireType();
+		EntityProvider.getSafe(entity).ifPresent(iEntity -> {
+			EntityFireType fireType = iEntity.getFireType();
 			TextureAtlasSprite fireTextureSprite0 = EntityFireTypeHelper.getFireTextureSprite0(entity, fireType);
 			TextureAtlasSprite fireTextureSprite1 = EntityFireTypeHelper.getFireTextureSprite1(entity, fireType);
 			stack.pushPose();
@@ -79,6 +78,6 @@ public abstract class EntityRenderDispatcherMixin {
 			}
 			stack.popPose();
 			callback.cancel();
-		}
+		});
 	}
 }

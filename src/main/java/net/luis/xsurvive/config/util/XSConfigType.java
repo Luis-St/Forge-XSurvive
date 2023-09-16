@@ -1,8 +1,8 @@
-package net.luis.xsurvive.config;
+package net.luis.xsurvive.config.util;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum ConfigType {
+public enum XSConfigType {
 	
 	CLIENT("client"),
 	OPTIONS("options"),
@@ -25,7 +25,7 @@ public enum ConfigType {
 	
 	private final String name;
 	
-	private ConfigType(@NotNull String name) {
+	private XSConfigType(@NotNull String name) {
 		this.name = name;
 	}
 	

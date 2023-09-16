@@ -2,6 +2,7 @@ package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.client.XSRecipeBookCategories;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -44,6 +45,7 @@ public class XSurvive {
 	public static final Logger LOGGER = LogUtils.getLogger();
 	
 	public XSurvive() {
+		XSConfigManager.register();
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		XSEnchantments.ENCHANTMENTS.register(eventBus);
 		XSLootItemConditions.LOOT_ITEM_CONDITIONS.register(eventBus);
