@@ -21,6 +21,7 @@ public class XSConfigManager {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final Path FOLDER = FMLPaths.GAMEDIR.get().resolve("xsurvive/config");
 	
+	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
 	
 	public static void register() {}
 	

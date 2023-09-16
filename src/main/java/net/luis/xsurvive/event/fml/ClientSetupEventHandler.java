@@ -5,6 +5,8 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.EnderChestScreen;
 import net.luis.xsurvive.client.gui.screens.SmeltingFurnaceScreen;
+import net.luis.xsurvive.config.ClientConfig;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -33,10 +35,19 @@ public class ClientSetupEventHandler {
 			MenuScreens.register(XSMenuTypes.SMELTING_FURNACE.get(), SmeltingFurnaceScreen::new);
 			MenuScreens.register(XSMenuTypes.ENDER_CHEST.get(), EnderChestScreen::new);
 		});
-		replaceGammaOption(minecraft);
-		XSurvive.LOGGER.debug("Replaced gamma option");
-		replaceGlintOptions(minecraft);
-		XSurvive.LOGGER.debug("Replaced glint options");
+		ClientConfig config = XSConfigManager.CLIENT_CONFIG.get();
+		if (config.options().replaceGamma()) {
+			XSurvive.LOGGER.info("Replace gamma option");
+			replaceGammaOption(minecraft);
+		}
+		if (config.options().replaceGlintSpeed()) {
+			XSurvive.LOGGER.info("Replace glint speed option");
+			replaceGlintSpeedOptions(minecraft);
+		}
+		if (config.options().replaceGlintStrength()) {
+			XSurvive.LOGGER.info("Replace glint strength option");
+			replaceGlintStrengthOptions(minecraft);
+		}
 		XSurvive.LOGGER.info("Reload options");
 		minecraft.options.load();
 		XSurvive.LOGGER.info("Gamma is now {}", minecraft.options.gamma.get());
@@ -61,7 +72,7 @@ public class ClientSetupEventHandler {
 		}, DoubleRangeOption.forGamma(0.0, 100.0), 0.5, (value) -> {});
 	}
 	
-	private static void replaceGlintOptions(@NotNull Minecraft minecraft) {
+	private static void replaceGlintSpeedOptions(@NotNull Minecraft minecraft) {
 		minecraft.options.glintSpeed = new OptionInstance<>("options.glintSpeed", OptionInstance.cachedConstantTooltip(Component.translatable("options.glintSpeed.tooltip")), (component, value) -> {
 			int glint = (int) (value * 100.0);
 			if (glint == 0) {
@@ -76,6 +87,9 @@ public class ClientSetupEventHandler {
 				return Options.percentValueLabel(component, value);
 			}
 		}, DoubleRangeOption.forGlint(0.0, 2.0), 0.5, (value) -> {});
+	}
+	
+	private static void replaceGlintStrengthOptions(@NotNull Minecraft minecraft) {
 		minecraft.options.glintStrength = new OptionInstance<>("options.glintStrength", OptionInstance.cachedConstantTooltip(Component.translatable("options.damageTiltStrength.tooltip")), (component, value) -> {
 			int glint = (int) (value * 100.0);
 			if (glint == 0) {

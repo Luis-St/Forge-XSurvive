@@ -1,5 +1,6 @@
 package net.luis.xsurvive.mixin.client;
 
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
@@ -26,9 +27,12 @@ public abstract class ChatReportScreenMixin extends Screen {
 	
 	@Inject(method = "sendReport", at = @At("HEAD"))
 	private void sendReport(CallbackInfo callback) {
-		Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
-		if (this.getMinecraft().player != null) {
-			this.getMinecraft().player.sendSystemMessage(component);
+		if (XSConfigManager.CLIENT_CONFIG.get().chat().disableChatReport()) {
+			Component component = Component.literal("Due to the chat reporting system not working properly and many players being banned for no reason, this system will be disabled pending a Mojang overhaul.").withStyle(ChatFormatting.RED);
+			if (this.getMinecraft().player != null) {
+				this.getMinecraft().player.sendSystemMessage(component);
+			}
+			callback.cancel();
 		}
 	}
 }
