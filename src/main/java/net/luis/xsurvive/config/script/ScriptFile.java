@@ -6,7 +6,6 @@ import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import javax.script.*;
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Objects;
 
 public class ScriptFile {

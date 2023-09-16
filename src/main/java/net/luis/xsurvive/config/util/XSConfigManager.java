@@ -17,9 +17,9 @@ import java.util.function.Supplier;
 
 public class XSConfigManager {
 	
-	public static final Logger LOGGER = LogUtils.getLogger();
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final Path FOLDER = FMLPaths.GAMEDIR.get().resolve("xsurvive/config");
+	public static final Logger LOGGER = LogUtils.getLogger();
 	
 	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
 	

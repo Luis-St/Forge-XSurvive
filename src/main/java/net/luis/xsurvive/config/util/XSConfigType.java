@@ -25,7 +25,7 @@ public enum XSConfigType {
 	
 	private final String name;
 	
-	private XSConfigType(@NotNull String name) {
+	XSConfigType(@NotNull String name) {
 		this.name = name;
 	}
 	
