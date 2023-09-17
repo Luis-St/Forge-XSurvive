@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static net.luis.xsurvive.config.scripts.blocks.BeaconScript.*;
 import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
 
 /**
@@ -52,23 +53,28 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
 	private static void applyEffects(@NotNull Level level, BlockPos pos, int beaconLevel, @Nullable MobEffect primary, @Nullable MobEffect secondary, CallbackInfo callback) {
 		if (level instanceof ServerLevel && primary != null && level.getBlockEntity(pos) instanceof IBeaconBlockEntity beacon) {
-			int area = beaconLevel * 20 + 20;
+			double effectRange = getRange(beaconLevel);
 			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared()) {
-				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, area * 3))) {
+				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, effectRange * getNetheriteRangeModifier(beaconLevel, effectRange)))) {
 					for (MobEffect effect : getEffects(beaconLevel, primary == MobEffects.JUMP)) {
-						player.addEffect(new MobEffectInstance(effect, (10 + beaconLevel * 10) * 20, beaconLevel, true, true));
+						player.addEffect(new MobEffectInstance(effect, getNetheriteEffectDuration(beaconLevel, effectRange), getNetheriteEffectAmplifier(beaconLevel, effectRange), true, true));
 					}
 				}
 			} else {
 				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared();
-				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? area * 2 : area));
-				int amplifier = beaconLevel >= 4 && primary == secondary ? 1 : 0;
+				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? effectRange * getDiamondRangeModifier(beaconLevel, effectRange) : effectRange));
+				int vanillaAmplifier = getVanillaEffectAmplifier(beaconLevel, effectRange, primary == secondary);
 				for (Player player : players) {
-					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : getAmplifier(player.getOnPos(), player.level(), pos, beaconLevel, area, primary, amplifier), true, true));
+					int stackedAmplifier = getAmplifier(player.getOnPos(), player.level(), pos, beaconLevel, (int) effectRange, primary, vanillaAmplifier);
+					int duration = getPrimaryEffectDuration(beaconLevel, effectRange, primary == secondary, diamond);
+					int amplifier = getPrimaryEffectAmplifier(beaconLevel, effectRange, primary == secondary, diamond, stackedAmplifier, vanillaAmplifier);
+					player.addEffect(new MobEffectInstance(primary, duration, amplifier, true, true));
 				}
 				if (beaconLevel >= 4 && primary != secondary && secondary != null) {
 					for (Player player : players) {
-						player.addEffect(new MobEffectInstance(secondary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : 0, true, true));
+						int duration = getSecondaryEffectDuration(beaconLevel, effectRange, diamond);
+						int amplifier = getSecondaryEffectAmplifier(beaconLevel, effectRange, diamond, vanillaAmplifier);
+						player.addEffect(new MobEffectInstance(secondary, duration, amplifier, true, true));
 					}
 				}
 			}
@@ -76,8 +82,8 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 		}
 	}
 	
-	private static @NotNull AABB getArea(@NotNull Level level, BlockPos pos, int area) {
-		return new AABB(pos).inflate(area).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
+	private static @NotNull AABB getArea(@NotNull Level level, BlockPos pos, double effectRange) {
+		return new AABB(pos).inflate(effectRange).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
 	}
 	
 	private static @NotNull List<MobEffect> getEffects(int beaconLevel, boolean includeJump) {

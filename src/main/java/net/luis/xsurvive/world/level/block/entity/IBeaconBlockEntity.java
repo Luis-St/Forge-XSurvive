@@ -22,7 +22,7 @@ import java.util.List;
 
 public interface IBeaconBlockEntity {
 	
-	static int getAmplifier(BlockPos playerPos, Level level, BlockPos current, int beaconLevel, int area, MobEffect effect, int defaultAmplifier) {
+	static int getAmplifier(BlockPos playerPos, Level level, BlockPos current, int beaconLevel, int area, MobEffect effect, int vanillaAmplifier) {
 		ILevel iLevel = LevelProvider.get(level);
 		List<BlockPos> positions = iLevel.getBeaconPositions(playerPos, area);
 		positions.remove(current);
@@ -36,7 +36,7 @@ public interface IBeaconBlockEntity {
 			}
 		}
 		if (amplifier == 0 || (level.getBlockEntity(current) instanceof IBeaconBlockEntity beacon && beacon.isBeaconBaseShared())) {
-			return defaultAmplifier;
+			return vanillaAmplifier;
 		}
 		return Mth.clamp(amplifier, 0, beaconLevel);
 	}
