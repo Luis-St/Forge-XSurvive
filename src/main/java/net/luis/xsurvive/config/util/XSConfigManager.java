@@ -1,11 +1,12 @@
 package net.luis.xsurvive.config.util;
 
 import com.google.common.base.Suppliers;
+import com.google.common.collect.Lists;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
-import net.luis.xsurvive.config.ClientConfig;
+import net.luis.xsurvive.config.configs.ClientConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -13,21 +14,24 @@ import org.slf4j.Logger;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class XSConfigManager {
 	
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-	private static final Path FOLDER = FMLPaths.GAMEDIR.get().resolve("xsurvive/config");
+	private static final Path CONFIG_FOLDER = FMLPaths.GAMEDIR.get().resolve("xsurvive/config/");
+	private static final List<ScriptFile> SCRIPT_FILES = Lists.newArrayList();
 	public static final Logger LOGGER = LogUtils.getLogger();
 	
 	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
 	
-	public static void register() {}
+	public static void register() {
+	}
 	
 	public static <T extends XSConfig> @NotNull Supplier<T> register(String name, @NotNull XSConfigType type, Codec<T> codec, T defaultConfig) {
 		try {
-			Path file = FOLDER.resolve(type.getName()).resolve(name + ".json");
+			Path file = CONFIG_FOLDER.resolve(type.getName()).resolve(name + ".json");
 			if (Files.notExists(file)) {
 				LOGGER.info("Config '{}' of type '{}' does not exist, creating new config", name, type.getName());
 				Files.createDirectories(file.getParent());
@@ -52,6 +56,17 @@ public class XSConfigManager {
 		}
 	}
 	
+	public static void registerScript(@NotNull ScriptFile scriptFile) {
+		SCRIPT_FILES.add(scriptFile);
+		scriptFile.initialize();
+	}
+	
+	public static void reloadScripts() {
+		SCRIPT_FILES.forEach(ScriptFile::reload);
+		LOGGER.info("Reloaded {} scripts", SCRIPT_FILES.size());
+	}
+	
+	//region Internal
 	private static <T extends XSConfig> @NotNull Supplier<T> createNewConfig(Path file, @NotNull Codec<T> codec, @NotNull T defaultConfig) throws Exception {
 		Files.createFile(file);
 		JsonElement element = codec.encodeStart(JsonOps.INSTANCE, defaultConfig).getOrThrow(false, s -> {});
@@ -73,4 +88,5 @@ public class XSConfigManager {
 			return config;
 		});
 	}
+	//endregion
 }
