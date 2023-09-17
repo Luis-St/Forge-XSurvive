@@ -1,4 +1,4 @@
-package net.luis.xsurvive.config;
+package net.luis.xsurvive.config.configs;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

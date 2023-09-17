@@ -5,7 +5,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.EnderChestScreen;
 import net.luis.xsurvive.client.gui.screens.SmeltingFurnaceScreen;
-import net.luis.xsurvive.config.ClientConfig;
+import net.luis.xsurvive.config.configs.ClientConfig;
 import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
 import net.minecraft.client.*;
