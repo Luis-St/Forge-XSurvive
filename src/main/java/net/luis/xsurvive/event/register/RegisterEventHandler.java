@@ -3,6 +3,7 @@ package net.luis.xsurvive.event.register;
 import com.google.gson.JsonElement;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.config.util.XSConfigManager;
+import net.luis.xsurvive.server.commands.TestCommand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.commands.RaidCommand;
 import net.minecraft.server.packs.resources.*;
@@ -11,6 +12,7 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -29,6 +31,9 @@ public class RegisterEventHandler {
 	@SubscribeEvent
 	public static void registerCommands(@NotNull RegisterCommandsEvent event) {
 		RaidCommand.register(event.getDispatcher());
+		if (!FMLEnvironment.production) {
+			TestCommand.register(event.getDispatcher());
+		}
 	}
 	
 	@SubscribeEvent
