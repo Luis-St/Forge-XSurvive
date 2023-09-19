@@ -12,7 +12,7 @@ public enum XSConfigType {
 	ANIMAL("animal"),
 	MONSTER("monster"),
 	PLAYER("player"),
-	ITEM("item"),
+	ITEMS("item"),
 	BLOCK("block"),
 	FLUID("fluid"),
 	DIMENSION("dimension"),

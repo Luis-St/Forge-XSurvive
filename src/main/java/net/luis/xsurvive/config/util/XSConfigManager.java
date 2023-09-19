@@ -7,6 +7,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import net.luis.xsurvive.config.configs.ClientConfig;
+import net.luis.xsurvive.config.configs.blocks.BeaconConfig;
 import net.luis.xsurvive.config.scripts.blocks.BeaconScript;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +26,13 @@ public class XSConfigManager {
 	private static final List<ScriptFile> SCRIPT_FILES = Lists.newArrayList();
 	public static final Logger LOGGER = LogUtils.getLogger();
 	
+	
 	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
+	
+	public static final Supplier<BeaconConfig> BEACON_CONFIG = register("beacon", XSConfigType.BLOCK, BeaconConfig.CODEC, BeaconConfig.DEFAULT);
+	
+	
+	
 	
 	public static void register() {
 		registerScript(BeaconScript.SCRIPT);

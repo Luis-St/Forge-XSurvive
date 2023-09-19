@@ -1,6 +1,9 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import com.google.common.collect.*;
+import net.luis.xsurvive.config.configs.blocks.BeaconConfig;
+import net.luis.xsurvive.config.scripts.blocks.BeaconScript;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.server.capability.ServerLevelHandler;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
@@ -27,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static net.luis.xsurvive.config.scripts.blocks.BeaconScript.*;
 import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
 
 /**
@@ -53,28 +55,25 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
 	private static void applyEffects(@NotNull Level level, BlockPos pos, int beaconLevel, @Nullable MobEffect primary, @Nullable MobEffect secondary, CallbackInfo callback) {
 		if (level instanceof ServerLevel && primary != null && level.getBlockEntity(pos) instanceof IBeaconBlockEntity beacon) {
-			double effectRange = getRange(beaconLevel);
+			BeaconConfig config = XSConfigManager.BEACON_CONFIG.get();
+			int area = BeaconScript.getRange(beaconLevel);
 			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared()) {
-				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, effectRange * getNetheriteRangeModifier(beaconLevel, effectRange)))) {
+				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, area * config.range().fullNetheriteMultiplier()))) {
 					for (MobEffect effect : getEffects(beaconLevel, primary == MobEffects.JUMP)) {
-						player.addEffect(new MobEffectInstance(effect, getNetheriteEffectDuration(beaconLevel, effectRange), getNetheriteEffectAmplifier(beaconLevel, effectRange), true, true));
+						player.addEffect(new MobEffectInstance(effect, (10 + beaconLevel * 10) * 20, beaconLevel, true, true));
 					}
 				}
 			} else {
 				boolean diamond = beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared();
-				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? effectRange * getDiamondRangeModifier(beaconLevel, effectRange) : effectRange));
-				int vanillaAmplifier = getVanillaEffectAmplifier(beaconLevel, effectRange, primary == secondary);
+				List<Player> players = level.getEntitiesOfClass(Player.class, getArea(level, pos, diamond ? area * config.range().fullDiamondMultiplier() : area));
+				int amplifier = beaconLevel >= 4 && primary == secondary ? 1 : 0;
 				for (Player player : players) {
-					int stackedAmplifier = getAmplifier(player.getOnPos(), player.level(), pos, beaconLevel, (int) effectRange, primary, vanillaAmplifier);
-					int duration = getPrimaryEffectDuration(beaconLevel, effectRange, primary == secondary, diamond);
-					int amplifier = getPrimaryEffectAmplifier(beaconLevel, effectRange, primary == secondary, diamond, stackedAmplifier, vanillaAmplifier);
-					player.addEffect(new MobEffectInstance(primary, duration, amplifier, true, true));
+					int stackedAmplifier = config.allowAmplifierStacking() ? getAmplifier(player.getOnPos(), player.level(), pos, beaconLevel, area, primary, amplifier) : amplifier;
+					player.addEffect(new MobEffectInstance(primary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : stackedAmplifier, true, true));
 				}
 				if (beaconLevel >= 4 && primary != secondary && secondary != null) {
 					for (Player player : players) {
-						int duration = getSecondaryEffectDuration(beaconLevel, effectRange, diamond);
-						int amplifier = getSecondaryEffectAmplifier(beaconLevel, effectRange, diamond, vanillaAmplifier);
-						player.addEffect(new MobEffectInstance(secondary, duration, amplifier, true, true));
+						player.addEffect(new MobEffectInstance(secondary, (10 + beaconLevel * 10) * 20, diamond ? beaconLevel : 0, true, true));
 					}
 				}
 			}
