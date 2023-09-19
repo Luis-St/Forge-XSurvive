@@ -8,7 +8,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import net.luis.xsurvive.config.configs.ClientConfig;
 import net.luis.xsurvive.config.configs.blocks.BeaconConfig;
+import net.luis.xsurvive.config.configs.blocks.ConduitConfig;
 import net.luis.xsurvive.config.scripts.blocks.BeaconScript;
+import net.luis.xsurvive.config.scripts.blocks.ConduitScript;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -30,12 +32,13 @@ public class XSConfigManager {
 	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
 	
 	public static final Supplier<BeaconConfig> BEACON_CONFIG = register("beacon", XSConfigType.BLOCK, BeaconConfig.CODEC, BeaconConfig.DEFAULT);
-	
+	public static final Supplier<ConduitConfig> CONDUIT_CONFIG = register("conduit", XSConfigType.BLOCK, ConduitConfig.CODEC, ConduitConfig.DEFAULT);
 	
 	
 	
 	public static void register() {
 		registerScript(BeaconScript.SCRIPT);
+		registerScript(ConduitScript.SCRIPT);
 	}
 	
 	public static <T extends XSConfig> @NotNull Supplier<T> register(String name, @NotNull XSConfigType type, Codec<T> codec, T defaultConfig) {

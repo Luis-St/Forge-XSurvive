@@ -1,5 +1,8 @@
 package net.luis.xsurvive.mixin.block.entity;
 
+import net.luis.xsurvive.config.configs.blocks.ConduitConfig;
+import net.luis.xsurvive.config.scripts.blocks.ConduitScript;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,14 +50,14 @@ public abstract class ConduitBlockEntityMixin {
 	
 	@Inject(method = "updateHunting", at = @At("HEAD"), cancellable = true)
 	private static void updateHunting(@NotNull ConduitBlockEntity blockEntity, @NotNull List<BlockPos> shapeBlocks, @NotNull CallbackInfo callback) {
-		blockEntity.setHunting(shapeBlocks.size() >= 30);
+		blockEntity.setHunting(shapeBlocks.size() >= XSConfigManager.CONDUIT_CONFIG.get().requiredBlocksForDefence());
 		callback.cancel();
 	}
 	
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
 	private static void applyEffects(@NotNull Level level, @NotNull BlockPos pos, @NotNull List<BlockPos> shapeBlocks, CallbackInfo callback) {
-		int range = (shapeBlocks.size() / 7 * 16) * 2;
-		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).expandTowards(0.0, level.getHeight(), 0.0);
+		int range = ConduitScript.getRange(shapeBlocks.size());
+		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
 		for (Player player : level.getEntitiesOfClass(Player.class, aabb)) {
 			if (pos.closerThan(player.blockPosition(), range) && player.isInWaterOrRain()) {
 				player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 260 * (shapeBlocks.size() >= 42 ? 2 : 1), 0, true, true));
@@ -76,13 +79,13 @@ public abstract class ConduitBlockEntityMixin {
 			if (!entities.isEmpty()) {
 				blockEntity.destroyTarget = entities.get(level.random.nextInt(entities.size()));
 			}
-		} else if (!blockEntity.destroyTarget.isAlive() || !pos.closerThan(blockEntity.destroyTarget.blockPosition(), 8.0D)) {
+		} else if (!blockEntity.destroyTarget.isAlive()) {
 			blockEntity.destroyTarget = null;
 		}
-		
 		if (blockEntity.destroyTarget != null) {
+			ConduitConfig config = XSConfigManager.CONDUIT_CONFIG.get();
 			level.playSound(null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? config.maxLevelDamage() : config.defaultDamage());
 		}
 		if (destroyTarget != blockEntity.destroyTarget) {
 			level.sendBlockUpdated(pos, state, state, 2);
@@ -92,6 +95,6 @@ public abstract class ConduitBlockEntityMixin {
 	
 	@Inject(method = "getDestroyRangeAABB", at = @At("HEAD"), cancellable = true)
 	private static void getDestroyRangeAABB(BlockPos pos, @NotNull CallbackInfoReturnable<AABB> callback) {
-		callback.setReturnValue(new AABB(pos).inflate(24.0));
+		callback.setReturnValue(new AABB(pos).inflate(XSConfigManager.CONDUIT_CONFIG.get().attackRange()));
 	}
 }
