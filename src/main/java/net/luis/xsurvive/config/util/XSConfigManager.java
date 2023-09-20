@@ -7,8 +7,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import net.luis.xsurvive.config.configs.ClientConfig;
-import net.luis.xsurvive.config.configs.blocks.BeaconConfig;
-import net.luis.xsurvive.config.configs.blocks.ConduitConfig;
+import net.luis.xsurvive.config.configs.blocks.*;
 import net.luis.xsurvive.config.scripts.blocks.BeaconScript;
 import net.luis.xsurvive.config.scripts.blocks.ConduitScript;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -28,12 +27,11 @@ public class XSConfigManager {
 	private static final List<ScriptFile> SCRIPT_FILES = Lists.newArrayList();
 	public static final Logger LOGGER = LogUtils.getLogger();
 	
-	
 	public static final Supplier<ClientConfig> CLIENT_CONFIG = register("client", XSConfigType.CLIENT, ClientConfig.CODEC, ClientConfig.DEFAULT);
 	
 	public static final Supplier<BeaconConfig> BEACON_CONFIG = register("beacon", XSConfigType.BLOCK, BeaconConfig.CODEC, BeaconConfig.DEFAULT);
 	public static final Supplier<ConduitConfig> CONDUIT_CONFIG = register("conduit", XSConfigType.BLOCK, ConduitConfig.CODEC, ConduitConfig.DEFAULT);
-	
+	public static final Supplier<MonsterSpawnerConfig> MONSTER_SPAWNER_CONFIG = register("monster_spawner", XSConfigType.BLOCK, MonsterSpawnerConfig.CODEC, MonsterSpawnerConfig.DEFAULT);
 	
 	
 	public static void register() {
@@ -51,7 +49,7 @@ public class XSConfigManager {
 			}
 			try {
 				LOGGER.info("Loading config '{}' of type '{}'", name, type);
-				return loadConfig(name, type, file, codec, defaultConfig);
+				return loadConfig(file, codec);
 			} catch (Exception e) {
 				LOGGER.error("Failed to load config '{}' of type '{}' from file '{}'", name, type, file, e);
 				Files.copy(file, file.resolveSibling(file.getFileName() + ".error"));
@@ -92,7 +90,7 @@ public class XSConfigManager {
 		});
 	}
 	
-	private static <T extends XSConfig> @NotNull Supplier<T> loadConfig(String name, XSConfigType type, @NotNull Path file, @NotNull Codec<T> codec, @NotNull T defaultConfig) throws Exception {
+	private static <T extends XSConfig> @NotNull Supplier<T> loadConfig(@NotNull Path file, @NotNull Codec<T> codec) throws Exception {
 		JsonElement element = GSON.fromJson(Files.newBufferedReader(file), JsonElement.class);
 		T config = codec.decode(JsonOps.INSTANCE, element).getOrThrow(false, s -> {}).getFirst();
 		return Suppliers.memoize(() -> {

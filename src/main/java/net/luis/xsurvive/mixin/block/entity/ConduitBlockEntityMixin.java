@@ -50,7 +50,7 @@ public abstract class ConduitBlockEntityMixin {
 	
 	@Inject(method = "updateHunting", at = @At("HEAD"), cancellable = true)
 	private static void updateHunting(@NotNull ConduitBlockEntity blockEntity, @NotNull List<BlockPos> shapeBlocks, @NotNull CallbackInfo callback) {
-		blockEntity.setHunting(shapeBlocks.size() >= XSConfigManager.CONDUIT_CONFIG.get().requiredBlocksForDefence());
+		blockEntity.setHunting(shapeBlocks.size() >= XSConfigManager.CONDUIT_CONFIG.get().requiredBlocks().defence());
 		callback.cancel();
 	}
 	
@@ -60,7 +60,7 @@ public abstract class ConduitBlockEntityMixin {
 		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
 		for (Player player : level.getEntitiesOfClass(Player.class, aabb)) {
 			if (pos.closerThan(player.blockPosition(), range) && player.isInWaterOrRain()) {
-				player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 260 * (shapeBlocks.size() >= 42 ? 2 : 1), 0, true, true));
+				player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 260 * (shapeBlocks.size() >= XSConfigManager.CONDUIT_CONFIG.get().requiredBlocks().maxOut() ? 2 : 1), 0, true, true));
 			}
 		}
 		callback.cancel();
@@ -85,7 +85,7 @@ public abstract class ConduitBlockEntityMixin {
 		if (blockEntity.destroyTarget != null) {
 			ConduitConfig config = XSConfigManager.CONDUIT_CONFIG.get();
 			level.playSound(null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? config.maxLevelDamage() : config.defaultDamage());
+			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= config.requiredBlocks().maxOut() ? config.damage().maxLevel() : config.damage().normal());
 		}
 		if (destroyTarget != blockEntity.destroyTarget) {
 			level.sendBlockUpdated(pos, state, state, 2);

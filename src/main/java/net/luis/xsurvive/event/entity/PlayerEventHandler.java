@@ -2,6 +2,7 @@ package net.luis.xsurvive.event.entity;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.capability.XSCapabilities;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
@@ -105,7 +106,7 @@ public class PlayerEventHandler {
 	
 	@SubscribeEvent
 	public static void breakSpeed(@NotNull BreakSpeed event) {
-		if (event.getState().is(Blocks.SPAWNER)) {
+		if (event.getState().is(Blocks.SPAWNER) && !XSConfigManager.MONSTER_SPAWNER_CONFIG.get().allowDestroy().byExplosion()) {
 			event.setCanceled(true);
 		}
 	}

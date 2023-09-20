@@ -32,7 +32,7 @@ public record ClientConfig(ClientConfig.Chat chat, ClientConfig.Options options)
 	
 	public record Options(boolean replaceGamma, boolean replaceGlintSpeed, boolean replaceGlintStrength) {
 		
-		public static final Codec<Options> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+		public static final Codec<ClientConfig.Options> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 				Codec.BOOL.fieldOf("replaceGamma").forGetter(Options::replaceGamma),
 				Codec.BOOL.fieldOf("replaceGlintSpeed").forGetter(Options::replaceGlintSpeed),
 				Codec.BOOL.fieldOf("replaceGlintStrength").forGetter(Options::replaceGlintStrength)
@@ -42,7 +42,7 @@ public record ClientConfig(ClientConfig.Chat chat, ClientConfig.Options options)
 	
 	public record Chat(boolean enableGammaCommand, boolean disableChatReport) {
 		
-		public static final Codec<Chat> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+		public static final Codec<ClientConfig.Chat> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 				Codec.BOOL.fieldOf("enableGammaCommand").forGetter(Chat::enableGammaCommand),
 				Codec.BOOL.fieldOf("disableChatReport").forGetter(Chat::disableChatReport)
 			).apply(instance, Chat::new)

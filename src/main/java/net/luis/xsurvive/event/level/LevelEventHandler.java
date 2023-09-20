@@ -2,6 +2,7 @@ package net.luis.xsurvive.event.level;
 
 import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.WoodHarvester;
@@ -112,7 +113,9 @@ public class LevelEventHandler {
 					level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
 				}
 			}
-			event.getAffectedBlocks().removeIf(pos -> level.getBlockState(pos).is(Blocks.SPAWNER));
+			if (!XSConfigManager.MONSTER_SPAWNER_CONFIG.get().allowDestroy().byExplosion()) {
+				event.getAffectedBlocks().removeIf(pos -> level.getBlockState(pos).is(Blocks.SPAWNER));
+			}
 		}
 	}
 }
