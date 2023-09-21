@@ -23,7 +23,6 @@ public record ConduitConfig(int attackRange, ConduitConfig.RequiredBlocks requir
 	
 	@Override
 	public void loaded() {
-		LOGGER.info("Conduit config loaded");
 		LOGGER.debug("attackRange: {}", this.attackRange());
 		LOGGER.debug("requiredBlocks.defence: {}", this.requiredBlocks.defence());
 		LOGGER.debug("requiredBlocks.maxOut: {}", this.requiredBlocks.maxOut());

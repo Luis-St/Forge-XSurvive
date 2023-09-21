@@ -22,7 +22,6 @@ public record MonsterSpawnerConfig(MonsterSpawnerConfig.Settings settings, Allow
 	
 	@Override
 	public void loaded() {
-		LOGGER.info("Monster spawner config loaded");
 		LOGGER.debug("settings.minSpawnDelay: {}", this.settings.minSpawnDelay());
 		LOGGER.debug("settings.maxSpawnDelay: {}", this.settings.maxSpawnDelay());
 		LOGGER.debug("settings.spawnCount: {}", this.settings.spawnCount());

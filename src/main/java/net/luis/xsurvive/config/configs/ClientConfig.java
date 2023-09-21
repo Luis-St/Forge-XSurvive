@@ -22,7 +22,6 @@ public record ClientConfig(ClientConfig.Chat chat, ClientConfig.Options options)
 	public static final ClientConfig DEFAULT = new ClientConfig(new ClientConfig.Chat(true, true), new ClientConfig.Options(true, true, true));
 	
 	public void loaded() {
-		LOGGER.info("Client config loaded");
 		LOGGER.debug("chat.enableGammaCommand: {}", this.chat.enableGammaCommand());
 		LOGGER.debug("chat.disableChatReport: {}", this.chat.disableChatReport());
 		LOGGER.debug("options.replaceGamma: {}", this.options.replaceGamma());

@@ -22,7 +22,6 @@ public record BeaconConfig(boolean allowAmplifierStacking, BeaconConfig.Range ra
 	
 	@Override
 	public void loaded() {
-		LOGGER.info("Beacon config loaded");
 		LOGGER.debug("allowAmplifierStacking: {}", this.allowAmplifierStacking());
 		LOGGER.debug("range.fullDiamondMultiplier: {}", this.range.fullDiamondMultiplier());
 		LOGGER.debug("range.fullNetheriteMultiplier: {}", this.range.fullNetheriteMultiplier());

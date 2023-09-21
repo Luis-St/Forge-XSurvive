@@ -1,10 +1,8 @@
 package net.luis.xsurvive.event.register;
 
-import com.google.gson.JsonElement;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.config.util.XSConfigManager;
 import net.luis.xsurvive.server.commands.TestCommand;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.commands.RaidCommand;
 import net.minecraft.server.packs.resources.*;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -14,10 +12,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 /**
  *
@@ -47,7 +41,7 @@ public class RegisterEventHandler {
 			
 			@Override
 			protected void apply(@NotNull Object object, @NotNull ResourceManager resourceManager, @NotNull ProfilerFiller profiler) {
-				XSConfigManager.reloadScripts();
+				XSConfigManager.reload();
 			}
 		});
 	}
