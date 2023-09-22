@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -72,5 +74,19 @@ public class Util {
 			return fallback;
 		}
 		return array.length > index && index >= 0 ? array[index] : array[array.length - 1];
+	}
+	
+	public static @NotNull Executor createWorkerExecutor(String threadPrefix) {
+		ForkJoinPool.ForkJoinWorkerThreadFactory threadFactory = new ForkJoinPool.ForkJoinWorkerThreadFactory() {
+			private final AtomicInteger count = new AtomicInteger(0);
+			
+			@Override
+			public @NotNull ForkJoinWorkerThread newThread(@NotNull ForkJoinPool pool) {
+				ForkJoinWorkerThread worker = ForkJoinPool.defaultForkJoinWorkerThreadFactory.newThread(pool);
+				worker.setName(threadPrefix + "-Thread-" + this.count.getAndIncrement());
+				return worker;
+			}
+		};
+		return new ForkJoinPool(Runtime.getRuntime().availableProcessors(), threadFactory, null, false);
 	}
 }
