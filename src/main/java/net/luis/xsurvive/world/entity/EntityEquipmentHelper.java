@@ -1,14 +1,17 @@
 package net.luis.xsurvive.world.entity;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.entity.player.PlayerHelper;
 import net.luis.xsurvive.world.item.*;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.minecraft.Util;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,8 +25,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -33,6 +35,12 @@ import java.util.stream.Stream;
  */
 
 public class EntityEquipmentHelper {
+	
+	private static final Map<Difficulty, Double> MAX_DIFFICULTY = Util.make(Maps.newHashMap(), map -> {
+		map.put(Difficulty.EASY, 5.0);
+		map.put(Difficulty.NORMAL, 7.5);
+		map.put(Difficulty.HARD, 10.0);
+	});
 	
 	public static void equipEntity(@NotNull LivingEntity entity, @NotNull ServerLevel level) {
 		if (entity instanceof Zombie zombie && !(entity instanceof ZombifiedPiglin) && !(entity instanceof ZombieVillager)) {
@@ -56,26 +64,70 @@ public class EntityEquipmentHelper {
 	}
 	
 	public static double getGlobalDifficulty(@NotNull ServerLevel level) {
-		int weeks = (int) (level.getGameTime() / (24000 * 7));
-		if (0 >= weeks) {
+		int days = (int) (level.getGameTime() / 24000);
+		if (7 >= days || level.getDifficulty() == Difficulty.PEACEFUL) {
 			return 0.0;
 		}
 		return level.getServer().getPlayerList().getPlayers().stream().mapToDouble(player -> getPlayerDifficulty(level, player)).average().orElse(0.0);
 	}
 	
+	/*
+	 * 0.0 - 10.0
+	 * If game time is less than 7 days or the difficulty is peaceful:
+	 *  - 0.0
+	 *
+	 * If the player has played for more than 45 days:
+	 *  - Max value for difficulty
+	 *
+	 * If the player has not died:
+	 *  - Max value for difficulty * (days / 45)
+	 *
+	 * If the mob kill to death ratio is less than 1.0:
+	 *  - difficulty * ((days / 45) * 0.25)
+	 *
+	 *
+	 *
+	 *
+	 */
 	public static double getPlayerDifficulty(@NotNull ServerLevel level, @NotNull ServerPlayer player) {
-		int difficulty = level.getDifficulty().getId();
+		Difficulty difficulty = level.getDifficulty();
+		int id = level.getDifficulty().getId();
 		int days = (int) (level.getGameTime() / 24000);
-		int weeks = days / 7;
-		if (0 >= weeks) {
+		if (7 >= days || difficulty == Difficulty.PEACEFUL) {
 			return 0.0;
 		}
-		int deaths = PlayerHelper.getStat(player, Stats.DEATHS);
-		int mobKills = PlayerHelper.getStat(player, Stats.MOB_KILLS);
-		boolean pvp = PlayerHelper.getStat(player, Stats.PLAYER_KILLS) > 0;
-		double equipment = getPlayerEquipment(player);
+		double max = MAX_DIFFICULTY.getOrDefault(difficulty, 10.0);
 		
-		double deathsPerWeek = (double) deaths / weeks;
+		double playPercentage = days / 45.0;
+		if (playPercentage >= 1.0) {
+			return max;
+		}
+		
+		int deaths = PlayerHelper.getStat(player, Stats.DEATHS);
+		if (0 >= deaths) {
+			return max * playPercentage;
+		}
+		
+		int mobKills = PlayerHelper.getStat(player, Stats.MOB_KILLS);
+		double mkd = (double) mobKills / deaths;
+		if (1.0 > mkd) {
+			return max * (playPercentage * 0.25);
+		}
+		if (mkd > 100.0) {
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+	/*	level.getServer().isPvpAllowed()*/
+		
+		
+		
+		
 		
 		
 
@@ -83,66 +135,6 @@ public class EntityEquipmentHelper {
 		return 0.0;
 	}
 	
-	public static double getPlayerEquipment(@NotNull ServerPlayer player) {
-		double equipment = 0;
-		IItemHandler handler = player.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(NullPointerException::new);
-		for (int i = 0; i < handler.getSlots(); i++) {
-			ItemStack stack = handler.getStackInSlot(i);
-			if (stack.isEmpty()) {
-				continue;
-			}
-			equipment += getItemValue(player, stack);
-		}
-		return equipment;
-	}
-	
-	private static double getItemValue(@NotNull ServerPlayer player, @NotNull ItemStack stack) {
-		double value = 0.0;
-		double durability = ItemStackHelper.getDurabilityPercent(stack);
-		if (stack.isEmpty()) {
-			return 0.0;
-		} else if (stack.getItem() instanceof ArmorItem item) {
-			value = (item.getDefense() * durability) * (1 + item.getMaterial().getKnockbackResistance());
-		} else if (stack.getItem() instanceof SwordItem item) {
-			value = (1 + item.getDamage()) * durability;
-		} else if (stack.getItem() instanceof DiggerItem item) {
-			value = (1 + item.getAttackDamage()) * durability;
-		} else if (stack.getItem() instanceof ShieldItem item) {
-			value = 45 * durability;
-		} else if (stack.getItem() instanceof BowItem item) {
-			value = 25 * durability;
-		} else if (stack.getItem() instanceof CrossbowItem item) {
-			value = 35 * durability;
-		} else if (stack.getItem() instanceof TridentItem item) {
-			value = 75 * durability;
-		} else if (stack.getItem() instanceof PotionItem item) {
-			value = PotionUtils.getMobEffects(stack).stream().mapToInt(MobEffectInstance::getAmplifier).sum();
-		}
-		int curseCount = 0;
-		if (stack.isEnchanted()) {
-			double enchantmentValue = 0.0;
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-			for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-				Enchantment enchantment = entry.getKey();
-				if (enchantment.isCurse()) {
-					curseCount++;
-				}
-				double tempValue = 1 + enchantment.getRarity().ordinal();
-				if (!enchantment.isTradeable() && !enchantment.isDiscoverable() && enchantment.isTreasureOnly()) {
-					tempValue *= 3;
-				} else if ((!enchantment.isTradeable() && !enchantment.isDiscoverable()) || enchantment.isTreasureOnly()) {
-					tempValue *= 2;
-				}
-				if (enchantment instanceof IEnchantment ench && ench.isGoldenLevel(entry.getValue())) {
-					tempValue *= 2;
-				}
-				enchantmentValue += tempValue * entry.getValue();
-				
-			}
-			value += enchantmentValue;
-		}
-		return value * (1 - (0.3 * curseCount));
-	}
 	
 	/*
 	if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
