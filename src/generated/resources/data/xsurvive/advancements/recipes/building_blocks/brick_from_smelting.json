@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_clay_ball",
-      "has_brick",
-      "has_the_recipe"
+      "has_brick"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:brick_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

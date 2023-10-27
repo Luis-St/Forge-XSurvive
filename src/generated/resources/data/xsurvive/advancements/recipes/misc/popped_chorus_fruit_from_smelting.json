@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_chorus_fruit",
-      "has_popped_chorus_fruit",
-      "has_the_recipe"
+      "has_popped_chorus_fruit"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:popped_chorus_fruit_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

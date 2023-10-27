@@ -15,12 +15,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
+import static net.minecraft.core.registries.BuiltInRegistries.*;
+
 /**
  *
  * @author Luis-St
  *
  */
 
+@SuppressWarnings("deprecation")
 public abstract class AbstractLevelHandler implements ILevel {
 	
 	private final Level level;
@@ -53,7 +56,7 @@ public abstract class AbstractLevelHandler implements ILevel {
 			return new Pair<>(null, null);
 		}
 		Pair<Integer, Integer> effects = this.beaconEffects.get(pos);
-		return new Pair<>(MobEffect.byId(effects.getFirst()), MobEffect.byId(effects.getSecond()));
+		return new Pair<>(MOB_EFFECT.byId(effects.getFirst()), MOB_EFFECT.byId(effects.getSecond()));
 	}
 	
 	//region NBT

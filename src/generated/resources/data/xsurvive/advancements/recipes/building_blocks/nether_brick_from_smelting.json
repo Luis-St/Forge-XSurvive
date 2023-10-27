@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_netherrack",
-      "has_nether_brick",
-      "has_the_recipe"
+      "has_nether_brick"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:nether_brick_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

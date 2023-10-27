@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_quartz_block",
-      "has_smooth_quartz",
-      "has_the_recipe"
+      "has_smooth_quartz"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:smooth_quartz_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

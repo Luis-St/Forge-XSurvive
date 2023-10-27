@@ -46,10 +46,10 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_melon_slice",
       "has_honey_bottle",
-      "has_honey_melon_slice",
-      "has_the_recipe"
+      "has_honey_melon_slice"
     ]
   ],
   "rewards": {

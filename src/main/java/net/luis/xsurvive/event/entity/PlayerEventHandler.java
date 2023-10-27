@@ -47,7 +47,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent.*;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -238,7 +237,7 @@ public class PlayerEventHandler {
 					if (!player.getItemInHand(event.getHand()).isEmpty()) {
 						event.setUseItem(Event.Result.DENY);
 					}
-					NetworkHooks.openScreen(player, new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST), pos);
+					player.openMenu(new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST));
 					player.awardStat(Stats.OPEN_ENDERCHEST);
 					PiglinAi.angerNearbyPiglins(player, true);
 					level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);

@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_deepslate_tiles",
-      "has_cracked_deepslate_tiles",
-      "has_the_recipe"
+      "has_cracked_deepslate_tiles"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:cracked_deepslate_tiles_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

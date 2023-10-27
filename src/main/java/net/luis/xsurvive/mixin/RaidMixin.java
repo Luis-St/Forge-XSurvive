@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin;
 
-import com.google.common.collect.Maps;
 import net.luis.xsurvive.world.level.LevelHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -115,7 +114,8 @@ public abstract class RaidMixin {
 		int waveGroupCount = 5;
 		int wave = this.groupsSpawned + 1;
 		boolean bonusWave = this.shouldSpawnBonusGroup();
-		Map<Raid.RaiderType, List<Integer>> spawnGroups = Maps.newEnumMap(Raid.RaiderType.class);
+		
+		Map<Raid.RaiderType, List<Integer>> spawnGroups = new EnumMap<>(Raid.RaiderType.class);
 		for (Raid.RaiderType raiderType : Raid.RaiderType.values()) {
 			int defaultSpawns = this.getDefaultNumSpawns(raiderType, wave, bonusWave);
 			int potentialBonusSpawns = this.getPotentialBonusSpawns(raiderType, this.random, wave, LevelHelper.getCurrentDifficultyAt(this.level, pos), bonusWave);

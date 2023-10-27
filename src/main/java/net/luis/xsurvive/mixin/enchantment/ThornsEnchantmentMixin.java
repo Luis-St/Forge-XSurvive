@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.enchantment;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.SimpleEntry;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
@@ -15,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -60,7 +60,7 @@ public abstract class ThornsEnchantmentMixin {
 	}
 	
 	private @NotNull List<Entry<EquipmentSlot, ItemStack>> getThornsEquipment(LivingEntity entity) {
-		List<Entry<EquipmentSlot, ItemStack>> thornsEquipment = Lists.newArrayList();
+		List<Entry<EquipmentSlot, ItemStack>> thornsEquipment = new ArrayList<>();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot.getType() == Type.ARMOR && this.getThornsLevel(entity, slot) > 0) {
 				thornsEquipment.add(new SimpleEntry<>(slot, entity.getItemBySlot(slot)));

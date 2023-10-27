@@ -1,18 +1,16 @@
 package net.luis.xsurvive.mixin.enchantment;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.enchantment.*;
+import org.apache.commons.lang3.ArrayUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.List;
 
 /**
  *
@@ -24,6 +22,12 @@ import java.util.List;
 @SuppressWarnings("DataFlowIssue")
 public abstract class EnchantmentMixin implements IEnchantment {
 	
+	private static final Enchantment[] goldenEnchantments = new Enchantment[] {
+		Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE,
+		Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY,
+		Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK
+	};
+
 	//region Mixin
 	@Shadow
 	public abstract int getMaxLevel();
@@ -62,9 +66,6 @@ public abstract class EnchantmentMixin implements IEnchantment {
 	@Override
 	public boolean isAllowedOnGoldenBooks() {
 		Enchantment enchantment = (Enchantment) (Object) this;
-		List<Enchantment> goldenEnchantments = Lists.newArrayList(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.MOB_LOOTING, Enchantments.SWEEPING_EDGE,
-			Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY,
-			Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);
 		if (enchantment instanceof ProtectionEnchantment) {
 			return true;
 		} else if (enchantment instanceof DamageEnchantment) {
@@ -72,6 +73,6 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		} else if (enchantment instanceof FireAspectEnchantment) {
 			return true;
 		}
-		return goldenEnchantments.contains(enchantment);
+		return ArrayUtils.contains(goldenEnchantments, enchantment);
 	}
 }

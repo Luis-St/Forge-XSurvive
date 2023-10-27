@@ -15,6 +15,8 @@ import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 import static net.minecraft.world.level.storage.loot.BuiltInLootTables.*;
 
 /**
@@ -32,10 +34,10 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 	@Override
 	protected void start() {
 		this.add("multi_drop_modifier", new MultiDropModifier(new LootItemCondition[] {
-			new MatchTool(ItemPredicate.ANY)
+			new MatchTool(Optional.of(ItemPredicate.Builder.item().build()))
 		}));
 		this.add("smelting_modifier", new SmeltingModifier(new LootItemCondition[] {
-			new MatchTool(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(XSEnchantments.SMELTING.get(), MinMaxBounds.Ints.atLeast(1))).build())
+			new MatchTool(Optional.of(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(XSEnchantments.SMELTING.get(), MinMaxBounds.Ints.atLeast(1))).build()))
 		}));
 		this.add("rune_item_modifier", new RuneItemModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY).add(STRONGHOLD_CROSSING).add(STRONGHOLD_CORRIDOR).add(BASTION_BRIDGE).add(BASTION_HOGLIN_STABLE).add(BASTION_OTHER)

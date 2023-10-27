@@ -11,12 +11,15 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import static net.minecraft.core.registries.BuiltInRegistries.*;
+
 /**
  *
  * @author Luis-St
  *
  */
 
+@SuppressWarnings("deprecation")
 public class ServerLevelHandler extends AbstractLevelHandler {
 	
 	public ServerLevelHandler(Level level) {
@@ -34,8 +37,8 @@ public class ServerLevelHandler extends AbstractLevelHandler {
 	}
 	
 	public void setBeaconEffects(@NotNull BlockPos pos, MobEffect primaryEffect, MobEffect secondaryEffect) {
-		int primaryId = MobEffect.getIdFromNullable(primaryEffect);
-		int secondaryId = MobEffect.getIdFromNullable(secondaryEffect);
+		int primaryId = MOB_EFFECT.getId(primaryEffect);
+		int secondaryId = MOB_EFFECT.getId(secondaryEffect);
 		if (this.beaconEffects.containsKey(pos)) {
 			Pair<Integer, Integer> pair = this.beaconEffects.get(pos);
 			if (pair.getFirst() == primaryId && pair.getSecond() == secondaryId) {

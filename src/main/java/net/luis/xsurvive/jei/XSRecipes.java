@@ -5,9 +5,11 @@ import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -20,7 +22,7 @@ public class XSRecipes {
 	public static @NotNull List<SmeltingRecipe> getSmeltingRecipes() {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null) {
-			return level.getRecipeManager().getAllRecipesFor(XSRecipeTypes.SMELTING.get());
+			return level.getRecipeManager().getAllRecipesFor(XSRecipeTypes.SMELTING.get()).stream().map(RecipeHolder::value).collect(Collectors.toList());
 		}
 		return Lists.newArrayList();
 	}

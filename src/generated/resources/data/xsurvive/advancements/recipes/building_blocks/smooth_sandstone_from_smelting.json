@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sandstone",
-      "has_smooth_sandstone",
-      "has_the_recipe"
+      "has_smooth_sandstone"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:smooth_sandstone_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

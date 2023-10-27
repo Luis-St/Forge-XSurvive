@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.Mixin;
 public abstract class SugarCaneBlockMixin implements BonemealableBlock {
 	
 	@Override
-	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state, boolean isClientSide) {
+	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
 		BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(pos.getX(), this.getStartBlock(level, pos), pos.getZ());
 		for (int i = 0; i < 5; i++) {
 			if (!level.getBlockState(blockPos.immutable()).is(Blocks.SUGAR_CANE)) {

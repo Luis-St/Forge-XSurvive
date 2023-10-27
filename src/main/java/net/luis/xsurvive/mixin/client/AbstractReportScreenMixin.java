@@ -2,7 +2,7 @@ package net.luis.xsurvive.mixin.client;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.reporting.ChatReportScreen;
+import net.minecraft.client.gui.screens.reporting.AbstractReportScreen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,11 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  */
 
-@Mixin(value = ChatReportScreen.class, priority = Integer.MIN_VALUE)
-public abstract class ChatReportScreenMixin extends Screen {
+@Mixin(value = AbstractReportScreen.class, priority = Integer.MIN_VALUE)
+public abstract class AbstractReportScreenMixin extends Screen {
 	
 	//region Mixin
-	private ChatReportScreenMixin(Component component) {
+	private AbstractReportScreenMixin(Component component) {
 		super(component);
 	}
 	//endregion

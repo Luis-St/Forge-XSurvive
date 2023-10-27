@@ -18,6 +18,6 @@ public class XSLootItemConditions {
 	public static final DeferredRegister<LootItemConditionType> LOOT_ITEM_CONDITIONS = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, XSurvive.MOD_ID);
 	
 	public static final RegistryObject<LootItemConditionType> LOOT_TABLE_IDS = LOOT_ITEM_CONDITIONS.register("loot_table_ids", () -> {
-		return new LootItemConditionType(new LootTableIdsCondition.Serializer());
+		return new LootItemConditionType(LootTableIdsCondition.CODEC);
 	});
 }

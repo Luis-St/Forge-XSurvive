@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sea_pickle",
-      "has_lime_dye",
-      "has_the_recipe"
+      "has_lime_dye"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:lime_dye_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

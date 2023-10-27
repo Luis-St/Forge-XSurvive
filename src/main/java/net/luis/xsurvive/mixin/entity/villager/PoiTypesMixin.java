@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.entity.villager;
 
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +23,7 @@ public abstract class PoiTypesMixin {
 	@Inject(method = "getBlockStates", at = @At("HEAD"), cancellable = true)
 	private static void getBlockStates(Block block, CallbackInfoReturnable<Set<BlockState>> callback) {
 		if (block == Blocks.BEEHIVE) {
-			callback.setReturnValue(ImmutableSet.of());
+			callback.setReturnValue(Set.of());
 		}
 	}
 }

@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_cactus",
-      "has_green_dye",
-      "has_the_recipe"
+      "has_green_dye"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:green_dye_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

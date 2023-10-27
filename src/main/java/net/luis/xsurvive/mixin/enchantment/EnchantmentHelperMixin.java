@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.enchantment;
 
-import com.google.common.collect.Maps;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
@@ -32,7 +31,7 @@ public abstract class EnchantmentHelperMixin {
 	@Inject(method = "getEnchantments", at = @At("HEAD"), cancellable = true)
 	private static void getEnchantments(@NotNull ItemStack stack, CallbackInfoReturnable<Map<Enchantment, Integer>> callback) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
-			Map<Enchantment, Integer> enchantments = Maps.newLinkedHashMap();
+			Map<Enchantment, Integer> enchantments = new LinkedHashMap<>();
 			CompoundTag tag = stack.getTag() != null ? stack.getTag().getCompound(XSurvive.MOD_NAME + "GoldenEnchantments") : null;
 			if (tag != null) {
 				enchantments.put(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(tag.getString("enchantment"))), 1);

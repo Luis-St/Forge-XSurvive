@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_purple_terracotta",
-      "has_purple_glazed_terracotta",
-      "has_the_recipe"
+      "has_purple_glazed_terracotta"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:purple_glazed_terracotta_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

@@ -32,9 +32,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sand",
-      "has_glass",
-      "has_the_recipe"
+      "has_glass"
     ]
   ],
   "rewards": {
@@ -42,5 +42,5 @@
       "xsurvive:glass_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

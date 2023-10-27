@@ -2,7 +2,8 @@
   "type": "xsurvive:multi_drop_modifier",
   "conditions": [
     {
-      "condition": "minecraft:match_tool"
+      "condition": "minecraft:match_tool",
+      "predicate": {}
     }
   ]
 }

@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_wet_sponge",
-      "has_sponge",
-      "has_the_recipe"
+      "has_sponge"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:sponge_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

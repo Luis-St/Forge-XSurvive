@@ -1,6 +1,5 @@
 package net.luis.xsurvive.dependency.xbackpack;
 
-import com.google.common.collect.Lists;
 import net.luis.xbackpack.network.XBNetworkHandler;
 import net.luis.xbackpack.network.packet.extension.UpdateAnvilPacket;
 import net.luis.xbackpack.world.capability.BackpackProvider;
@@ -28,8 +27,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -249,7 +247,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				resultStack = ItemStack.EMPTY;
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
-				List<Enchantment> enchantments = Lists.newArrayList();
+				List<Enchantment> enchantments = new ArrayList<>();
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
 				if (!enchantments.isEmpty()) {

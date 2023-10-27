@@ -95,7 +95,6 @@
   "options.xsurvive.glint.defaultVanilla": "Default vanilla",
   "options.xsurvive.glint.maxVanilla": "Max vanilla",
   "options.xsurvive.glint.original": "Original",
-  "xsurvive.commands.gamma.failure": "Fail to set gamma value to {0}",
   "xsurvive.commands.gamma.get": "Gamma value is set to {0}",
   "xsurvive.commands.gamma.success": "Successfully sets the gamma value to {0}",
   "xsurvive.container.smelting_furnace": "Smelting Furnace",

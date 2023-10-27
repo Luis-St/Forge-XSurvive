@@ -1,7 +1,6 @@
 package net.luis.xsurvive.world.item.crafting;
 
 import net.luis.xsurvive.world.level.block.XSBlocks;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import org.jetbrains.annotations.NotNull;
@@ -14,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmeltingRecipe extends AbstractCookingRecipe {
 	
-	public SmeltingRecipe(ResourceLocation location, String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
-		super(XSRecipeTypes.SMELTING.get(), location, group, category, ingredient, result, experience, cookingTime);
+	public SmeltingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
+		super(XSRecipeTypes.SMELTING.get(), group, category, ingredient, result, experience, cookingTime);
 	}
 	
 	@Override

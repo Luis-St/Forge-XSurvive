@@ -32,9 +32,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_logs",
-      "has_charcoal",
-      "has_the_recipe"
+      "has_charcoal"
     ]
   ],
   "rewards": {
@@ -42,5 +42,5 @@
       "xsurvive:charcoal_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

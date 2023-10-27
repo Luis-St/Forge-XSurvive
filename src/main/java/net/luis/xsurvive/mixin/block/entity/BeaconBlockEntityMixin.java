@@ -1,6 +1,6 @@
 package net.luis.xsurvive.mixin.block.entity;
 
-import com.google.common.collect.*;
+import com.google.common.collect.Streams;
 import net.luis.xsurvive.server.capability.ServerLevelHandler;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
@@ -23,8 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity.*;
@@ -82,11 +81,11 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	private static @NotNull List<MobEffect> getEffects(int beaconLevel, boolean includeJump) {
 		List<MobEffect> effects = switch (beaconLevel) {
-			case 1 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED);
-			case 2 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE);
-			case 3 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST);
-			case 4 -> Lists.newArrayList(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION);
-			default -> Lists.newArrayList();
+			case 1 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED);
+			case 2 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE);
+			case 3 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST);
+			case 4 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION);
+			default -> List.of();
 		};
 		if (includeJump && beaconLevel >= 2) {
 			effects.add(MobEffects.JUMP);
@@ -119,7 +118,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	@Override
 	public List<AABB> getBeaconBase() {
-		List<AABB> base = Lists.newArrayList();
+		List<AABB> base = new ArrayList<>();
 		AABB area = new AABB(this.getBlockPos(), this.getBlockPos());
 		for (int i = 0; i < this.levels; i++) {
 			base.add(area.move(0, -(i + 1), 0).inflate(i + 1, 0, i + 1));
@@ -129,20 +128,20 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	@Override
 	public List<Block> getBeaconBaseBlocks() {
-		HashSet<Block> blocks = Sets.newHashSet();
+		HashSet<Block> blocks = new HashSet<>();
 		List<AABB> base = this.getBeaconBase();
 		for (AABB basePart : base) {
 			this.level.getBlockStates(basePart).filter(state -> state.is(BlockTags.BEACON_BASE_BLOCKS)).map(BlockState::getBlock).forEach(blocks::add);
 		}
-		return Lists.newArrayList(blocks);
+		return new ArrayList<>(blocks);
 	}
 	
 	@Override
 	public boolean isBeaconBaseShared() {
 		BlockPos p = this.getBlockPos();
-		Stream<BlockPos> positions = Streams.concat(BlockPos.betweenClosedStream(new AABB(p.getX() - 7, p.getY() - 1, p.getZ() - 7, p.getX() + 8, p.getY(), p.getZ() + 8)).map(BlockPos::immutable),
+		Stream<BlockPos> positions = Stream.of(BlockPos.betweenClosedStream(new AABB(p.getX() - 7, p.getY() - 1, p.getZ() - 7, p.getX() + 8, p.getY(), p.getZ() + 8)).map(BlockPos::immutable),
 			BlockPos.betweenClosedStream(new AABB(p.getX() - 6, p.getY() - 2, p.getZ() - 6, p.getX() + 7, p.getY() - 2, p.getZ() + 7)).map(BlockPos::immutable),
-			BlockPos.betweenClosedStream(new AABB(p.getX() - 5, p.getY() - 3, p.getZ() - 5, p.getX() + 6, p.getY() - 3, p.getZ() + 6)).map(BlockPos::immutable));
+			BlockPos.betweenClosedStream(new AABB(p.getX() - 5, p.getY() - 3, p.getZ() - 5, p.getX() + 6, p.getY() - 3, p.getZ() + 6)).map(BlockPos::immutable)).flatMap(stream -> stream);
 		return positions.map(this.level::getBlockState).filter(state -> state.is(Blocks.BEACON)).count() > 1;
 	}
 }

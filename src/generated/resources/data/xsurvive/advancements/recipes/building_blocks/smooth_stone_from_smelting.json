@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_stone",
-      "has_smooth_stone",
-      "has_the_recipe"
+      "has_smooth_stone"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:smooth_stone_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

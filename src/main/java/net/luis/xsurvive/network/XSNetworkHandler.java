@@ -9,12 +9,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.*;
-import net.minecraftforge.network.simple.SimpleChannel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -27,12 +28,11 @@ public enum XSNetworkHandler {
 	
 	INSTANCE();
 	
-	private static final String VERSION = "3";
 	private int id;
 	private SimpleChannel simpleChannel;
 	
 	public void initChannel() {
-		this.simpleChannel = NetworkRegistry.newSimpleChannel(new ResourceLocation(XSurvive.MOD_ID, "simple_channel"), () -> VERSION, VERSION::equals, VERSION::equals);
+		this.simpleChannel = ChannelBuilder.named(new ResourceLocation(XSurvive.MOD_ID, "simple_channel")).acceptedVersions((status, version) -> true).simpleChannel();
 	}
 	
 	public void registerPackets() {
@@ -42,7 +42,7 @@ public enum XSNetworkHandler {
 		this.registerPacket(UpdateLevelCapabilityPacket.class, UpdateLevelCapabilityPacket::encode, UpdateLevelCapabilityPacket::new, UpdateLevelCapabilityPacket::handle);
 	}
 	
-	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> consumer) {
+	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, CustomPayloadEvent.Context> consumer) {
 		this.simpleChannel.messageBuilder(clazz, this.id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
 	}
 	
@@ -51,7 +51,7 @@ public enum XSNetworkHandler {
 	}
 	
 	public <T extends NetworkPacket> void sendToServer(@NotNull T packet) {
-		this.getChannel().sendToServer(packet);
+		this.getChannel().send(packet, PacketDistributor.SERVER.noArg());
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayer(@NotNull Player player, @NotNull T packet) {
@@ -61,19 +61,19 @@ public enum XSNetworkHandler {
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayer(@NotNull ServerPlayer player, @NotNull T packet) {
-		this.getChannel().send(PacketDistributor.PLAYER.with(() -> player), packet);
+		this.getChannel().send(packet, PacketDistributor.PLAYER.with(player));
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet) {
-		this.getChannel().send(PacketDistributor.ALL.noArg(), packet);
+		this.getChannel().send(packet, PacketDistributor.ALL.noArg());
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet, ServerPlayer... players) {
-		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> player.connection.connection).collect(Collectors.toList());
-		this.getChannel().send(PacketDistributor.NMLIST.with(() -> connections), packet);
+		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> player.connection.getConnection()).collect(Collectors.toList());
+		this.getChannel().send(packet, PacketDistributor.NMLIST.with(connections));
 	}
 	
 	public <T extends NetworkPacket> void sendToPlayersInLevel(@NotNull ServerLevel level, @NotNull T packet) {
-		this.getChannel().send(PacketDistributor.DIMENSION.with(level::dimension), packet);
+		this.getChannel().send(packet, PacketDistributor.DIMENSION.with(level.dimension()));
 	}
 }

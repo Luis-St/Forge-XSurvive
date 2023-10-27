@@ -1,7 +1,8 @@
 package net.luis.xsurvive.world.level.storage.loot.predicates;
 
 import com.google.common.collect.Lists;
-import com.google.gson.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -16,7 +17,14 @@ import java.util.List;
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class LootTableIdsCondition implements LootItemCondition {
+	
+	public static final Codec<LootTableIdsCondition> CODEC = RecordCodecBuilder.create((instance) -> {
+		return instance.group(Codec.list(ResourceLocation.CODEC).fieldOf("loot_table_ids").forGetter((condition) -> {
+			return condition.lootTables;
+		})).apply(instance, LootTableIdsCondition::new);
+	});
 	
 	private final List<ResourceLocation> lootTables;
 	
@@ -55,28 +63,6 @@ public class LootTableIdsCondition implements LootItemCondition {
 		@Override
 		public @NotNull LootItemCondition build() {
 			return new LootTableIdsCondition(this.lootTables);
-		}
-	}
-	
-	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<LootTableIdsCondition> {
-		
-		@Override
-		public void serialize(@NotNull JsonObject object, @NotNull LootTableIdsCondition instance, @NotNull JsonSerializationContext context) {
-			JsonArray array = new JsonArray();
-			for (ResourceLocation location : instance.lootTables) {
-				array.add(location.toString());
-			}
-			object.add("loot_table_ids", array);
-		}
-		
-		@Override
-		public @NotNull LootTableIdsCondition deserialize(@NotNull JsonObject object, @NotNull JsonDeserializationContext context) {
-			List<ResourceLocation> lootTables = Lists.newArrayList();
-			JsonArray array = object.get("loot_table_ids").getAsJsonArray();
-			for (JsonElement jsonElement : array) {
-				lootTables.add(new ResourceLocation(jsonElement.getAsString()));
-			}
-			return new LootTableIdsCondition(lootTables);
 		}
 	}
 }

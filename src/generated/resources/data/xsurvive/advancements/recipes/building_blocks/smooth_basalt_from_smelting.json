@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_basalt",
-      "has_smooth_basalt",
-      "has_the_recipe"
+      "has_smooth_basalt"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:smooth_basalt_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

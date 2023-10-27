@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -32,7 +32,7 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	private final Ingredient ingredient;
 	private final float experience;
 	private final int cookingTime;
-	private final Advancement.Builder advancement = Advancement.Builder.advancement();
+	private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
 	@Nullable
 	private String group;
 	
@@ -57,8 +57,8 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		}
 	}
 	
-	public @NotNull SmeltingRecipeBuilder unlockedBy(@NotNull String key, @NotNull CriterionTriggerInstance triggerInstance) {
-		this.advancement.addCriterion(key, triggerInstance);
+	public @NotNull SmeltingRecipeBuilder unlockedBy(@NotNull String key, @NotNull Criterion<?> criterion) {
+		this.criteria.put(key, criterion);
 		return this;
 	}
 	
@@ -72,42 +72,21 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 	}
 	
 	@Override
-	public void save(@NotNull Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation id) {
+	public void save(@NotNull RecipeOutput output, @NotNull ResourceLocation id) {
 		this.ensureValid(id);
-		this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(RequirementsStrategy.OR);
-		consumer.accept(
-			new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, this.advancement, id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
+		Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
+		this.criteria.forEach(builder::addCriterion);
+		AdvancementHolder advancement = builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/"));
+		output.accept(new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, advancement));
 	}
 	
 	private void ensureValid(ResourceLocation id) {
-		if (this.advancement.getCriteria().isEmpty()) {
+		if (this.criteria.isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		}
 	}
 	
-	public static class Result implements FinishedRecipe {
-		
-		private final ResourceLocation id;
-		private final String group;
-		private final CookingBookCategory category;
-		private final Ingredient ingredient;
-		private final Item result;
-		private final float experience;
-		private final int cookingTime;
-		private final Advancement.Builder advancement;
-		private final ResourceLocation advancementId;
-		
-		public Result(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, Advancement.Builder advancement, ResourceLocation advancementId) {
-			this.id = id;
-			this.group = group;
-			this.category = category;
-			this.ingredient = ingredient;
-			this.result = result;
-			this.experience = experience;
-			this.cookingTime = cookingTime;
-			this.advancement = advancement;
-			this.advancementId = advancementId;
-		}
+	public static record Result(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, AdvancementHolder advancement) implements FinishedRecipe {
 		
 		@Override
 		public @NotNull JsonObject serializeRecipe() {
@@ -123,30 +102,25 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 				object.addProperty("group", this.group);
 			}
 			object.addProperty("category", this.category.getSerializedName());
-			object.add("ingredient", this.ingredient.toJson());
+			object.add("ingredient", this.ingredient.toJson(false));
 			object.addProperty("result", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(this.result)).toString());
 			object.addProperty("experience", this.experience);
 			object.addProperty("cookingtime", this.cookingTime);
 		}
 		
 		@Override
-		public @NotNull RecipeSerializer<?> getType() {
+		public @NotNull RecipeSerializer<?> type() {
 			return XSRecipeSerializers.SMELTING_RECIPE.get();
 		}
 		
 		@Override
-		public @NotNull ResourceLocation getId() {
+		public @NotNull ResourceLocation id() {
 			return this.id;
 		}
 		
 		@Override
-		public JsonObject serializeAdvancement() {
-			return this.advancement.serializeToJson();
-		}
-		
-		@Override
-		public ResourceLocation getAdvancementId() {
-			return this.advancementId;
+		public @NotNull AdvancementHolder advancement() {
+			return this.advancement;
 		}
 	}
 }

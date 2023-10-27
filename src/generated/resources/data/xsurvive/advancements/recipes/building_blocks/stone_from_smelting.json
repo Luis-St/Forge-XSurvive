@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_cobblestone",
-      "has_stone",
-      "has_the_recipe"
+      "has_stone"
     ]
   ],
   "rewards": {
@@ -44,5 +44,5 @@
       "xsurvive:stone_from_smelting"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

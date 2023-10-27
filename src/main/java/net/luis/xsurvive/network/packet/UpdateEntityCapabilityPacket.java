@@ -5,11 +5,9 @@ import net.luis.xsurvive.network.NetworkPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent.Context;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Supplier;
 
 /**
  *
@@ -40,8 +38,8 @@ public class UpdateEntityCapabilityPacket implements NetworkPacket {
 	}
 	
 	@Override
-	public void handle(@NotNull Supplier<Context> context) {
-		context.get().enqueueWork(() -> {
+	public void handle(@NotNull CustomPayloadEvent.Context context) {
+		context.enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 				XSClientPacketHandler.handleEntityCapabilityUpdate(this.entityId, this.tag);
 			});

@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_charcoal",
-      "has_coal",
-      "has_the_recipe"
+      "has_coal"
     ]
   ],
   "rewards": {

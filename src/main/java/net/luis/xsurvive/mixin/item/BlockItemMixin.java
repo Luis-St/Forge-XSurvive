@@ -19,8 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  *
@@ -51,8 +50,7 @@ public abstract class BlockItemMixin extends Item {
 			CompoundTag tag = BlockItem.getBlockEntityData(stack);
 			if (tag != null && tag.contains("Items", 9)) {
 				ListTag listTag = tag.getList("Items", 10);
-				List<ItemStack> stacks = Lists.newArrayList();
-				stacks.addAll(listTag.stream().map(CompoundTag.class::cast).map(ItemStack::of).toList());
+				List<ItemStack> stacks = new ArrayList<>(listTag.stream().map(CompoundTag.class::cast).map(ItemStack::of).toList());
 				return Optional.of(new ShulkerBoxTooltip(stacks));
 			}
 		}

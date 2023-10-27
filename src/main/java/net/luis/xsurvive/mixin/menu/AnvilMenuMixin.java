@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.menu;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
 import net.luis.xsurvive.world.item.enchantment.IEnchantment;
@@ -20,8 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -192,7 +190,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				this.cost.set(59);
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
-				List<Enchantment> enchantments = Lists.newArrayList();
+				List<Enchantment> enchantments = new ArrayList<>();
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
 				if (!enchantments.isEmpty()) {

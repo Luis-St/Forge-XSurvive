@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.entity.boss;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.Util;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,7 +65,7 @@ public abstract class EnderDragonMixin extends Mob {
 		boolean doMobDrop = this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
 		if (this.level() instanceof ServerLevel) {
 			if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0 && doMobDrop) {
-				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.08)));
+				this.addDragonExperience(new ArrayList<>(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.08)));
 			}
 			if (this.dragonDeathTime == 1 && !this.isSilent()) {
 				this.level().globalLevelEvent(1028, this.blockPosition(), 0);
@@ -76,7 +76,7 @@ public abstract class EnderDragonMixin extends Mob {
 		this.yBodyRot = this.getYRot();
 		if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel) {
 			if (doMobDrop) {
-				this.addDragonExperience(Lists.newArrayList(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.2)));
+				this.addDragonExperience(new ArrayList<>(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.2)));
 			}
 			if (this.dragonFight != null) {
 				this.dragonFight.setDragonKilled((EnderDragon) (Object) this);
