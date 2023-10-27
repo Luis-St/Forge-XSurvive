@@ -65,7 +65,7 @@ public class XSurvive {
 		XSDamageTypes.register();
 		XSOreFeatures.register();
 		XSOrePlacements.register();
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookTypes::register);
+		XSRecipeBookTypes.register();
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookCategories::register);
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();

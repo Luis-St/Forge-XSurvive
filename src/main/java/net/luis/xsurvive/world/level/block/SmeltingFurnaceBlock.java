@@ -54,11 +54,11 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 			}
 			Direction direction = state.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
-			double offset = rng.nextDouble() * 0.6D - 0.3D;
-			double xOffset = axis == Direction.Axis.X ? direction.getStepX() * 0.52D : offset;
-			double yOffset = rng.nextDouble() * 9.0D / 16.0D;
-			double zOffset = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : offset;
-			level.addParticle(ParticleTypes.SMOKE, x + xOffset, y + yOffset, z + zOffset, 0.0D, 0.0D, 0.0D);
+			double offset = rng.nextDouble() * 0.6 - 0.3;
+			double xOffset = axis == Direction.Axis.X ? direction.getStepX() * 0.52 : offset;
+			double yOffset = rng.nextDouble() * 9.0 / 16.0;
+			double zOffset = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52 : offset;
+			level.addParticle(ParticleTypes.SMOKE, x + xOffset, y + yOffset, z + zOffset, 0.0, 0.0, 0.0);
 		}
 	}
 }
