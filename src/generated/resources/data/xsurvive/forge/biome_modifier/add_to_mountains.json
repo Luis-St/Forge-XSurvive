@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#xsurvive:is_mountain",
-  "features": "xsurvive:emerald_ore",
-  "step": "underground_ores"
-}

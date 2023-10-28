@@ -12,13 +12,13 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("CodeBlock2Expr")
 /**
  *
  * @author Luis-St
  *
  */
 
+@SuppressWarnings("CodeBlock2Expr")
 public class SmeltingModifier extends LootModifier {
 	
 	public static final Codec<SmeltingModifier> CODEC = RecordCodecBuilder.create((instance) -> {
