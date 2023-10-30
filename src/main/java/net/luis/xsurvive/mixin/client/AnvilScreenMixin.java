@@ -57,5 +57,4 @@ public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		}
 		callback.cancel();
 	}
-	
 }

@@ -38,7 +38,7 @@ public abstract class MerchantOfferMixin {
 		int baseCount = this.baseCostA.getCount();
 		ItemStack stack = this.baseCostA.copy();
 		int demandCount = (int) Math.max(0, (double) (baseCount * this.demand) * this.priceMultiplier);
-		int count = Mth.clamp(baseCount + demandCount + this.specialPriceDiff, (int) (baseCount * 0.85), (int) (baseCount * 1.5));
+		int count = Mth.clamp(baseCount + demandCount + this.specialPriceDiff, (int) (baseCount * 0.85), (int) (baseCount * 1.2));
 		stack.setCount(Mth.clamp(count, 1, this.baseCostA.getMaxStackSize()));
 		callback.setReturnValue(stack);
 	}
@@ -48,11 +48,6 @@ public abstract class MerchantOfferMixin {
 		if (this.maxUses != 1) {
 			callback.setReturnValue(this.maxUses * 5);
 		}
-	}
-	
-	@Inject(method = "getXp", at = @At("HEAD"), cancellable = true)
-	public void getXp(@NotNull CallbackInfoReturnable<Integer> callback) {
-		callback.setReturnValue(Math.max(1, (int) (this.xp * 0.5)));
 	}
 	
 	@Inject(method = "isOutOfStock", at = @At("HEAD"), cancellable = true)

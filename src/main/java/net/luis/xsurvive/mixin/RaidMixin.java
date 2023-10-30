@@ -37,20 +37,20 @@ public abstract class RaidMixin {
 	
 	// @formatter:off
 	private static final int[] VINDICATOR_SPAWNS = {
-		// 0, 0, 2, 0, 1,  4,  2,  5 -> Max: 64
-		   0, 3, 5, 6, 9, 11, 13, 16
+		// 0, 0, 2, 0, 1,  4,  2,  5 -> Max: 48
+		   0, 2, 4, 5, 5, 8, 10, 12
 	};
 	private static final int[] EVOKER_SPAWNS = {
 		// 0, 0, 0, 0, 0, 1, 1, 2 -> Max: 12
-		   0, 0, 1, 1, 2, 2, 3, 3
+		   0, 0, 0, 1, 1, 2, 2, 3
 	};
 	private static final int[] PILLAGER_SPAWNS = {
-		// 0, 4, 3,  3,  4,  4,  4,  2 -> Max: 104
-		   0, 6, 9, 13, 17, 21, 24, 26
+		// 0, 4, 3,  3,  4,  4,  4,  2 -> Max: 56
+		   0, 5, 6, 6, 7, 9, 12, 14
 	};
 	private static final int[] WITCH_SPAWNS = {
-		// 0, 0, 0, 0, 3, 0, 0, 1 -> Max: 25
-		   0, 1, 1, 2, 3, 3, 4, 5
+		// 0, 0, 0, 0, 3, 0, 0, 1 -> Max: 16
+		   0, 0, 1, 1, 2, 2, 3, 4
 	};
 	private static final int[] RAVAGER_SPAWNS = {
 		// 0, 0, 0, 1, 0, 1, 0, 2 -> Max: 12
