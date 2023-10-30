@@ -7,8 +7,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ForgeHooks;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static net.minecraft.world.level.block.SugarCaneBlock.*;
 
 /**
  *
@@ -17,7 +23,35 @@ import org.spongepowered.asm.mixin.Mixin;
  */
 
 @Mixin(SugarCaneBlock.class)
-public abstract class SugarCaneBlockMixin implements BonemealableBlock {
+@SuppressWarnings({"DataFlowIssue", "UnstableApiUsage"})
+public abstract class SugarCaneBlockMixin extends Block implements BonemealableBlock {
+	
+	//region Mixin
+	private SugarCaneBlockMixin(Properties properties) {
+		super(properties);
+	}
+	//endregion
+	
+	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
+	public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource rng, @NotNull CallbackInfo callback) {
+		if (level.isEmptyBlock(pos.above())) {
+			int height;
+			for (height = 1; level.getBlockState(pos.below(height)).is((SugarCaneBlock) (Object) this); ++height) ;
+			if (height < 5) {
+				int j = state.getValue(AGE);
+				if (ForgeHooks.onCropsGrowPre(level, pos, state, true)) {
+					if (j == 15) {
+						level.setBlockAndUpdate(pos.above(), this.defaultBlockState());
+						ForgeHooks.onCropsGrowPost(level, pos.above(), this.defaultBlockState());
+						level.setBlock(pos, state.setValue(AGE, 0), 4);
+					} else {
+						level.setBlock(pos, state.setValue(AGE, j + 1), 4);
+					}
+				}
+			}
+			callback.cancel();
+		}
+	}
 	
 	@Override
 	public boolean isValidBonemealTarget(@NotNull LevelReader level, @NotNull BlockPos pos, @NotNull BlockState state) {
