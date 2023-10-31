@@ -137,7 +137,8 @@ def replaceProperties = [
 	MinecraftVersion: MinecraftVersion, MinecraftVersionRange: MinecraftVersionRange,
 	ForgeVersion    : ForgeVersion, ForgeVersionRange: ForgeVersionRange,
 	ForgeLoaderRange: ForgeLoaderRange, ModVersion: ModVersion,
-	XBackpackVersion: XBackpackVersion, XOresVersion: XOresVersion
+	XBackpackVersion: XBackpackVersion, XOresVersion: XOresVersion,
+	MinecraftPackFormat: MinecraftPackFormat
 ]
 processResources {
 	inputs.properties replaceProperties
