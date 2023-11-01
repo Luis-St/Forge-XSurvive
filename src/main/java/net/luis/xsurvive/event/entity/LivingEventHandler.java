@@ -132,12 +132,15 @@ public class LivingEventHandler {
 				int voidWalkerFrom = fromStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
 				EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_GRAVITY.get(), Operation.MULTIPLY_TOTAL, GRAVITY_MODIFIER_UUID, "EntityGravity", voidWalkerTo, voidWalkerFrom, 1.0);
 			}
-			int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
-			int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
-			EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom, 1.0);
-			AttributeInstance instance = player.getAttribute(Attributes.MAX_HEALTH);
-			if (instance != null) {
-				instance.setBaseValue(Math.min(player.getHealth(), (float) instance.getValue()));
+			if (event.getSlot().isArmor()) {
+				int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
+				int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
+				if (growthTo != growthFrom) {
+					EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom, 1.0);
+					if (growthFrom > growthTo) {
+						player.setHealth(Math.min(player.getHealth(), 20.0F + growthTo));
+					}
+				}
 			}
 			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
 			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
