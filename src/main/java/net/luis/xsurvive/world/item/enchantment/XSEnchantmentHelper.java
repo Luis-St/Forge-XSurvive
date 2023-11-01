@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -70,21 +71,20 @@ public class XSEnchantmentHelper {
 		return enchantments;
 	}
 	
-	public static @NotNull Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
-		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, itemStack -> true).entrySet()) {
-			if (entry.getKey().getType() == EquipmentSlot.Type.HAND) {
-				return entry;
-			}
-		}
-		return new SimpleEntry<>(null, ItemStack.EMPTY);
-	}
-	
 	public static int getEnchantmentLevel(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
 		int level = entity.getMainHandItem().getEnchantmentLevel(enchantment);
 		if (level > 0) {
 			return level;
 		}
 		return entity.getOffhandItem().getEnchantmentLevel(enchantment);
+	}
+	
+	public static int getTotalEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
+		int total = 0;
+		for (EquipmentSlot slot : Stream.of(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).toList()) {
+			total += entity.getItemBySlot(slot).getEnchantmentLevel(enchantment);
+		}
+		return total;
 	}
 	
 	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {
@@ -151,6 +151,15 @@ public class XSEnchantmentHelper {
 	
 	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
 		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> enchantment.canEnchant(new ItemStack(item))).map(ItemStack::new).collect(Collectors.toList());
+	}
+	
+	public static @NotNull Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
+		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, itemStack -> true).entrySet()) {
+			if (entry.getKey().getType() == EquipmentSlot.Type.HAND) {
+				return entry;
+			}
+		}
+		return new SimpleEntry<>(null, ItemStack.EMPTY);
 	}
 	
 	public static void enchantItem(RandomSource rng, ItemStack stack, int count, int cost, boolean treasure, boolean golden) {

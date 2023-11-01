@@ -23,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
@@ -106,5 +109,13 @@ public class EntityHelper {
 				instance.addPermanentModifier(modifier);
 			}
 		}
+	}
+	
+	public static List<ItemStack> getArmorItems(@NotNull LivingEntity entity) {
+		return Stream.of(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).map(entity::getItemBySlot).collect(Collectors.toList());
+	}
+	
+	public static boolean isWearing(@NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
+		return getArmorItems(entity).stream().allMatch(predicate);
 	}
 }

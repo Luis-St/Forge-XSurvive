@@ -5,6 +5,8 @@ import net.luis.xsurvive.dependency.DependencyCallWrapper;
 import net.luis.xsurvive.world.entity.ai.custom.*;
 import net.luis.xsurvive.world.item.alchemy.BrewingRecipeUtils;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,8 +27,11 @@ public class CommonSetupEventHandler {
 	@SubscribeEvent
 	public static void commonSetup(@NotNull FMLCommonSetupEvent event) {
 		DependencyCallWrapper.wrapCommonSetup();
-		registerBrewingRecipes();
-		registerCustomAis();
+		event.enqueueWork(() -> {
+			registerBrewingRecipes();
+			registerCustomAis();
+			replaceEntityDimensions();
+		});
 	}
 	
 	private static void registerBrewingRecipes() {
@@ -39,5 +44,9 @@ public class CommonSetupEventHandler {
 		CustomAiManager.INSTANCE.register(ElderGuardian.class, CustomElderGuardianAi::new);
 		CustomAiManager.INSTANCE.register(EnderMan.class, CustomEnderManAi::new);
 		CustomAiManager.INSTANCE.register(ZombifiedPiglin.class, CustomZombifiedPiglinAi::new);
+	}
+	
+	private static void replaceEntityDimensions() {
+		EntityType.SHULKER_BULLET.dimensions = EntityDimensions.scalable(0.45F, 0.45F);
 	}
 }

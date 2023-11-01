@@ -12,6 +12,8 @@ import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.LevelHelper;
 import net.luis.xsurvive.world.level.LevelProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -28,22 +30,25 @@ import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraftforge.event.entity.*;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Method;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 /**
  *
@@ -54,6 +59,7 @@ import java.util.UUID;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class EntityEventHandler {
 	
+	private static final Method CAN_STAY_AT = ObfuscationReflectionHelper.findMethod(Shulker.class, "m_149785_", BlockPos.class, Direction.class);
 	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
 	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
 	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
@@ -191,6 +197,26 @@ public class EntityEventHandler {
 				projectile.level().explode(projectile.getOwner(), location.x(), location.y(), location.z(), explosionLevel, Level.ExplosionInteraction.BLOCK);
 				projectile.discard();
 			}
+		}
+		if (projectile instanceof ShulkerBullet bullet && event.getRayTraceResult() instanceof EntityHitResult result) {
+			if (result.getEntity() instanceof LivingEntity target) {
+				if (XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION) >= 16) {
+					event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void shulkerTeleport(@NotNull EntityTeleportEvent.EnderEntity event) {
+		if (event.getEntity() instanceof Shulker shulker) {
+			boolean canStayAt = false;
+			try {
+				canStayAt = (boolean) CAN_STAY_AT.invoke(shulker, shulker.blockPosition(), shulker.getAttachFace());
+			} catch (Exception e) {
+				XSurvive.LOGGER.error("Failed to invoke Shulker#canStayAt(BlockPos, Direction) report this issue to the mod author", e);
+			}
+			event.setCanceled(shulker.getTarget() != null && canStayAt);
 		}
 	}
 }
