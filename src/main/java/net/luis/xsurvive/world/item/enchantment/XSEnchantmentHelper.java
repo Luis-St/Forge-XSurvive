@@ -2,6 +2,7 @@ package net.luis.xsurvive.world.item.enchantment;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.SimpleEntry;
 import net.minecraft.Util;
@@ -79,12 +80,17 @@ public class XSEnchantmentHelper {
 		return entity.getOffhandItem().getEnchantmentLevel(enchantment);
 	}
 	
-	public static int getTotalEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
+	public static @NotNull Pair<Integer, Integer> getTotalEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
 		int total = 0;
+		int items = 0;
 		for (EquipmentSlot slot : Stream.of(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).toList()) {
-			total += entity.getItemBySlot(slot).getEnchantmentLevel(enchantment);
+			int level = entity.getItemBySlot(slot).getEnchantmentLevel(enchantment);
+			if (level > 0) {
+				total += level;
+				items++;
+			}
 		}
-		return total;
+		return Pair.of(total, items);
 	}
 	
 	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {

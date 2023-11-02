@@ -35,12 +35,10 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.event.entity.*;
-import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
@@ -48,7 +46,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 /**
  *
@@ -183,7 +180,7 @@ public class EntityEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void enderPearl(@NotNull EnderPearl event) {
+	public static void enderPearl(@NotNull EntityTeleportEvent.EnderPearl event) {
 		event.setAttackDamage(event.getAttackDamage() * 1.5F);
 	}
 	
@@ -200,7 +197,7 @@ public class EntityEventHandler {
 		}
 		if (projectile instanceof ShulkerBullet bullet && event.getRayTraceResult() instanceof EntityHitResult result) {
 			if (result.getEntity() instanceof LivingEntity target) {
-				if (XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION) >= 16) {
+				if (XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION).getFirst() >= 16) {
 					event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
 				}
 			}
