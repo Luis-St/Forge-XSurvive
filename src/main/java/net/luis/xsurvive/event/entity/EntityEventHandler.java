@@ -1,5 +1,6 @@
 package net.luis.xsurvive.event.entity;
 
+import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.entity.EntityHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
@@ -34,7 +35,7 @@ import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
@@ -195,10 +196,24 @@ public class EntityEventHandler {
 				projectile.discard();
 			}
 		}
-		if (projectile instanceof ShulkerBullet bullet && event.getRayTraceResult() instanceof EntityHitResult result) {
-			if (result.getEntity() instanceof LivingEntity target) {
-				if (XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION).getFirst() >= 16) {
-					event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+		if (event.getRayTraceResult() instanceof EntityHitResult result && result.getEntity() instanceof LivingEntity target) {
+			Pair<Integer, Integer> pair = XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION);
+			int total = pair.getFirst();
+			int items = pair.getSecond();
+			if (total > 0 && items > 0) {
+				double average = (double) total / items;
+				if (total >= 20) {
+					int piercing = projectile instanceof AbstractArrow arrow ? arrow.getPierceLevel() : 0;
+					if (0 >= piercing) {
+						event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+					} else if (EntityHelper.isUsingItem(target, stack -> stack.getItem() instanceof ShieldItem)) {
+						event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+					}
+				} else if (average > 0.0) {
+					double skipChance = 1.0 - (0.225 * average);
+					if (target.getRandom().nextDouble() > skipChance) {
+						event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+					}
 				}
 			}
 		}

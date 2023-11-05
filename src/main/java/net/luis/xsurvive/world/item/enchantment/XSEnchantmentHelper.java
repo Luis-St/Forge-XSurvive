@@ -93,6 +93,11 @@ public class XSEnchantmentHelper {
 		return Pair.of(total, items);
 	}
 	
+	public static int getAverageEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
+		Pair<Integer, Integer> pair = getTotalEnchantmentLevel(entity, enchantment);
+		return 0 >= pair.getSecond() ? 0 : pair.getFirst() / pair.getSecond();
+	}
+	
 	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 		if ((!hasEnchantment(instance.enchantment, stack) || present) && EnchantmentHelper.isEnchantmentCompatible(enchantments.keySet(), instance.enchantment)) {

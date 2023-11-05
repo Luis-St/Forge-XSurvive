@@ -118,4 +118,10 @@ public class EntityHelper {
 	public static boolean isWearing(@NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
 		return getArmorItems(entity).stream().allMatch(predicate);
 	}
+	
+	public static boolean isUsingItem(@NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
+		ItemStack main = entity.getMainHandItem();
+		ItemStack off = entity.getOffhandItem();
+		return predicate.test(main) || predicate.test(off);
+	}
 }
