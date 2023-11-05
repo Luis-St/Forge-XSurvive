@@ -35,12 +35,6 @@ minecraft {
 			}
 		}
 		
-		serverClient {
-			parent runs.client
-			
-			args "--username", "Dev2"
-		}
-		
 		server {
 			workingDirectory project.file("run")
 			
@@ -82,6 +76,7 @@ minecraft {
 			property "forge.enabledGameTestNamespaces", "xsurvive"
 			property "mixin.env.remapRefMap", "true"
 			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
+			property "xsurvive.data.include", "mod"
 			
 			args "--mod", "xsurvive", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
 			
@@ -90,6 +85,12 @@ minecraft {
 					source sourceSets.main
 				}
 			}
+		}
+		
+		dataPackAdditions {
+			parent runs.data
+			
+			property "xsurvive.data.include", "additions"
 		}
 	}
 }

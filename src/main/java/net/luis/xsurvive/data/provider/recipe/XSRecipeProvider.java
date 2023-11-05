@@ -30,11 +30,11 @@ public class XSRecipeProvider extends RecipeProvider {
 		super(generator.getPackOutput());
 	}
 	
-	private static @NotNull String getId(@NotNull ItemLike item) {
+	protected static @NotNull String getId(@NotNull ItemLike item) {
 		return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item.asItem())).getPath();
 	}
 	
-	private static @NotNull String getGroup(ItemLike item) {
+	protected static @NotNull String getGroup(ItemLike item) {
 		String path = getId(item);
 		if (!path.contains("_")) {
 			return path;
@@ -89,32 +89,31 @@ public class XSRecipeProvider extends RecipeProvider {
 			XSItems.HONEY_MELON_SEEDS.get()).save(output);
 		this.groupAndUnlock(ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, XSItems.HONEY_MELON_SLICE.get()).requires(Items.MELON_SLICE).requires(Items.HONEY_BOTTLE), getGroup(XSBlocks.HONEY_MELON.get()), Items.MELON_SLICE,
 			Items.HONEY_BOTTLE, XSItems.HONEY_MELON_SLICE.get()).save(output);
-		this.groupAndUnlock(ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, XSItems.DIAMOND_APPLE.get()).define('#', Items.DIAMOND).define('?', Items.APPLE).pattern("###").pattern("#?#").pattern("###"),
-			getGroup(XSItems.DIAMOND_APPLE.get()), Items.DIAMOND,
-			Items.APPLE).save(output);
+		this.groupAndUnlock(ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, XSItems.DIAMOND_APPLE.get()).define('#', Items.DIAMOND).define('?', Items.APPLE).pattern("###").pattern("#?#").pattern("###"), getGroup(XSItems.DIAMOND_APPLE.get()),
+			Items.DIAMOND, Items.APPLE).save(output);
 	}
 	
-	private void furnaceRecipe(RecipeOutput output, Item input, Item result) {
+	protected void furnaceRecipe(RecipeOutput output, Item input, Item result) {
 		this.groupAndUnlock(SimpleCookingRecipeBuilder.smelting(Ingredient.of(input), RecipeCategory.MISC, result, 1.0F, 200), getGroup(input), input, result).save(output, new ResourceLocation(XSurvive.MOD_ID, getId(result)));
 	}
 	
-	private void smeltingFurnaceRecipe(RecipeOutput output, RecipeCategory category, Item input, Item result) {
+	protected void smeltingFurnaceRecipe(RecipeOutput output, RecipeCategory category, Item input, Item result) {
 		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F), getGroup(input), input, result).save(output, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
 	}
 	
-	private void smeltingFurnaceRecipe(RecipeOutput output, RecipeCategory category, TagKey<Item> input, Item result) {
+	protected void smeltingFurnaceRecipe(RecipeOutput output, RecipeCategory category, TagKey<Item> input, Item result) {
 		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(input), result, 0.5F), input.location().getPath(), Ingredient.of(input), result)
 			.save(output, new ResourceLocation(XSurvive.MOD_ID, getId(result) + "_from_smelting"));
 	}
 	
-	private @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, ItemLike @NotNull ... unlockCriterions) {
+	protected @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, ItemLike @NotNull ... unlockCriterions) {
 		for (ItemLike unlockCriterion : unlockCriterions) {
 			builder.unlockedBy("has_" + getId(unlockCriterion), has(unlockCriterion));
 		}
 		return builder.group(group);
 	}
 	
-	private @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, @NotNull Ingredient ingredientCriterion, Item itemCriterion) {
+	protected @NotNull RecipeBuilder groupAndUnlock(RecipeBuilder builder, String group, @NotNull Ingredient ingredientCriterion, Item itemCriterion) {
 		for (Ingredient.Value value : ingredientCriterion.values) {
 			if (value instanceof Ingredient.ItemValue itemValue) {
 				builder.unlockedBy("has_" + getId(itemValue.item().getItem()), has(itemValue.item().getItem()));
