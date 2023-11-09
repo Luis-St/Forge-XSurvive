@@ -140,7 +140,6 @@ public class PlayerEventHandler {
 		if (!player.onGround() && player.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(XSEnchantments.VOID_WALKER.get()) > 0) {
 			event.setNewSpeed(event.getOriginalSpeed() * 5.0F);
 		}
-		event.setNewSpeed(event.getNewSpeed() * 0.75F);
 	}
 	
 	@SubscribeEvent
