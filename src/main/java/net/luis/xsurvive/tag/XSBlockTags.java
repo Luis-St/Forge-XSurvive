@@ -15,6 +15,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSBlockTags {
 	
+	public static void register() {
+	
+	}
+	
 	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(new ResourceLocation(XSurvive.MOD_ID, "ocean_monument_blocks"));
 	
 	private static @NotNull TagKey<Block> bind(@NotNull ResourceLocation location) {

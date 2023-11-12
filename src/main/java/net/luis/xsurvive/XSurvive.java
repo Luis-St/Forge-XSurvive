@@ -3,6 +3,7 @@ package net.luis.xsurvive;
 import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.client.XSRecipeBookCategories;
 import net.luis.xsurvive.network.XSNetworkHandler;
+import net.luis.xsurvive.tag.*;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.XSEntityTypes;
@@ -61,6 +62,10 @@ public class XSurvive {
 		XSDamageTypes.register();
 		XSRecipeBookTypes.register();
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookCategories::register);
+		XSBiomeTags.register();
+		XSBlockTags.register();
+		XSDamageTypeTags.register();
+		XSItemTags.register();
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}

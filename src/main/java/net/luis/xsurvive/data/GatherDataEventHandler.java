@@ -51,6 +51,7 @@ public class GatherDataEventHandler {
 				generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
 				generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
 				generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSDamageTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
 				generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator));
 				generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), XSBuiltinProvider.createProvider(), Set.of(XSurvive.MOD_ID)));
 			}
