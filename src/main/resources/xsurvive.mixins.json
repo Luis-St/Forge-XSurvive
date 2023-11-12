@@ -28,6 +28,7 @@
 		"entity.monster.VexMixin",
 		"entity.monster.WitherSkeletonMixin",
 		"entity.monster.ZombieVillagerMixin",
+		"entity.player.InventoryMixin",
 		"entity.projectile.ArrowMixin",
 		"entity.projectile.EyeOfEnderMixin",
 		"entity.projectile.WitherSkullMixin",
