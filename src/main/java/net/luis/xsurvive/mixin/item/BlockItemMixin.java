@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.item;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxTooltip;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

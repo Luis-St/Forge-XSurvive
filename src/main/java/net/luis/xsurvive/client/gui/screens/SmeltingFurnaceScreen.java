@@ -3,7 +3,6 @@ package net.luis.xsurvive.client.gui.screens;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.inventory.SmeltingFurnaceMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
-import net.minecraft.client.gui.screens.recipebook.AbstractFurnaceRecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.SmeltingRecipeBookComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

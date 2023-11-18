@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +34,7 @@ public class XSDamageTypeTagsProvider extends DamageTypeTagsProvider {
 			.add(PLAYER_EXPLOSION, SONIC_BOOM, BAD_RESPAWN_POINT, OUTSIDE_BORDER, GENERIC_KILL);
 		this.tag(XSDamageTypeTags.HEAD_ONLY_DAMAGE).add(FLY_INTO_WALL);
 		this.tag(XSDamageTypeTags.FEET_ONLY_DAMAGE).add(HOT_FLOOR, FALL, DRAGON_BREATH, STALAGMITE);
-		this.tag(DamageTypeTags.BYPASSES_ARMOR).replace().add(ON_FIRE, IN_WALL, CRAMMING, DROWN, GENERIC, WITHER, DRAGON_BREATH, STARVE,  FREEZE, MAGIC, INDIRECT_MAGIC, FELL_OUT_OF_WORLD, GENERIC_KILL, SONIC_BOOM, OUTSIDE_BORDER)
+		this.tag(DamageTypeTags.BYPASSES_ARMOR).replace().add(ON_FIRE, IN_WALL, CRAMMING, DROWN, GENERIC, WITHER, DRAGON_BREATH, STARVE, FREEZE, MAGIC, INDIRECT_MAGIC, FELL_OUT_OF_WORLD, GENERIC_KILL, SONIC_BOOM, OUTSIDE_BORDER)
 			.add(/*FLY_INTO_WALL, FALL, STALAGMITE*/);
 	}
 }

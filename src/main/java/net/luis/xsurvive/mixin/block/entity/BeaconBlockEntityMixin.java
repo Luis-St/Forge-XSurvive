@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.block.entity;
 
-import com.google.common.collect.Streams;
 import net.luis.xsurvive.server.capability.ServerLevelHandler;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;

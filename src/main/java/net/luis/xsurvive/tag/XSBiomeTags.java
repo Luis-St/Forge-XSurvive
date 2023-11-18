@@ -15,11 +15,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSBiomeTags {
 	
+	public static final TagKey<Biome> IS_MOUNTAIN = bind(new ResourceLocation(XSurvive.MOD_ID, "is_mountain"));
+	
 	public static void register() {
 	
 	}
-	
-	public static final TagKey<Biome> IS_MOUNTAIN = bind(new ResourceLocation(XSurvive.MOD_ID, "is_mountain"));
 	
 	private static @NotNull TagKey<Biome> bind(@NotNull ResourceLocation location) {
 		return TagKey.create(Registries.BIOME, location);

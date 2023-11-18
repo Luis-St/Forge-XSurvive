@@ -1,6 +1,5 @@
 package net.luis.xsurvive.event.registry;
 
-import net.luis.xbackpack.server.commands.BackpackCommand;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.server.commands.TestCommand;
 import net.minecraft.server.commands.RaidCommand;

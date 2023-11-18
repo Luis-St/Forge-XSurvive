@@ -1,6 +1,5 @@
 package net.luis.xsurvive.mixin.entity.player;
 
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.tag.XSDamageTypeTags;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.DamageTypeTags;
@@ -34,28 +33,6 @@ public abstract class InventoryMixin {
 	@Shadow public Player player;
 	//endregion
 	
-	@Inject(method = "hurtArmor", at = @At("HEAD"), cancellable = true)
-	public void hurtArmor(@NotNull DamageSource source, float damage, int @NotNull [] slots, CallbackInfo callback) {
-		XSurvive.LOGGER.info("source: {}, damage: {}", source, damage);
-		if (damage > 0.0) {
-			for (int slot : slots) {
-				ItemStack stack = this.armor.get(slot);
-				if (stack.isEmpty()) {
-					continue;
-				}
-				EquipmentSlot equipmentSlot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, slot);
-				float slotDamage = calculateArmorDamage(source, (damage / 4.0F) / 2.0F, equipmentSlot);
-				XSurvive.LOGGER.info("slotDamage: {}, slot: {}", slotDamage, equipmentSlot);
-				if (!(source.is(DamageTypeTags.IS_FIRE) && stack.getItem().isFireResistant()) && slotDamage > 0.0F) {
-					if (stack.getItem() instanceof ArmorItem) {
-						stack.hurtAndBreak((int) slotDamage, this.player, (p) -> p.broadcastBreakEvent(equipmentSlot));
-					}
-				}
-			}
-		}
-		callback.cancel();
-	}
-	
 	private static float calculateArmorDamage(@NotNull DamageSource source, float damage, @NotNull EquipmentSlot slot) {
 		float armorDamage = damage;
 		if (source.is(XSDamageTypeTags.DAMAGE_FROM_ABOVE)) {
@@ -87,5 +64,25 @@ public abstract class InventoryMixin {
 			return 0.0F;
 		}
 		return (float) Math.ceil(armorDamage);
+	}
+	
+	@Inject(method = "hurtArmor", at = @At("HEAD"), cancellable = true)
+	public void hurtArmor(@NotNull DamageSource source, float damage, int @NotNull [] slots, CallbackInfo callback) {
+		if (damage > 0.0) {
+			for (int slot : slots) {
+				ItemStack stack = this.armor.get(slot);
+				if (stack.isEmpty()) {
+					continue;
+				}
+				EquipmentSlot equipmentSlot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, slot);
+				float slotDamage = calculateArmorDamage(source, (damage / 4.0F) / 2.0F, equipmentSlot);
+				if (!(source.is(DamageTypeTags.IS_FIRE) && stack.getItem().isFireResistant()) && slotDamage > 0.0F) {
+					if (stack.getItem() instanceof ArmorItem) {
+						stack.hurtAndBreak((int) slotDamage, this.player, (p) -> p.broadcastBreakEvent(equipmentSlot));
+					}
+				}
+			}
+		}
+		callback.cancel();
 	}
 }

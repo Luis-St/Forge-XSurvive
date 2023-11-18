@@ -27,7 +27,7 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		Enchantments.BLOCK_EFFICIENCY, Enchantments.UNBREAKING, Enchantments.BLOCK_FORTUNE, Enchantments.POWER_ARROWS, Enchantments.PUNCH_ARROWS, Enchantments.FISHING_LUCK, Enchantments.FISHING_SPEED, Enchantments.LOYALTY,
 		Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK
 	};
-
+	
 	//region Mixin
 	@Shadow
 	public abstract int getMaxLevel();
