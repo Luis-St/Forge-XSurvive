@@ -2,13 +2,13 @@ package net.luis.xsurvive.data.provider.recipe;
 
 import com.google.gson.JsonObject;
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
 import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -76,50 +76,12 @@ public class SmeltingRecipeBuilder implements RecipeBuilder {
 		Advancement.Builder builder = output.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
 		this.criteria.forEach(builder::addCriterion);
 		AdvancementHolder advancement = builder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/"));
-		output.accept(new Result(id, this.group == null ? "" : this.group, this.bookCategory, this.ingredient, this.result, this.experience, this.cookingTime, advancement));
+		output.accept(id, new SmeltingRecipe(this.group == null ? "" : this.group, this.bookCategory, this.ingredient, new ItemStack(this.result), this.experience, this.cookingTime), advancement);
 	}
 	
 	private void ensureValid(ResourceLocation id) {
 		if (this.criteria.isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
-		}
-	}
-	
-	public static record Result(ResourceLocation id, String group, CookingBookCategory category, Ingredient ingredient, Item result, float experience, int cookingTime, AdvancementHolder advancement) implements FinishedRecipe {
-		
-		@Override
-		public @NotNull JsonObject serializeRecipe() {
-			JsonObject jsonobject = new JsonObject();
-			jsonobject.addProperty("type", XSurvive.MOD_ID + ":xsurvive_smelting");
-			this.serializeRecipeData(jsonobject);
-			return jsonobject;
-		}
-		
-		@Override
-		public void serializeRecipeData(@NotNull JsonObject object) {
-			if (!this.group.isEmpty()) {
-				object.addProperty("group", this.group);
-			}
-			object.addProperty("category", this.category.getSerializedName());
-			object.add("ingredient", this.ingredient.toJson(false));
-			object.addProperty("result", Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(this.result)).toString());
-			object.addProperty("experience", this.experience);
-			object.addProperty("cookingtime", this.cookingTime);
-		}
-		
-		@Override
-		public @NotNull RecipeSerializer<?> type() {
-			return XSRecipeSerializers.SMELTING_RECIPE.get();
-		}
-		
-		@Override
-		public @NotNull ResourceLocation id() {
-			return this.id;
-		}
-		
-		@Override
-		public @NotNull AdvancementHolder advancement() {
-			return this.advancement;
 		}
 	}
 }

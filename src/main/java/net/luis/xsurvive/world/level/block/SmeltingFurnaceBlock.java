@@ -1,5 +1,7 @@
 package net.luis.xsurvive.world.level.block;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -23,8 +25,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 	
+	public static final MapCodec<SmeltingFurnaceBlock> CODEC = simpleCodec(SmeltingFurnaceBlock::new);
+	
 	public SmeltingFurnaceBlock(Properties properties) {
 		super(properties);
+	}
+	
+	@Override
+	protected @NotNull MapCodec<SmeltingFurnaceBlock> codec() {
+		return CODEC;
 	}
 	
 	@Override

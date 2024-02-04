@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -59,11 +60,11 @@ public class WoodHarvester {
 	private static @NotNull AABB getHarvestingArea(@NotNull BlockPos startPos, @NotNull List<BlockPos> positions, int height) {
 		AABB aabb;
 		if (positions.size() == 1) {
-			aabb = new AABB(startPos.north().east(), startPos.south().west());
+			aabb = new AABB(Vec3.atLowerCornerOf(startPos.north().east()), Vec3.atLowerCornerOf(startPos.south().west()));
 		} else if (positions.size() == 4) {
-			aabb = new AABB(startPos.north(1).east(1), startPos.south(1).west(1));
+			aabb = new AABB(Vec3.atLowerCornerOf(startPos.north(1).east(1)), Vec3.atLowerCornerOf(startPos.south(1).west(1)));
 		} else {
-			aabb = new AABB(startPos.north(2).east(2), startPos.south(2).west(2));
+			aabb = new AABB(Vec3.atLowerCornerOf(startPos.north(2).east(2)), Vec3.atLowerCornerOf(startPos.south(2).west(2)));
 		}
 		int y = startPos.getY();
 		return aabb.setMinY(y - (height / 2.0)).setMaxY(y + height);
