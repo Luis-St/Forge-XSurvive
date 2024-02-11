@@ -32,7 +32,7 @@ public class XSClientPacketHandler {
 	public static void handleTridentGlintColorUpdate(int tridentEntityId, @NotNull ItemStack tridentStack) {
 		ClientLevel level = Minecraft.getInstance().level;
 		if (level != null && level.getEntity(tridentEntityId) instanceof ThrownTrident trident) {
-			trident.tridentItem = tridentStack;
+			trident.pickupItemStack = tridentStack;
 		}
 	}
 	

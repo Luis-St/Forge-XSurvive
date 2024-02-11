@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -118,7 +119,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	@Override
 	public List<AABB> getBeaconBase() {
 		List<AABB> base = new ArrayList<>();
-		AABB area = new AABB(this.getBlockPos(), this.getBlockPos());
+		AABB area = new AABB(Vec3.atLowerCornerOf(this.getBlockPos()), Vec3.atLowerCornerOf(this.getBlockPos()));
 		for (int i = 0; i < this.levels; i++) {
 			base.add(area.move(0, -(i + 1), 0).inflate(i + 1, 0, i + 1));
 		}

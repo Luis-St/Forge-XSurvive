@@ -51,7 +51,7 @@ public abstract class ServerEntityMixin {
 	}
 	
 	private void broadcastThrownTrident(@NotNull ThrownTrident trident, boolean forced) {
-		ItemStack tridentStack = trident.tridentItem.copy();
+		ItemStack tridentStack = trident.getPickupItemStackOrigin().copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
 		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
 			if (trident.level() instanceof ServerLevel level) {

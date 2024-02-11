@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,7 +40,7 @@ public abstract class EntityRenderDispatcherMixin {
 	//endregion
 	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
-	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, CallbackInfo callback) {
+	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, Quaternionf quaternion, CallbackInfo callback) {
 		Optional<IEntity> optional = EntityProvider.getSafe(entity).resolve();
 		if (optional.isPresent()) {
 			EntityFireType fireType = optional.get().getFireType();
@@ -51,7 +52,7 @@ public abstract class EntityRenderDispatcherMixin {
 			float xOffset = 0.5F;
 			float height = entity.getBbHeight() / width;
 			float yOffset = 0.0F;
-			stack.mulPose(Axis.YP.rotationDegrees(-this.camera.getYRot()));
+			stack.mulPose(quaternion);
 			stack.translate(0.0, 0.0, -0.3F + ((int) height) * 0.02F);
 			float zOffset = 0.0F;
 			int index = 0;

@@ -4,11 +4,11 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Map.Entry;
+import java.util.Optional;
 
 /**
  *
@@ -52,7 +53,8 @@ public abstract class ServerPlayerGameModeMixin {
 				} else if (state.getBlock() instanceof StemBlock block && state.getValue(StemBlock.AGE) >= 7) {
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
 				} else if (state.getBlock() instanceof AttachedStemBlock block) {
-					if (block.seedSupplier.get() instanceof BlockItem blockItem && blockItem.getBlock() instanceof StemBlock stemBlock) {
+					Optional<Item> optional = this.level.registryAccess().registryOrThrow(Registries.ITEM).getOptional(block.seed);
+					if (optional.isPresent() && optional.get() instanceof BlockItem blockItem && blockItem.getBlock() instanceof StemBlock stemBlock) {
 						replanted = this.level.setBlock(pos, stemBlock.defaultBlockState(), 3);
 					}
 				} else if (state.getBlock() instanceof CocoaBlock && state.getValue(CocoaBlock.AGE) >= 2) {

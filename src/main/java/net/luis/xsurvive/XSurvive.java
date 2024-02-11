@@ -48,7 +48,9 @@ public class XSurvive {
 		XSGlobalLootModifiers.LOOT_MODIFIERS.register(eventBus);
 		XSBlocks.BLOCKS.register(eventBus);
 		XSBlocks.ITEMS.register(eventBus);
+		XSBlocks.Keys.register();
 		XSItems.ITEMS.register(eventBus);
+		XSItems.Keys.register();
 		XSCreativeModeTabs.TABS.register(eventBus);
 		XSMobEffects.MOB_EFFECTS.register(eventBus);
 		XSPotions.POTIONS.register(eventBus);

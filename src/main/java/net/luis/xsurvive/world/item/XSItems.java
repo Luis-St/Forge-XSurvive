@@ -2,11 +2,16 @@ package net.luis.xsurvive.world.item;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.level.block.XSBlocks;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -73,7 +78,7 @@ public class XSItems {
 	public static final RegistryObject<GlintColorItem> RAINBOW_RUNE = ITEMS.register("rainbow_rune", () -> {
 		return new GlintColorItem(new Item.Properties().stacksTo(1), 16);
 	});
-	public static final RegistryObject<ItemNameBlockItem> HONEY_MELON_SEEDS = ITEMS.register("honey_melon_seeds", () -> {
+	public static final RegistryObject<Item> HONEY_MELON_SEEDS = ITEMS.register("honey_melon_seeds", () -> {
 		return new ItemNameBlockItem(XSBlocks.HONEY_MELON_STEM.get(), new Item.Properties());
 	});
 	public static final RegistryObject<Item> HONEY_MELON_SLICE = ITEMS.register("honey_melon_slice", () -> {
@@ -108,4 +113,15 @@ public class XSItems {
 	public static final RegistryObject<Item> CURSED_ENDER_EYE = ITEMS.register("cursed_eye_of_ender", () -> {
 		return new Item(new Item.Properties());
 	});
+	
+	public static class Keys {
+		
+		public static final ResourceKey<Item> HONEY_MELON_SEEDS = createKey("honey_melon_seeds");
+		
+		public static void register() {}
+		
+		private static @NotNull ResourceKey<Item> createKey(String name) {
+			return ResourceKey.create(Registries.ITEM, new ResourceLocation(XSurvive.MOD_ID, name));
+		}
+	}
 }

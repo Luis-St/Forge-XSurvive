@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPattern.BlockPatternMatch;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -103,7 +104,7 @@ public abstract class WitherSkullBlockMixin {
 	
 	private static boolean checkSpawnArea(@NotNull Level level, @NotNull BlockPatternMatch patternMatch) {
 		BlockPos pos = patternMatch.getBlock(1, 1, 0).getPos();
-		return level.getBlockStates(new AABB(pos.below().south().west(), pos.above().north().east())).anyMatch((state) -> {
+		return level.getBlockStates(new AABB(Vec3.atLowerCornerOf(pos.below().south().west()), Vec3.atLowerCornerOf(pos.above().north().east()))).anyMatch((state) -> {
 			return !state.isAir() && !state.is(Blocks.WITHER_SKELETON_SKULL) && !state.is(Blocks.WITHER_SKELETON_WALL_SKULL) && !state.is(BlockTags.WITHER_SUMMON_BASE_BLOCKS);
 		});
 	}

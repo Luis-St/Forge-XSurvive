@@ -105,11 +105,11 @@ public class LevelEventHandler {
 	public static void explosionDetonate(ExplosionEvent.@NotNull Detonate event) {
 		Explosion explosion = event.getExplosion();
 		if (event.getLevel() instanceof ServerLevel level) {
-			if (level.dimension().equals(Level.NETHER) && explosion.getExploder() instanceof PrimedTnt) {
-				Vec3 vec3 = explosion.getPosition();
-				BlockPos pos = new BlockPos((int) vec3.x, (int) vec3.y, (int) vec3.z);
+			if (level.dimension().equals(Level.NETHER) && explosion.getDirectSourceEntity() instanceof PrimedTnt) {
+				BlockPos pos = new BlockPos((int) explosion.x, (int) explosion.y, (int) explosion.z);
 				if (pos.getY() >= 124 && level.getBlockState(pos.below()).is(Blocks.BEDROCK)) {
 					level.setBlock(pos.below(), Blocks.AIR.defaultBlockState(), Block.UPDATE_CLIENTS);
+					event.getAffectedBlocks().removeIf(p -> true);
 				}
 			}
 			event.getAffectedBlocks().removeIf(pos -> level.getBlockState(pos).is(Blocks.SPAWNER));
