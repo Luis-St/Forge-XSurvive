@@ -43,6 +43,5 @@
     "recipes": [
       "xsurvive:sponge_from_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

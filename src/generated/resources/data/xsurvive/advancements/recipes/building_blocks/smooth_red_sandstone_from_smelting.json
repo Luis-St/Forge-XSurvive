@@ -43,6 +43,5 @@
     "recipes": [
       "xsurvive:smooth_red_sandstone_from_smelting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
