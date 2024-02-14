@@ -55,12 +55,13 @@ public abstract class EnderEyeItemMixin extends Item {
 				BlockPos pos = serverLevel.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, player.blockPosition(), 100, false);
 				if (pos != null) {
 					EyeOfEnder eyeOfEnder;
-					if (level.random.nextInt(5) >= 2) {
+					if (level.random.nextInt(4) >= 2) {
 						eyeOfEnder = new EyeOfEnder(level, player.getX(), player.getY(0.5D), player.getZ());
 						eyeOfEnder.setItem(stack);
 					} else {
-						eyeOfEnder = new CursedEyeOfEnder(level, player.getX(), player.getY(0.5D), player.getZ());
+						eyeOfEnder = new CursedEyeOfEnder(level, player.getX(), player.getY(0.5), player.getZ());
 						eyeOfEnder.setItem(new ItemStack(XSItems.CURSED_ENDER_EYE.get()));
+						player.getCooldowns().addCooldown(this, 1200);
 					}
 					eyeOfEnder.signalTo(pos);
 					level.gameEvent(GameEvent.PROJECTILE_SHOOT, eyeOfEnder.position(), GameEvent.Context.of(player));

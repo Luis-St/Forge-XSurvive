@@ -3,9 +3,14 @@ package net.luis.xsurvive.world.entity.projectile;
 import net.luis.xsurvive.world.entity.XSEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -18,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class CursedEyeOfEnder extends EyeOfEnder {
+	
+	private static final IntProvider CURSED_RAIN_TIME = UniformInt.of(6000, 12000); // 5-10 minutes
 	
 	public CursedEyeOfEnder(EntityType<? extends EyeOfEnder> entityType, Level level) {
 		super(entityType, level);
@@ -65,8 +72,16 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 		if (!this.level().isClientSide) {
 			this.setPos(x, y, z);
 			++this.life;
-			if (this.life > 100 && !this.level().isClientSide) {
+			if (this.life > 100 && this.level() instanceof ServerLevel level) {
 				this.playSound(SoundEvents.ENDER_EYE_DEATH, 1.0F, 1.0F);
+				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+				if (lightning != null) {
+					BlockPos.MutableBlockPos pos = this.getOnPos().mutable();
+					for (; level.getBlockState(pos.immutable()).isAir(); pos.move(0, -1, 0)) ;
+					lightning.moveTo(pos, lightning.getYRot(), lightning.getXRot());
+					level.setWeatherParameters(0, CURSED_RAIN_TIME.sample(RandomSource.create()), true, true);
+					level.addFreshEntity(lightning);
+				}
 				this.discard();
 			}
 		} else {
