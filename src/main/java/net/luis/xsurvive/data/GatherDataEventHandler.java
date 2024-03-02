@@ -1,6 +1,5 @@
 package net.luis.xsurvive.data;
 
-import net.luis.xores.data.provider.DatapackBuiltinEntriesProvider;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.data.provider.XSBuiltinProvider;
 import net.luis.xsurvive.data.provider.block.XSBlockStateProvider;
@@ -12,6 +11,7 @@ import net.luis.xsurvive.data.provider.recipe.XSRecipeProvider;
 import net.luis.xsurvive.data.provider.recipe.additions.XSAdditionsRecipeProvider;
 import net.luis.xsurvive.data.provider.tag.*;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
