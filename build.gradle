@@ -1,12 +1,14 @@
-import java.nio.file.Files
-
 plugins {
-	id "eclipse"
 	id "idea"
 	id "maven-publish"
 	id "net.minecraftforge.gradle" version "[6.0,6.2)"
 	id "org.spongepowered.mixin" version "0.7.+"
+	id "io.github.themrmilchmann.curseforge-publish" version "0.6.1"
 }
+
+project.ext.username = System.getenv("MAVEN_USERNAME")
+project.ext.password = System.getenv("MAVEN_PASSWORD")
+project.ext.token = System.getenv("CURSEFORGE_TOKEN")
 
 minecraft {
 	mappings channel: "official", version: MinecraftVersion
@@ -121,36 +123,17 @@ artifacts {
 	archives sourcesJar
 }
 
-def username = ""
-def password = ""
-def creds = file("./../../credentials.properties")
-if (creds.exists()) {
-	def properties = new Properties()
-	creds.withInputStream {properties.load(it)}
-	username = properties.getProperty("username")
-	password = properties.getProperty("password")
-}
-
 def ver = "${MinecraftVersion}-${ModVersion}"
-tasks.register("renameArtifacts") {
-	doLast {
-		def jar = file("build/libs/${project.name}.jar")
-		def sourcesJar = file("build/libs/${project.name}-sources.jar")
-		if (Files.exists(jar.toPath())) {
-			def folder = file("D:/Games/Forge/Uploaded/XSurvive/${MinecraftVersion}")
-			if (!Files.exists(folder.toPath())) {
-				Files.createDirectory(folder.toPath())
+curseforge {
+	apiToken = "${project.ext.token}"
+	publications {
+		register("curseForge") {
+			projectId = "637349"
+			
+			artifacts.register("main") {
+				displayName = "XSurvive-${ver}"
+				from(tasks.named("jar"))
 			}
-			if (!Files.exists(folder.toPath().resolve("XSurvive-${ver}.jar"))) {
-				Files.move(jar.toPath(), folder.toPath().resolve("XSurvive-${ver}.jar"))
-				println "Moved '${jar}' to '${folder.toPath().resolve("XSurvive-${ver}.jar")}'"
-			} else {
-				Files.delete(jar.toPath())
-				println "Deleted '${jar}'"
-			}
-		}
-		if (Files.deleteIfExists(sourcesJar.toPath())) {
-			println "Deleted '${sourcesJar}'"
 		}
 	}
 }
@@ -166,7 +149,7 @@ publishing {
 		}
 	}
 	repositories {
-		if (!username.isBlank() && !password.isBlank()) {
+		if (project.ext.username != null && project.ext.password != null) {
 			maven {
 				url "https://maven.luis-st.net/forge/"
 				credentials.username = username
@@ -195,6 +178,7 @@ processResources {
 }
 
 jar {
+	archiveFileName = "XSurvive-${ver}.jar"
 	manifest {
 		attributes([
 			"Specification-Title": "XSurvive",
@@ -209,9 +193,6 @@ jar {
 sourcesJar {
 	outputs.upToDateWhen {false}
 }
-
-build.finalizedBy("renameArtifacts")
-publish.finalizedBy("renameArtifacts")
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = "UTF-8"
