@@ -1,6 +1,5 @@
 package net.luis.xsurvive.world.level.block;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.luis.xsurvive.world.level.block.entity.SmeltingFurnaceBlockEntity;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;

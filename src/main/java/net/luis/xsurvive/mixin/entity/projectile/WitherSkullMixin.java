@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(WitherSkull.class)
-@SuppressWarnings({"DataFlowIssue", "UnnecessarySuperQualifier"})
+@SuppressWarnings({ "DataFlowIssue", "UnnecessarySuperQualifier" })
 public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 	
 	//region Mixin

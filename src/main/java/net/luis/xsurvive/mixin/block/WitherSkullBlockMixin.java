@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 
 @Mixin(WitherSkullBlock.class)
-@SuppressWarnings({"CodeBlock2Expr", "ReturnOfNull", "DataFlowIssue"})
+@SuppressWarnings({ "CodeBlock2Expr", "ReturnOfNull", "DataFlowIssue" })
 public abstract class WitherSkullBlockMixin {
 	
 	//region Mixin

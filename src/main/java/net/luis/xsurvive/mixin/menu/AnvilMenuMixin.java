@@ -28,7 +28,7 @@ import java.util.*;
  */
 
 @Mixin(AnvilMenu.class)
-@SuppressWarnings({"DataFlowIssue", "DuplicatedCode"})
+@SuppressWarnings({ "DataFlowIssue", "DuplicatedCode" })
 public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 	
 	//region Mixin

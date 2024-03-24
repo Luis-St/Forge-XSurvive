@@ -17,9 +17,7 @@ import java.util.Objects;
 
 public record Trade(ItemStack getCost, ItemStack getSecondCost, ItemStack getResult, int getMaxUses, int getVillagerXp, float getPriceMultiplier) implements ItemListing {
 	
-	public static final int[] VILLAGER_XP = {
-		2, 10, 20, 30, 40
-	};
+	public static final int[] VILLAGER_XP = { 2, 10, 20, 30, 40 };
 	
 	public Trade {
 		Objects.requireNonNull(getCost);

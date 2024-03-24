@@ -32,7 +32,7 @@ import static net.luis.xsurvive.util.Util.*;
  */
 
 @Mixin(Raid.class)
-@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "unused", "BooleanMethodNameMustStartWithQuestion", "NonConstantFieldWithUpperCaseName"})
+@SuppressWarnings({ "OptionalUsedAsFieldOrParameterType", "unused", "BooleanMethodNameMustStartWithQuestion", "NonConstantFieldWithUpperCaseName" })
 public abstract class RaidMixin {
 	
 	// @formatter:off

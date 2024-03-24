@@ -25,7 +25,5 @@ public class XSLootTableProvider extends LootTableProvider {
 	}
 	
 	@Override
-	protected void validate(@NotNull Map<ResourceLocation, LootTable> lootTables, @NotNull ValidationContext validationContext) {
-		
-	}
+	protected void validate(@NotNull Map<ResourceLocation, LootTable> lootTables, @NotNull ValidationContext validationContext) {}
 }

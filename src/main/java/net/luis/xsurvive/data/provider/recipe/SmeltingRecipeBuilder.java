@@ -1,21 +1,19 @@
 package net.luis.xsurvive.data.provider.recipe;
 
-import com.google.gson.JsonObject;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.crafting.SmeltingRecipe;
-import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *

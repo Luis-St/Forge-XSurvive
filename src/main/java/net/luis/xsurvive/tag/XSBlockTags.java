@@ -17,9 +17,7 @@ public class XSBlockTags {
 	
 	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(new ResourceLocation(XSurvive.MOD_ID, "ocean_monument_blocks"));
 	
-	public static void register() {
-	
-	}
+	public static void register() {}
 	
 	private static @NotNull TagKey<Block> bind(@NotNull ResourceLocation location) {
 		return BlockTags.create(location);

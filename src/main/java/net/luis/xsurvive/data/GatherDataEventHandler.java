@@ -29,7 +29,7 @@ import java.util.*;
  *
  */
 
-@SuppressWarnings({"resource", "ResultOfMethodCallIgnored"})
+@SuppressWarnings({ "resource", "ResultOfMethodCallIgnored" })
 @EventBusSubscriber(modid = XSurvive.MOD_ID, bus = Bus.MOD)
 public class GatherDataEventHandler {
 	

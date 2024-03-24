@@ -20,7 +20,6 @@ public class XSAdditionsRecipeProvider extends XSRecipeProvider {
 	
 	@Override
 	protected void buildRecipes(@NotNull RecipeOutput output) {
-		
 		this.groupAndUnlock(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.NETHERITE_INGOT).define('#', Items.NETHERITE_SCRAP).define('?', Items.GOLD_BLOCK).pattern("###").pattern("#?#").pattern("###"), getGroup(Items.NETHERITE_INGOT),
 			Items.NETHERITE_SCRAP, Items.NETHERITE_INGOT).save(output);
 	}

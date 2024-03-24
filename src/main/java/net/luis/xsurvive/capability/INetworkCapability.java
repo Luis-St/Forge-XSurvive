@@ -11,13 +11,9 @@ import org.jetbrains.annotations.NotNull;
 
 public interface INetworkCapability {
 	
-	default void setChanged() {
-		
-	}
+	default void setChanged() {}
 	
-	default void broadcastChanges() {
-		
-	}
+	default void broadcastChanges() {}
 	
 	@NotNull CompoundTag serializeNetwork();
 	

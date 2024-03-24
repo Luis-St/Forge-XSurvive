@@ -2,7 +2,6 @@ package net.luis.xsurvive.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.luis.xsurvive.client.EntityFireTypeHelper;
 import net.luis.xsurvive.world.entity.*;
 import net.minecraft.client.Camera;

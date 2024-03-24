@@ -24,7 +24,5 @@ public interface IEntity extends ICapability, INetworkCapability {
 	
 	@NotNull EntityFireType getFireType();
 	
-	default void setFireType(@NotNull EntityFireType fireType) {
-		
-	}
+	default void setFireType(@NotNull EntityFireType fireType) {}
 }

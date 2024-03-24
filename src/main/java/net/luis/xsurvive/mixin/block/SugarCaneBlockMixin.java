@@ -23,7 +23,7 @@ import static net.minecraft.world.level.block.SugarCaneBlock.*;
  */
 
 @Mixin(SugarCaneBlock.class)
-@SuppressWarnings({"DataFlowIssue", "UnstableApiUsage"})
+@SuppressWarnings({ "DataFlowIssue", "UnstableApiUsage" })
 public abstract class SugarCaneBlockMixin extends Block implements BonemealableBlock {
 	
 	//region Mixin

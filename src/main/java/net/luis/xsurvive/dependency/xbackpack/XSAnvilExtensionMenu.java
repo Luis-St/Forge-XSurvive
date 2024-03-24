@@ -36,7 +36,7 @@ import java.util.function.Consumer;
  *
  */
 
-@SuppressWarnings({"DuplicatedCode", "deprecation"})
+@SuppressWarnings({ "DuplicatedCode", "deprecation" })
 public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 	
 	private final CraftingHandler handler;

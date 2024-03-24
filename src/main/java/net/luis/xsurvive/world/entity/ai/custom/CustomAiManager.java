@@ -19,10 +19,6 @@ public enum CustomAiManager {
 	
 	private final Map<Class<?>, CustomAiFactory<?>> factories = Maps.newHashMap();
 	
-	CustomAiManager() {
-		
-	}
-	
 	public <T extends LivingEntity> void register(@NotNull Class<T> entityClass, @NotNull CustomAiFactory<T> factory) {
 		if (this.factories.get(entityClass) != null) {
 			throw new RuntimeException("Can not register a CustomAiFactory for Entity " + entityClass.getSimpleName() + ", since a CustomAiFactory has already been registered to it");

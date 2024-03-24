@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 
 @Mixin(ConduitBlockEntity.class)
-@SuppressWarnings({"DataFlowIssue", "ReturnOfNull"})
+@SuppressWarnings({ "DataFlowIssue", "ReturnOfNull" })
 public abstract class ConduitBlockEntityMixin {
 	
 	//region Mixin

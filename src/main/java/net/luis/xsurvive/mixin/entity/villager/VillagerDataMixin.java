@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(VillagerData.class)
-@SuppressWarnings({"StaticVariableUsedBeforeInitialization", "NonConstantFieldWithUpperCaseName"})
+@SuppressWarnings({ "StaticVariableUsedBeforeInitialization", "NonConstantFieldWithUpperCaseName" })
 public abstract class VillagerDataMixin {
 	
 	//region Mixin

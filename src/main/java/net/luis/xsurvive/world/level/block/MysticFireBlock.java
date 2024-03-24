@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  *
  */
 
-@SuppressWarnings({"CodeBlock2Expr", "deprecation"})
+@SuppressWarnings({ "CodeBlock2Expr", "deprecation" })
 public class MysticFireBlock extends BaseFireBlock {
 	
 	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((direction) -> {
@@ -36,12 +36,12 @@ public class MysticFireBlock extends BaseFireBlock {
 	private static final VoxelShape EAST_AABB = Block.box(15.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 	private static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 1.0D);
 	private static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 15.0D, 16.0D, 16.0D, 16.0D);
-	public static final MapCodec<MysticFireBlock> CODEC = simpleCodec(MysticFireBlock::new);
 	public static final BooleanProperty NORTH = PipeBlock.NORTH;
 	public static final BooleanProperty EAST = PipeBlock.EAST;
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
 	public static final BooleanProperty WEST = PipeBlock.WEST;
 	public static final BooleanProperty UP = PipeBlock.UP;
+	public static final MapCodec<MysticFireBlock> CODEC = simpleCodec(MysticFireBlock::new);
 	private final Map<BlockState, VoxelShape> shapesCache;
 	
 	public MysticFireBlock(Properties properties) {
@@ -49,11 +49,6 @@ public class MysticFireBlock extends BaseFireBlock {
 		this.registerDefaultState(
 			this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE));
 		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
-	}
-	
-	@Override
-	protected @NotNull MapCodec<MysticFireBlock> codec() {
-		return CODEC;
 	}
 	
 	private static @NotNull VoxelShape calculateShape(@NotNull BlockState state) {
@@ -74,6 +69,11 @@ public class MysticFireBlock extends BaseFireBlock {
 			voxelShape = Shapes.or(voxelShape, WEST_AABB);
 		}
 		return voxelShape.isEmpty() ? DOWN_AABB : voxelShape;
+	}
+	
+	@Override
+	protected @NotNull MapCodec<MysticFireBlock> codec() {
+		return CODEC;
 	}
 	
 	@Override

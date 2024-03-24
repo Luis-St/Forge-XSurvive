@@ -32,17 +32,13 @@ public interface IPlayer extends ICapability, INetworkCapability {
 	
 	int getFrostTime();
 	
-	default void setFrostTime(int frostTime) {
-		
-	}
+	default void setFrostTime(int frostTime) {}
 	
 	double getFrostPercent();
 	
 	int getEndAspectCooldown();
 	
-	default void setEndAspectCooldown(int endAspectCooldown) {
-	
-	}
+	default void setEndAspectCooldown(int endAspectCooldown) {}
 	
 	double getEndAspectPercent();
 	

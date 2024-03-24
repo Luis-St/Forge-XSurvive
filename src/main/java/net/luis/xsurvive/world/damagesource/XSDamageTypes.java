@@ -17,9 +17,7 @@ public class XSDamageTypes {
 	
 	public static final ResourceKey<DamageType> CURSE_OF_HARMING = createKey("curse_of_harming");
 	
-	public static void register() {
-	
-	}
+	public static void register() {}
 	
 	private static @NotNull ResourceKey<DamageType> createKey(@NotNull String name) {
 		return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(XSurvive.MOD_ID, name));
