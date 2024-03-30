@@ -1,9 +1,10 @@
 plugins {
 	id "idea"
 	id "maven-publish"
-	id "net.minecraftforge.gradle" version "[6.0,6.2)"
-	id "org.spongepowered.mixin" version "0.7.+"
-	id "io.github.themrmilchmann.curseforge-publish" version "0.6.1"
+	id "net.minecraftforge.gradle" version "${ForgeGradle}"
+	id "org.spongepowered.mixin" version "${SpongePoweredMixin}"
+	id "com.github.joschi.licenser" version "${Licenser}"
+	id "io.github.themrmilchmann.curseforge-publish" version "${CurseForge}"
 }
 
 project.ext.username = System.getenv("MAVEN_USERNAME")
@@ -113,6 +114,13 @@ dependencies {
 	
 	implementation fg.deobf("net.luis:XBackpack:${MinecraftVersion}-${XBackpackVersion}")
 	implementation fg.deobf("net.luis:XOres:${MinecraftVersion}-${XOresVersion}")
+}
+
+compileJava.dependsOn(updateLicenses)
+
+license {
+	header = file("header.txt")
+	include("**/*.java")
 }
 
 java {
