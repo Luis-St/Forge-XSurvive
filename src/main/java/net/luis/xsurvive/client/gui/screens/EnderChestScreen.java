@@ -34,9 +34,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class EnderChestScreen extends AbstractContainerScreen<EnderChestMenu> {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
+	private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
 	
-	public EnderChestScreen(EnderChestMenu menu, Inventory inventory, Component component) {
+	public EnderChestScreen(@NotNull EnderChestMenu menu, @NotNull Inventory inventory, @NotNull Component component) {
 		super(menu, inventory, component);
 		this.imageHeight = 222;
 		this.inventoryLabelY = this.imageHeight - 94;

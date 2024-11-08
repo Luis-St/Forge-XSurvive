@@ -38,6 +38,6 @@ public class XSDamageTypes {
 	public static void register() {}
 	
 	private static @NotNull ResourceKey<DamageType> createKey(@NotNull String name) {
-		return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(XSurvive.MOD_ID, name));
+		return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 }

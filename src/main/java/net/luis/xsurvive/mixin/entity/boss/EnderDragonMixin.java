@@ -22,12 +22,14 @@ import net.luis.xsurvive.util.Util;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -63,22 +65,22 @@ public abstract class EnderDragonMixin extends Mob {
 	public @Nullable EndCrystal nearestCrystal;
 	@Shadow public int dragonDeathTime;
 	
-	private EnderDragonMixin(EntityType<? extends Mob> entityType, Level level) {
+	private EnderDragonMixin(@NotNull EntityType<? extends Mob> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	//endregion
 	
 	@Inject(method = "tickDeath", at = @At("HEAD"), cancellable = true)
-	protected void tickDeath(CallbackInfo callback) {
+	protected void tickDeath(@NotNull CallbackInfo callback) {
 		if (this.dragonFight != null) {
 			this.dragonFight.updateDragon((EnderDragon) (Object) this);
 		}
 		++this.dragonDeathTime;
 		if (this.dragonDeathTime >= 180 && this.dragonDeathTime <= 200) {
-			float f = (this.random.nextFloat() - 0.5F) * 8.0F;
-			float f1 = (this.random.nextFloat() - 0.5F) * 4.0F;
-			float f2 = (this.random.nextFloat() - 0.5F) * 8.0F;
-			this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + f, this.getY() + 2.0 + f1, this.getZ() + f2, 0.0, 0.0, 0.0);
+			float x = (this.random.nextFloat() - 0.5F) * 8.0F;
+			float y = (this.random.nextFloat() - 0.5F) * 4.0F;
+			float z = (this.random.nextFloat() - 0.5F) * 8.0F;
+			this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + x, this.getY() + 2.0 + y, this.getZ() + z, 0.0, 0.0, 0.0);
 		}
 		boolean doMobDrop = this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
 		if (this.level() instanceof ServerLevel) {
@@ -105,11 +107,12 @@ public abstract class EnderDragonMixin extends Mob {
 		callback.cancel();
 	}
 	
-	private void addDragonExperience(@NotNull List<Player> players, int experience) {
-		for (Player player : players) {
+	private void addDragonExperience(@NotNull List<ServerPlayer> players, int experience) {
+		for (ServerPlayer player : players) {
 			int xp = experience;
-			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, XSEnchantmentHelper.getItemsWith(Enchantments.MENDING, player, ItemStack::isDamaged))) {
-				int repair = (int) Math.min(experience * stack.getXpRepairRatio(), stack.getDamageValue());
+			for (ItemStack stack : Util.shufflePreferred(EquipmentSlot.MAINHAND, XSEnchantmentHelper.getItemsWith(Enchantments.MENDING.getOrThrow(player), player, ItemStack::isDamaged))) {
+				int value = EnchantmentHelper.modifyDurabilityToRepairFromXp(player.serverLevel(), stack, experience);
+				int repair = (int) Math.min(experience * value, stack.getDamageValue());
 				stack.setDamageValue(stack.getDamageValue() - repair);
 				xp -= repair / 2;
 				if (0 > xp) {
@@ -123,7 +126,7 @@ public abstract class EnderDragonMixin extends Mob {
 	}
 	
 	@Inject(method = "checkCrystals", at = @At("HEAD"), cancellable = true)
-	private void checkCrystals(CallbackInfo callback) {
+	private void checkCrystals(@NotNull CallbackInfo callback) {
 		if (this.nearestCrystal != null) {
 			if (this.nearestCrystal.isRemoved()) {
 				this.nearestCrystal = null;
@@ -133,7 +136,7 @@ public abstract class EnderDragonMixin extends Mob {
 		}
 		EndCrystal nearestCrystal = null;
 		double distance = Double.MAX_VALUE;
-		for (EndCrystal endCrystal : this.level().getEntitiesOfClass(EndCrystal.class, this.getBoundingBox().inflate(32.0D))) {
+		for (EndCrystal endCrystal : this.level().getEntitiesOfClass(EndCrystal.class, this.getBoundingBox().inflate(64.0))) {
 			double distanceTo = endCrystal.distanceToSqr(this);
 			if (distanceTo < distance) {
 				distance = distanceTo;

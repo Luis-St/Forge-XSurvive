@@ -23,6 +23,7 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.world.level.ILevel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -41,14 +42,13 @@ import static net.minecraft.core.registries.BuiltInRegistries.*;
  *
  */
 
-@SuppressWarnings("deprecation")
 public abstract class AbstractLevelHandler implements ILevel {
 	
 	private final Level level;
 	protected final List<BlockPos> beaconPositions = Lists.newArrayList();
 	protected final Map<BlockPos, Pair<Integer, Integer>> beaconEffects = Maps.newHashMap();
 	
-	protected AbstractLevelHandler(Level level) {
+	protected AbstractLevelHandler(@NotNull Level level) {
 		this.level = level;
 	}
 	
@@ -69,12 +69,12 @@ public abstract class AbstractLevelHandler implements ILevel {
 	}
 	
 	@Override
-	public @NotNull Pair<@Nullable MobEffect, @Nullable MobEffect> getBeaconEffects(@NotNull BlockPos pos) {
+	public @NotNull Pair<@Nullable Holder<MobEffect>, @Nullable Holder<MobEffect>> getBeaconEffects(@NotNull BlockPos pos) {
 		if (!this.beaconEffects.containsKey(pos)) {
 			return new Pair<>(null, null);
 		}
 		Pair<Integer, Integer> effects = this.beaconEffects.get(pos);
-		return new Pair<>(MOB_EFFECT.byId(effects.getFirst()), MOB_EFFECT.byId(effects.getSecond()));
+		return new Pair<>(MOB_EFFECT.getHolder(effects.getFirst()).orElseThrow(), MOB_EFFECT.getHolder(effects.getSecond()).orElseThrow());
 	}
 	
 	//region NBT
@@ -103,13 +103,14 @@ public abstract class AbstractLevelHandler implements ILevel {
 		this.beaconPositions.clear();
 		ListTag beaconPositions = tag.getList("beacon_positions", Tag.TAG_COMPOUND);
 		for (Tag beaconPosition : beaconPositions) {
-			this.beaconPositions.add(NbtUtils.readBlockPos((CompoundTag) beaconPosition));
+			int[] array = ((IntArrayTag) beaconPosition).getAsIntArray();
+			this.beaconPositions.add(new BlockPos(array[0], array[1], array[2]));
 		}
 		this.beaconEffects.clear();
 		ListTag beaconEffects = tag.getList("beacon_effects", Tag.TAG_COMPOUND);
 		for (Tag beaconEffect : beaconEffects) {
 			CompoundTag beaconEffectTag = (CompoundTag) beaconEffect;
-			this.beaconEffects.put(NbtUtils.readBlockPos(beaconEffectTag.getCompound("pos")), new Pair<>(beaconEffectTag.getInt("primary_effect"), beaconEffectTag.getInt("secondary_effect")));
+			this.beaconEffects.put(NbtUtils.readBlockPos(beaconEffectTag, "pos").orElseThrow(), new Pair<>(beaconEffectTag.getInt("primary_effect"), beaconEffectTag.getInt("secondary_effect")));
 		}
 	}
 	//endregion

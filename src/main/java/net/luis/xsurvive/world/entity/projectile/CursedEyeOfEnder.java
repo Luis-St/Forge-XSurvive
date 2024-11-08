@@ -44,11 +44,11 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 	
 	private static final IntProvider CURSED_RAIN_TIME = UniformInt.of(6000, 12000); // 5-10 minutes
 	
-	public CursedEyeOfEnder(EntityType<? extends EyeOfEnder> entityType, Level level) {
+	public CursedEyeOfEnder(@NotNull EntityType<? extends EyeOfEnder> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	
-	public CursedEyeOfEnder(Level level, double x, double y, double z) {
+	public CursedEyeOfEnder(@NotNull Level level, double x, double y, double z) {
 		super(XSEntityTypes.CURSED_ENDER_EYE.get(), level);
 		this.setPos(x, y, z);
 	}
@@ -87,7 +87,9 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 		} else {
 			this.level().addParticle(ParticleTypes.ASH, x - movement.x * 0.25 + this.random.nextDouble() * 0.6 - 0.3, y - movement.y * 0.25 - 0.5, z - movement.z * 0.25 + this.random.nextDouble() * 0.6 - 0.3, 0.0, movement.y, 0.0);
 		}
-		if (!this.level().isClientSide) {
+		if (this.level().isClientSide) {
+			this.setPosRaw(x, y, z);
+		} else {
 			this.setPos(x, y, z);
 			++this.life;
 			if (this.life > 100 && this.level() instanceof ServerLevel level) {
@@ -102,8 +104,6 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 				}
 				this.discard();
 			}
-		} else {
-			this.setPosRaw(x, y, z);
 		}
 	}
 }

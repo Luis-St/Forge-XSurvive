@@ -39,20 +39,20 @@ public class UpdateTridentGlintColorPacket implements NetworkPacket {
 	private final int tridentEntityId;
 	private final ItemStack tridentStack;
 	
-	public UpdateTridentGlintColorPacket(int tridentEntityId, ItemStack tridentStack) {
+	public UpdateTridentGlintColorPacket(int tridentEntityId, @NotNull ItemStack tridentStack) {
 		this.tridentEntityId = tridentEntityId;
 		this.tridentStack = tridentStack;
 	}
 	
 	public UpdateTridentGlintColorPacket(@NotNull FriendlyByteBuf buffer) {
 		this.tridentEntityId = buffer.readInt();
-		this.tridentStack = buffer.readItem();
+		this.tridentStack = buffer.readJsonWithCodec(ItemStack.CODEC);
 	}
 	
 	@Override
 	public void encode(@NotNull FriendlyByteBuf buffer) {
 		buffer.writeInt(this.tridentEntityId);
-		buffer.writeItem(this.tridentStack);
+		buffer.writeJsonWithCodec(ItemStack.CODEC, this.tridentStack);
 	}
 	
 	@Override

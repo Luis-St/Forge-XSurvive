@@ -51,18 +51,18 @@ public abstract class ServerEntityMixin {
 	@Shadow private Entity entity;
 	
 	@Shadow
-	protected abstract void broadcastAndSend(Packet<?> packet);
+	protected abstract void broadcastAndSend(@NotNull Packet<?> packet);
 	//endregion
 	
 	@Inject(method = "sendDirtyEntityData", at = @At("HEAD"))
-	private void sendDirtyEntityData(CallbackInfo callback) {
+	private void sendDirtyEntityData(@NotNull CallbackInfo callback) {
 		if (this.entity instanceof ThrownTrident trident) {
 			this.broadcastThrownTrident(trident, false);
 		}
 	}
 	
 	@Inject(method = "sendPairingData", at = @At("HEAD"))
-	private void sendPairingData(ServerPlayer player, Consumer<Packet<?>> send, CallbackInfo callback) {
+	private void sendPairingData(@NotNull ServerPlayer player, @NotNull Consumer<Packet<?>> send, @NotNull CallbackInfo callback) {
 		if (this.entity instanceof ThrownTrident trident) {
 			this.broadcastThrownTrident(trident, true);
 		}
@@ -71,7 +71,7 @@ public abstract class ServerEntityMixin {
 	private void broadcastThrownTrident(@NotNull ThrownTrident trident, boolean forced) {
 		ItemStack tridentStack = trident.getPickupItemStackOrigin().copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
-		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
+		if (forced || previousStack == null || ItemStack.isSameItemSameComponents(tridentStack, previousStack)) {
 			if (trident.level() instanceof ServerLevel level) {
 				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack));
 			}

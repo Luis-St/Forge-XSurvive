@@ -33,6 +33,7 @@ import net.luis.xsurvive.world.level.LevelHelper;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -66,7 +67,6 @@ import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
-import java.util.UUID;
 
 /**
  *
@@ -77,10 +77,10 @@ import java.util.UUID;
 @EventBusSubscriber(modid = XSurvive.MOD_ID)
 public class EntityEventHandler {
 	
-	private static final Method CAN_STAY_AT = ObfuscationReflectionHelper.findMethod(Shulker.class, "m_149785_", BlockPos.class, Direction.class);
-	public static final UUID MAX_HEALTH_UUID = UUID.fromString("21E6F6F7-4ED8-4DA4-A921-BFFC33BD6E55");
-	public static final UUID ATTACK_DAMAGE_UUID = UUID.fromString("FF121C82-5FEE-4D7C-9074-A001F24EBE16");
-	public static final UUID FOLLOW_RANGE_UUID = UUID.fromString("59CDBB10-9F24-41D2-8CBF-82ACF38D5F6D");
+	private static final Method CAN_STAY_AT = ObfuscationReflectionHelper.findMethod(Shulker.class, "canStayAt", BlockPos.class, Direction.class);
+	public static final ResourceLocation MAX_HEALTH = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_max_health");
+	public static final ResourceLocation ATTACK_DAMAGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_attack_damage");
+	public static final ResourceLocation FOLLOW_RANGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_follow_range");
 	
 	@SubscribeEvent
 	public static void entityJoinLevel(@NotNull EntityJoinLevelEvent event) {
@@ -91,13 +91,13 @@ public class EntityEventHandler {
 					if (instance != null) {
 						instance.setBaseValue(1000.0);
 					}
-					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 2.0, Operation.MULTIPLY_TOTAL)); // *= 3.0
+					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, 2.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 3.0
 				} else if (entity instanceof Enemy || entity instanceof AbstractGolem) {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 3.0, Operation.MULTIPLY_TOTAL)); // *= 4.0
-					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_UUID, "IncreaseAttackDamageAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
-					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE_UUID, "IncreaseFollowRangeAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
+					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, 3.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 4.0
+					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
+					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
 				} else {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH_UUID, "IncreaseMaxHealthAttribute", 1.0, Operation.MULTIPLY_TOTAL)); // *= 2.0
+					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
 				}
 				entity.setHealth(entity.getMaxHealth());
 			}
@@ -170,10 +170,10 @@ public class EntityEventHandler {
 			}
 		} else if (entity instanceof AbstractArrow abstractArrow && abstractArrow instanceof IArrow arrow) {
 			if (abstractArrow.getOwner() instanceof LivingEntity user && user.getMainHandItem().getItem() instanceof BowItem) {
-				int explosion = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPLOSION.get(), user);
+				int explosion = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPLOSION, user);
 				if (explosion > 0) {
 					arrow.setExplosionLevel(explosion);
-					user.getMainHandItem().hurtAndBreak(3, user, (e) -> e.broadcastBreakEvent(user.getUsedItemHand()));
+					user.getMainHandItem().hurtAndBreak(3, user, user.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 				}
 			}
 		}
@@ -217,7 +217,7 @@ public class EntityEventHandler {
 			}
 		}
 		if (event.getRayTraceResult() instanceof EntityHitResult result && result.getEntity() instanceof LivingEntity target) {
-			Pair<Integer, Integer> pair = XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION);
+			Pair<Integer, Integer> pair = XSEnchantmentHelper.getTotalEnchantmentLevel(target, Enchantments.PROJECTILE_PROTECTION.getOrThrow(target));
 			int total = pair.getFirst();
 			int items = pair.getSecond();
 			if (total > 0 && items > 0) {

@@ -24,6 +24,7 @@ import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
@@ -58,7 +59,7 @@ public abstract class BeaconUpgradePowerButtonMixin extends BeaconScreen.BeaconS
 	//endregion
 	
 	@Inject(at = @At("HEAD"), method = "createEffectDescription", cancellable = true)
-	protected void createEffectDescription(MobEffect effect, CallbackInfoReturnable<MutableComponent> callback) {
+	protected void createEffectDescription(@NotNull Holder<MobEffect> effect, @NotNull CallbackInfoReturnable<MutableComponent> callback) {
 		LocalPlayer player = this.this$0.getMinecraft().player;
 		if (player != null) {
 			Level level = player.level();
@@ -78,7 +79,7 @@ public abstract class BeaconUpgradePowerButtonMixin extends BeaconScreen.BeaconS
 						this.visible = false;
 					}
 				}
-				callback.setReturnValue(Component.translatable(effect.getDescriptionId()).append(suffix));
+				callback.setReturnValue(Component.translatable(effect.value().getDescriptionId()).append(suffix));
 			}
 		}
 	}

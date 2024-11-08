@@ -23,6 +23,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractFurnaceMenu;
 import net.minecraft.world.inventory.ContainerData;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -32,11 +33,11 @@ import net.minecraft.world.inventory.ContainerData;
 
 public class SmeltingFurnaceMenu extends AbstractFurnaceMenu {
 	
-	public SmeltingFurnaceMenu(int id, Inventory inventory) {
+	public SmeltingFurnaceMenu(int id, @NotNull Inventory inventory) {
 		super(XSMenuTypes.SMELTING_FURNACE.get(), XSRecipeTypes.SMELTING.get(), XSRecipeBookTypes.SMELTING, id, inventory);
 	}
 	
-	public SmeltingFurnaceMenu(int id, Inventory inventory, Container container, ContainerData data) {
+	public SmeltingFurnaceMenu(int id, @NotNull Inventory inventory, @NotNull Container container, @NotNull ContainerData data) {
 		super(XSMenuTypes.SMELTING_FURNACE.get(), XSRecipeTypes.SMELTING.get(), XSRecipeBookTypes.SMELTING, id, inventory, container, data);
 	}
 }

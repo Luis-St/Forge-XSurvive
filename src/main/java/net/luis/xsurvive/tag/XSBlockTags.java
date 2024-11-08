@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSBlockTags {
 	
-	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(new ResourceLocation(XSurvive.MOD_ID, "ocean_monument_blocks"));
+	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "ocean_monument_blocks"));
 	
 	public static void register() {}
 	

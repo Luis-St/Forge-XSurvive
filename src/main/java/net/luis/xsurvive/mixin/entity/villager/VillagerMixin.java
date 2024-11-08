@@ -46,19 +46,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class VillagerMixin extends AbstractVillager {
 	
 	//region Mixin
-	private VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level level) {
+	private VillagerMixin(@NotNull EntityType<? extends AbstractVillager> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	
 	@Shadow
-	public abstract VillagerData getVillagerData();
+	public abstract @NotNull VillagerData getVillagerData();
 	
 	@Shadow
-	public abstract void setVillagerData(VillagerData villagerData);
+	public abstract void setVillagerData(@NotNull VillagerData villagerData);
 	//endregion
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
-	public void mobInteract(@NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
+	public void mobInteract(@NotNull Player player, @NotNull InteractionHand hand, @NotNull CallbackInfoReturnable<InteractionResult> callback) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (this.getVillagerData().getProfession() == VillagerProfession.NITWIT && stack.is(Items.ENCHANTED_GOLDEN_APPLE)) {
 			if (!player.getAbilities().instabuild) {

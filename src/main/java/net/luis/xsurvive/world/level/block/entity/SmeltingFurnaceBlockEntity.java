@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	
-	public SmeltingFurnaceBlockEntity(BlockPos pos, BlockState state) {
+	public SmeltingFurnaceBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 		super(XSBlockEntityTypes.SMELTING_FURNACE.get(), pos, state, XSRecipeTypes.SMELTING.get());
 	}
 	

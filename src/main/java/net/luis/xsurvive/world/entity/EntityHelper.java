@@ -19,11 +19,12 @@
 package net.luis.xsurvive.world.entity;
 
 import com.google.common.collect.Lists;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.WeightCollection;
 import net.luis.xsurvive.world.item.ItemEquipmentHelper;
 import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
@@ -40,7 +41,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,7 +58,7 @@ public class EntityHelper {
 	}
 	
 	public static boolean isAffectedByImpaling(@NotNull LivingEntity entity) {
-		return entity instanceof WaterAnimal || entity.getMobType() == MobType.WATER;
+		return entity instanceof WaterAnimal || entity instanceof Guardian;
 	}
 	
 	public static boolean isAffectedByFrost(@NotNull Entity entity) {
@@ -68,27 +68,27 @@ public class EntityHelper {
 	public static int getGrowthLevel(@NotNull LivingEntity entity, @NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
 		int growth = 0;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+			if (equipmentSlot.getType() == Type.HUMANOID_ARMOR) {
 				if (equipmentSlot == slot) {
-					growth += stack.getEnchantmentLevel(XSEnchantments.GROWTH.get());
+					growth += stack.getEnchantments().getLevel(XSEnchantments.GROWTH.getOrThrow(entity));
 				} else {
-					growth += entity.getItemBySlot(equipmentSlot).getEnchantmentLevel(XSEnchantments.GROWTH.get());
+					growth += entity.getItemBySlot(equipmentSlot).getEnchantments().getLevel(XSEnchantments.GROWTH.getOrThrow(entity));
 				}
 			}
 		}
 		return growth;
 	}
 	
-	public static void updateAttributeModifier(@NotNull Player player, @NotNull Attribute attribute, @NotNull Operation operation, @NotNull UUID uuid, @NotNull String name, int to, int from, double multiplier) {
+	public static void updateAttributeModifier(@NotNull Player player, @NotNull Holder<Attribute> attribute, @NotNull Operation operation, @NotNull ResourceLocation location, int to, int from, double multiplier) {
 		AttributeInstance instance = player.getAttribute(attribute);
 		if (instance != null) {
-			AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to * multiplier, operation);
-			boolean hasModifier = instance.getModifier(uuid) != null;
+			AttributeModifier modifier = new AttributeModifier(location, to * multiplier, operation);
+			boolean hasModifier = instance.getModifier(location) != null;
 			if (to == from && !hasModifier) {
 				instance.addTransientModifier(modifier);
 			} else if (to != from) {
 				if (hasModifier) {
-					instance.removeModifier(uuid);
+					instance.removeModifier(location);
 					instance.addTransientModifier(modifier);
 				} else {
 					instance.addTransientModifier(modifier);
@@ -119,11 +119,11 @@ public class EntityHelper {
 		return level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(vecX * clipDistance, vecY * clipDistance, vecZ * clipDistance), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getLocation();
 	}
 	
-	public static void addAttributeModifier(@NotNull LivingEntity entity, @NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
+	public static void addAttributeModifier(@NotNull LivingEntity entity, @NotNull Holder<Attribute> attribute, @NotNull AttributeModifier modifier) {
 		AttributeMap attributes = entity.getAttributes();
 		if (attributes.hasAttribute(attribute)) {
 			AttributeInstance instance = attributes.getInstance(attribute);
-			if (instance != null && instance.getModifier(modifier.getId()) == null) {
+			if (instance != null && instance.getModifier(modifier.id()) == null) {
 				instance.addPermanentModifier(modifier);
 			}
 		}

@@ -18,7 +18,7 @@
 
 package net.luis.xsurvive.client.gui.screens.inventory.tooltip;
 
-import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxTooltip;
+import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxContent;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -36,11 +36,11 @@ import java.util.List;
 
 public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/bundle.png");
+	private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/bundle.png"); // ToDo: Change texture -> does not exist
 	
 	private final List<ItemStack> stacks;
 	
-	public ClientShulkerBoxTooltip(@NotNull ShulkerBoxTooltip tooltip) {
+	public ClientShulkerBoxTooltip(@NotNull ShulkerBoxContent tooltip) {
 		this.stacks = tooltip.stacks();
 	}
 	

@@ -19,21 +19,25 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
 import com.google.common.collect.Lists;
-import net.luis.xsurvive.XSurvive;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import net.luis.xsurvive.tag.XSEnchantmentTags;
 import net.luis.xsurvive.util.Rarity;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.luis.xsurvive.world.item.trading.Trade;
 import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -44,12 +48,16 @@ import java.util.stream.Collectors;
 
 class DynamicTradeHelper {
 	
-	static @NotNull List<Enchantment> getValidEnchantments(@NotNull List<Rarity> rarities) {
-		return getEnchantmentsForRarity(rarities).stream().filter((enchantment) -> enchantment.isTradeable() && !enchantment.isCurse()).collect(Collectors.toList());
+	static @NotNull List<Holder<Enchantment>> getNonTreasureEnchantments(@NotNull Collection<? extends Holder<Enchantment>> enchantments) {
+		return enchantments.stream().filter(enchantment -> enchantment.is(EnchantmentTags.NON_TREASURE)).collect(Collectors.toList());
 	}
 	
-	private static @NotNull List<Enchantment> getEnchantmentsForRarity(@NotNull List<Rarity> rarities) {
-		List<Enchantment> enchantments = Lists.newArrayList();
+	static @NotNull List<Holder<Enchantment>> getValidEnchantments(@NotNull Entity entity, @NotNull List<Rarity> rarities) {
+		return getEnchantmentsForRarity(rarities).stream().map(key -> key.getOrThrow(entity)).filter(enchantment -> enchantment.is(EnchantmentTags.TRADEABLE)).collect(Collectors.toList());
+	}
+	
+	private static @NotNull List<ResourceKey<Enchantment>> getEnchantmentsForRarity(@NotNull List<Rarity> rarities) {
+		List<ResourceKey<Enchantment>> enchantments = Lists.newArrayList();
 		if (rarities.contains(Rarity.COMMON)) {
 			enchantments.addAll(LootModifierHelper.getCommonEnchantments().getValues());
 		}
@@ -65,14 +73,8 @@ class DynamicTradeHelper {
 		return enchantments;
 	}
 	
-	static @NotNull List<Enchantment> getValidGoldenEnchantments(@NotNull Collection<Enchantment> enchantments) {
-		return enchantments.stream().filter((enchantment) -> enchantment.isTradeable() && !enchantment.isCurse()).filter((enchantment) -> {
-			if (enchantment instanceof IEnchantment ench) {
-				return ench.isAllowedOnGoldenBooks();
-			}
-			XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-			return false;
-		}).collect(Collectors.toList());
+	static @NotNull List<Holder<Enchantment>> getValidGoldenEnchantments(@NotNull Collection<? extends Holder<Enchantment>> enchantments) {
+		return enchantments.stream().filter(enchantment -> enchantment.is(XSEnchantmentTags.GOLDEN_ENCHANTMENT)).collect(Collectors.toList());
 	}
 	
 	static int getEmeraldCount(@NotNull RandomSource rng, int level) {
@@ -88,18 +90,19 @@ class DynamicTradeHelper {
 	}
 	
 	static int getEmeraldCount(@NotNull ItemStack stack) {
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+		ItemEnchantments enchantments = stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
 		int emeralds = enchantments.size();
-		for (Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-			Enchantment enchantment = entry.getKey();
-			if (enchantment.getRarity().ordinal() > 1) {
-				if (enchantment.getRarity().ordinal() > 2) {
-					emeralds += entry.getValue() + entry.getValue();
+		for (Object2IntMap.Entry<Holder<Enchantment>> entry : enchantments.entrySet()) {
+			Holder<Enchantment> enchantment = entry.getKey();
+			int anvilCost = enchantment.value().getAnvilCost();
+			if (anvilCost >= 2) {
+				if (anvilCost> 2) {
+					emeralds += entry.getIntValue() + entry.getIntValue();
 				} else {
-					emeralds += entry.getValue() + (entry.getValue() / 2);
+					emeralds += entry.getIntValue() + (entry.getIntValue() / 2);
 				}
 			} else {
-				emeralds += entry.getValue();
+				emeralds += entry.getIntValue();
 			}
 		}
 		return Math.min(emeralds, 64);

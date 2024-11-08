@@ -46,14 +46,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BaseFireBlockMixin {
 	
 	@Inject(method = "getState", at = @At("HEAD"), cancellable = true)
-	private static void getState(BlockGetter blockGetter, BlockPos pos, CallbackInfoReturnable<BlockState> callback) {
+	private static void getState(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CallbackInfoReturnable<BlockState> callback) {
 		if (XSBlocks.MYSTIC_FIRE.get().canSurvive(blockGetter, pos)) {
 			callback.setReturnValue(XSBlocks.MYSTIC_FIRE.get().getStateForPlacement(blockGetter, pos));
 		}
 	}
 	
 	@Inject(method = "entityInside", at = @At("TAIL"))
-	public void entityInside(BlockState state, @NotNull Level level, BlockPos pos, Entity entity, CallbackInfo callback) {
+	public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity, @NotNull CallbackInfo callback) {
 		if (!level.isClientSide) {
 			EntityProvider.getSafe(entity).ifPresent((handler) -> {
 				if (state.getBlock() instanceof SoulFireBlock) {

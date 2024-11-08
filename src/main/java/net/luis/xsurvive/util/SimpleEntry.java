@@ -19,6 +19,7 @@
 package net.luis.xsurvive.util;
 
 import net.luis.xsurvive.XSurvive;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -34,11 +35,11 @@ public final class SimpleEntry<K, V> implements Map.Entry<K, V> {
 	private V value;
 	private boolean muted;
 	
-	public SimpleEntry(K key, V value) {
+	public SimpleEntry(@Nullable K key, @Nullable V value) {
 		this(key, value, false);
 	}
 	
-	public SimpleEntry(K key, V value, boolean muted) {
+	public SimpleEntry(@Nullable K key, @Nullable V value, boolean muted) {
 		this.key = key;
 		this.value = value;
 		this.muted = muted;

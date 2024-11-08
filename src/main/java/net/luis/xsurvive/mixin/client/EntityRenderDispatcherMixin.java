@@ -51,13 +51,11 @@ public abstract class EntityRenderDispatcherMixin {
 	@Shadow public Camera camera;
 	
 	@Shadow
-	private static void fireVertex(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {
-		
-	}
+	private static void fireVertex(PoseStack.@NotNull Pose pose, @NotNull VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {}
 	//endregion
 	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
-	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, Quaternionf quaternion, CallbackInfo callback) {
+	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, @NotNull Entity entity, @NotNull Quaternionf quaternion, @NotNull CallbackInfo callback) {
 		Optional<IEntity> optional = EntityProvider.getSafe(entity).resolve();
 		if (optional.isPresent()) {
 			EntityFireType fireType = optional.get().getFireType();

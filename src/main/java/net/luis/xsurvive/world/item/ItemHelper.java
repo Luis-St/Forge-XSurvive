@@ -36,11 +36,6 @@ import static net.luis.xsurvive.world.item.XSItems.*;
 
 public class ItemHelper {
 	
-	public static @NotNull List<GlintColorItem> getRunes() {
-		return Lists.newArrayList(WHITE_RUNE.get(), GRAY_RUNE.get(), LIGHT_GRAY_RUNE.get(), BROWN_RUNE.get(), BLACK_RUNE.get(), ORANGE_RUNE.get(), MAGENTA_RUNE.get(), LIGHT_BLUE_RUNE.get(), YELLOW_RUNE.get(), LIME_RUNE.get(),
-			PINK_RUNE.get(), CYAN_RUNE.get(), PURPLE_RUNE.get(), BLUE_RUNE.get(), GREEN_RUNE.get(), RED_RUNE.get(), RAINBOW_RUNE.get());
-	}
-	
 	public static @NotNull List<Item> getLeatherArmor() {
 		return Lists.newArrayList(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
 	}

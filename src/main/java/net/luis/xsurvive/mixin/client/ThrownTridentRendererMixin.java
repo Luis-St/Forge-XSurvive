@@ -39,7 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ThrownTridentRendererMixin {
 	
 	@Inject(method = "render(Lnet/minecraft/world/entity/projectile/ThrownTrident;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V"))
-	private void render(@NotNull ThrownTrident trident, float yaw, float partialTicks, PoseStack pose, MultiBufferSource buffer, int packedLight, CallbackInfo callback) {
+	private void render(@NotNull ThrownTrident trident, float yaw, float partialTicks, @NotNull PoseStack pose, @NotNull MultiBufferSource buffer, int packedLight, @NotNull CallbackInfo callback) {
 		GlintColorHandler.setStack(trident.getPickupItemStackOrigin().copy());
 	}
 }

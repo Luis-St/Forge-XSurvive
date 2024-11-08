@@ -50,10 +50,10 @@ import static net.luis.xsurvive.util.Util.*;
  */
 
 @Mixin(Raid.class)
-@SuppressWarnings({ "OptionalUsedAsFieldOrParameterType", "unused", "BooleanMethodNameMustStartWithQuestion", "NonConstantFieldWithUpperCaseName" })
-public abstract class RaidMixin {
+//@SuppressWarnings({ "OptionalUsedAsFieldOrParameterType", "unused", "BooleanMethodNameMustStartWithQuestion", "NonConstantFieldWithUpperCaseName" })
+public abstract class RaidMixin { // ToDo: Fix issue with Raid.RaiderType AT
 	
-	// @formatter:off
+	/*// @formatter:off
 	private static final int[] VINDICATOR_SPAWNS = {
 		// 0, 0, 2, 0, 1,  4,  2,  5 -> Max: 48
 		   0, 2, 4, 5, 5, 8, 10, 12
@@ -94,7 +94,7 @@ public abstract class RaidMixin {
 	protected abstract boolean shouldSpawnBonusGroup();
 	
 	@Shadow
-	public abstract void joinRaid(int wave, Raider raider, @Nullable BlockPos pos, boolean hasLeader);
+	public abstract void joinRaid(int wave, @NotNull Raider raider, @Nullable BlockPos pos, boolean hasLeader);
 	
 	@Shadow
 	public abstract void updateBossbar();
@@ -106,27 +106,27 @@ public abstract class RaidMixin {
 	protected abstract void setDirty();
 	
 	@Shadow
-	protected abstract int getDefaultNumSpawns(Raid.RaiderType raiderType, int wave, boolean bonusWave);
+	protected abstract int getDefaultNumSpawns(Raid.@NotNull RaiderType raiderType, int wave, boolean bonusWave);
 	
 	@Shadow
-	protected abstract int getPotentialBonusSpawns(Raid.RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave);
+	protected abstract int getPotentialBonusSpawns(Raid.@NotNull RaiderType raiderType, @NotNull RandomSource rng, int wave, @NotNull DifficultyInstance instance, boolean bonusWave);
 	
 	@Shadow
-	public abstract void setLeader(int wave, Raider raider);
+	public abstract void setLeader(int wave, @NotNull Raider raider);
 	
 	@Shadow
-	public abstract int getNumGroups(Difficulty difficulty);
+	public abstract int getNumGroups(@NotNull Difficulty difficulty);
 	//endregion
 	
 	private int totalRaiders;
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
-	public void init(int id, ServerLevel level, BlockPos pos, CallbackInfo callback) {
+	public void init(int id, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull CallbackInfo callback) {
 		this.raidEvent = new ServerBossEvent(RAID_NAME_COMPONENT, BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS);
 	}
 	
 	@Inject(at = @At("HEAD"), method = "spawnGroup", cancellable = true)
-	private void spawnGroup(BlockPos pos, CallbackInfo callback) {
+	private void spawnGroup(@NotNull BlockPos pos, @NotNull CallbackInfo callback) {
 		this.totalHealth = 0.0F;
 		this.totalRaiders = 0;
 		int waveGroupCount = 5;
@@ -152,7 +152,7 @@ public abstract class RaidMixin {
 				if (spawns.size() <= i) {
 					continue;
 				}
-				hasLeader |= this.spawnRaiderType(wave, BlockPos.containing(spawnPositions.get(i)), spawns.get(i), entry.getKey(), hasLeader);
+				hasLeader = hasLeader || this.spawnRaiderType(wave, BlockPos.containing(spawnPositions.get(i)), spawns.get(i), entry.getKey(), hasLeader);
 			}
 		}
 		this.waveSpawnPos = Optional.empty();
@@ -162,7 +162,7 @@ public abstract class RaidMixin {
 		callback.cancel();
 	}
 	
-	private boolean spawnRaiderType(int wave, BlockPos pos, int spawnCount, Raid.@NotNull RaiderType raiderType, boolean hasLeader) {
+	private boolean spawnRaiderType(int wave, @NotNull BlockPos pos, int spawnCount, Raid.@NotNull RaiderType raiderType, boolean hasLeader) {
 		int riders = 0;
 		for (int i = 0; i < spawnCount; i++) {
 			Raider raider = raiderType.entityType.create(this.level);
@@ -223,7 +223,7 @@ public abstract class RaidMixin {
 	}
 	
 	@Inject(method = "getDefaultNumSpawns", at = @At("HEAD"), cancellable = true)
-	private void getDefaultNumSpawns(Raid.@NotNull RaiderType raiderType, int wave, boolean bonusWave, CallbackInfoReturnable<Integer> callback) {
+	private void getDefaultNumSpawns(Raid.@NotNull RaiderType raiderType, int wave, boolean bonusWave, @NotNull CallbackInfoReturnable<Integer> callback) {
 		int waveSpawns = this.getNumSpawns(raiderType, wave);
 		for (int j = 0; j < (wave / 8); j++) {
 			waveSpawns += this.getNumSpawns(raiderType, 7);
@@ -244,11 +244,11 @@ public abstract class RaidMixin {
 	}
 	
 	@Inject(method = "getPotentialBonusSpawns", at = @At("HEAD"), cancellable = true)
-	private void getPotentialBonusSpawns(Raid.@NotNull RaiderType raiderType, RandomSource rng, int wave, DifficultyInstance instance, boolean bonusWave, @NotNull CallbackInfoReturnable<Integer> callback) {
+	private void getPotentialBonusSpawns(Raid.@NotNull RaiderType raiderType, @NotNull RandomSource rng, int wave, @NotNull DifficultyInstance instance, boolean bonusWave, @NotNull CallbackInfoReturnable<Integer> callback) {
 		callback.setReturnValue(switch (raiderType) {
 			case VINDICATOR, PILLAGER -> rng.nextInt(Math.max(1, this.getNumSpawns(raiderType, wave) / 2));
 			case EVOKER, RAVAGER, WITCH -> rng.nextInt((wave / 8) + 1) + rng.nextInt((wave / 8) + 1);
 			default -> rng.nextInt((wave / 8) + 1);
 		});
-	}
+	}*/
 }

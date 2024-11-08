@@ -43,17 +43,17 @@ import java.util.stream.Collectors;
  *
  */
 
-@SuppressWarnings({ "CodeBlock2Expr", "deprecation" })
+@SuppressWarnings("CodeBlock2Expr")
 public class MysticFireBlock extends BaseFireBlock {
 	
 	private static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((direction) -> {
 		return direction.getKey() != Direction.DOWN;
 	}).collect(Util.toMap());
-	private static final VoxelShape UP_AABB = Block.box(0.0D, 15.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-	private static final VoxelShape WEST_AABB = Block.box(0.0D, 0.0D, 0.0D, 1.0D, 16.0D, 16.0D);
-	private static final VoxelShape EAST_AABB = Block.box(15.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-	private static final VoxelShape NORTH_AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 1.0D);
-	private static final VoxelShape SOUTH_AABB = Block.box(0.0D, 0.0D, 15.0D, 16.0D, 16.0D, 16.0D);
+	private static final VoxelShape UP_AABB = box(0.0, 15.0, 0.0, 16.0, 16.0, 16.0);
+	private static final VoxelShape WEST_AABB = box(0.0, 0.0, 0.0, 1.0, 16.0, 16.0);
+	private static final VoxelShape EAST_AABB = box(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
+	private static final VoxelShape NORTH_AABB = box(0.0, 0.0, 0.0, 16.0, 16.0, 1.0);
+	private static final VoxelShape SOUTH_AABB = box(0.0, 0.0, 15.0, 16.0, 16.0, 16.0);
 	public static final BooleanProperty NORTH = PipeBlock.NORTH;
 	public static final BooleanProperty EAST = PipeBlock.EAST;
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
@@ -62,10 +62,9 @@ public class MysticFireBlock extends BaseFireBlock {
 	public static final MapCodec<MysticFireBlock> CODEC = simpleCodec(MysticFireBlock::new);
 	private final Map<BlockState, VoxelShape> shapesCache;
 	
-	public MysticFireBlock(Properties properties) {
+	public MysticFireBlock(@NotNull Properties properties) {
 		super(properties, 3.0F);
-		this.registerDefaultState(
-			this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE));
+		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE));
 		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
 	}
 	

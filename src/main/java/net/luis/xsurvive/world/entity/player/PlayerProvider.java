@@ -22,12 +22,14 @@ import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.capability.LocalPlayerHandler;
 import net.luis.xsurvive.server.capability.ServerPlayerHandler;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -40,7 +42,7 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	private final IPlayer playerCapability;
 	private final LazyOptional<IPlayer> optional;
 	
-	public PlayerProvider(IPlayer playerCapability) {
+	public PlayerProvider(@NotNull IPlayer playerCapability) {
 		this.playerCapability = playerCapability;
 		this.optional = LazyOptional.of(() -> this.playerCapability);
 	}
@@ -74,17 +76,17 @@ public class PlayerProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		return XSCapabilities.PLAYER.orEmpty(capability, this.optional);
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializeNBT() {
-		return this.playerCapability.serializeDisk();
+	public @NotNull CompoundTag serializeNBT(HolderLookup.@NotNull Provider lookup) {
+		return this.playerCapability.serializeDisk(lookup);
 	}
 	
 	@Override
-	public void deserializeNBT(@NotNull CompoundTag tag) {
-		this.playerCapability.deserializeDisk(tag);
+	public void deserializeNBT(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
+		this.playerCapability.deserializeDisk(lookup, tag);
 	}
 }

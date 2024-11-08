@@ -21,6 +21,7 @@ package net.luis.xsurvive.world.level;
 import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.capability.INetworkCapability;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -48,9 +49,9 @@ public interface ILevel extends INetworkCapability {
 	
 	@NotNull List<BlockPos> getBeaconPositions(@NotNull AABB area);
 	
-	@NotNull Pair<@Nullable MobEffect, @Nullable MobEffect> getBeaconEffects(@NotNull BlockPos pos);
+	@NotNull Pair<@Nullable Holder<MobEffect>, @Nullable Holder<MobEffect>> getBeaconEffects(@NotNull BlockPos pos);
 	
-	default @NotNull Optional<MobEffect> getPrimaryBeaconEffect(@NotNull BlockPos pos) {
+	default @NotNull Optional<Holder<MobEffect>> getPrimaryBeaconEffect(@NotNull BlockPos pos) {
 		return Optional.ofNullable(this.getBeaconEffects(pos).getFirst());
 	}
 	

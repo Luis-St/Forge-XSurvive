@@ -25,6 +25,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
@@ -61,16 +62,16 @@ public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenBu
 	}
 	
 	@Shadow
-	protected abstract MutableComponent createEffectDescription(MobEffect effect);
+	protected abstract MutableComponent createEffectDescription(@NotNull MobEffect effect);
 	//endregion
 	
 	@Inject(at = @At("HEAD"), method = "updateStatus")
-	public void updateStatus(int beaconLevel, CallbackInfo callback) {
+	public void updateStatus(int beaconLevel, @NotNull CallbackInfo callback) {
 		this.setTooltip(Tooltip.create(this.createEffectDescription(this.effect), null));
 	}
 	
 	@Inject(at = @At("HEAD"), method = "createEffectDescription", cancellable = true)
-	protected void createEffectDescription(MobEffect effect, CallbackInfoReturnable<MutableComponent> callback) {
+	protected void createEffectDescription(@NotNull Holder<MobEffect> effect, @NotNull CallbackInfoReturnable<MutableComponent> callback) {
 		LocalPlayer player = this.this$0.getMinecraft().player;
 		if (player != null) {
 			Level level = player.level();
@@ -87,7 +88,7 @@ public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenBu
 						suffix = this.getLevel(getAmplifier(player.getOnPos(), level, containerPos, beaconLevel, beaconLevel * 20 + 20, effect, 0));
 					}
 				}
-				callback.setReturnValue(Component.translatable(effect.getDescriptionId()).append(suffix));
+				callback.setReturnValue(Component.translatable(effect.value().getDescriptionId()).append(suffix));
 			}
 		}
 	}

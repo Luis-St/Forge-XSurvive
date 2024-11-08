@@ -44,7 +44,7 @@ public abstract class SpawnerBlockEntityMixin {
 	//endregion
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	public void init(BlockPos pos, BlockState state, CallbackInfo callback) {
+	public void init(@NotNull BlockPos pos, @NotNull BlockState state, @NotNull CallbackInfo callback) {
 		this.spawner.minSpawnDelay = 50;
 		this.spawner.maxSpawnDelay = 200;
 		this.spawner.spawnCount = 8;
@@ -53,7 +53,7 @@ public abstract class SpawnerBlockEntityMixin {
 	}
 	
 	@Inject(method = "load", at = @At("HEAD"))
-	public void load(@NotNull CompoundTag tag, CallbackInfo callback) {
+	public void load(@NotNull CompoundTag tag, @NotNull CallbackInfo callback) {
 		if (tag.contains("MinSpawnDelay")) {
 			tag.remove("MinSpawnDelay");
 			tag.putShort("MinSpawnDelay", (short) 50);

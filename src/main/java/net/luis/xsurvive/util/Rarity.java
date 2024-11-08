@@ -30,7 +30,7 @@ public enum Rarity implements StringRepresentable {
 	
 	private final String name;
 	
-	Rarity(String name) {
+	Rarity(@NotNull String name) {
 		this.name = name;
 	}
 	

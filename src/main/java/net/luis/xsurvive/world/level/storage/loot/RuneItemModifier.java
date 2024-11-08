@@ -19,6 +19,7 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.util.RarityList;
@@ -43,7 +44,7 @@ import java.util.Random;
 public class RuneItemModifier extends LootModifier {
 	
 	private static final Random RNG = new Random();
-	public static final Codec<RuneItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final MapCodec<RuneItemModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
 		return LootModifier.codecStart(instance).and(instance.group(Codec.INT.fieldOf("rune_count").forGetter((modifier) -> {
 			return modifier.runeCount;
 		}), WeightCollection.codec(RarityList.codec(ForgeRegistries.ITEMS.getCodec())).fieldOf("runes").forGetter((modifier) -> {
@@ -53,14 +54,14 @@ public class RuneItemModifier extends LootModifier {
 	private final int runeCount;
 	private final WeightCollection<RarityList<Item>> runeWeights;
 	
-	public RuneItemModifier(LootItemCondition[] conditions, int runeCount, WeightCollection<RarityList<Item>> runeWeights) {
+	public RuneItemModifier(LootItemCondition @NotNull [] conditions, int runeCount, @NotNull WeightCollection<RarityList<Item>> runeWeights) {
 		super(conditions);
 		this.runeCount = runeCount;
 		this.runeWeights = runeWeights;
 	}
 	
 	@Override
-	public @NotNull Codec<RuneItemModifier> codec() {
+	public @NotNull MapCodec<RuneItemModifier> codec() {
 		return XSGlobalLootModifiers.RUNE_ITEM_MODIFIER.get();
 	}
 	

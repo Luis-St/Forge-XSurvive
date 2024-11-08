@@ -27,6 +27,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -40,7 +41,7 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public class TradePrinter {
 	
-	public static void print(Villager villager) {
+	public static void print(@NotNull Villager villager) {
 		System.out.println();
 		for (Map.Entry<VillagerProfession, Int2ObjectMap<VillagerTrades.ItemListing[]>> entry1 : VillagerTrades.TRADES.entrySet()) {
 			System.out.println("VillagerProfession: " + StringUtils.capitalize(entry1.getKey().name()));
@@ -57,7 +58,7 @@ public class TradePrinter {
 		}
 	}
 	
-	private static @NotNull String offerToString(MerchantOffer offer) {
+	private static @NotNull String offerToString(@Nullable MerchantOffer offer) {
 		if (offer == null) {
 			return "null";
 		}

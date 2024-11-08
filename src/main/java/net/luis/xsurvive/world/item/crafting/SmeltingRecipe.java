@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class SmeltingRecipe extends AbstractCookingRecipe {
 	
-	public SmeltingRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
+	public SmeltingRecipe(@NotNull String group, @NotNull CookingBookCategory category, @NotNull Ingredient ingredient, @NotNull ItemStack result, float experience, int cookingTime) {
 		super(XSRecipeTypes.SMELTING.get(), group, category, ingredient, result, experience, cookingTime);
 	}
 	

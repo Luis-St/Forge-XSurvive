@@ -32,15 +32,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class FrostMobEffect extends MobEffect {
 	
-	public FrostMobEffect(MobEffectCategory category, int color) {
+	public FrostMobEffect(@NotNull MobEffectCategory category, int color) {
 		super(category, color);
 	}
 	
 	@Override
-	public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+	public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
 		if (EntityHelper.isAffectedByFrost(entity)) {
 			entity.hurt(entity.damageSources().freeze(), (amplifier + 1) * 2.0F);
 		}
+		return true;
 	}
 	
 	@Override

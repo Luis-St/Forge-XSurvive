@@ -46,9 +46,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ScreenEffectRendererMixin {
 	
 	@Inject(method = "renderFire", at = @At("HEAD"), cancellable = true)
-	private static void renderFire(@NotNull Minecraft minecraft, PoseStack stack, CallbackInfo callback) {
-		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-		RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+	private static void renderFire(@NotNull Minecraft minecraft, @NotNull PoseStack stack, @NotNull CallbackInfo callback) {
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.depthFunc(519);
 		RenderSystem.depthMask(false);
 		RenderSystem.enableBlend();
@@ -68,12 +67,12 @@ public abstract class ScreenEffectRendererMixin {
 				stack.translate(-(i * 2 - 1) * 0.24, -0.3, 0.0);
 				stack.mulPose(Axis.YP.rotationDegrees((i * 2 - 1) * 10.0F));
 				Matrix4f matrix = stack.last().pose();
-				bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_TEX);
-				bufferBuilder.vertex(matrix, -0.5F, -0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).uv(outerU, innerV).endVertex();
-				bufferBuilder.vertex(matrix, 0.5F, -0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).uv(innerU, innerV).endVertex();
-				bufferBuilder.vertex(matrix, 0.5F, 0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).uv(innerU, outerV).endVertex();
-				bufferBuilder.vertex(matrix, -0.5F, 0.5F, -0.5F).color(1.0F, 1.0F, 1.0F, 0.9F).uv(outerU, outerV).endVertex();
-				BufferUploader.drawWithShader(bufferBuilder.end());
+				BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+				bufferBuilder.addVertex(matrix, -0.5F, -0.5F, -0.5F).setUv(outerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+				bufferBuilder.addVertex(matrix, 0.5F, -0.5F, -0.5F).setUv(innerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+				bufferBuilder.addVertex(matrix, 0.5F, 0.5F, -0.5F).setUv(innerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+				bufferBuilder.addVertex(matrix, -0.5F, 0.5F, -0.5F).setUv(outerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+				BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
 				stack.popPose();
 			}
 		}

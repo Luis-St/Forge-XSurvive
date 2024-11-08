@@ -19,12 +19,13 @@
 package net.luis.xsurvive.world.level.storage.loot;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -42,16 +43,16 @@ import java.util.List;
 @SuppressWarnings("CodeBlock2Expr")
 public class MultiDropModifier extends LootModifier {
 	
-	public static final Codec<MultiDropModifier> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final MapCodec<MultiDropModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
 		return LootModifier.codecStart(instance).apply(instance, MultiDropModifier::new);
 	});
 	
-	public MultiDropModifier(LootItemCondition[] conditions) {
+	public MultiDropModifier(LootItemCondition @NotNull [] conditions) {
 		super(conditions);
 	}
 	
 	@Override
-	public @NotNull Codec<MultiDropModifier> codec() {
+	public @NotNull MapCodec<MultiDropModifier> codec() {
 		return XSGlobalLootModifiers.MULTI_DROP_MODIFIER.get();
 	}
 	
@@ -60,7 +61,8 @@ public class MultiDropModifier extends LootModifier {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();
 		generatedLoot.forEach((stack) -> {
 			if (context.hasParam(LootContextParams.TOOL)) {
-				loot.addAll(this.multiplyItem(stack, context.getParam(LootContextParams.TOOL).getEnchantmentLevel(XSEnchantments.MULTI_DROP.get())));
+				int level = EnchantmentHelper.getItemEnchantmentLevel(XSEnchantments.MULTI_DROP.getOrThrow(context.getLevel()), context.getParam(LootContextParams.TOOL));
+				loot.addAll(this.multiplyItem(stack, level));
 			} else {
 				XSurvive.LOGGER.error("Could not apply the MultiDrop logic on LootTable '{}', since there is no Tool in the LootContext present", context.getQueriedLootTableId());
 			}

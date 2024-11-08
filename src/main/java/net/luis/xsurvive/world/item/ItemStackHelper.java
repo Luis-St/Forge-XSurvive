@@ -40,7 +40,7 @@ public class ItemStackHelper {
 	public static @NotNull ItemStack setupItemForSlot(@NotNull LivingEntity entity, @NotNull EquipmentSlot slot, @NotNull ItemStack stack, double specialMultiplier) {
 		RandomSource rng = entity.getRandom();
 		if (stack.canEquip(slot, entity)) {
-			XSEnchantmentHelper.enchantItem(rng, stack, (int) (2 + (specialMultiplier * 2.0)), (int) (20 + specialMultiplier * rng.nextInt(18)), false, false);
+			XSEnchantmentHelper.enchantItem(entity.registryAccess(), rng, stack, (int) (2 + (specialMultiplier * 2.0)), (int) (20 + specialMultiplier * rng.nextInt(18)), false, false);
 		}
 		return stack;
 	}

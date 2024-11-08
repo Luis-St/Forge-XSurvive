@@ -18,25 +18,13 @@
 
 package net.luis.xsurvive.mixin.enchantment;
 
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.item.enchantment.*;
-import org.apache.commons.lang3.ArrayUtils;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 /**
  *
  * @author Luis-St
  *
  */
 
-@Mixin(Enchantment.class)
+/*@Mixin(Enchantment.class)
 @SuppressWarnings("DataFlowIssue")
 public abstract class EnchantmentMixin implements IEnchantment {
 	
@@ -93,4 +81,4 @@ public abstract class EnchantmentMixin implements IEnchantment {
 		}
 		return ArrayUtils.contains(goldenEnchantments, enchantment);
 	}
-}
+}*/

@@ -23,11 +23,15 @@ import net.luis.xsurvive.capability.handler.AbstractLevelHandler;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateLevelCapabilityPacket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Optional;
 
 import static net.minecraft.core.registries.BuiltInRegistries.*;
 
@@ -37,10 +41,9 @@ import static net.minecraft.core.registries.BuiltInRegistries.*;
  *
  */
 
-@SuppressWarnings("deprecation")
 public class ServerLevelHandler extends AbstractLevelHandler {
 	
-	public ServerLevelHandler(Level level) {
+	public ServerLevelHandler(@NotNull Level level) {
 		super(level);
 	}
 	
@@ -49,14 +52,14 @@ public class ServerLevelHandler extends AbstractLevelHandler {
 		this.broadcastChanges();
 	}
 	
-	public void removeBeaconPosition(BlockPos pos) {
+	public void removeBeaconPosition(@NotNull BlockPos pos) {
 		this.beaconPositions.remove(pos);
 		this.broadcastChanges();
 	}
 	
-	public void setBeaconEffects(@NotNull BlockPos pos, MobEffect primaryEffect, MobEffect secondaryEffect) {
-		int primaryId = MOB_EFFECT.getId(primaryEffect);
-		int secondaryId = MOB_EFFECT.getId(secondaryEffect);
+	public void setBeaconEffects(@NotNull BlockPos pos, @NotNull Holder<MobEffect> primaryEffect, @NotNull Holder<MobEffect> secondaryEffect) {
+		int primaryId = MOB_EFFECT.getId(primaryEffect.value());
+		int secondaryId = MOB_EFFECT.getId(secondaryEffect.value());
 		if (this.beaconEffects.containsKey(pos)) {
 			Pair<Integer, Integer> pair = this.beaconEffects.get(pos);
 			if (pair.getFirst() == primaryId && pair.getSecond() == secondaryId) {
@@ -67,7 +70,7 @@ public class ServerLevelHandler extends AbstractLevelHandler {
 		this.broadcastChanges();
 	}
 	
-	public void removeBeaconEffects(BlockPos pos) {
+	public void removeBeaconEffects(@NotNull BlockPos pos) {
 		this.beaconEffects.remove(pos);
 		this.broadcastChanges();
 	}
@@ -79,8 +82,6 @@ public class ServerLevelHandler extends AbstractLevelHandler {
 	
 	//region NBT
 	@Override
-	public void deserializeNetwork(@NotNull CompoundTag tag) {
-	
-	}
+	public void deserializeNetwork(@NotNull CompoundTag tag) {}
 	//endregion
 }

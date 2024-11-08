@@ -54,15 +54,14 @@ public abstract class MerchantOfferMixin {
 	@Inject(method = "getCostA", at = @At("TAIL"), cancellable = true)
 	public void getCostA(@NotNull CallbackInfoReturnable<ItemStack> callback) {
 		int baseCount = this.baseCostA.getCount();
-		ItemStack stack = this.baseCostA.copy();
 		int demandCount = (int) Math.max(0, (double) (baseCount * this.demand) * this.priceMultiplier);
 		int count = Mth.clamp(baseCount + demandCount + this.specialPriceDiff, (int) (baseCount * 0.85), (int) (baseCount * 1.2));
-		stack.setCount(Mth.clamp(count, 1, this.baseCostA.getMaxStackSize()));
-		callback.setReturnValue(stack);
+		int clamped = Mth.clamp(count, 1, this.baseCostA.getMaxStackSize());
+		callback.setReturnValue(this.baseCostA.copy().copyWithCount(clamped));
 	}
 	
 	@Inject(method = "getMaxUses", at = @At("HEAD"), cancellable = true)
-	public void getMaxUses(CallbackInfoReturnable<Integer> callback) {
+	public void getMaxUses(@NotNull CallbackInfoReturnable<Integer> callback) {
 		if (this.maxUses != 1) {
 			callback.setReturnValue(this.maxUses * 5);
 		}

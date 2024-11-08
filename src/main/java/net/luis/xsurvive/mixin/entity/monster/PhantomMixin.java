@@ -39,7 +39,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PhantomMixin extends FlyingMob {
 	
 	//region Mixin
-	private PhantomMixin(EntityType<? extends FlyingMob> entityType, Level level) {
+	private PhantomMixin(@NotNull EntityType<? extends FlyingMob> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	//endregion

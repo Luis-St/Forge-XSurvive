@@ -21,9 +21,12 @@ package net.luis.xsurvive.world.level.block;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -91,9 +94,10 @@ public class WoodHarvester {
 	private static @NotNull ItemStack getUsedStack(@NotNull Player player) {
 		ItemStack mainStack = player.getMainHandItem();
 		ItemStack offStack = player.getOffhandItem();
-		if (mainStack.getEnchantmentLevel(XSEnchantments.HARVESTING.get()) > 0) {
+		Holder<Enchantment> harvesting = XSEnchantments.HARVESTING.getOrThrow(player);
+		if (EnchantmentHelper.getItemEnchantmentLevel(harvesting, mainStack) > 0) {
 			return mainStack;
-		} else if (offStack.getEnchantmentLevel(XSEnchantments.HARVESTING.get()) > 0) {
+		} else if (EnchantmentHelper.getItemEnchantmentLevel(harvesting, offStack) > 0) {
 			return offStack;
 		} else if (!mainStack.isEmpty()) {
 			return mainStack;

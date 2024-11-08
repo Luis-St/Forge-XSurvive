@@ -40,10 +40,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
 	
-	@Redirect(method = "getArmorFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorGlint()Lnet/minecraft/client/renderer/RenderType;"))
-	private static @NotNull RenderType getArmorGlint() {
-		return GlintColorHandler.getArmorGlint();
-	}
+	//@Redirect(method = "getArmorFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorGlint()Lnet/minecraft/client/renderer/RenderType;"))
+	//private static @NotNull RenderType getArmorGlint() {
+	//	return GlintColorHandler.getArmorGlint();
+	//}
 	
 	@Redirect(method = "getArmorFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;"))
 	private static @NotNull RenderType getArmorEntityGlint() {
@@ -65,10 +65,10 @@ public abstract class ItemRendererMixin {
 		return GlintColorHandler.getEntityGlint();
 	}
 	
-	@Redirect(method = "getFoilBufferDirect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;glintDirect()Lnet/minecraft/client/renderer/RenderType;"))
-	private static @NotNull RenderType getGlintDirect() {
-		return GlintColorHandler.getGlintDirect();
-	}
+	//@Redirect(method = "getFoilBufferDirect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;glintDirect()Lnet/minecraft/client/renderer/RenderType;"))
+	//private static @NotNull RenderType getGlintDirect() {
+	//	return GlintColorHandler.getGlintDirect();
+	//}
 	
 	@Redirect(method = "getFoilBufferDirect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;entityGlintDirect()Lnet/minecraft/client/renderer/RenderType;"))
 	private static @NotNull RenderType getEntityGlintDirect() {
@@ -76,7 +76,7 @@ public abstract class ItemRendererMixin {
 	}
 	
 	@Inject(method = "render", at = @At("HEAD"))
-	public void render(ItemStack stack, ItemDisplayContext context, boolean leftHand, PoseStack pose, MultiBufferSource buffer, int combinedLight, int combinedOverlay, BakedModel model, CallbackInfo callback) {
+	public void render(@NotNull ItemStack stack, @NotNull ItemDisplayContext context, boolean leftHand, @NotNull PoseStack pose, @NotNull MultiBufferSource buffer, int combinedLight, int combinedOverlay, @NotNull BakedModel model, @NotNull CallbackInfo callback) {
 		GlintColorHandler.setStack(stack);
 	}
 }

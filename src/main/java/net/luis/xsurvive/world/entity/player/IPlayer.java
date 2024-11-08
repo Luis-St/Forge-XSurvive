@@ -21,6 +21,7 @@ package net.luis.xsurvive.world.entity.player;
 import net.luis.xsurvive.capability.ICapability;
 import net.luis.xsurvive.capability.INetworkCapability;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -64,7 +65,7 @@ public interface IPlayer extends ICapability, INetworkCapability {
 	
 	@NotNull Optional<@Nullable BlockPos> getContainerPos();
 	
-	@NotNull CompoundTag serializePersistent();
+	@NotNull CompoundTag serializePersistent(HolderLookup.@NotNull Provider lookup);
 	
-	void deserializePersistent(@NotNull CompoundTag tag);
+	void deserializePersistent(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag);
 }

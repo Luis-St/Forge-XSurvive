@@ -47,7 +47,7 @@ public class CustomElderGuardianAi extends AbstractCustomAi<ElderGuardian> {
 	public boolean canUse() {
 		StructureManager manager = this.level.structureManager();
 		BlockPos pos = this.entity.blockPosition();
-		return manager.structureHasPieceAt(pos, manager.getStructureWithPieceAt(pos, BuiltinStructures.OCEAN_MONUMENT)) && this.level.getSeaLevel() > pos.getY();
+		return manager.structureHasPieceAt(pos, manager.getStructureWithPieceAt(pos, holder -> holder.is(BuiltinStructures.OCEAN_MONUMENT))) && this.level.getSeaLevel() > pos.getY();
 	}
 	
 	@Override

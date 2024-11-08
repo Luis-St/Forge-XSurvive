@@ -39,7 +39,7 @@ public class UpdateEntityCapabilityPacket implements NetworkPacket {
 	private final int entityId;
 	private final CompoundTag tag;
 	
-	public UpdateEntityCapabilityPacket(int entityId, CompoundTag tag) {
+	public UpdateEntityCapabilityPacket(int entityId, @NotNull CompoundTag tag) {
 		this.entityId = entityId;
 		this.tag = tag;
 	}

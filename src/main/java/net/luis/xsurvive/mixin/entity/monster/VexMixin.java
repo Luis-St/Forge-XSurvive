@@ -22,6 +22,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -37,13 +38,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class VexMixin extends Monster implements TraceableEntity {
 	
 	//region Mixin
-	private VexMixin(EntityType<? extends Monster> entityType, Level level) {
+	private VexMixin(@NotNull EntityType<? extends Monster> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	//endregion
 	
 	@Inject(method = "tick", at = @At("RETURN"))
-	public void tick(CallbackInfo callback) {
+	public void tick(@NotNull CallbackInfo callback) {
 		if (this.getOwner() instanceof Evoker evoker && !evoker.isAlive()) {
 			this.hurt(this.damageSources().starve(), Float.MAX_VALUE);
 		}

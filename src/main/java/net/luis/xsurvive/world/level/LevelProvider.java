@@ -27,6 +27,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  *
@@ -38,7 +39,7 @@ public class LevelProvider implements ICapabilityProvider {
 	
 	private final LazyOptional<ILevel> optional;
 	
-	public LevelProvider(ILevel levelCapability) {
+	public LevelProvider(@NotNull ILevel levelCapability) {
 		this.optional = LazyOptional.of(() -> levelCapability);
 	}
 	
@@ -67,7 +68,7 @@ public class LevelProvider implements ICapabilityProvider {
 	}
 	
 	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side) {
 		return XSCapabilities.LEVEL.orEmpty(capability, this.optional);
 	}
 }

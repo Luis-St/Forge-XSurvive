@@ -62,11 +62,11 @@ public class LevelEventHandler {
 		BlockPos pos = new BlockPos(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 		BlockState state = event.getState();
 		int xp = event.getExpToDrop();
-		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
-		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP.get(), player);
-		int fortune = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player);
-		int blasting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.BLASTING.get(), player);
-		int harvesting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.HARVESTING.get(), player);
+		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE, player);
+		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP, player);
+		int fortune = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player);
+		int blasting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.BLASTING, player);
+		int harvesting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.HARVESTING, player);
 		if (xp > 0 && experience > 0) {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}

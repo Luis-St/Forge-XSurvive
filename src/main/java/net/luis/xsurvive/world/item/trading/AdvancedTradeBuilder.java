@@ -18,12 +18,15 @@
 
 package net.luis.xsurvive.world.item.trading;
 
-import net.minecraft.util.RandomSource;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.Fireworks;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  *
@@ -32,8 +35,6 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class AdvancedTradeBuilder {
-	
-	private static final RandomSource RNG = RandomSource.create();
 	
 	private final ItemStack cost;
 	private final ItemStack secondCost;
@@ -70,7 +71,7 @@ public class AdvancedTradeBuilder {
 	
 	public static @NotNull AdvancedTradeBuilder firework(int emeralds, int count, int flightDuration) {
 		ItemStack stack = new ItemStack(Items.FIREWORK_ROCKET, count);
-		stack.getOrCreateTagElement("Fireworks").putByte("Flight", (byte) flightDuration);
+		stack.set(DataComponents.FIREWORKS, new Fireworks(flightDuration, List.of()));
 		return simple(new ItemStack(Items.EMERALD, emeralds), ItemStack.EMPTY, stack);
 	}
 	

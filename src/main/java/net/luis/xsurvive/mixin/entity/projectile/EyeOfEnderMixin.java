@@ -23,6 +23,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,13 +42,13 @@ public abstract class EyeOfEnderMixin extends Entity {
 	//region Mixin
 	@Shadow private boolean surviveAfterDeath;
 	
-	private EyeOfEnderMixin(EntityType<?> entityType, Level level) {
+	private EyeOfEnderMixin(@NotNull EntityType<?> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	//endregion
 	
 	@Inject(method = "signalTo", at = @At("TAIL"))
-	public void signalTo(BlockPos pos, CallbackInfo callback) {
+	public void signalTo(@NotNull BlockPos pos, @NotNull CallbackInfo callback) {
 		this.surviveAfterDeath = this.random.nextInt(5) == 0;
 	}
 }

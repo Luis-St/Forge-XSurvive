@@ -65,7 +65,7 @@ public abstract class WitherSkullBlockMixin {
 	//endregion
 	
 	@Inject(method = "checkSpawn", at = @At("HEAD"), cancellable = true)
-	private static void checkSpawn(@NotNull Level level, BlockPos pos, SkullBlockEntity blockEntity, CallbackInfo callback) {
+	private static void checkSpawn(@NotNull Level level, @NotNull BlockPos pos, @NotNull SkullBlockEntity blockEntity, @NotNull CallbackInfo callback) {
 		if (!level.isClientSide) {
 			BlockState state = blockEntity.getBlockState();
 			boolean witherSkull = state.is(Blocks.WITHER_SKELETON_SKULL) || state.is(Blocks.WITHER_SKELETON_WALL_SKULL);

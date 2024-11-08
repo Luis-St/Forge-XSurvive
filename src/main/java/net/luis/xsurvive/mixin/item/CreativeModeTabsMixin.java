@@ -18,18 +18,8 @@
 
 package net.luis.xsurvive.mixin.item;
 
-import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.*;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.item.CreativeModeTabs;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Set;
 
 /**
  *
@@ -38,9 +28,9 @@ import java.util.Set;
  */
 
 @Mixin(CreativeModeTabs.class)
-public abstract class CreativeModeTabsMixin {
+public abstract class CreativeModeTabsMixin { // ToDo: No idea what this was supposed to do
 	
-	@Inject(method = "generateEnchantmentBookTypesOnlyMaxLevel", at = @At("HEAD"), cancellable = true)
+	/*@Inject(method = "generateEnchantmentBookTypesOnlyMaxLevel", at = @At("HEAD"), cancellable = true)
 	private static void generateEnchantmentBookTypesOnlyMaxLevel(CreativeModeTab.Output populator, HolderLookup<Enchantment> lookup, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
 		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
 			if (enchantment.isAllowedOnBooks()) {
@@ -80,5 +70,5 @@ public abstract class CreativeModeTabsMixin {
 			}
 		}
 		callback.cancel();
-	}
+	}*/
 }

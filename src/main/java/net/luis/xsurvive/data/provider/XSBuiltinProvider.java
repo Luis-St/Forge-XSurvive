@@ -18,7 +18,8 @@
 
 package net.luis.xsurvive.data.provider;
 
-import net.luis.xsurvive.data.provider.damagesource.XSDamageTypeProvider;
+import net.luis.xsurvive.data.provider.base.XSDamageTypeProvider;
+import net.luis.xsurvive.data.provider.base.XSEnchantmentProvider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +35,7 @@ public class XSBuiltinProvider {
 	public static @NotNull RegistrySetBuilder createProvider() {
 		RegistrySetBuilder builder = new RegistrySetBuilder();
 		builder.add(Registries.DAMAGE_TYPE, XSDamageTypeProvider::create);
+		builder.add(Registries.ENCHANTMENT, XSEnchantmentProvider::create);
 		return builder;
 	}
 }

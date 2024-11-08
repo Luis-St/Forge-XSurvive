@@ -18,31 +18,13 @@
 
 package net.luis.xsurvive.mixin.enchantment;
 
-import net.luis.xsurvive.util.SimpleEntry;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.EquipmentSlot.Type;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.ThornsEnchantment;
-import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
 /**
  *
  * @author Luis-St
  *
  */
 
-@SuppressWarnings("DataFlowIssue")
+/*@SuppressWarnings("DataFlowIssue")
 @Mixin(ThornsEnchantment.class)
 public abstract class ThornsEnchantmentMixin {
 	
@@ -90,4 +72,4 @@ public abstract class ThornsEnchantmentMixin {
 	private int getThornsLevel(LivingEntity entity) {
 		return this.getThornsLevel(entity, EquipmentSlot.HEAD) + this.getThornsLevel(entity, EquipmentSlot.CHEST) + this.getThornsLevel(entity, EquipmentSlot.LEGS) + this.getThornsLevel(entity, EquipmentSlot.FEET);
 	}
-}
+}*/

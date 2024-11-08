@@ -18,12 +18,12 @@
 
 package net.luis.xsurvive.world.level.storage.loot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
@@ -39,16 +39,16 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("CodeBlock2Expr")
 public class SmeltingModifier extends LootModifier {
 	
-	public static final Codec<SmeltingModifier> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final MapCodec<SmeltingModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
 		return LootModifier.codecStart(instance).apply(instance, SmeltingModifier::new);
 	});
 	
-	public SmeltingModifier(LootItemCondition[] lootCondition) {
+	public SmeltingModifier(LootItemCondition @NotNull [] lootCondition) {
 		super(lootCondition);
 	}
 	
 	@Override
-	public @NotNull Codec<SmeltingModifier> codec() {
+	public @NotNull MapCodec<SmeltingModifier> codec() {
 		return XSGlobalLootModifiers.SMELTING_MODIFIER.get();
 	}
 	
@@ -61,7 +61,7 @@ public class SmeltingModifier extends LootModifier {
 	
 	private @NotNull ItemStack smelt(@NotNull ItemStack stack, @NotNull LootContext context) {
 		return context.getLevel().getRecipeManager()
-			.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), context.getLevel())
+			.getRecipeFor(RecipeType.SMELTING, new SingleRecipeInput(stack), context.getLevel())
 			.map(recipe -> recipe.value().getResultItem(context.getLevel().registryAccess())).filter(itemStack -> !itemStack.isEmpty())
 			.map(itemStack -> ItemHandlerHelper.copyStackWithSize(itemStack, stack.getCount() * itemStack.getCount()))
 			.orElse(stack);

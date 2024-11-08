@@ -28,6 +28,7 @@ import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -44,13 +45,13 @@ import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  *
@@ -62,10 +63,10 @@ import java.util.*;
 public class LivingEventHandler {
 	
 	private static final Random RNG = new Random();
-	public static final UUID GRAVITY_MODIFIER_UUID = UUID.fromString("715AF01B-DED3-45ED-8812-C8878C7F98CC");
-	public static final UUID HEALTH_MODIFIER_UUID = UUID.fromString("CD14D16D-82ED-474E-97E9-403DE2439D01");
-	public static final UUID ATTACK_RANGE_UUID = UUID.fromString("95C48A2D-C536-4FB4-88DF-0DC534CE012A");
-	public static final UUID REACH_DISTANCE_UUID = UUID.fromString("F4502088-D181-44F4-A881-CDE977976A6D");
+	public static final ResourceLocation GRAVITY_MODIFIER = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "gravity_modifier");
+	public static final ResourceLocation HEALTH_MODIFIER = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "health_modifier");
+	public static final ResourceLocation ATTACK_RANGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "attack_range");
+	public static final ResourceLocation REACH_DISTANCE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "reach_distance");
 	
 	@SubscribeEvent
 	public static void livingAttack(@NotNull LivingAttackEvent event) {
@@ -74,8 +75,8 @@ public class LivingEventHandler {
 		float amount = event.getAmount();
 		if (source.getEntity() instanceof Player player) {
 			if (target instanceof LivingEntity livingTarget && amount > 0.0F) {
-				int harmingCurse = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.CURSE_OF_HARMING.get(), player);
-				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT.get(), player);
+				int harmingCurse = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.CURSE_OF_HARMING, player);
+				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT, player);
 				if (harmingCurse > 0) {
 					float damage = (amount / 2.0F) * harmingCurse;
 					if (player.hurt(new DamageSource(player.level().registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
@@ -94,7 +95,7 @@ public class LivingEventHandler {
 			}
 		}
 		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && amount > 0) {
-			int voidProtection = player.getItemBySlot(EquipmentSlot.CHEST).getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get());
+			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.VOID_PROTECTION, player.getItemBySlot(EquipmentSlot.CHEST));
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
 					case 1 -> 1.0F;
@@ -114,17 +115,13 @@ public class LivingEventHandler {
 		DamageSource source = event.getSource();
 		float newAmount = event.getAmount();
 		if (source.getEntity() instanceof Player player) {
-			int enderSlayer = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.ENDER_SLAYER.get(), player);
-			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player);
-			if (enderSlayer > 0 && EntityHelper.isAffectedByEnderSlayer(target)) {
-				newAmount *= 2.5F;
-			}
+			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player); // ToDo: Override via Datapack
 			if (impaling > 0 && EntityHelper.isAffectedByImpaling(target)) {
 				newAmount *= 2.5F;
 			}
 		}
 		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && newAmount > 0) {
-			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION.get(), player);
+			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION, player);
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
 					case 1 -> 0.8F;
@@ -145,24 +142,24 @@ public class LivingEventHandler {
 			ItemStack toStack = event.getTo();
 			ItemStack fromStack = event.getFrom();
 			if (event.getSlot() == EquipmentSlot.FEET) {
-				int voidWalkerTo = toStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
-				int voidWalkerFrom = fromStack.getEnchantmentLevel(XSEnchantments.VOID_WALKER.get());
-				EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_GRAVITY.get(), Operation.MULTIPLY_TOTAL, GRAVITY_MODIFIER_UUID, "EntityGravity", voidWalkerTo, voidWalkerFrom, 1.0);
+				int voidWalkerTo = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.VOID_WALKER, toStack);
+				int voidWalkerFrom = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.VOID_WALKER, fromStack);
+				EntityHelper.updateAttributeModifier(player, Attributes.GRAVITY, Operation.ADD_MULTIPLIED_TOTAL, GRAVITY_MODIFIER, voidWalkerTo, voidWalkerFrom, 1.0);
 			}
 			if (event.getSlot().isArmor()) {
 				int growthTo = EntityHelper.getGrowthLevel(player, event.getSlot(), toStack);
 				int growthFrom = EntityHelper.getGrowthLevel(player, event.getSlot(), fromStack);
 				if (growthTo != growthFrom) {
-					EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADDITION, HEALTH_MODIFIER_UUID, "MaxHealth", growthTo, growthFrom, 1.0);
+					EntityHelper.updateAttributeModifier(player, Attributes.MAX_HEALTH, Operation.ADD_VALUE, HEALTH_MODIFIER, growthTo, growthFrom, 1.0);
 					if (growthFrom > growthTo) {
 						player.setHealth(Math.min(player.getHealth(), 20.0F + growthTo));
 					}
 				}
 			}
-			int reachingTo = toStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
-			int reachingFrom = fromStack.getEnchantmentLevel(XSEnchantments.REACHING.get());
-			EntityHelper.updateAttributeModifier(player, ForgeMod.ENTITY_REACH.get(), Operation.ADDITION, ATTACK_RANGE_UUID, "AttackRange", reachingTo, reachingFrom, 0.5);
-			EntityHelper.updateAttributeModifier(player, ForgeMod.BLOCK_REACH.get(), Operation.ADDITION, REACH_DISTANCE_UUID, "ReachDistance", reachingTo, reachingFrom, 0.5);
+			int reachingTo = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.REACHING, toStack);
+			int reachingFrom = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.REACHING, fromStack);
+			EntityHelper.updateAttributeModifier(player, Attributes.ENTITY_INTERACTION_RANGE, Operation.ADD_VALUE, ATTACK_RANGE, reachingTo, reachingFrom, 0.5);
+			EntityHelper.updateAttributeModifier(player, Attributes.BLOCK_INTERACTION_RANGE, Operation.ADD_VALUE, REACH_DISTANCE, reachingTo, reachingFrom, 0.5);
 		}
 	}
 	
@@ -171,8 +168,8 @@ public class LivingEventHandler {
 		Player player = event.getAttackingPlayer();
 		int xp = event.getOriginalExperience();
 		if (player != null) {
-			int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
-			int looting = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.MOB_LOOTING, player);
+			int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE, player);
+			int looting = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, player);
 			if (xp > 0 && experience > 0) {
 				event.setDroppedExperience(xp * ((experience + 1) * ((experience * 2) + looting)));
 			}
@@ -183,13 +180,13 @@ public class LivingEventHandler {
 	public static void livingHurt(@NotNull LivingHurtEvent event) {
 		LivingEntity livingTarget = event.getEntity();
 		if (event.getSource().getEntity() instanceof LivingEntity livingAttacker) {
-			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT.get(), livingAttacker);
-			int frostAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.FROST_ASPECT.get(), livingAttacker);
+			int poisonAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.POISON_ASPECT, livingAttacker);
+			int frostAspect = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.FROST_ASPECT, livingAttacker);
 			if (poisonAspect > 0) {
 				livingTarget.addEffect(new MobEffectInstance(MobEffects.POISON, 100 * poisonAspect), livingAttacker);
 			}
 			if (frostAspect > 0) {
-				livingTarget.addEffect(new MobEffectInstance(XSMobEffects.FROST.get(), 100 * frostAspect), livingAttacker);
+				livingTarget.addEffect(new MobEffectInstance(XSMobEffects.FROST.getHolder().orElseThrow(), 100 * frostAspect), livingAttacker);
 			}
 		}
 	}
@@ -216,7 +213,7 @@ public class LivingEventHandler {
 	
 	@SubscribeEvent
 	public static void shieldBlock(@NotNull ShieldBlockEvent event) {
-		if (event.getEntity() instanceof Player && event.getDamageSource().isIndirect()) {
+		if (event.getEntity() instanceof Player && !event.getDamageSource().isDirect()) {
 			Entity attacker = event.getDamageSource().getEntity();
 			if (attacker instanceof Blaze || attacker instanceof Ghast) {
 				event.setCanceled(true);

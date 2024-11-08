@@ -39,7 +39,7 @@ public class XSSpiderAttackGoal extends MeleeAttackGoal {
 	private static final Method HITBOX = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "m_293919_");
 	private static final Method ATTACK_BOUNDING_BOX = ObfuscationReflectionHelper.findMethod(Mob.class, "m_292684_");
 	
-	public XSSpiderAttackGoal(Spider spider) {
+	public XSSpiderAttackGoal(@NotNull Spider spider) {
 		super(spider, 1.0, true);
 	}
 	

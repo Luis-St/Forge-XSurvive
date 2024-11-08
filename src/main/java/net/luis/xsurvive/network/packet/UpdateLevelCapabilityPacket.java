@@ -38,7 +38,7 @@ public class UpdateLevelCapabilityPacket implements NetworkPacket {
 	
 	private final CompoundTag tag;
 	
-	public UpdateLevelCapabilityPacket(CompoundTag tag) {
+	public UpdateLevelCapabilityPacket(@NotNull CompoundTag tag) {
 		this.tag = tag;
 	}
 	

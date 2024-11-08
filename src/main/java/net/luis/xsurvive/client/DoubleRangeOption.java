@@ -40,7 +40,7 @@ public class DoubleRangeOption implements OptionInstance.SliderableValueSet<Doub
 	private final Function<Double, Double> toSliderValue;
 	private final Function<Double, Double> fromSliderValue;
 	
-	private DoubleRangeOption(double min, double max, Function<Double, Double> toSliderValue, Function<Double, Double> fromSliderValue) {
+	private DoubleRangeOption(double min, double max, @NotNull Function<Double, Double> toSliderValue, @NotNull Function<Double, Double> fromSliderValue) {
 		this.min = min;
 		this.max = max;
 		this.toSliderValue = toSliderValue;

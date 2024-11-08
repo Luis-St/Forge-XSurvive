@@ -20,7 +20,6 @@ package net.luis.xsurvive.world.item;
 
 import net.luis.xores.XOres;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;

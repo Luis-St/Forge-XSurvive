@@ -83,8 +83,8 @@ public class XSBlocks {
 		
 		public static void register() {}
 		
-		private static @NotNull ResourceKey<Block> createKey(String name) {
-			return ResourceKey.create(Registries.BLOCK, new ResourceLocation("xores", name));
+		private static @NotNull ResourceKey<Block> createKey(@NotNull String name) {
+			return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 		}
 	}
 }

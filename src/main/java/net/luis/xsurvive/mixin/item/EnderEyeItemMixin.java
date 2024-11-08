@@ -56,13 +56,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class EnderEyeItemMixin extends Item {
 	
 	//region Mixin
-	private EnderEyeItemMixin(Properties properties) {
+	private EnderEyeItemMixin(@NotNull Properties properties) {
 		super(properties);
 	}
 	//endregion
 	
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
-	public void use(Level level, @NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callback) {
+	public void use(Level level, @NotNull Player player, @NotNull InteractionHand hand, @NotNull CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callback) {
 		ItemStack stack = player.getItemInHand(hand);
 		HitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
 		if (hitResult instanceof BlockHitResult blockHitResult && level.getBlockState(blockHitResult.getBlockPos()).is(Blocks.END_PORTAL_FRAME)) {

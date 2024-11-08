@@ -24,10 +24,14 @@ import com.mojang.datafixers.util.Pair;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.SimpleEntry;
 import net.minecraft.Util;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -49,60 +53,58 @@ import java.util.stream.Stream;
 
 public class XSEnchantmentHelper {
 	
-	public static boolean hasEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
-		List<Enchantment> enchantments = EnchantmentHelper.getEnchantments(stack).keySet().stream().toList();
-		return enchantments.contains(enchantment);
+	public static boolean hasEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack) {
+		return stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).keySet().contains(enchantment);
 	}
 	
-	public static boolean hasMaxEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
+	public static boolean hasMaxEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
-			return stack.getEnchantmentLevel(enchantment) == enchantment.getMaxLevel();
+			return EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) == enchantment.value().getMaxLevel();
 		}
 		return false;
 	}
 	
-	public static boolean hasMaxGoldenEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
+	public static boolean hasMaxGoldenEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack) {
 		if (hasEnchantment(enchantment, stack)) {
-			if (enchantment instanceof IEnchantment ench) {
-				return stack.getEnchantmentLevel(enchantment) == ench.getMaxGoldenBookLevel();
-			} else {
-				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-			}
+			return EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) == GoldenEnchantmentHelper.getMaxGoldenBookLevel(enchantment);
 		}
 		return false;
 	}
 	
-	public static boolean isEnchantmentCompatible(@NotNull ItemStack stack, @NotNull Enchantment enchantment) {
-		return EnchantmentHelper.isEnchantmentCompatible(EnchantmentHelper.getEnchantments(stack).keySet(), enchantment);
+	public static boolean isEnchantmentCompatible(@NotNull ItemStack stack, @NotNull Holder<Enchantment> enchantment) {
+		return EnchantmentHelper.isEnchantmentCompatible(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).keySet(), enchantment);
 	}
 	
-	public static @NotNull List<Enchantment> getGoldenEnchantments(@NotNull ItemStack stack) {
-		List<Enchantment> enchantments = Lists.newArrayList();
-		for (Enchantment enchantment : EnchantmentHelper.getEnchantments(stack).keySet().stream().toList()) {
-			if (enchantment instanceof IEnchantment ench) {
-				if (ench.isAllowedOnGoldenBooks() && Math.max(0, stack.getEnchantmentLevel(enchantment) - enchantment.getMaxLevel()) > 0) {
+	public static @NotNull List<Holder<Enchantment>> getGoldenEnchantments(@NotNull ItemStack stack) {
+		List<Holder<Enchantment>>  enchantments = Lists.newArrayList();
+		for (Holder<Enchantment> enchantment : stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).keySet().stream().toList()) {
+			if (GoldenEnchantmentHelper.isGoldenEnchantment(enchantment)) {
+				if (Math.max(0, EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) - enchantment.value().getMaxLevel()) > 0) {
 					enchantments.add(enchantment);
 				}
-			} else {
-				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
 			}
 		}
 		return enchantments;
 	}
 	
-	public static int getEnchantmentLevel(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
-		int level = entity.getMainHandItem().getEnchantmentLevel(enchantment);
+	public static int getEnchantmentLevel(@NotNull Entity entity, @NotNull ResourceKey<Enchantment> enchantmentKey, @NotNull ItemStack stack) {
+		return EnchantmentHelper.getItemEnchantmentLevel(enchantmentKey.getOrThrow(entity), stack);
+	}
+	
+	public static int getEnchantmentLevel(@NotNull ResourceKey<Enchantment> enchantmentKey, @NotNull LivingEntity entity) {
+		Holder<Enchantment> enchantment = enchantmentKey.getOrThrow(entity);
+		int level = entity.getMainHandItem().getEnchantments().getLevel(enchantment);
 		if (level > 0) {
 			return level;
 		}
-		return entity.getOffhandItem().getEnchantmentLevel(enchantment);
+		return entity.getOffhandItem().getEnchantments().getLevel(enchantment);
 	}
 	
-	public static @NotNull Pair<Integer, Integer> getTotalEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
+	public static @NotNull Pair<Integer, Integer> getTotalEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Holder<Enchantment> enchantment) {
 		int total = 0;
 		int items = 0;
 		for (EquipmentSlot slot : Stream.of(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).toList()) {
-			int level = entity.getItemBySlot(slot).getEnchantmentLevel(enchantment);
+			int level = entity.getItemBySlot(slot).getEnchantments().getLevel(enchantment);
 			if (level > 0) {
 				total += level;
 				items++;
@@ -111,41 +113,38 @@ public class XSEnchantmentHelper {
 		return Pair.of(total, items);
 	}
 	
-	public static int getAverageEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Enchantment enchantment) {
+	public static int getAverageEnchantmentLevel(@NotNull LivingEntity entity, @NotNull Holder<Enchantment> enchantment) {
 		Pair<Integer, Integer> pair = getTotalEnchantmentLevel(entity, enchantment);
 		return 0 >= pair.getSecond() ? 0 : pair.getFirst() / pair.getSecond();
 	}
 	
 	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+		ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
 		if ((!hasEnchantment(instance.enchantment, stack) || present) && EnchantmentHelper.isEnchantmentCompatible(enchantments.keySet(), instance.enchantment)) {
-			enchantments.put(instance.enchantment, instance.level);
+			enchantments.set(instance.enchantment, instance.level);
 		}
-		EnchantmentHelper.setEnchantments(enchantments, stack);
+		EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());
 	}
 	
-	public static void removeEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack) {
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+	@SuppressWarnings("deprecation")
+	public static void removeEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack) {
+		ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
 		if (hasEnchantment(enchantment, stack)) {
-			enchantments.remove(enchantment);
+			enchantments.removeIf(holder -> holder.is(enchantment));
 		}
-		EnchantmentHelper.setEnchantments(enchantments, stack);
+		EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());
 	}
 	
 	public static void replaceEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack) {
-		if (hasEnchantment(instance.enchantment, stack)) {
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-			enchantments.replace(instance.enchantment, instance.level);
-			EnchantmentHelper.setEnchantments(enchantments, stack);
-		}
+		addEnchantment(instance, stack, true);
 	}
 	
-	public static void increaseEnchantment(@NotNull Enchantment enchantment, @NotNull ItemStack stack, boolean golden) {
+	public static void increaseEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack, boolean golden) {
 		if (hasEnchantment(enchantment, stack)) {
 			if (!hasMaxEnchantment(enchantment, stack)) {
-				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) + 1), stack);
+				replaceEnchantment(new EnchantmentInstance(enchantment, EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) + 1), stack);
 			} else if (golden && !hasMaxGoldenEnchantment(enchantment, stack)) {
-				replaceEnchantment(new EnchantmentInstance(enchantment, stack.getEnchantmentLevel(enchantment) + 1), stack);
+				replaceEnchantment(new EnchantmentInstance(enchantment, EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) + 1), stack);
 			}
 		} else {
 			addEnchantment(new EnchantmentInstance(enchantment, 1), stack, false);
@@ -153,21 +152,20 @@ public class XSEnchantmentHelper {
 	}
 	
 	public static @NotNull EnchantmentInstance increaseEnchantment(@NotNull EnchantmentInstance instance, boolean golden) {
-		if (instance.level != instance.enchantment.getMaxLevel()) {
-			return new EnchantmentInstance(instance.enchantment, instance.level + 1);
+		Holder<Enchantment> enchantment = instance.enchantment;
+		if (enchantment.value().getMaxLevel() > instance.level) {
+			return new EnchantmentInstance(enchantment, instance.level + 1);
 		} else if (golden) {
-			if (instance.enchantment instanceof IEnchantment ench) {
-				if (instance.level != ench.getMaxGoldenBookLevel()) {
-					return new EnchantmentInstance(instance.enchantment, instance.level + 1);
+			if (GoldenEnchantmentHelper.isGoldenEnchantment(enchantment)) {
+				if (instance.level != GoldenEnchantmentHelper.getMaxGoldenBookLevel(enchantment)) {
+					return new EnchantmentInstance(enchantment, instance.level + 1);
 				}
-			} else {
-				XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(instance.enchantment));
 			}
 		}
 		return instance;
 	}
 	
-	public static @NotNull Map<EquipmentSlot, ItemStack> getItemsWith(@NotNull Enchantment enchantment, @NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
+	public static @NotNull Map<EquipmentSlot, ItemStack> getItemsWith(@NotNull Holder<Enchantment> enchantment, @NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
 		Map<EquipmentSlot, ItemStack> items = Maps.newHashMap();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			ItemStack stack = entity.getItemBySlot(slot);
@@ -178,11 +176,11 @@ public class XSEnchantmentHelper {
 		return items;
 	}
 	
-	public static List<ItemStack> getItemsForEnchantment(Enchantment enchantment) {
-		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> enchantment.canEnchant(new ItemStack(item))).map(ItemStack::new).collect(Collectors.toList());
+	public static List<ItemStack> getItemsForEnchantment(@NotNull Holder<Enchantment> enchantment) {
+		return ForgeRegistries.ITEMS.getValues().stream().filter((item) -> enchantment.value().canEnchant(new ItemStack(item))).map(ItemStack::new).collect(Collectors.toList());
 	}
 	
-	public static @NotNull Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(@NotNull Enchantment enchantment, @NotNull LivingEntity entity) {
+	public static @NotNull Entry<EquipmentSlot, ItemStack> getItemWithEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull LivingEntity entity) {
 		for (Entry<EquipmentSlot, ItemStack> entry : getItemsWith(enchantment, entity, itemStack -> true).entrySet()) {
 			if (entry.getKey().getType() == EquipmentSlot.Type.HAND) {
 				return entry;
@@ -191,9 +189,16 @@ public class XSEnchantmentHelper {
 		return new SimpleEntry<>(null, ItemStack.EMPTY);
 	}
 	
-	public static void enchantItem(RandomSource rng, ItemStack stack, int count, int cost, boolean treasure, boolean golden) {
+	public static void enchantItem(@NotNull RegistryAccess registryAccess, @NotNull RandomSource rng, @NotNull ItemStack stack, int count, int cost, boolean treasure, boolean golden) {
 		List<EnchantmentInstance> instances = Lists.newArrayList();
-		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, treasure);
+		Registry<Enchantment> registry = registryAccess.registry(Registries.ENCHANTMENT).orElseThrow();
+		List<Holder<Enchantment>> enchantments;
+		if (treasure) {
+			enchantments = registry.holders().map(holder -> (Holder<Enchantment>) holder).toList();
+		} else {
+			enchantments = registry.holders().filter(enchantment -> enchantment.is(EnchantmentTags.NON_TREASURE)).collect(Collectors.toList());
+		}
+		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, enchantments.stream());
 		Consumer<? super EnchantmentInstance> action = (instance) -> {
 			if (golden) {
 				instances.add(increaseEnchantment(instance, true));

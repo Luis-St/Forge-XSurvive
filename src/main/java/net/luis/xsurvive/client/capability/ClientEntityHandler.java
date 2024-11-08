@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientEntityHandler extends AbstractEntityHandler {
 	
-	public ClientEntityHandler(Entity entity) {
+	public ClientEntityHandler(@NotNull Entity entity) {
 		super(entity);
 	}
 	

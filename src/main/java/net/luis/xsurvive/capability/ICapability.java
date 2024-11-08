@@ -18,6 +18,7 @@
 
 package net.luis.xsurvive.capability;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ICapability {
 	
-	@NotNull CompoundTag serializeDisk();
+	@NotNull CompoundTag serializeDisk(HolderLookup.@NotNull Provider lookup);
 	
-	void deserializeDisk(@NotNull CompoundTag tag);
+	void deserializeDisk(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag);
 }

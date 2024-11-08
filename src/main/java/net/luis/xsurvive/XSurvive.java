@@ -20,6 +20,7 @@ package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
 import net.luis.xsurvive.client.XSRecipeBookCategories;
+import net.luis.xsurvive.core.components.XSDataComponents;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.tag.*;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
@@ -44,6 +45,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 /**
@@ -59,9 +61,10 @@ public class XSurvive {
 	public static final String MOD_NAME = "XSurvive";
 	public static final Logger LOGGER = LogUtils.getLogger();
 	
-	public XSurvive() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		XSEnchantments.ENCHANTMENTS.register(eventBus);
+	public XSurvive(@NotNull FMLJavaModLoadingContext context) {
+		IEventBus eventBus = context.getModEventBus();
+		XSEnchantments.register();
+		XSDataComponents.DATA_COMPONENT_TYPES.register(eventBus);
 		XSLootItemConditions.LOOT_ITEM_CONDITIONS.register(eventBus);
 		XSGlobalLootModifiers.LOOT_MODIFIERS.register(eventBus);
 		XSBlocks.BLOCKS.register(eventBus);
@@ -86,6 +89,7 @@ public class XSurvive {
 		XSBlockTags.register();
 		XSDamageTypeTags.register();
 		XSItemTags.register();
+		XSEnchantmentTags.register();
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}

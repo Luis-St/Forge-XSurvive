@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LocalPlayerHandler extends AbstractPlayerHandler {
 	
-	public LocalPlayerHandler(LocalPlayer player) {
+	public LocalPlayerHandler(@NotNull LocalPlayer player) {
 		super(player);
 	}
 	
