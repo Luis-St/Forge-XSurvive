@@ -27,8 +27,6 @@ minecraft {
 			property "forge.logging.markers", "REGISTRIES"
 			property "forge.logging.console.level", "debug"
 			property "forge.enabledGameTestNamespaces", "xsurvive"
-			property "mixin.env.remapRefMap", "true"
-			property "mixin.env.refMapRemappingFile", "${buildDir}/createSrgToMcp/output.srg"
 		}
 		
 		client {}
@@ -52,7 +50,6 @@ minecraft {
 }
 
 mixin {
-	add sourceSets.main, "mixins.xsurvive.refmap.json"
 	config "xsurvive.mixins.json"
 	debug.export = true
 }
@@ -73,7 +70,7 @@ dependencies {
 	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 	
 	implementation "net.luis:XBackpack:${MinecraftVersion}-${XBackpackVersion}"
-	implementation "net.luis:XOres:${MinecraftVersion}-${XOresVersion}"
+	/*implementation "net.luis:XOres:${MinecraftVersion}-${XOresVersion}"*/
 }
 
 compileJava.dependsOn(updateLicenses)

@@ -2,7 +2,6 @@
 	"required": true,
 	"package": "net.luis.xsurvive.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"refmap": "mixins.xsurvive.refmap.json",
 	"mixins": [
 		"block.entity.BeaconBlockEntityMixin",
 		"block.entity.ConduitBlockEntityMixin",
