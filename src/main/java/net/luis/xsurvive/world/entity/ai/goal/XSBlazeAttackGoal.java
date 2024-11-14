@@ -85,7 +85,7 @@ public class XSBlazeAttackGoal extends Goal {
 					return;
 				} else if (0 >= this.attackTime) {
 					this.attackTime = 20;
-					this.blaze.doHurtTarget(target);
+					this.blaze.doHurtTarget(getServerLevel(this.blaze), target);
 				}
 				this.blaze.getMoveControl().setWantedPosition(target.getX(), target.getY(), target.getZ(), 1.0);
 			} else if (distance < this.getFollowDistance() * this.getFollowDistance() && seeTarget) {

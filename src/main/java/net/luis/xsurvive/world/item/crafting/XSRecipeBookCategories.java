@@ -16,12 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.client;
+package net.luis.xsurvive.world.item.crafting;
 
 import net.luis.xsurvive.XSurvive;
-import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  *
@@ -31,9 +32,8 @@ import net.minecraft.world.item.Items;
 
 public class XSRecipeBookCategories {
 	
-	public static final RecipeBookCategories SMELTING_FURNACE_SEARCH = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_search", new ItemStack(Items.COMPASS));
-	public static final RecipeBookCategories SMELTING_FURNACE_BLOCKS = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_blocks", new ItemStack(Items.DEEPSLATE));
-	public static final RecipeBookCategories SMELTING_FURNACE_MISC = RecipeBookCategories.create(XSurvive.MOD_ID + "_smelting_furnace_misc", new ItemStack(Items.BRICK));
+	public static final DeferredRegister<RecipeBookCategory> RECIPE_BOOK_CATEGORY = DeferredRegister.create(Registries.RECIPE_BOOK_CATEGORY, XSurvive.MOD_ID);
 	
-	public static void register() {}
+	public static final RegistryObject<RecipeBookCategory> XSMELTING_FURNACE_BLOCKS = RECIPE_BOOK_CATEGORY.register("xsmelting_furnace_blocks", RecipeBookCategory::new);
+	public static final RegistryObject<RecipeBookCategory> XSMELTING_FURNACE_MISC = RECIPE_BOOK_CATEGORY.register("xsmelting_furnace_misc", RecipeBookCategory::new);
 }

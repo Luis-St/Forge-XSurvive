@@ -20,8 +20,6 @@ package net.luis.xsurvive.event.village;
 
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.luis.xores.world.item.XOItems;
-import net.luis.xores.world.level.block.XOBlocks;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
@@ -51,7 +49,7 @@ public class VillagerTradesEventHandler {
 	private static final List<Rarity> ALLOWED_RARITIES = Lists.newArrayList(Rarity.COMMON, Rarity.RARE);
 	
 	@SubscribeEvent
-	public static void villagerTrades(@NotNull VillagerTradesEvent event) {
+	public static void villagerTrades(@NotNull VillagerTradesEvent event) { // ToDo: Add when xores is updated
 		Int2ObjectMap<List<ItemListing>> trades = event.getTrades();
 		List<ItemListing> trade1 = Lists.newArrayList();
 		List<ItemListing> trade2 = Lists.newArrayList();
@@ -195,7 +193,7 @@ public class VillagerTradesEventHandler {
 			
 			trade5.add(SimpleTradeBuilder.item(4, Items.ENDER_EYE, 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.firework(3, 3, 3).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.emerald(XOItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));
+			/*trade5.add(SimpleTradeBuilder.emerald(XOItems.ENDERITE_SCRAP.get(), 1, 16).defaultBuild(5));*/
 			trade5.add(SimpleTradeBuilder.item(32, Items.SHULKER_SHELL, 1).defaultBuild(5));
 		} else if (event.getType() == XSVillagerProfessions.LUMBERJACK.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.STICK, 32, 1).defaultBuild(1));
@@ -250,10 +248,10 @@ public class VillagerTradesEventHandler {
 			trade4.add(SimpleTradeBuilder.emerald(Items.DIAMOND, 1, 3).defaultBuild(4));
 			trade4.add(SimpleTradeBuilder.item(16, Items.DIAMOND, 1).defaultBuild(4));
 			
-			trade5.add(AdvancedTradeBuilder.processItem(XOBlocks.SAPHIRE_ORE.get(), 1, 6, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
+			/*trade5.add(AdvancedTradeBuilder.processItem(XOBlocks.SAPHIRE_ORE.get(), 1, 6, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
 			trade5.add(AdvancedTradeBuilder.processItem(XOBlocks.DEEPSLATE_SAPHIRE_ORE.get(), 1, 6, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.emerald(XOItems.SAPHIRE_INGOT.get(), 1, 2).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.item(32, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));
+			trade5.add(SimpleTradeBuilder.item(32, XOItems.SAPHIRE_INGOT.get(), 1).defaultBuild(5));*/
 		} else if (event.getType() == XSVillagerProfessions.MOB_HUNTER.get()) {
 			trade1.add(SimpleTradeBuilder.emerald(Items.ROTTEN_FLESH, 8, 1).defaultBuild(1));
 			trade1.add(SimpleTradeBuilder.item(1, Items.BONE, 4).defaultBuild(1));
@@ -285,7 +283,7 @@ public class VillagerTradesEventHandler {
 			trade3.add(SimpleTradeBuilder.emerald(Items.OBSIDIAN, 4, 1).defaultBuild(3));
 			trade3.add(SimpleTradeBuilder.item(4, Items.CRYING_OBSIDIAN, 1).defaultBuild(3));
 			trade3.add(AdvancedTradeBuilder.processItem(Items.OBSIDIAN, 1, 1, Items.CRYING_OBSIDIAN, 2).defaultBuild(3));
-			trade3.add(SimpleTradeBuilder.emerald(XOItems.POLISHED_ROSE_QUARTZ.get(), 1, 1).defaultBuild(3));
+			/*trade3.add(SimpleTradeBuilder.emerald(XOItems.POLISHED_ROSE_QUARTZ.get(), 1, 1).defaultBuild(3));*/
 			trade3.add(SimpleTradeBuilder.emerald(Items.NETHER_WART, 4, 1).defaultBuild(3));
 			
 			trade4.add(SimpleTradeBuilder.item(1, Items.NETHER_WART, 1).defaultBuild(4));
@@ -296,7 +294,7 @@ public class VillagerTradesEventHandler {
 			trade5.add(SimpleTradeBuilder.item(6, Items.GHAST_TEAR, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(4, Items.BLAZE_ROD, 1).defaultBuild(5));
 			trade5.add(SimpleTradeBuilder.item(24, Items.MUSIC_DISC_PIGSTEP, 1).defaultBuild(5));
-			trade5.add(SimpleTradeBuilder.emerald(XOItems.BLAZING_INGOT.get(), 1, 18).defaultBuild(5));
+			/*trade5.add(SimpleTradeBuilder.emerald(XOItems.BLAZING_INGOT.get(), 1, 18).defaultBuild(5));*/
 			trade5.add(DynamicPotionTrades.randomPotion(5));
 			trade5.add(DynamicPotionTrades.randomPotion(5));
 			trade5.add(DynamicPotionTrades.randomPotion(5));

@@ -43,11 +43,9 @@
 		"ServerPlayerGameModeMixin"
 	],
 	"client": [
-		"client.AbstractReportScreenMixin",
 		"client.AnvilScreenMixin",
 		"client.BeaconPowerButtonMixin",
 		"client.BeaconUpgradePowerButtonMixin",
-		"client.ElytraLayerMixin",
 		"client.EntityRenderDispatcherMixin",
 		"client.HumanoidArmorLayerMixin",
 		"client.ItemRendererMixin",

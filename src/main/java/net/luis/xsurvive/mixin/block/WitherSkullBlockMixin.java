@@ -26,6 +26,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.level.Level;
@@ -64,12 +65,12 @@ public abstract class WitherSkullBlockMixin {
 	}
 	//endregion
 	
-	@Inject(method = "checkSpawn", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "Lnet/minecraft/world/level/block/WitherSkullBlock;checkSpawn(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/SkullBlockEntity;)V", at = @At("HEAD"), cancellable = true)
 	private static void checkSpawn(@NotNull Level level, @NotNull BlockPos pos, @NotNull SkullBlockEntity blockEntity, @NotNull CallbackInfo callback) {
 		if (!level.isClientSide) {
 			BlockState state = blockEntity.getBlockState();
 			boolean witherSkull = state.is(Blocks.WITHER_SKELETON_SKULL) || state.is(Blocks.WITHER_SKELETON_WALL_SKULL);
-			if (witherSkull && pos.getY() >= level.getMinBuildHeight() && level.getDifficulty() != Difficulty.PEACEFUL) {
+			if (witherSkull && pos.getY() >= level.getMinY() && level.getDifficulty() != Difficulty.PEACEFUL) {
 				BlockPattern pattern = getOrCreateWitherFull();
 				BlockPatternMatch patternMatch = pattern.find(level, pos);
 				if (patternMatch != null) {
@@ -89,7 +90,7 @@ public abstract class WitherSkullBlockMixin {
 								level.levelEvent(2001, inWorld.getPos(), Block.getId(inWorld.getState()));
 							}
 						}
-						WitherBoss wither = Objects.requireNonNull(EntityType.WITHER.create(level));
+						WitherBoss wither = Objects.requireNonNull(EntityType.WITHER.create(level, EntitySpawnReason.TRIGGERED));
 						BlockPos spawnPos = patternMatch.getBlock(1, 2, 0).getPos();
 						wither.moveTo(spawnPos.getX() + 0.5, spawnPos.getY() + 0.55, spawnPos.getZ() + 0.5, patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F, 0.0F);
 						wither.yBodyRot = patternMatch.getForwards().getAxis() == Direction.Axis.X ? 0.0F : 90.0F;

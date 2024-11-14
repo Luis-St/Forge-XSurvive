@@ -18,8 +18,8 @@
 
 package net.luis.xsurvive.data.provider;
 
-import net.luis.xsurvive.data.provider.base.XSDamageTypeProvider;
-import net.luis.xsurvive.data.provider.base.XSEnchantmentProvider;
+import net.luis.xsurvive.data.provider.base.server.XSDamageTypeProvider;
+import net.luis.xsurvive.data.provider.base.server.XSEnchantmentProvider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.NotNull;

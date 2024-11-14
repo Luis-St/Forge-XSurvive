@@ -19,7 +19,7 @@
 package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
-import net.luis.xsurvive.client.XSRecipeBookCategories;
+import net.luis.xsurvive.client.XSSearchRecipeBookCategory;
 import net.luis.xsurvive.core.components.XSDataComponents;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.tag.*;
@@ -33,8 +33,7 @@ import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
 import net.luis.xsurvive.world.item.XSCreativeModeTabs;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
-import net.luis.xsurvive.world.item.crafting.XSRecipeSerializers;
-import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
+import net.luis.xsurvive.world.item.crafting.*;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.luis.xsurvive.world.level.block.entity.XSBlockEntityTypes;
@@ -63,15 +62,16 @@ public class XSurvive {
 	
 	public XSurvive(@NotNull FMLJavaModLoadingContext context) {
 		IEventBus eventBus = context.getModEventBus();
+		XSDamageTypes.register();
 		XSEnchantments.register();
+		XSRecipeBookTypes.register();
+		XSRecipePropertySets.register();
 		XSDataComponents.DATA_COMPONENT_TYPES.register(eventBus);
 		XSLootItemConditions.LOOT_ITEM_CONDITIONS.register(eventBus);
 		XSGlobalLootModifiers.LOOT_MODIFIERS.register(eventBus);
 		XSBlocks.BLOCKS.register(eventBus);
 		XSBlocks.ITEMS.register(eventBus);
-		XSBlocks.Keys.register();
 		XSItems.ITEMS.register(eventBus);
-		XSItems.Keys.register();
 		XSCreativeModeTabs.TABS.register(eventBus);
 		XSMobEffects.MOB_EFFECTS.register(eventBus);
 		XSPotions.POTIONS.register(eventBus);
@@ -82,14 +82,14 @@ public class XSurvive {
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
 		XSEntityTypes.ENTITY_TYPES.register(eventBus);
-		XSDamageTypes.register();
-		XSRecipeBookTypes.register();
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSRecipeBookCategories::register);
+		XSRecipeBookCategories.RECIPE_BOOK_CATEGORY.register(eventBus);
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSSearchRecipeBookCategory::register);
 		XSBiomeTags.register();
 		XSBlockTags.register();
 		XSDamageTypeTags.register();
-		XSItemTags.register();
 		XSEnchantmentTags.register();
+		XSEntityTypeTags.register();
+		XSItemTags.register();
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}

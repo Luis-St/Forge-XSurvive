@@ -59,8 +59,8 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	//region Mixin
 	@Shadow private int levels;
-	@Shadow private MobEffect primaryPower;
-	@Shadow private MobEffect secondaryPower;
+	@Shadow private Holder<MobEffect> primaryPower;
+	@Shadow private Holder<MobEffect> secondaryPower;
 	
 	private BeaconBlockEntityMixin(@NotNull BlockEntityType<?> type, @NotNull BlockPos pos, @NotNull BlockState state) {
 		super(type, pos, state);
@@ -95,7 +95,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	}
 	
 	private static @NotNull AABB getArea(@NotNull Level level, @NotNull BlockPos pos, int area) {
-		return new AABB(pos).inflate(area).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
+		return new AABB(pos).inflate(area).setMinY(level.getMinY()).setMaxY(level.getMaxY());
 	}
 	
 	private static @NotNull List<Holder<MobEffect>> getEffects(int beaconLevel, boolean includeJump) {

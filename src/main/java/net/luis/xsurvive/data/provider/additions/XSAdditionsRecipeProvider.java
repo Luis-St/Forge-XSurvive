@@ -18,10 +18,13 @@
 
 package net.luis.xsurvive.data.provider.additions;
 
-import net.luis.xsurvive.data.provider.base.XSRecipeProvider;
+import net.luis.xsurvive.data.provider.base.server.XSRecipeProvider;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,13 +38,30 @@ import java.util.concurrent.CompletableFuture;
 
 public class XSAdditionsRecipeProvider extends XSRecipeProvider {
 	
-	public XSAdditionsRecipeProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookup) {
-		super(generator, lookup);
+	private XSAdditionsRecipeProvider(HolderLookup.@NotNull Provider lookup, @NotNull RecipeOutput output) {
+		super(lookup, output);
 	}
 	
 	@Override
-	protected void buildRecipes(@NotNull RecipeOutput output) {
-		this.groupAndUnlock(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.NETHERITE_INGOT).define('#', Items.NETHERITE_SCRAP).define('?', Items.GOLD_BLOCK).pattern("###").pattern("#?#").pattern("###"), getGroup(Items.NETHERITE_INGOT),
-			Items.NETHERITE_SCRAP, Items.NETHERITE_INGOT).save(output);
+	protected void buildRecipes() {
+		this.groupAndUnlock(ShapedRecipeBuilder.shaped(this.items, RecipeCategory.MISC, Items.NETHERITE_INGOT).define('#', Items.NETHERITE_SCRAP).define('?', Items.GOLD_BLOCK).pattern("###").pattern("#?#").pattern("###"), getGroup(Items.NETHERITE_INGOT),
+			Items.NETHERITE_SCRAP, Items.NETHERITE_INGOT).save(this.output);
+	}
+	
+	public static class Runner extends RecipeProvider.Runner {
+		
+		public Runner(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(generator.getPackOutput(), lookupProvider);
+		}
+		
+		@Override
+		protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.@NotNull Provider lookup, @NotNull RecipeOutput output) {
+			return new XSAdditionsRecipeProvider(lookup, output);
+		}
+		
+		@Override
+		public @NotNull String getName() {
+			return "XSurvive Addition Recipes";
+		}
 	}
 }

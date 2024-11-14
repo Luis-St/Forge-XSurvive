@@ -33,11 +33,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSBlockTags {
 	
-	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "ocean_monument_blocks"));
+	public static final TagKey<Block> OCEAN_MONUMENT_BLOCKS = bind("ocean_monument_blocks");
 	
 	public static void register() {}
 	
-	private static @NotNull TagKey<Block> bind(@NotNull ResourceLocation location) {
-		return BlockTags.create(location);
+	private static @NotNull TagKey<Block> bind(@NotNull String name) {
+		return BlockTags.create(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 }

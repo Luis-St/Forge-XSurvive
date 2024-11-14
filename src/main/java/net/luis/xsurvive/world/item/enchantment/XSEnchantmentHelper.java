@@ -36,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,10 @@ import java.util.stream.Stream;
  */
 
 public class XSEnchantmentHelper {
+	
+	public static @NotNull @Unmodifiable List<Holder<Enchantment>> getEnchantments(@NotNull Registry<Enchantment> registry) {
+		return registry.stream().map(registry::wrapAsHolder).toList();
+	}
 	
 	public static boolean hasEnchantment(@NotNull Holder<Enchantment> enchantment, @NotNull ItemStack stack) {
 		return stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY).keySet().contains(enchantment);
@@ -191,12 +196,12 @@ public class XSEnchantmentHelper {
 	
 	public static void enchantItem(@NotNull RegistryAccess registryAccess, @NotNull RandomSource rng, @NotNull ItemStack stack, int count, int cost, boolean treasure, boolean golden) {
 		List<EnchantmentInstance> instances = Lists.newArrayList();
-		Registry<Enchantment> registry = registryAccess.registry(Registries.ENCHANTMENT).orElseThrow();
+		Registry<Enchantment> registry = registryAccess.lookupOrThrow(Registries.ENCHANTMENT);
 		List<Holder<Enchantment>> enchantments;
 		if (treasure) {
-			enchantments = registry.holders().map(holder -> (Holder<Enchantment>) holder).toList();
+			enchantments = getEnchantments(registry);
 		} else {
-			enchantments = registry.holders().filter(enchantment -> enchantment.is(EnchantmentTags.NON_TREASURE)).collect(Collectors.toList());
+			enchantments = registry.get(EnchantmentTags.NON_TREASURE).stream().flatMap(HolderSet::stream).collect(Collectors.toList());
 		}
 		List<EnchantmentInstance> availableInstances = EnchantmentHelper.getAvailableEnchantmentResults(cost, stack, enchantments.stream());
 		Consumer<? super EnchantmentInstance> action = (instance) -> {

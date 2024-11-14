@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.client;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.effect.XSMobEffects;
@@ -26,6 +26,7 @@ import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -76,10 +77,7 @@ public class XSLanguageProvider extends LanguageProvider {
 	}
 	
 	@Override
-	protected void addTranslations() {
-		for (Enchantment enchantment : XSEnchantments.ENCHANTMENTS.getEntries().stream().map(RegistryObject::get).toList()) {
-			this.add(enchantment, getLocalizedName(ForgeRegistries.ENCHANTMENTS.getKey(enchantment)));
-		}
+	protected void addTranslations() { // ToDo: Add enchantment translations
 		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
 			this.add(item, getLocalizedName(ForgeRegistries.ITEMS.getKey(item)));
 		}

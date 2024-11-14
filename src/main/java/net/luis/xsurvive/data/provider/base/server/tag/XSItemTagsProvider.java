@@ -16,9 +16,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base.tag;
+package net.luis.xsurvive.data.provider.base.server.tag;
 
-import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.tag.XSBlockTags;
 import net.luis.xsurvive.tag.XSItemTags;
@@ -26,6 +25,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -46,9 +46,10 @@ public class XSItemTagsProvider extends ItemTagsProvider {
 	}
 	
 	@Override
-	protected void addTags(HolderLookup.@NotNull Provider lookup) {
+	protected void addTags(HolderLookup.@NotNull Provider lookup) { // ToDo: Add when xores is updated
 		this.copy(XSBlockTags.OCEAN_MONUMENT_BLOCKS, XSItemTags.OCEAN_MONUMENT_BLOCKS);
-		this.tag(XSItemTags.SUB_INGOTS).add(Items.NETHERITE_SCRAP, XOItems.ENDERITE_SCRAP.get(), XOItems.NIGHT_SCRAP.get());
+		this.tag(XSItemTags.SUB_INGOTS).add(Items.NETHERITE_SCRAP/*, XOItems.ENDERITE_SCRAP.get(), XOItems.NIGHT_SCRAP.get()*/);
+		this.tag(XSItemTags.CHEST_WEARABLE).addTag(ItemTags.CHEST_ARMOR)/*.addTag(XOItemTags.ELYTRA_CHESTPLATE)*/.add(Items.ELYTRA);
 	}
 	
 	@Override

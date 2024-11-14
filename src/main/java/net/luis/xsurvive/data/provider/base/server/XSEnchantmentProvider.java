@@ -16,8 +16,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.server;
 
+import net.luis.xsurvive.tag.XSEntityTypeTags;
+import net.luis.xsurvive.tag.XSItemTags;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
@@ -28,6 +30,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.*;
@@ -47,9 +50,10 @@ public class XSEnchantmentProvider {
 	public static void create(@NotNull BootstrapContext<Enchantment> context) {
 		HolderGetter<Enchantment> enchantmentLookup = context.lookup(Registries.ENCHANTMENT);
 		HolderGetter<Item> itemLookup = context.lookup(Registries.ITEM);
+		HolderGetter<EntityType<?>> entityTypeLookup = context.lookup(Registries.ENTITY_TYPE);
 		
 		register(context, XSEnchantments.MULTI_DROP, createMultiDrop(itemLookup));
-		register(context, XSEnchantments.ENDER_SLAYER, createEnderSlayer(enchantmentLookup, itemLookup));
+		register(context, XSEnchantments.ENDER_SLAYER, createEnderSlayer(enchantmentLookup, itemLookup, entityTypeLookup));
 		register(context, XSEnchantments.FROST_ASPECT, createFrostAspect(enchantmentLookup, itemLookup));
 		register(context, XSEnchantments.POISON_ASPECT, createPoisonAspect(itemLookup));
 		register(context, XSEnchantments.EXPERIENCE, createExperience(itemLookup));
@@ -82,7 +86,7 @@ public class XSEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createEnderSlayer(@NotNull HolderGetter<Enchantment> enchantmentLookup, @NotNull HolderGetter<Item> itemLookup) {
+	public static Enchantment.@NotNull Builder createEnderSlayer(@NotNull HolderGetter<Enchantment> enchantmentLookup, @NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<EntityType<?>> entityTypeLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
@@ -100,7 +104,7 @@ public class XSEnchantmentProvider {
 				EnchantmentEffectComponents.DAMAGE,
 				new AddValue(LevelBasedValue.perLevel(2.5F)),
 				LootItemEntityPropertyCondition.hasProperties(
-					LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(XSEntityTypeTags.SENSITIVE_TO_ENDER_SLAYER))
+					LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(entityTypeLookup, XSEntityTypeTags.SENSITIVE_TO_ENDER_SLAYER))
 				)
 			);
 	}

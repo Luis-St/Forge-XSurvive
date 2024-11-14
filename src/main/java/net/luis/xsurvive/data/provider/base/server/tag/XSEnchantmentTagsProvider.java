@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base.tag;
+package net.luis.xsurvive.data.provider.base.server.tag;
 
 import net.luis.xsurvive.XSurvive;
 import net.minecraft.core.HolderLookup;

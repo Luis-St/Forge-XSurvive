@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base.tag;
+package net.luis.xsurvive.data.provider.base.server.tag;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.tag.XSDamageTypeTags;
@@ -54,5 +54,10 @@ public class XSDamageTypeTagsProvider extends DamageTypeTagsProvider {
 		this.tag(XSDamageTypeTags.FEET_ONLY_DAMAGE).add(HOT_FLOOR, FALL, DRAGON_BREATH, STALAGMITE);
 		this.tag(DamageTypeTags.BYPASSES_ARMOR).replace().add(ON_FIRE, IN_WALL, CRAMMING, DROWN, GENERIC, WITHER, DRAGON_BREATH, STARVE, FREEZE, MAGIC, INDIRECT_MAGIC, FELL_OUT_OF_WORLD, GENERIC_KILL, SONIC_BOOM, OUTSIDE_BORDER)
 			.add(/*FLY_INTO_WALL, FALL, STALAGMITE*/);
+	}
+	
+	@Override
+	public @NotNull String getName() {
+		return "XSurvive Damage Type Tags";
 	}
 }

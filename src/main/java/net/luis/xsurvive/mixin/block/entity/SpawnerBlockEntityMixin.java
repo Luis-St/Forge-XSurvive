@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -52,8 +53,8 @@ public abstract class SpawnerBlockEntityMixin {
 		this.spawner.maxNearbyEntities = 12;
 	}
 	
-	@Inject(method = "load", at = @At("HEAD"))
-	public void load(@NotNull CompoundTag tag, @NotNull CallbackInfo callback) {
+	@Inject(method = "loadAdditional", at = @At("HEAD"))
+	public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider lookup, @NotNull CallbackInfo callback) {
 		if (tag.contains("MinSpawnDelay")) {
 			tag.remove("MinSpawnDelay");
 			tag.putShort("MinSpawnDelay", (short) 50);

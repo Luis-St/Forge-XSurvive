@@ -21,10 +21,13 @@ package net.luis.xsurvive.world.level.storage.loot;
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.util.Rarity;
 import net.luis.xsurvive.util.RarityList;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
 
 import static net.luis.xsurvive.world.item.XSItems.*;
 import static net.luis.xsurvive.world.item.enchantment.XSEnchantments.*;
@@ -40,36 +43,87 @@ public class LootModifierHelper {
 	
 	// ToDO: Add Mace enchantments
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getCommonEnchantments() {
-		return RarityList.of(Rarity.COMMON, Lists.newArrayList(FIRE_PROTECTION, BLAST_PROTECTION, PROJECTILE_PROTECTION, BANE_OF_ARTHROPODS, PUNCH, KNOCKBACK, BLASTING));
+	public static @NotNull RarityList<Holder<Enchantment>> getCommonEnchantments(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.COMMON, Lists.newArrayList(
+			lookup.apply(FIRE_PROTECTION),
+			lookup.apply(BLAST_PROTECTION),
+			lookup.apply(PROJECTILE_PROTECTION),
+			lookup.apply(BANE_OF_ARTHROPODS),
+			lookup.apply(PUNCH),
+			lookup.apply(KNOCKBACK),
+			lookup.apply(BLASTING)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getRareEnchantments() {
-		return RarityList.of(Rarity.RARE, Lists.newArrayList(PROTECTION, SHARPNESS, SMITE, ENDER_SLAYER, EFFICIENCY, POWER, GROWTH, PIERCING, FIRE_ASPECT, FROST_ASPECT, POISON_ASPECT));
+	public static @NotNull RarityList<Holder<Enchantment>> getRareEnchantments(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.RARE, Lists.newArrayList(
+			lookup.apply(PROTECTION),
+			lookup.apply(SHARPNESS),
+			lookup.apply(SMITE),
+			lookup.apply(ENDER_SLAYER),
+			lookup.apply(EFFICIENCY),
+			lookup.apply(POWER),
+			lookup.apply(GROWTH),
+			lookup.apply(PIERCING),
+			lookup.apply(FIRE_ASPECT),
+			lookup.apply(FROST_ASPECT),
+			lookup.apply(POISON_ASPECT)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getVeryRareEnchantments() {
-		return RarityList.of(Rarity.VERY_RARE, Lists.newArrayList(FEATHER_FALLING, RESPIRATION, DEPTH_STRIDER, SWEEPING_EDGE, UNBREAKING, FORTUNE, LOOTING, LOYALTY, RIPTIDE, QUICK_CHARGE, LUCK_OF_THE_SEA, LURE, REPLANTING));
+	public static @NotNull RarityList<Holder<Enchantment>> getVeryRareEnchantments(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.VERY_RARE, Lists.newArrayList(
+			lookup.apply(FEATHER_FALLING),
+			lookup.apply(RESPIRATION),
+			lookup.apply(DEPTH_STRIDER),
+			lookup.apply(SWEEPING_EDGE),
+			lookup.apply(UNBREAKING),
+			lookup.apply(FORTUNE),
+			lookup.apply(LOOTING),
+			lookup.apply(LOYALTY),
+			lookup.apply(RIPTIDE),
+			lookup.apply(QUICK_CHARGE),
+			lookup.apply(LUCK_OF_THE_SEA),
+			lookup.apply(LURE),
+			lookup.apply(REPLANTING)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getTreasureEnchantments() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(MULTI_DROP, REACHING));
+	public static @NotNull RarityList<Holder<Enchantment>> getTreasureEnchantments(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(
+			lookup.apply(MULTI_DROP),
+			lookup.apply(REACHING)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getExtraOverworldTreasure() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(SWIFT_SNEAK));
+	public static @NotNull RarityList<Holder<Enchantment>> getExtraOverworldTreasure(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(
+			lookup.apply(SWIFT_SNEAK)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getExtraNetherTreasure() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(SOUL_SPEED));
+	public static @NotNull RarityList<Holder<Enchantment>> getExtraNetherTreasure(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(
+			lookup.apply(SOUL_SPEED)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getExtraEndTreasure() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(VOID_WALKER, VOID_PROTECTION, ASPECT_OF_THE_END));
+	public static @NotNull RarityList<Holder<Enchantment>> getExtraEndTreasure(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(
+			lookup.apply(VOID_WALKER),
+			lookup.apply(VOID_PROTECTION),
+			lookup.apply(ASPECT_OF_THE_END)
+		));
 	}
 	
-	public static @NotNull RarityList<ResourceKey<Enchantment>> getAllTreasureEnchantments() {
-		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(MULTI_DROP, SWIFT_SNEAK, SOUL_SPEED, VOID_PROTECTION, ASPECT_OF_THE_END));
+	public static @NotNull RarityList<Holder<Enchantment>> getAllTreasureEnchantments(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup) {
+		return RarityList.of(Rarity.TREASURE, Lists.newArrayList(
+			lookup.apply(MULTI_DROP),
+			lookup.apply(SWIFT_SNEAK),
+			lookup.apply(SOUL_SPEED),
+			lookup.apply(VOID_PROTECTION),
+			lookup.apply(ASPECT_OF_THE_END)
+		));
 	}
 	
 	public static @NotNull RarityList<Item> getCommonRunes() {

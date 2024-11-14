@@ -22,6 +22,7 @@ import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxContent;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	
-	private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/bundle.png"); // ToDo: Change texture -> does not exist
+	private static final ResourceLocation SLOT_SPRITE = ResourceLocation.withDefaultNamespace("container/slot");
 	
 	private final List<ItemStack> stacks;
 	
@@ -45,7 +46,7 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	}
 	
 	@Override
-	public int getHeight() {
+	public int getHeight(@NotNull Font font) {
 		return 59;
 	}
 	
@@ -55,11 +56,11 @@ public class ClientShulkerBoxTooltip implements ClientTooltipComponent {
 	}
 	
 	@Override
-	public void renderImage(@NotNull Font font, int x, int y, @NotNull GuiGraphics graphics) {
+	public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphics graphics) {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
 				int index = j + i * 9;
-				graphics.blit(TEXTURE, x + j * 18, y + i * 18, 0, 0.0F, 0.0F, 18, 18, 128, 128);
+				graphics.blitSprite(RenderType::guiTextured, SLOT_SPRITE, x + j * 18, y + i * 18, 18, 18);
 				if (this.stacks.size() > index && index >= 0) {
 					ItemStack itemStack = this.stacks.get(index);
 					if (!itemStack.isEmpty()) {

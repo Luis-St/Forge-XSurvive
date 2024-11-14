@@ -24,9 +24,9 @@ import com.mojang.math.Axis;
 import net.luis.xsurvive.client.EntityFireTypeHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.ScreenEffectRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
@@ -47,11 +47,10 @@ public abstract class ScreenEffectRendererMixin {
 	
 	@Inject(method = "renderFire", at = @At("HEAD"), cancellable = true)
 	private static void renderFire(@NotNull Minecraft minecraft, @NotNull PoseStack stack, @NotNull CallbackInfo callback) {
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
 		RenderSystem.depthFunc(519);
 		RenderSystem.depthMask(false);
 		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
 		Player player = minecraft.player;
 		if (player != null) {
 			TextureAtlasSprite textureSprite = EntityFireTypeHelper.getFireTextureSprite1(player, EntityProvider.get(player).getFireType());

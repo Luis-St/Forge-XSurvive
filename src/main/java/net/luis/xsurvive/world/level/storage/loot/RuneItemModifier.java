@@ -27,6 +27,7 @@ import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -45,7 +46,7 @@ public class RuneItemModifier extends LootModifier {
 	
 	private static final Random RNG = new Random();
 	public static final MapCodec<RuneItemModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
-		return LootModifier.codecStart(instance).and(instance.group(Codec.INT.fieldOf("rune_count").forGetter((modifier) -> {
+		return codecStart(instance).and(instance.group(Codec.INT.fieldOf("rune_count").forGetter((modifier) -> {
 			return modifier.runeCount;
 		}), WeightCollection.codec(RarityList.codec(ForgeRegistries.ITEMS.getCodec())).fieldOf("runes").forGetter((modifier) -> {
 			return modifier.runeWeights;
@@ -66,7 +67,7 @@ public class RuneItemModifier extends LootModifier {
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull LootTable lootTable, @NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		for (int i = 0; i < this.runeCount; i++) {
 			generatedLoot.add(this.getRandomRune());
 		}

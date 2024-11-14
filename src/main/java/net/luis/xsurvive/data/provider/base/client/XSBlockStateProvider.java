@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.client;
 
 import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;

@@ -19,9 +19,9 @@
 package net.luis.xsurvive.mixin.item;
 
 import net.luis.xsurvive.world.entity.projectile.CursedEyeOfEnder;
-import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -29,16 +29,16 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.StructureTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.UseCooldown;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -62,28 +62,29 @@ public abstract class EnderEyeItemMixin extends Item {
 	//endregion
 	
 	@Inject(method = "use", at = @At("HEAD"), cancellable = true)
-	public void use(Level level, @NotNull Player player, @NotNull InteractionHand hand, @NotNull CallbackInfoReturnable<InteractionResultHolder<ItemStack>> callback) {
+	public void use(Level level, @NotNull Player player, @NotNull InteractionHand hand, @NotNull CallbackInfoReturnable<InteractionResult> callback) {
 		ItemStack stack = player.getItemInHand(hand);
 		HitResult hitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
 		if (hitResult instanceof BlockHitResult blockHitResult && level.getBlockState(blockHitResult.getBlockPos()).is(Blocks.END_PORTAL_FRAME)) {
-			callback.setReturnValue(InteractionResultHolder.pass(stack));
+			callback.setReturnValue(InteractionResult.PASS);
 		} else {
 			player.startUsingItem(hand);
 			if (level instanceof ServerLevel serverLevel) {
 				BlockPos pos = serverLevel.findNearestMapStructure(StructureTags.EYE_OF_ENDER_LOCATED, player.blockPosition(), 100, false);
 				if (pos != null) {
-					EyeOfEnder eyeOfEnder;
-					if (level.random.nextInt(4) >= 2) {
-						eyeOfEnder = new EyeOfEnder(level, player.getX(), player.getY(0.5D), player.getZ());
-						eyeOfEnder.setItem(stack);
+					Vec3 position;
+					if (serverLevel.random.nextInt(4) >= 2) {
+						position = this.summonEyeOfEnder(serverLevel, player, pos, stack);
 					} else {
-						eyeOfEnder = new CursedEyeOfEnder(level, player.getX(), player.getY(0.5), player.getZ());
-						eyeOfEnder.setItem(new ItemStack(XSItems.CURSED_ENDER_EYE.get()));
-						player.getCooldowns().addCooldown(this, 1200);
+						position = this.summonCursedEyeOfEnder(serverLevel, player, pos, stack);
+						UseCooldown cooldown = stack.get(DataComponents.USE_COOLDOWN);
+						if (cooldown != null) {
+							cooldown.apply(stack, player);
+						} else {
+							player.getCooldowns().addCooldown(stack, 1200);
+						}
 					}
-					eyeOfEnder.signalTo(pos);
-					level.gameEvent(GameEvent.PROJECTILE_SHOOT, eyeOfEnder.position(), GameEvent.Context.of(player));
-					level.addFreshEntity(eyeOfEnder);
+					level.gameEvent(GameEvent.PROJECTILE_SHOOT, position, GameEvent.Context.of(player));
 					if (player instanceof ServerPlayer serverPlayer) {
 						CriteriaTriggers.USED_ENDER_EYE.trigger(serverPlayer, pos);
 					}
@@ -94,10 +95,26 @@ public abstract class EnderEyeItemMixin extends Item {
 					}
 					player.awardStat(Stats.ITEM_USED.get(this));
 					player.swing(hand, true);
-					callback.setReturnValue(InteractionResultHolder.success(stack));
+					callback.setReturnValue(InteractionResult.SUCCESS);
 				}
 			}
-			callback.setReturnValue(InteractionResultHolder.consume(stack));
+			callback.setReturnValue(InteractionResult.CONSUME);
 		}
+	}
+	
+	private @NotNull Vec3 summonEyeOfEnder(@NotNull ServerLevel serverLevel, @NotNull Player player, @NotNull BlockPos targetPos, @NotNull ItemStack stack) {
+		EyeOfEnder eyeOfEnder = new EyeOfEnder(serverLevel, player.getX(), player.getY(0.5D), player.getZ());
+		eyeOfEnder.setItem(stack);
+		eyeOfEnder.signalTo(targetPos);
+		serverLevel.addFreshEntity(eyeOfEnder);
+		return eyeOfEnder.position();
+	}
+	
+	private @NotNull Vec3 summonCursedEyeOfEnder(@NotNull ServerLevel serverLevel, @NotNull Player player, @NotNull BlockPos targetPos, @NotNull ItemStack stack) {
+		CursedEyeOfEnder eyeOfEnder = new CursedEyeOfEnder(serverLevel, player.getX(), player.getY(0.5D), player.getZ());
+		eyeOfEnder.setItem(stack);
+		eyeOfEnder.signalTo(targetPos);
+		serverLevel.addFreshEntity(eyeOfEnder);
+		return eyeOfEnder.position();
 	}
 }

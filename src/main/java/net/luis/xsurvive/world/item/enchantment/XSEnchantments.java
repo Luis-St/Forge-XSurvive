@@ -19,6 +19,7 @@
 package net.luis.xsurvive.world.item.enchantment;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.core.XSResourceKeys;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -33,28 +34,24 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSEnchantments {
 	
-	public static final ResourceKey<Enchantment> MULTI_DROP = createKey("multi_drop");
-	public static final ResourceKey<Enchantment> ENDER_SLAYER = createKey("ender_slayer");
-	public static final ResourceKey<Enchantment> FROST_ASPECT = createKey("frost_aspect");
-	public static final ResourceKey<Enchantment> POISON_ASPECT = createKey("poison_aspect");
-	public static final ResourceKey<Enchantment> EXPERIENCE = createKey("experience");
-	public static final ResourceKey<Enchantment> SMELTING = createKey("smelting");
-	public static final ResourceKey<Enchantment> CURSE_OF_BREAKING = createKey("curse_of_breaking");
-	public static final ResourceKey<Enchantment> CURSE_OF_HARMING = createKey("curse_of_harming");
-	public static final ResourceKey<Enchantment> VOID_WALKER = createKey("void_walker");
-	public static final ResourceKey<Enchantment> BLASTING = createKey("blasting");
-	public static final ResourceKey<Enchantment> THUNDERBOLT = createKey("thunderbolt");
-	public static final ResourceKey<Enchantment> VOID_PROTECTION = createKey("void_protection");
-	public static final ResourceKey<Enchantment> HARVESTING = createKey("harvesting");
-	public static final ResourceKey<Enchantment> REPLANTING = createKey("replanting");
-	public static final ResourceKey<Enchantment> ASPECT_OF_THE_END = createKey("aspect_of_the_end");
-	public static final ResourceKey<Enchantment> EXPLOSION = createKey("explosion");
-	public static final ResourceKey<Enchantment> REACHING = createKey("reaching");
-	public static final ResourceKey<Enchantment> GROWTH = createKey("growth");
+	public static final ResourceKey<Enchantment> MULTI_DROP = XSResourceKeys.createEnchantmentKey("multi_drop");
+	public static final ResourceKey<Enchantment> ENDER_SLAYER = XSResourceKeys.createEnchantmentKey("ender_slayer");
+	public static final ResourceKey<Enchantment> FROST_ASPECT = XSResourceKeys.createEnchantmentKey("frost_aspect");
+	public static final ResourceKey<Enchantment> POISON_ASPECT = XSResourceKeys.createEnchantmentKey("poison_aspect");
+	public static final ResourceKey<Enchantment> EXPERIENCE = XSResourceKeys.createEnchantmentKey("experience");
+	public static final ResourceKey<Enchantment> SMELTING = XSResourceKeys.createEnchantmentKey("smelting");
+	public static final ResourceKey<Enchantment> CURSE_OF_BREAKING = XSResourceKeys.createEnchantmentKey("curse_of_breaking");
+	public static final ResourceKey<Enchantment> CURSE_OF_HARMING = XSResourceKeys.createEnchantmentKey("curse_of_harming");
+	public static final ResourceKey<Enchantment> VOID_WALKER = XSResourceKeys.createEnchantmentKey("void_walker");
+	public static final ResourceKey<Enchantment> BLASTING = XSResourceKeys.createEnchantmentKey("blasting");
+	public static final ResourceKey<Enchantment> THUNDERBOLT = XSResourceKeys.createEnchantmentKey("thunderbolt");
+	public static final ResourceKey<Enchantment> VOID_PROTECTION = XSResourceKeys.createEnchantmentKey("void_protection");
+	public static final ResourceKey<Enchantment> HARVESTING = XSResourceKeys.createEnchantmentKey("harvesting");
+	public static final ResourceKey<Enchantment> REPLANTING = XSResourceKeys.createEnchantmentKey("replanting");
+	public static final ResourceKey<Enchantment> ASPECT_OF_THE_END = XSResourceKeys.createEnchantmentKey("aspect_of_the_end");
+	public static final ResourceKey<Enchantment> EXPLOSION = XSResourceKeys.createEnchantmentKey("explosion");
+	public static final ResourceKey<Enchantment> REACHING = XSResourceKeys.createEnchantmentKey("reaching");
+	public static final ResourceKey<Enchantment> GROWTH = XSResourceKeys.createEnchantmentKey("growth");
 	
 	public static void register() {}
-	
-	private static @NotNull ResourceKey<Enchantment> createKey(@NotNull String name) {
-		return ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
-	}
 }

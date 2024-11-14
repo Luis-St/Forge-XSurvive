@@ -51,11 +51,6 @@ public class EnchantedGoldenBookItem extends Item {
 	}
 	
 	@Override
-	public boolean isEnchantable(@NotNull ItemStack stack) {
-		return true;
-	}
-	
-	@Override
 	public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> components, @NotNull TooltipFlag tooltip) {
 		super.appendHoverText(stack, context, components, tooltip);
 		ItemEnchantments enchantments = stack.getOrDefault(ENCHANTMENTS, ItemEnchantments.EMPTY);

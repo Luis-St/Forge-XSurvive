@@ -27,8 +27,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -94,7 +93,7 @@ public class CursedEyeOfEnder extends EyeOfEnder {
 			++this.life;
 			if (this.life > 100 && this.level() instanceof ServerLevel level) {
 				this.playSound(SoundEvents.ENDER_EYE_DEATH, 1.0F, 1.0F);
-				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+				LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level, EntitySpawnReason.TRIGGERED);
 				if (lightning != null) {
 					BlockPos.MutableBlockPos pos = this.getOnPos().mutable();
 					for (; level.getBlockState(pos.immutable()).isAir(); pos.move(0, -1, 0)) ;

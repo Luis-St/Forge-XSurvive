@@ -21,8 +21,8 @@ package net.luis.xsurvive.mixin.client;
 import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,12 +36,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  *
  */
 
-@SuppressWarnings("unused")
 @Mixin(HumanoidArmorLayer.class)
-public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> {
+public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>> {
 	
-	@Inject(method = "getArmorModelHook", at = @At("HEAD"), remap = false)
-	private void getArmorModelHook(@NotNull T entity, @NotNull ItemStack stack, @NotNull EquipmentSlot slot, @NotNull A model, @NotNull CallbackInfoReturnable<A> callback) {
+	@Inject(method = "getArmorModel", at = @At("HEAD"), remap = false)
+	private void getArmorModel(@NotNull S state, @NotNull EquipmentSlot slot, @NotNull ItemStack stack, A defaultModel, @NotNull CallbackInfoReturnable<A> callback) {
 		GlintColorHandler.setStack(stack);
 	}
 }

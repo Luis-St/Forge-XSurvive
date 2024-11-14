@@ -16,20 +16,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base.tag;
+package net.luis.xsurvive.data.provider.base.server.tag;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.tag.XSBlockTags;
+import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.PoiTypeTagsProvider;
-import net.minecraft.tags.PoiTypeTags;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-
-import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.*;
 
 /**
  *
@@ -37,20 +37,22 @@ import static net.luis.xsurvive.world.entity.ai.village.XSPoiTypes.*;
  *
  */
 
-public class XSPoiTypeTagsProvider extends PoiTypeTagsProvider {
+public class XSBlockTagsProvider extends BlockTagsProvider {
 	
-	public XSPoiTypeTagsProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookupProvider, @NotNull ExistingFileHelper existingFileHelper) {
+	public XSBlockTagsProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookupProvider, @NotNull ExistingFileHelper existingFileHelper) {
 		super(generator.getPackOutput(), lookupProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
 	
 	@Override
 	protected void addTags(HolderLookup.@NotNull Provider lookup) {
-		this.tag(PoiTypeTags.ACQUIRABLE_JOB_SITE).add(BEEKEEPER.getKey(), ENCHANTER.getKey(), END_TRADER.getKey(), LUMBERJACK.getKey(), MINER.getKey(), MOB_HUNTER.getKey(), NETHER_TRADER.getKey());
-		this.tag(PoiTypeTags.BEE_HOME).add(Objects.requireNonNull(BEEKEEPER.getKey()));
+		this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(XSBlocks.SMELTING_FURNACE.get());
+		this.tag(BlockTags.MINEABLE_WITH_AXE).add(XSBlocks.HONEY_MELON.get());
+		this.tag(BlockTags.FIRE).add(XSBlocks.MYSTIC_FIRE.get());
+		this.tag(XSBlockTags.OCEAN_MONUMENT_BLOCKS).add(Blocks.PRISMARINE, Blocks.PRISMARINE_BRICKS, Blocks.DARK_PRISMARINE, Blocks.SEA_LANTERN);
 	}
 	
 	@Override
 	public @NotNull String getName() {
-		return "XSurvive Poi Tags";
+		return "XSurvive Block Tags";
 	}
 }

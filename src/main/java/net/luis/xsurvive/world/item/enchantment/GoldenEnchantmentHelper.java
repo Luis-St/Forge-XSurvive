@@ -87,6 +87,10 @@ public class GoldenEnchantmentHelper {
 		return EnchantedItem.EMPTY;
 	}
 	
+	public static boolean isEnchantment(@NotNull Holder<Enchantment> enchantment) {
+		return isGoldenEnchantment(enchantment) || isUpgradeEnchantment(enchantment);
+	}
+	
 	public static boolean isGoldenEnchantment(@NotNull Holder<Enchantment> enchantment) {
 		return enchantment.is(XSEnchantmentTags.GOLDEN_ENCHANTMENT);
 	}

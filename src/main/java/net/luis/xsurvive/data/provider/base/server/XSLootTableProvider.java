@@ -16,9 +16,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.server;
 
 import com.google.common.collect.Lists;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -38,8 +40,8 @@ import java.util.Set;
 
 public class XSLootTableProvider extends LootTableProvider {
 	
-	public XSLootTableProvider(@NotNull DataGenerator generator) {
-		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)));
+	public XSLootTableProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> provider) {
+		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)), provider);
 	}
 	
 	@Override

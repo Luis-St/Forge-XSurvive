@@ -25,6 +25,7 @@ import net.luis.xsurvive.util.Chance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -62,7 +63,7 @@ public class AdditionalChanceItemModifier extends LootModifier {
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull LootTable lootTable, @NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		if (this.chance.result()) {
 			generatedLoot.add(new ItemStack(this.additionalItem));
 		}

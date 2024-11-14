@@ -40,11 +40,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
 	
-	//@Redirect(method = "getArmorFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorGlint()Lnet/minecraft/client/renderer/RenderType;"))
-	//private static @NotNull RenderType getArmorGlint() {
-	//	return GlintColorHandler.getArmorGlint();
-	//}
-	
 	@Redirect(method = "getArmorFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;"))
 	private static @NotNull RenderType getArmorEntityGlint() {
 		return GlintColorHandler.getArmorEntityGlint();
@@ -63,16 +58,6 @@ public abstract class ItemRendererMixin {
 	@Redirect(method = "getFoilBuffer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;entityGlint()Lnet/minecraft/client/renderer/RenderType;"))
 	private static @NotNull RenderType getEntityGlint() {
 		return GlintColorHandler.getEntityGlint();
-	}
-	
-	//@Redirect(method = "getFoilBufferDirect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;glintDirect()Lnet/minecraft/client/renderer/RenderType;"))
-	//private static @NotNull RenderType getGlintDirect() {
-	//	return GlintColorHandler.getGlintDirect();
-	//}
-	
-	@Redirect(method = "getFoilBufferDirect", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;entityGlintDirect()Lnet/minecraft/client/renderer/RenderType;"))
-	private static @NotNull RenderType getEntityGlintDirect() {
-		return GlintColorHandler.getEntityGlintDirect();
 	}
 	
 	@Inject(method = "render", at = @At("HEAD"))

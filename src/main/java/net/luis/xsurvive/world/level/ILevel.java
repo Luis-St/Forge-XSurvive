@@ -44,7 +44,7 @@ public interface ILevel extends INetworkCapability {
 	@NotNull Level getLevel();
 	
 	default @NotNull List<BlockPos> getBeaconPositions(@NotNull BlockPos pos, int range) {
-		return this.getBeaconPositions(new AABB(pos).inflate(range).setMinY(this.getLevel().getMinBuildHeight()).setMaxY(this.getLevel().getMaxBuildHeight()));
+		return this.getBeaconPositions(new AABB(pos).inflate(range).setMinY(this.getLevel().getMinY()).setMaxY(this.getLevel().getMaxY()));
 	}
 	
 	@NotNull List<BlockPos> getBeaconPositions(@NotNull AABB area);

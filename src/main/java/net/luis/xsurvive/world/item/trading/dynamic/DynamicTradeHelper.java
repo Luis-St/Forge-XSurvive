@@ -19,9 +19,11 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
 import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.Function;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.luis.xsurvive.tag.XSEnchantmentTags;
 import net.luis.xsurvive.util.Rarity;
+import net.luis.xsurvive.world.item.enchantment.GoldenEnchantmentHelper;
 import net.luis.xsurvive.world.item.trading.Trade;
 import net.luis.xsurvive.world.level.storage.loot.LootModifierHelper;
 import net.minecraft.core.Holder;
@@ -52,29 +54,30 @@ class DynamicTradeHelper {
 		return enchantments.stream().filter(enchantment -> enchantment.is(EnchantmentTags.NON_TREASURE)).collect(Collectors.toList());
 	}
 	
+	@SuppressWarnings("unchecked")
 	static @NotNull List<Holder<Enchantment>> getValidEnchantments(@NotNull Entity entity, @NotNull List<Rarity> rarities) {
-		return getEnchantmentsForRarity(rarities).stream().map(key -> key.getOrThrow(entity)).filter(enchantment -> enchantment.is(EnchantmentTags.TRADEABLE)).collect(Collectors.toList());
+		return getEnchantmentsForRarity(key -> ((ResourceKey<Enchantment>) key).getOrThrow(entity), rarities).stream().filter(enchantment -> enchantment.is(EnchantmentTags.TRADEABLE)).collect(Collectors.toList());
 	}
 	
-	private static @NotNull List<ResourceKey<Enchantment>> getEnchantmentsForRarity(@NotNull List<Rarity> rarities) {
-		List<ResourceKey<Enchantment>> enchantments = Lists.newArrayList();
+	private static @NotNull List<Holder<Enchantment>> getEnchantmentsForRarity(@NotNull Function<ResourceKey<Enchantment>, Holder<Enchantment>> lookup, @NotNull List<Rarity> rarities) {
+		List<Holder<Enchantment>> enchantments = Lists.newArrayList();
 		if (rarities.contains(Rarity.COMMON)) {
-			enchantments.addAll(LootModifierHelper.getCommonEnchantments().getValues());
+			enchantments.addAll(LootModifierHelper.getCommonEnchantments(lookup).getValues());
 		}
 		if (rarities.contains(Rarity.RARE)) {
-			enchantments.addAll(LootModifierHelper.getRareEnchantments().getValues());
+			enchantments.addAll(LootModifierHelper.getRareEnchantments(lookup).getValues());
 		}
 		if (rarities.contains(Rarity.VERY_RARE)) {
-			enchantments.addAll(LootModifierHelper.getVeryRareEnchantments().getValues());
+			enchantments.addAll(LootModifierHelper.getVeryRareEnchantments(lookup).getValues());
 		}
 		if (rarities.contains(Rarity.TREASURE)) {
-			enchantments.addAll(LootModifierHelper.getAllTreasureEnchantments().getValues());
+			enchantments.addAll(LootModifierHelper.getAllTreasureEnchantments(lookup).getValues());
 		}
 		return enchantments;
 	}
 	
 	static @NotNull List<Holder<Enchantment>> getValidGoldenEnchantments(@NotNull Collection<? extends Holder<Enchantment>> enchantments) {
-		return enchantments.stream().filter(enchantment -> enchantment.is(XSEnchantmentTags.GOLDEN_ENCHANTMENT)).collect(Collectors.toList());
+		return enchantments.stream().filter(GoldenEnchantmentHelper::isEnchantment).collect(Collectors.toList());
 	}
 	
 	static int getEmeraldCount(@NotNull RandomSource rng, int level) {

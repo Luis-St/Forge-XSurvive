@@ -18,6 +18,7 @@
 
 package net.luis.xsurvive.dependency.xbackpack;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.luis.xbackpack.network.XBNetworkHandler;
 import net.luis.xbackpack.network.packet.extension.UpdateAnvilPacket;
 import net.luis.xbackpack.world.capability.BackpackProvider;
@@ -25,9 +26,11 @@ import net.luis.xbackpack.world.inventory.AbstractExtensionContainerMenu;
 import net.luis.xbackpack.world.inventory.extension.AnvilExtensionMenu;
 import net.luis.xbackpack.world.inventory.extension.slot.ExtensionSlot;
 import net.luis.xbackpack.world.inventory.handler.CraftingHandler;
-import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
+import net.luis.xsurvive.world.item.enchantment.GoldenEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -36,15 +39,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -150,8 +153,8 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 		} else {
 			ItemStack resultStack = leftStack.copy();
 			ItemStack rightStack = this.handler.getInputHandler().getStackInSlot(1);
-			Map<Enchantment, Integer> resultEnchantments = EnchantmentHelper.getEnchantments(resultStack);
-			repairCost += leftStack.getBaseRepairCost() + (rightStack.isEmpty() ? 0 : rightStack.getBaseRepairCost());
+			ItemEnchantments.Mutable resultEnchantments = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(resultStack));
+			repairCost += leftStack.getOrDefault(DataComponents.REPAIR_COST, 0) + rightStack.getOrDefault(DataComponents.REPAIR_COST, 0);
 			this.repairItemCountCost = 0;
 			boolean enchantedBook;
 			if (leftStack.getItem() instanceof EnchantedGoldenBookItem) {
@@ -162,8 +165,8 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				if (!this.isEventCanceled(leftStack, rightStack, repairCost)) {
 					return;
 				}
-				enchantedBook = rightStack.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(rightStack).isEmpty();
-				if (resultStack.isDamageableItem() && resultStack.getItem().isValidRepairItem(leftStack, rightStack)) {
+				enchantedBook = rightStack.has(DataComponents.STORED_ENCHANTMENTS);
+				if (resultStack.isDamageableItem() && resultStack.isValidRepairItem(rightStack)) {
 					int damage = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (damage <= 0) {
 						this.handler.getResultHandler().setStackInSlot(0, ItemStack.EMPTY);
@@ -199,53 +202,44 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 						}
 					}
 					boolean survival = false;
-					Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(rightStack);
-					for (Map.Entry<Enchantment, Integer> entry : rightEnchantments.entrySet()) {
-						Enchantment rightEnchantment = entry.getKey();
-						if (rightEnchantment != null) {
-							int resultLevel = resultEnchantments.getOrDefault(rightEnchantment, 0);
-							int rightLevel = entry.getValue();
-							if (rightEnchantment instanceof IEnchantment ench) {
-								if (resultLevel == rightLevel) {
-									if (!ench.isGoldenLevel(resultLevel) && rightEnchantment.getMaxLevel() > rightLevel) {
-										rightLevel++;
-									}
-								} else {
-									rightLevel = Math.max(rightLevel, resultLevel);
+					ItemEnchantments rightEnchantments = rightStack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+					for (Object2IntMap.Entry<Holder<Enchantment>> entry : rightEnchantments.entrySet()) {
+						Holder<Enchantment> rightEnchantment = entry.getKey();
+						int resultLevel = resultEnchantments.getLevel(rightEnchantment);
+						int rightLevel = entry.getValue();
+						if (GoldenEnchantmentHelper.isGoldenEnchantment(rightEnchantment)) {
+							if (resultLevel == rightLevel) {
+								if (!GoldenEnchantmentHelper.isGoldenLevel(rightEnchantment, resultLevel) && rightEnchantment.value().getMaxLevel() > rightLevel) {
+									rightLevel++;
 								}
 							} else {
-								XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(rightEnchantment));
-								XSurvive.LOGGER.info("A deprecate vanilla logic is called");
-								rightLevel = resultLevel == rightLevel ? rightLevel + 1 : Math.max(rightLevel, resultLevel);
+								rightLevel = Math.max(rightLevel, resultLevel);
 							}
-							boolean canEnchantOrCreative = rightEnchantment.canEnchant(leftStack);
-							if (this.player.getAbilities().instabuild || leftStack.is(Items.ENCHANTED_BOOK)) {
-								canEnchantOrCreative = true;
+						} else {
+							rightLevel = resultLevel == rightLevel ? rightLevel + 1 : Math.max(rightLevel, resultLevel);
+						}
+						boolean canEnchantOrCreative = rightEnchantment.value().canEnchant(leftStack);
+						if (this.player.getAbilities().instabuild || leftStack.is(Items.ENCHANTED_BOOK)) {
+							canEnchantOrCreative = true;
+						}
+						for (Holder<Enchantment> resultEnchantment : resultEnchantments.keySet()) {
+							if (resultEnchantment != rightEnchantment && !Enchantment.areCompatible(rightEnchantment, resultEnchantment)) {
+								canEnchantOrCreative = false;
+								++enchantCost;
 							}
-							for (Enchantment resultEnchantment : resultEnchantments.keySet()) {
-								if (resultEnchantment != rightEnchantment && !rightEnchantment.isCompatibleWith(resultEnchantment)) {
-									canEnchantOrCreative = false;
-									++enchantCost;
-								}
+						}
+						if (canEnchantOrCreative) {
+							resultEnchantments.set(rightEnchantment, rightLevel);
+							int anvilCost = rightEnchantment.value().getAnvilCost();
+							if (enchantedBook) {
+								anvilCost = Math.max(1, anvilCost / 2);
 							}
-							if (canEnchantOrCreative) {
-								resultEnchantments.put(rightEnchantment, rightLevel);
-								int rarityCost = switch (rightEnchantment.getRarity()) {
-									case COMMON -> 1;
-									case UNCOMMON -> 2;
-									case RARE -> 4;
-									case VERY_RARE -> 8;
-								};
-								if (enchantedBook) {
-									rarityCost = Math.max(1, rarityCost / 2);
-								}
-								enchantCost += rarityCost * rightLevel;
-								if (leftStack.getCount() > 1) {
-									enchantCost = 40;
-								}
-							} else {
-								survival = true;
+							enchantCost += anvilCost * rightLevel;
+							if (leftStack.getCount() > 1) {
+								enchantCost = 40;
 							}
+						} else {
+							survival = true;
 						}
 					}
 					if (survival) {
@@ -264,7 +258,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				resultStack = ItemStack.EMPTY;
 			}
 			if (!rightStack.isEmpty() && !resultStack.isEmpty()) {
-				List<Enchantment> enchantments = new ArrayList<>();
+				List<Holder<Enchantment>> enchantments = new ArrayList<>();
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(leftStack));
 				enchantments.addAll(XSEnchantmentHelper.getGoldenEnchantments(rightStack));
 				if (!enchantments.isEmpty()) {
@@ -272,13 +266,13 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 				}
 			}
 			if (!resultStack.isEmpty()) {
-				int baseRepairCost = resultStack.getBaseRepairCost();
-				if (!rightStack.isEmpty() && baseRepairCost < rightStack.getBaseRepairCost()) {
-					baseRepairCost = rightStack.getBaseRepairCost();
+				int baseRepairCost = resultStack.getOrDefault(DataComponents.REPAIR_COST, 0);
+				if (!rightStack.isEmpty() && baseRepairCost < rightStack.getOrDefault(DataComponents.REPAIR_COST, 0)) {
+					baseRepairCost = rightStack.getOrDefault(DataComponents.REPAIR_COST, 0);
 				}
 				baseRepairCost = calculateIncreasedRepairCost(baseRepairCost);
-				resultStack.setRepairCost(baseRepairCost);
-				EnchantmentHelper.setEnchantments(resultEnchantments, resultStack);
+				resultStack.set(DataComponents.REPAIR_COST, baseRepairCost);
+				EnchantmentHelper.setEnchantments(resultStack, resultEnchantments.toImmutable());
 			}
 			this.handler.getResultHandler().setStackInSlot(0, resultStack);
 			this.broadcastChanges();
@@ -301,7 +295,7 @@ public class XSAnvilExtensionMenu extends AnvilExtensionMenu {
 			return true;
 		}
 		this.handler.getResultHandler().setStackInSlot(0, event.getOutput());
-		this.cost = event.getCost();
+		this.cost = (int) event.getCost();
 		this.repairItemCountCost = event.getMaterialCost();
 		this.broadcastChanges();
 		return false;

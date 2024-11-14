@@ -23,6 +23,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,11 +34,11 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSBiomeTags {
 	
-	public static final TagKey<Biome> IS_MOUNTAIN = bind(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "is_mountain"));
+	public static final TagKey<Biome> IS_MOUNTAIN = bind("is_mountain");
 	
 	public static void register() {}
 	
-	private static @NotNull TagKey<Biome> bind(@NotNull ResourceLocation location) {
-		return TagKey.create(Registries.BIOME, location);
+	private static @NotNull TagKey<Biome> bind(@NotNull String name) {
+		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 }

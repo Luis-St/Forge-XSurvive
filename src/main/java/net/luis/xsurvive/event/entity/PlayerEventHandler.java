@@ -97,8 +97,8 @@ public class PlayerEventHandler {
 				event.setCanceled(true);
 			} else if ((left.isEnchantable() || left.isEnchanted()) && right.getItem() instanceof EnchantedGoldenBookItem) {
 				Holder<Enchantment> enchantment = EnchantedGoldenBookItem.getEnchantment(right);
-				if (enchantment != null && enchantment.is(XSEnchantmentTags.GOLDEN_ENCHANTMENT)) {
-					EnchantedItem enchantedItem = enchantment.is(XSEnchantmentTags.UPGRADE_ENCHANTMENT) ? GoldenEnchantmentHelper.upgrade(left, right) : GoldenEnchantmentHelper.merge(left, right);
+				if (enchantment != null && GoldenEnchantmentHelper.isEnchantment(enchantment)) {
+					EnchantedItem enchantedItem = GoldenEnchantmentHelper.isUpgradeEnchantment(enchantment) ? GoldenEnchantmentHelper.upgrade(left, right) : GoldenEnchantmentHelper.merge(left, right);
 					event.setOutput(enchantedItem.stack());
 					event.setCost(enchantedItem.cost());
 				}
@@ -264,7 +264,7 @@ public class PlayerEventHandler {
 					}
 					player.openMenu(new SimpleMenuProvider((id, inventory, playerIn) -> new EnderChestMenu(id, inventory), ENDER_CHEST));
 					player.awardStat(Stats.OPEN_ENDERCHEST);
-					PiglinAi.angerNearbyPiglins(player, true);
+					PiglinAi.angerNearbyPiglins(serverLevel, player, true);
 					level.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENDER_CHEST_OPEN, SoundSource.BLOCKS, 0.5F, player.getRandom().nextFloat() * 0.1F + 0.9F);
 				}
 			} else if (state.getBlock() == Blocks.BELL) {

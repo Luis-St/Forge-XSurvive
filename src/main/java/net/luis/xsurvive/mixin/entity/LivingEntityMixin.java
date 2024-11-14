@@ -27,8 +27,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.DamageResistant;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -113,7 +113,8 @@ public abstract class LivingEntityMixin extends Entity implements ILivingEntity 
 					continue;
 				}
 				float slotDamage = calculateArmorDamage(source, (damage / 4.0F) / 2.0F, slot);
-				if (!(source.is(DamageTypeTags.IS_FIRE) && stack.has(DataComponents.FIRE_RESISTANT)) && slotDamage > 0.0F) {
+				DamageResistant resistant = stack.get(DataComponents.DAMAGE_RESISTANT);
+				if (!(resistant != null && resistant.isResistantTo(source)) && slotDamage > 0.0F) {
 					if (stack.getItem() instanceof ArmorItem) {
 						stack.hurtAndBreak((int) slotDamage, (LivingEntity) (Object) this, slot);
 					}

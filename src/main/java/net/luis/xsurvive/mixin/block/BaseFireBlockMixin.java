@@ -47,7 +47,7 @@ public abstract class BaseFireBlockMixin {
 	
 	@Inject(method = "getState", at = @At("HEAD"), cancellable = true)
 	private static void getState(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CallbackInfoReturnable<BlockState> callback) {
-		if (XSBlocks.MYSTIC_FIRE.get().canSurvive(blockGetter, pos)) {
+		if (MysticFireBlock.canSurvive(blockGetter, pos)) {
 			callback.setReturnValue(XSBlocks.MYSTIC_FIRE.get().getStateForPlacement(blockGetter, pos));
 		}
 	}

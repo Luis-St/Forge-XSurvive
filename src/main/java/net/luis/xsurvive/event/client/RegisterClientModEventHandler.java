@@ -18,19 +18,14 @@
 
 package net.luis.xsurvive.event.client;
 
-import com.google.common.collect.Lists;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.gui.screens.inventory.tooltip.ClientShulkerBoxTooltip;
 import net.luis.xsurvive.client.renderer.item.XSItemDecorator;
 import net.luis.xsurvive.world.entity.XSEntityTypes;
-import net.luis.xsurvive.world.inventory.XSRecipeBookTypes;
 import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxContent;
-import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,8 +34,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-
-import static net.luis.xsurvive.client.XSRecipeBookCategories.*;
 
 /**
  *
@@ -73,19 +66,6 @@ public class RegisterClientModEventHandler {
 		for (Item item : ForgeRegistries.ITEMS) {
 			event.register(item, new XSItemDecorator(Minecraft.getInstance()));
 		}
-	}
-	
-	@SubscribeEvent
-	public static void registerRecipeBookCategories(@NotNull RegisterRecipeBookCategoriesEvent event) {
-		event.registerBookCategories(XSRecipeBookTypes.SMELTING, Lists.newArrayList(SMELTING_FURNACE_SEARCH, SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
-		event.registerAggregateCategory(SMELTING_FURNACE_SEARCH, Lists.newArrayList(SMELTING_FURNACE_BLOCKS, SMELTING_FURNACE_MISC));
-		event.registerRecipeCategoryFinder(XSRecipeTypes.SMELTING.get(), (recipe) -> {
-			ClientLevel level = Minecraft.getInstance().level;
-			if (level != null && recipe.getResultItem(level.registryAccess()).getItem() instanceof BlockItem) {
-				return SMELTING_FURNACE_BLOCKS;
-			}
-			return SMELTING_FURNACE_MISC;
-		});
 	}
 	
 	@SubscribeEvent

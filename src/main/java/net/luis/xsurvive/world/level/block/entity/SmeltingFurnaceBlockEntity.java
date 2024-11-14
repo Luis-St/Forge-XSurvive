@@ -27,6 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.NotNull;
 public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	
 	public SmeltingFurnaceBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-		super(XSBlockEntityTypes.SMELTING_FURNACE.get(), pos, state, XSRecipeTypes.SMELTING.get());
+		super(XSBlockEntityTypes.SMELTING_FURNACE.get(), pos, state, XSRecipeTypes.XSMELTING.get());
 	}
 	
 	@Override
@@ -48,8 +49,8 @@ public class SmeltingFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 	}
 	
 	@Override
-	protected int getBurnDuration(@NotNull ItemStack stack) {
-		return super.getBurnDuration(stack) / 2;
+	protected int getBurnDuration(@NotNull FuelValues fuelValues, @NotNull ItemStack stack) {
+		return super.getBurnDuration(fuelValues, stack) / 2;
 	}
 	
 	@Override

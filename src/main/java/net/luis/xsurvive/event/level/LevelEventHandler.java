@@ -88,7 +88,7 @@ public class LevelEventHandler {
 	@SubscribeEvent
 	public static void createSpawnPosition(@NotNull CreateSpawnPosition event) {
 		if (event.getLevel() instanceof ServerLevel level) {
-			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
+			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
 			if (pair != null) {
 				ChunkPos pos = level.getChunk(pair.getFirst()).getPos();
 				BlockPos spawnPos = getSpawnPos(level, pos);
@@ -102,7 +102,7 @@ public class LevelEventHandler {
 	}
 	
 	private static @NotNull HolderSet<Structure> getHolderSet(@NotNull Registry<Structure> registry) {
-		return HolderSet.direct(registry.getHolderOrThrow(BuiltinStructures.VILLAGE_PLAINS));
+		return HolderSet.direct(registry.getOrThrow(BuiltinStructures.VILLAGE_PLAINS));
 	}
 	
 	private static @Nullable BlockPos getSpawnPos(@NotNull ServerLevel level, @NotNull ChunkPos pos) {

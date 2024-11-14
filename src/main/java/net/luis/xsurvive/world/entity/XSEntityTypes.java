@@ -19,10 +19,17 @@
 package net.luis.xsurvive.world.entity;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.core.XSResourceKeys;
 import net.luis.xsurvive.world.entity.projectile.CursedEyeOfEnder;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.*;
 import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
 
 /**
  *
@@ -35,7 +42,11 @@ public class XSEntityTypes {
 	
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, XSurvive.MOD_ID);
 	
-	public static final RegistryObject<EntityType<CursedEyeOfEnder>> CURSED_ENDER_EYE = ENTITY_TYPES.register("cursed_ender_eye", () -> {
-		return EntityType.Builder.<CursedEyeOfEnder>of(CursedEyeOfEnder::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(4).build("cursed_ender_eye");
+	public static final RegistryObject<EntityType<CursedEyeOfEnder>> CURSED_ENDER_EYE = register("cursed_ender_eye", (key) -> {
+		return EntityType.Builder.<CursedEyeOfEnder>of(CursedEyeOfEnder::new, MobCategory.MISC).sized(0.25F, 0.25F).clientTrackingRange(4).updateInterval(4).build(key);
 	});
+	
+	private static <T extends Entity> @NotNull RegistryObject<EntityType<T>> register(@NotNull String name, Function<ResourceKey<EntityType<?>>, @NotNull EntityType<T>> entityType) {
+		return ENTITY_TYPES.register(name, () -> entityType.apply(XSResourceKeys.createEntityTypeKey(name)));
+	}
 }

@@ -16,13 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.tag;
+package net.luis.xsurvive.world.item.crafting;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.core.XSResourceKeys;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.crafting.RecipePropertySet;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,14 +31,9 @@ import org.jetbrains.annotations.NotNull;
  *
  */
 
-public class XSEnchantmentTags {
+public class XSRecipePropertySets {
 	
-	public static final TagKey<Enchantment> GOLDEN_ENCHANTMENT = bind("golden_enchantment");
-	public static final TagKey<Enchantment> UPGRADE_ENCHANTMENT = bind("upgrade_enchantment");
+	public static final ResourceKey<RecipePropertySet> XSMELTING_FURNACE_INPUT = XSResourceKeys.createRecipePropertySetKey("xsmelting_furnace_input");
 	
 	public static void register() {}
-	
-	private static @NotNull TagKey<Enchantment> bind(@NotNull String name) {
-		return EnchantmentTags.create(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
-	}
 }

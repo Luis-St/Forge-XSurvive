@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  *
  */
 
-public class GlintColorHandler { // ToDo: Remove comment after testing
+public class GlintColorHandler {
 	
 	private static final ThreadLocal<ItemStack> STACK = new ThreadLocal<>();
 	
@@ -65,18 +65,6 @@ public class GlintColorHandler { // ToDo: Remove comment after testing
 	public static @NotNull RenderType getEntityGlint() {
 		return renderType(XSurviveRenderType.entityGlint, RenderType::entityGlint);
 	}
-	
-	//public static @NotNull RenderType getGlintDirect() {
-	//	return renderType(XSurviveRenderType.glintDirect, RenderType::glintDirect);
-	//}
-	
-	public static @NotNull RenderType getEntityGlintDirect() {
-		return renderType(XSurviveRenderType.entityGlintDirect, RenderType::entityGlintDirect);
-	}
-	
-	//public static @NotNull RenderType getArmorGlint() {
-	//	return renderType(XSurviveRenderType.armorGlint, RenderType::armorGlint);
-	//}
 	
 	public static @NotNull RenderType getArmorEntityGlint() {
 		return renderType(XSurviveRenderType.armorEntityGlint, RenderType::armorEntityGlint);

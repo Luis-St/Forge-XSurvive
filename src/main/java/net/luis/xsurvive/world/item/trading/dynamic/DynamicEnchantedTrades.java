@@ -19,6 +19,7 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
 import net.luis.xsurvive.util.Rarity;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -44,8 +45,8 @@ public class DynamicEnchantedTrades {
 	
 	public static @NotNull ItemListing randomEnchantedItem(@NotNull Item item, int emeralds, int maxUses, int villagerXp, float priceMultiplier) {
 		return (villager, rng) -> {
-			Registry<Enchantment> registry = villager.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
-			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), Math.max(emeralds / 2, 1), getNonTreasureEnchantments(registry.holders().toList()).stream());
+			Registry<Enchantment> registry = villager.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			ItemStack stack = EnchantmentHelper.enchantItem(rng, new ItemStack(item), Math.max(emeralds / 2, 1), getNonTreasureEnchantments(XSEnchantmentHelper.getEnchantments(registry)).stream());
 			return new MerchantOffer(new ItemCost(Items.EMERALD, emeralds + getEmeraldCount(stack)), stack, maxUses, villagerXp, priceMultiplier);
 		};
 	}
@@ -53,16 +54,18 @@ public class DynamicEnchantedTrades {
 	public static @NotNull ItemListing randomEnchantedBook(int villagerLevel, @NotNull List<Rarity> rarities) {
 		return (villager, rng) -> {
 			Holder<Enchantment> enchantment = random(getValidEnchantments(villager, rarities), rng);
-			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, 1));
+			ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+			stack.enchant(enchantment, 1);
 			return new MerchantOffer(new ItemCost(Items.EMERALD, getEmeraldCount(rng, enchantment.value().getMaxLevel())), Optional.of(new ItemCost(Items.BOOK)), stack, 1, getVillagerXp(villagerLevel), 0.2F);
 		};
 	}
 	
 	public static @NotNull ItemListing randomEnchantedGoldenBook(int villagerLevel) {
 		return (villager, rng) -> {
-			Registry<Enchantment> registry = villager.registryAccess().registry(Registries.ENCHANTMENT).orElseThrow();
-			Holder<Enchantment> enchantment = random(getValidGoldenEnchantments(registry.holders().toList()), rng);
-			ItemStack stack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.value().getMaxLevel()));
+			Registry<Enchantment> registry = villager.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			Holder<Enchantment> enchantment = random(getValidGoldenEnchantments(XSEnchantmentHelper.getEnchantments(registry)), rng);
+			ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+			stack.enchant(enchantment, enchantment.value().getMaxLevel());
 			return new MerchantOffer(new ItemCost(Items.EMERALD, 64), Optional.empty(), stack, 1, getVillagerXp(villagerLevel), 0.02F);
 		};
 	}

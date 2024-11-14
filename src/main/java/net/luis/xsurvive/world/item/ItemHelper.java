@@ -19,7 +19,6 @@
 package net.luis.xsurvive.world.item;
 
 import com.google.common.collect.Lists;
-import net.luis.xores.world.item.XOItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +33,7 @@ import static net.luis.xsurvive.world.item.XSItems.*;
  *
  */
 
-public class ItemHelper {
+public class ItemHelper {  // ToDo: Add when xores is updated
 	
 	public static @NotNull List<Item> getLeatherArmor() {
 		return Lists.newArrayList(Items.LEATHER_HELMET, Items.LEATHER_CHESTPLATE, Items.LEATHER_LEGGINGS, Items.LEATHER_BOOTS);
@@ -60,14 +59,14 @@ public class ItemHelper {
 		return Lists.newArrayList(Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
 	}
 	
-	public static @NotNull List<Item> getEnderiteArmor() {
+	/*public static @NotNull List<Item> getEnderiteArmor() {
 		List<Item> items = Lists.newArrayList();
 		items.add(XOItems.ENDERITE_HELMET.get());
 		items.add(XOItems.ENDERITE_CHESTPLATE.get());
 		items.add(XOItems.ENDERITE_LEGGINGS.get());
 		items.add(XOItems.ENDERITE_BOOTS.get());
 		return items;
-	}
+	}*/
 	
 	public static @NotNull List<Item> getWoodWeapons() {
 		return Lists.newArrayList(Items.WOODEN_SWORD, Items.WOODEN_AXE);
@@ -93,10 +92,10 @@ public class ItemHelper {
 		return Lists.newArrayList(Items.NETHERITE_SWORD, Items.NETHERITE_AXE);
 	}
 	
-	public static @NotNull List<Item> getEnderiteWeapons() {
+	/*public static @NotNull List<Item> getEnderiteWeapons() {
 		List<Item> items = Lists.newArrayList();
 		items.add(XOItems.ENDERITE_SWORD.get());
 		items.add(XOItems.ENDERITE_AXE.get());
 		return items;
-	}
+	}*/
 }

@@ -32,11 +32,9 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.*;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.common.loot.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -95,7 +93,7 @@ public class GoldenBookModifier extends LootModifier {
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull LootTable lootTable, @NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		for (int i = 0; i < this.goldenBookCount; i++) {
 			generatedLoot.add(this.getGoldenBook(context));
 		}

@@ -18,6 +18,7 @@
 
 package net.luis.xsurvive.mixin.entity.boss;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -47,12 +48,12 @@ public abstract class EndCrystalMixin extends Entity {
 	}
 	
 	@Shadow
-	protected abstract void onDestroyedBy(@NotNull DamageSource source);
+	protected abstract void onDestroyedBy(@NotNull ServerLevel serverLevel, @NotNull DamageSource source);
 	//endregion
 	
-	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-	public void hurt(@NotNull DamageSource source, float amount, @NotNull CallbackInfoReturnable<Boolean> callback) {
-		if (this.isInvulnerableTo(source)) {
+	@Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
+	public void hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource source, float amount, @NotNull CallbackInfoReturnable<Boolean> callback) {
+		if (this.isInvulnerableToBase(source)) {
 			callback.setReturnValue(false);
 		} else if (source.getEntity() instanceof EnderDragon) {
 			callback.setReturnValue(false);
@@ -64,7 +65,7 @@ public abstract class EndCrystalMixin extends Entity {
 				if (!source.is(DamageTypeTags.IS_EXPLOSION)) {
 					this.level().explode(null, this.getX(), this.getY(), this.getZ(), 9.0F, Level.ExplosionInteraction.BLOCK);
 				}
-				this.onDestroyedBy(source);
+				this.onDestroyedBy(serverLevel, source);
 			}
 			callback.setReturnValue(true);
 		}

@@ -59,7 +59,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 			boolean hurt;
 			if (this.getOwner() instanceof LivingEntity owner) {
 				DamageSource source = this.damageSources().witherSkull((WitherSkull) (Object) this, owner);
-				hurt = target.hurt(source, 12.0F);
+				hurt = target.hurtServer(level, source, 12.0F);
 				if (hurt) {
 					owner.heal(10.0F);
 					if (target.isAlive()) {
@@ -67,7 +67,7 @@ public abstract class WitherSkullMixin extends AbstractHurtingProjectile {
 					}
 				}
 			} else {
-				hurt = target.hurt(this.damageSources().magic(), 10.0F);
+				hurt = target.hurtServer(level, this.damageSources().magic(), 10.0F);
 			}
 			if (hurt && target instanceof LivingEntity livingTarget) {
 				int duration = 0;

@@ -23,12 +23,13 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.phys.shapes.*;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -54,6 +55,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	private static final VoxelShape EAST_AABB = box(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
 	private static final VoxelShape NORTH_AABB = box(0.0, 0.0, 0.0, 16.0, 16.0, 1.0);
 	private static final VoxelShape SOUTH_AABB = box(0.0, 0.0, 15.0, 16.0, 16.0, 16.0);
+	public static final IntegerProperty AGE = BlockStateProperties.AGE_15;
 	public static final BooleanProperty NORTH = PipeBlock.NORTH;
 	public static final BooleanProperty EAST = PipeBlock.EAST;
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
@@ -64,8 +66,8 @@ public class MysticFireBlock extends BaseFireBlock {
 	
 	public MysticFireBlock(@NotNull Properties properties) {
 		super(properties, 3.0F);
-		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE));
-		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false));
+		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().filter(state -> state.getValue(AGE) == 0).collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
 	}
 	
 	private static @NotNull VoxelShape calculateShape(@NotNull BlockState state) {
@@ -99,8 +101,13 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
-		return this.canSurvive(state, level, pos) ? getState(level, pos) : Blocks.AIR.defaultBlockState();
+	protected @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess tickAccess, @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState, @NotNull RandomSource rng) {
+		return this.canSurvive(state, level, pos) ? this.getStateWithAge(level, pos, state.getValue(AGE)) : Blocks.AIR.defaultBlockState();
+	}
+	
+	private @NotNull BlockState getStateWithAge(@NotNull LevelReader level, BlockPos pos, int age) {
+		BlockState state = getState(level, pos);
+		return state.is(Blocks.FIRE) ? state.setValue(AGE, age) : state;
 	}
 	
 	@Override
@@ -130,22 +137,18 @@ public class MysticFireBlock extends BaseFireBlock {
 	
 	public boolean canCatchFire(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull Direction direction) {
 		BlockState state = blockGetter.getBlockState(pos.relative(direction));
-		return state.is(Tags.Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN);
+		return state.is(Tags.Blocks.OBSIDIANS);
 	}
 	
 	@Override
-	public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader, @NotNull BlockPos pos) {
-		return this.canSurvive(levelReader, pos);
+	protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
+		return canSurvive(level, pos);
 	}
 	
-	public boolean canSurvive(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
-		return this.isValidFireLocation(blockGetter, pos);
-	}
-	
-	private boolean isValidFireLocation(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
+	public static boolean canSurvive(@NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
 		for (Direction direction : Direction.values()) {
 			BlockState state = blockGetter.getBlockState(pos.relative(direction));
-			if (state.is(Tags.Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN)) {
+			if (state.is(Tags.Blocks.OBSIDIANS)) {
 				return true;
 			}
 		}
@@ -155,5 +158,11 @@ public class MysticFireBlock extends BaseFireBlock {
 	@Override
 	protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> definitionBuilder) {
 		definitionBuilder.add(NORTH, EAST, SOUTH, WEST, UP);
+	}
+	
+	@Override
+	protected void onPlace(@NotNull BlockState newState, @NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState currentState, boolean flag) {
+		super.onPlace(newState, level, pos, currentState, flag);
+		level.scheduleTick(pos, this, 30 + level.random.nextInt(10));
 	}
 }

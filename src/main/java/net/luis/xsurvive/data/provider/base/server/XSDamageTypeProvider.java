@@ -16,7 +16,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.server;
 
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.minecraft.data.worldgen.BootstrapContext;

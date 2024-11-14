@@ -33,7 +33,7 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 public class XBCommonSetup {
 	
 	public static void commonSetup() {
-		BackpackConstants.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.SMELTING.get());
+		BackpackConstants.FURNACE_RECIPE_TYPES.add(XSRecipeTypes.XSMELTING.get());
 		ExtensionMenuRegistry.registerOverride(BackpackExtensions.ANVIL.get(), XSurvive.MOD_NAME, XSAnvilExtensionMenu::new);
 	}
 }

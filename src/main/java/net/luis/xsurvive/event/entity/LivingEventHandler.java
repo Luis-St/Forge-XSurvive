@@ -79,8 +79,11 @@ public class LivingEventHandler {
 				int thunderbolt = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.THUNDERBOLT, player);
 				if (harmingCurse > 0) {
 					float damage = (amount / 2.0F) * harmingCurse;
-					if (player.hurt(new DamageSource(player.level().registryAccess().registry(Registries.DAMAGE_TYPE).orElseThrow().getHolderOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget), damage)) {
-						event.setCanceled(true);
+					if (player.level() instanceof ServerLevel serverLevel) {
+						DamageSource damageSource = new DamageSource(serverLevel.registryAccess().lookup(Registries.DAMAGE_TYPE).orElseThrow().getOrThrow(XSDamageTypes.CURSE_OF_HARMING), livingTarget);
+						if (player.hurtServer(serverLevel, damageSource, damage)) {
+							event.setCanceled(true);
+						}
 					}
 				}
 				if (thunderbolt > 0 && player.level() instanceof ServerLevel serverLevel) {

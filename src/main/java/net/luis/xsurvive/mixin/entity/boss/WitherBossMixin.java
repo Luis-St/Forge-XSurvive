@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.entity.boss;
 
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -62,9 +63,9 @@ public abstract class WitherBossMixin extends Monster {
 	public abstract void setInvulnerableTicks(int invulnerableTicks);
 	//endregion
 	
-	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-	public void hurt(@NotNull DamageSource source, float amount, @NotNull CallbackInfoReturnable<Boolean> callback) {
-		if (this.isInvulnerableTo(source)) {
+	@Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
+	public void hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float amount, @NotNull CallbackInfoReturnable<Boolean> callback) {
+		if (this.isInvulnerableToBase(source)) {
 			callback.setReturnValue(false);
 		} else if (!source.is(DamageTypeTags.IS_DROWNING) && !source.is(DamageTypeTags.WITHER_IMMUNE_TO) && !(source.getEntity() instanceof WitherBoss)) {
 			if (this.getInvulnerableTicks() > 0 && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -82,7 +83,7 @@ public abstract class WitherBossMixin extends Monster {
 						for (int i = 0; i < this.idleHeadUpdates.length; ++i) {
 							this.idleHeadUpdates[i] += 3;
 						}
-						callback.setReturnValue(super.hurt(source, amount));
+						callback.setReturnValue(super.hurtServer(level, source, amount));
 					}
 				}
 			}

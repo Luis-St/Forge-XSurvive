@@ -33,12 +33,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class XSItemTags {
 	
-	public static final TagKey<Item> OCEAN_MONUMENT_BLOCKS = bind(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "ocean_monument_blocks"));
-	public static final TagKey<Item> SUB_INGOTS = bind(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "sub_ingots"));
+	public static final TagKey<Item> OCEAN_MONUMENT_BLOCKS = bind("ocean_monument_blocks");
+	public static final TagKey<Item> SUB_INGOTS = bind("sub_ingots");
+	public static final TagKey<Item> CHEST_WEARABLE = bind("chest_wearable");
 	
 	public static void register() {}
 	
-	private static @NotNull TagKey<Item> bind(@NotNull ResourceLocation location) {
-		return ItemTags.create(location);
+	private static @NotNull TagKey<Item> bind(@NotNull String name) {
+		return ItemTags.create(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 }

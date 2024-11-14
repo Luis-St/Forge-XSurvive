@@ -46,7 +46,7 @@ public class XSItemDecorator implements IItemDecorator {
 	public boolean render(@NotNull GuiGraphics graphics, @NotNull Font font, @NotNull ItemStack stack, int xOffset, int yOffset) {
 		LocalPlayer player = this.minecraft.player;
 		if (player != null) {
-			if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
+			if (!player.getCooldowns().isOnCooldown(stack)) {
 				double endAspectCooldown = PlayerProvider.getLocal(player).getEndAspectPercent();
 				if (endAspectCooldown > 0 && stack.getEnchantments().getLevel(XSEnchantments.ASPECT_OF_THE_END.getOrThrow(player)) > 0) {
 					graphics.fill(RenderType.guiOverlay(), xOffset, yOffset + Mth.floor(16.0 * (1.0 - endAspectCooldown)), xOffset + 16, Mth.ceil(16.0 * endAspectCooldown), Integer.MAX_VALUE);

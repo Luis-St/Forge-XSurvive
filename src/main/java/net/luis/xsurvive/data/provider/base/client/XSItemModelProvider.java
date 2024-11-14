@@ -16,14 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.luis.xsurvive.data.provider.base;
+package net.luis.xsurvive.data.provider.base.client;
 
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.ExistingModelFile;
@@ -49,10 +48,11 @@ public class XSItemModelProvider extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
-			if (item instanceof TieredItem tieredItem) {
-				this.handheldItem(tieredItem);
-			} else {
-				this.generatedItem(item);
+			switch (item) {
+				case SwordItem swordItem -> this.handheldItem(swordItem);
+				case DiggerItem diggerItem -> this.handheldItem(diggerItem);
+				case null -> throw new NullPointerException("Item is null");
+				default -> this.generatedItem(item);
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class XSItemModelProvider extends ItemModelProvider {
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "item/" + location.getPath()));
 	}
 	
-	private void handheldItem(@NotNull TieredItem tool) {
+	private void handheldItem(@NotNull Item tool) {
 		ResourceLocation location = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(tool));
 		ModelFile model = new ExistingModelFile(ResourceLocation.withDefaultNamespace("item/handheld"), this.existingFileHelper);
 		this.getBuilder(location.getPath()).parent(model).texture("layer0", ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "item/" + location.getPath()));

@@ -75,8 +75,10 @@ public abstract class BlockItemMixin extends Item {
 		return super.getTooltipImage(stack);
 	}
 	
+	//ItemStack p_40572_, Item.TooltipContext p_327780_, List<Component> p_40574_, TooltipFlag p_40575_
+	
 	@Inject(method = "appendHoverText", at = @At("HEAD"), cancellable = true)
-	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag, @NotNull CallbackInfo callback) {
+	public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> components, @NotNull TooltipFlag flag, @NotNull CallbackInfo callback) {
 		if (this.getBlock() instanceof ShulkerBoxBlock) {
 			callback.cancel();
 		}

@@ -82,19 +82,23 @@ public abstract class EnderDragonMixin extends Mob {
 			float z = (this.random.nextFloat() - 0.5F) * 8.0F;
 			this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getX() + x, this.getY() + 2.0 + y, this.getZ() + z, 0.0, 0.0, 0.0);
 		}
-		boolean doMobDrop = this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
-		if (this.level() instanceof ServerLevel) {
-			if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0 && doMobDrop) {
-				this.addDragonExperience(new ArrayList<>(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.08)));
-			}
-			if (this.dragonDeathTime == 1 && !this.isSilent()) {
-				this.level().globalLevelEvent(1028, this.blockPosition(), 0);
+		if (this.level() instanceof ServerLevel serverLevel) {
+			boolean doMobDrop = serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
+			if (this.level() instanceof ServerLevel) {
+				if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0 && doMobDrop) {
+					this.addDragonExperience(new ArrayList<>(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.08)));
+				}
+				if (this.dragonDeathTime == 1 && !this.isSilent()) {
+					this.level().globalLevelEvent(1028, this.blockPosition(), 0);
+				}
 			}
 		}
+		
 		this.move(MoverType.SELF, new Vec3(0.0, 0.1, 0.0));
 		this.setYRot(this.getYRot() + 20.0F);
 		this.yBodyRot = this.getYRot();
-		if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel) {
+		if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel serverLevel) {
+			boolean doMobDrop = serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
 			if (doMobDrop) {
 				this.addDragonExperience(new ArrayList<>(this.dragonFight.dragonEvent.getPlayers()), ForgeEventFactory.getExperienceDrop(this, this.unlimitedLastHurtByPlayer, Mth.floor(12000 * 0.2)));
 			}

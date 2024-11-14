@@ -74,7 +74,7 @@ public abstract class AbstractLevelHandler implements ILevel {
 			return new Pair<>(null, null);
 		}
 		Pair<Integer, Integer> effects = this.beaconEffects.get(pos);
-		return new Pair<>(MOB_EFFECT.getHolder(effects.getFirst()).orElseThrow(), MOB_EFFECT.getHolder(effects.getSecond()).orElseThrow());
+		return new Pair<>(MOB_EFFECT.get(effects.getFirst()).orElseThrow(), MOB_EFFECT.get(effects.getSecond()).orElseThrow());
 	}
 	
 	//region NBT
