@@ -53,14 +53,6 @@ import java.util.stream.Stream;
 
 public class EntityHelper {
 	
-	public static boolean isAffectedByEnderSlayer(@NotNull Entity entity) {
-		return entity instanceof EnderMan || entity instanceof Endermite || entity instanceof Shulker;
-	}
-	
-	public static boolean isAffectedByImpaling(@NotNull LivingEntity entity) {
-		return entity instanceof WaterAnimal || entity instanceof Guardian;
-	}
-	
 	public static boolean isAffectedByFrost(@NotNull Entity entity) {
 		return entity instanceof MagmaCube || entity instanceof Ghast || entity instanceof Blaze || entity instanceof Strider;
 	}

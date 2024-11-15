@@ -19,12 +19,17 @@
 package net.luis.xsurvive.data.provider.base.server.tag;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.core.XSResourceKeys;
+import net.luis.xsurvive.tag.XSEnchantmentTags;
+import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -52,9 +57,23 @@ public class XSEnchantmentTagsProvider extends TagsProvider<Enchantment> {
 			.add(CURSE_OF_HARMING, CURSE_OF_BREAKING);
 		this.tag(EnchantmentTags.BOOTS_EXCLUSIVE).add(VOID_WALKER);
 		this.tag(EnchantmentTags.DAMAGE_EXCLUSIVE).add(ENDER_SLAYER);
-		this.tag(EnchantmentTags.TREASURE).add(MULTI_DROP, SMELTING, VOID_WALKER, THUNDERBOLT, VOID_PROTECTION, REPLANTING, ASPECT_OF_THE_END, REACHING);
-		this.tag(EnchantmentTags.NON_TREASURE).add(ENDER_SLAYER, FROST_ASPECT, POISON_ASPECT, EXPLOSION, BLASTING, HARVESTING, EXPLOSION, GROWTH);
-		this.tag(EnchantmentTags.ON_RANDOM_LOOT).add(CURSE_OF_HARMING, CURSE_OF_BREAKING).remove(ASPECT_OF_THE_END);
+		this.tag(EnchantmentTags.TREASURE)
+			.add(MULTI_DROP, SMELTING, VOID_WALKER, THUNDERBOLT, VOID_PROTECTION, REPLANTING, ASPECT_OF_THE_END, REACHING);
+		this.tag(EnchantmentTags.NON_TREASURE)
+			.add(ENDER_SLAYER, FROST_ASPECT, POISON_ASPECT, EXPLOSION, BLASTING, HARVESTING, EXPLOSION, GROWTH);
+		this.tag(EnchantmentTags.ON_RANDOM_LOOT)
+			.add(CURSE_OF_HARMING, CURSE_OF_BREAKING).remove(ASPECT_OF_THE_END);
+		this.tag(XSEnchantmentTags.GOLDEN_ENCHANTMENT)
+			.add(MULTI_DROP, ENDER_SLAYER, FROST_ASPECT, POISON_ASPECT, EXPERIENCE, BLASTING, HARVESTING, EXPLOSION, REACHING, GROWTH)
+			.add(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.FEATHER_FALLING, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION)
+			.add(Enchantments.SHARPNESS, Enchantments.BANE_OF_ARTHROPODS, Enchantments.FIRE_ASPECT, Enchantments.IMPALING)
+			.add(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.LOOTING, Enchantments.SWEEPING_EDGE)
+			.add(Enchantments.EFFICIENCY, Enchantments.UNBREAKING, Enchantments.FORTUNE, Enchantments.POWER, Enchantments.PUNCH, Enchantments.LUCK_OF_THE_SEA)
+			.add(Enchantments.LURE, Enchantments.LOYALTY, Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);
+		this.tag(XSEnchantmentTags.UPGRADE_ENCHANTMENT)
+			.add(ASPECT_OF_THE_END, REACHING, VOID_PROTECTION)
+			.add(Enchantments.WIND_BURST, Enchantments.BREACH, Enchantments.DENSITY);
+		this.tag(XSEnchantmentTags.DEFAULT_PROTECTION).add(Enchantments.PROTECTION);
 	}
 	
 	@Override

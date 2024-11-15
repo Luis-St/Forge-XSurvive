@@ -18,6 +18,8 @@
 
 package net.luis.xsurvive.data.provider.base.server.tag;
 
+import net.luis.xores.tags.XOItemTags;
+import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.tag.XSBlockTags;
 import net.luis.xsurvive.tag.XSItemTags;
@@ -46,10 +48,11 @@ public class XSItemTagsProvider extends ItemTagsProvider {
 	}
 	
 	@Override
-	protected void addTags(HolderLookup.@NotNull Provider lookup) { // ToDo: Add when xores is updated
+	protected void addTags(HolderLookup.@NotNull Provider lookup) {
 		this.copy(XSBlockTags.OCEAN_MONUMENT_BLOCKS, XSItemTags.OCEAN_MONUMENT_BLOCKS);
-		this.tag(XSItemTags.SUB_INGOTS).add(Items.NETHERITE_SCRAP/*, XOItems.ENDERITE_SCRAP.get(), XOItems.NIGHT_SCRAP.get()*/);
-		this.tag(XSItemTags.CHEST_WEARABLE).addTag(ItemTags.CHEST_ARMOR)/*.addTag(XOItemTags.ELYTRA_CHESTPLATE)*/.add(Items.ELYTRA);
+		this.tag(XSItemTags.SUB_INGOTS).add(Items.NETHERITE_SCRAP, XOItems.ENDERITE_SCRAP.get(), XOItems.NIGHT_SCRAP.get());
+		this.tag(XSItemTags.CHEST_WEARABLE).addTag(ItemTags.CHEST_ARMOR).addTag(XOItemTags.ELYTRA_CHESTPLATES).add(Items.ELYTRA);
+		this.tag(XSItemTags.IMPALING_WEAPONS).addTag(ItemTags.TRIDENT_ENCHANTABLE).addTag(ItemTags.WEAPON_ENCHANTABLE);
 	}
 	
 	@Override

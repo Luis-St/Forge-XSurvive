@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "honey",
+  "ingredients": [
+    "minecraft:melon_slice",
+    "minecraft:honey_bottle"
+  ],
+  "result": {
+    "count": 1,
+    "id": "xsurvive:honey_melon_slice"
+  }
+}

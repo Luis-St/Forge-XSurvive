@@ -36,6 +36,7 @@ public class XSItemTags {
 	public static final TagKey<Item> OCEAN_MONUMENT_BLOCKS = bind("ocean_monument_blocks");
 	public static final TagKey<Item> SUB_INGOTS = bind("sub_ingots");
 	public static final TagKey<Item> CHEST_WEARABLE = bind("chest_wearable");
+	public static final TagKey<Item> IMPALING_WEAPONS = bind("impaling_weapons");
 	
 	public static void register() {}
 	

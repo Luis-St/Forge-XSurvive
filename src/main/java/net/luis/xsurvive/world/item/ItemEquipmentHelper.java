@@ -18,6 +18,7 @@
 
 package net.luis.xsurvive.world.item;
 
+import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.util.WeightCollection;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -59,23 +60,23 @@ public class ItemEquipmentHelper {
 		return itemWeights;
 	}
 	
-	public static @NotNull WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {  // ToDo: Add when xores is updated
+	public static @NotNull WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
 		WeightCollection<Item> itemWeights = new WeightCollection<>();
-		/*if (difficulty >= 5.5) {
+		if (difficulty >= 5.5) {
 			itemWeights.add(10, XOItems.ENDERITE_CROSSBOW.get());
 		}
 		if (difficulty >= 4.0) {
 			itemWeights.add(30, XOItems.NETHERITE_CROSSBOW.get());
-		}*/
+		}
 		itemWeights.add(4.0 >= difficulty ? 50 : 80, Items.CROSSBOW);
 		return itemWeights;
 	}
 	
 	public static @NotNull WeightCollection<List<Item>> getArmorWeightsForDifficulty(double difficulty) {
 		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
-		/*if (difficulty >= 5.5) {
+		if (difficulty >= 5.5) {
 			itemWeights.add(1, ItemHelper.getEnderiteArmor());
-		}*/
+		}
 		if (difficulty >= 4.5) {
 			itemWeights.add(10, ItemHelper.getNetheriteArmor());
 		}

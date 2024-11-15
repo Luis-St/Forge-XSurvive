@@ -23,16 +23,13 @@ import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -77,7 +74,7 @@ public class XSLanguageProvider extends LanguageProvider {
 	}
 	
 	@Override
-	protected void addTranslations() { // ToDo: Add enchantment translations
+	protected void addTranslations() {
 		for (Item item : XSItems.ITEMS.getEntries().stream().map(RegistryObject::get).toList()) {
 			this.add(item, getLocalizedName(ForgeRegistries.ITEMS.getKey(item)));
 		}
@@ -94,18 +91,42 @@ public class XSLanguageProvider extends LanguageProvider {
 			ResourceLocation location = Objects.requireNonNull(ForgeRegistries.VILLAGER_PROFESSIONS.getKey(profession));
 			this.add("entity.minecraft.villager." + XSurvive.MOD_ID + "." + location.getPath(), getName(location));
 		}
+		this.add("enchantment.xsurvive.aspect_of_the_end", "Aspect of The End");
+		this.add("enchantment.xsurvive.blasting", "Blasting");
+		this.add("enchantment.xsurvive.curse_of_breaking", "Curse of Breaking");
+		this.add("enchantment.xsurvive.curse_of_harming", "Curse of Harming");
+		this.add("enchantment.xsurvive.ender_slayer", "Ender Slayer");
+		this.add("enchantment.xsurvive.experience", "Experience");
+		this.add("enchantment.xsurvive.explosion", "Explosion");
+		this.add("enchantment.xsurvive.frost_aspect", "Frost Aspect");
+		this.add("enchantment.xsurvive.growth", "Growth");
+		this.add("enchantment.xsurvive.harvesting", "Harvesting");
+		this.add("enchantment.xsurvive.multi_drop", "Multi Drop");
+		this.add("enchantment.xsurvive.poison_aspect", "Poison Aspect");
+		this.add("enchantment.xsurvive.reaching", "Reaching");
+		this.add("enchantment.xsurvive.replanting", "Replanting");
+		this.add("enchantment.xsurvive.smelting", "Smelting");
+		this.add("enchantment.xsurvive.thunderbolt", "Thunderbolt");
+		this.add("enchantment.xsurvive.void_protection", "Void Protection");
+		this.add("enchantment.xsurvive.void_walker", "Void Walker");
+		
 		this.add("item_tab." + XSurvive.MOD_ID + ".runes", "Runes");
 		this.add("item_tab." + XSurvive.MOD_ID + ".golden_book", "Golden Books");
+		
 		this.add("death.attack.curse_of_harming", "{0} die by his own weapon");
 		this.add("death.attack.curse_of_harming.player", "{0} die by his own weapon whilst fighting {1}");
+		
 		this.add(XSurvive.MOD_ID + ".container.smelting_furnace", "Smelting Furnace");
 		this.add(XSurvive.MOD_ID + ".gui.recipebook.toggleRecipes.smeltable", "Showing Smeltable");
+		
 		this.add("options." + XSurvive.MOD_ID + ".gamma.infinite", "Infinite");
 		this.add("options." + XSurvive.MOD_ID + ".glint.defaultVanilla", "Default vanilla");
 		this.add("options." + XSurvive.MOD_ID + ".glint.maxVanilla", "Max vanilla");
 		this.add("options." + XSurvive.MOD_ID + ".glint.original", "Original");
+		
 		this.add(XSurvive.MOD_ID + ".commands.gamma.get", "Gamma value is set to {0}");
 		this.add(XSurvive.MOD_ID + ".commands.gamma.success", "Successfully sets the gamma value to {0}");
+		
 		this.add("message.xsurvive.sleeping", "Sleeping was disabled to increase the difficulty");
 	}
 	

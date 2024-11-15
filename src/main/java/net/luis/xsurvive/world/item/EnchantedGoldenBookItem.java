@@ -62,14 +62,6 @@ public class EnchantedGoldenBookItem extends Item {
 		}
 	}
 	
-	//@Override // ToDo: Mixin replacement EnchantmentHelper.getEnchantmentLevel
-	//public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-	//	if (this.getEnchantment(stack) == enchantment) {
-	//		return 1;
-	//	}
-	//	return 0;
-	//}
-	
 	public static @Nullable Holder<Enchantment> getEnchantment(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
 			ItemEnchantments enchantments = stack.getOrDefault(ENCHANTMENTS, ItemEnchantments.EMPTY);

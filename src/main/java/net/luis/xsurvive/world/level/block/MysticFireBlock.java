@@ -55,7 +55,6 @@ public class MysticFireBlock extends BaseFireBlock {
 	private static final VoxelShape EAST_AABB = box(15.0, 0.0, 0.0, 16.0, 16.0, 16.0);
 	private static final VoxelShape NORTH_AABB = box(0.0, 0.0, 0.0, 16.0, 16.0, 1.0);
 	private static final VoxelShape SOUTH_AABB = box(0.0, 0.0, 15.0, 16.0, 16.0, 16.0);
-	public static final IntegerProperty AGE = BlockStateProperties.AGE_15;
 	public static final BooleanProperty NORTH = PipeBlock.NORTH;
 	public static final BooleanProperty EAST = PipeBlock.EAST;
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
@@ -66,8 +65,8 @@ public class MysticFireBlock extends BaseFireBlock {
 	
 	public MysticFireBlock(@NotNull Properties properties) {
 		super(properties, 3.0F);
-		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false));
-		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().filter(state -> state.getValue(AGE) == 0).collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false));
+		this.shapesCache = ImmutableMap.copyOf(this.stateDefinition.getPossibleStates().stream().collect(Collectors.toMap(Function.identity(), MysticFireBlock::calculateShape)));
 	}
 	
 	private static @NotNull VoxelShape calculateShape(@NotNull BlockState state) {
@@ -102,12 +101,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	
 	@Override
 	protected @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull LevelReader level, @NotNull ScheduledTickAccess tickAccess, @NotNull BlockPos pos, @NotNull Direction direction, @NotNull BlockPos neighborPos, @NotNull BlockState neighborState, @NotNull RandomSource rng) {
-		return this.canSurvive(state, level, pos) ? this.getStateWithAge(level, pos, state.getValue(AGE)) : Blocks.AIR.defaultBlockState();
-	}
-	
-	private @NotNull BlockState getStateWithAge(@NotNull LevelReader level, BlockPos pos, int age) {
-		BlockState state = getState(level, pos);
-		return state.is(Blocks.FIRE) ? state.setValue(AGE, age) : state;
+		return this.canSurvive(state, level, pos) ? getState(level, pos) : Blocks.AIR.defaultBlockState();
 	}
 	
 	@Override
@@ -156,7 +150,7 @@ public class MysticFireBlock extends BaseFireBlock {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(@NotNull StateDefinition.Builder<Block, BlockState> definitionBuilder) {
+	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> definitionBuilder) {
 		definitionBuilder.add(NORTH, EAST, SOUTH, WEST, UP);
 	}
 	

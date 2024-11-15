@@ -35,6 +35,7 @@ public class XSEnchantmentTags {
 	
 	public static final TagKey<Enchantment> GOLDEN_ENCHANTMENT = bind("golden_enchantment");
 	public static final TagKey<Enchantment> UPGRADE_ENCHANTMENT = bind("upgrade_enchantment");
+	public static final TagKey<Enchantment> DEFAULT_PROTECTION = bind("default_protection");
 	
 	public static void register() {}
 	

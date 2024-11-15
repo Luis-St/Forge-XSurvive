@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "netherite",
+  "key": {
+    "#": "minecraft:netherite_scrap",
+    "?": "minecraft:gold_block"
+  },
+  "pattern": [
+    "###",
+    "#?#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:netherite_ingot"
+  }
+}

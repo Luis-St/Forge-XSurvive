@@ -1,0 +1,9 @@
+{
+  "remove": [
+    "xsurvive:aspect_of_the_end"
+  ],
+  "values": [
+    "xsurvive:curse_of_harming",
+    "xsurvive:curse_of_breaking"
+  ]
+}

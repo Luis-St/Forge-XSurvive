@@ -117,12 +117,6 @@ public class LivingEventHandler {
 		LivingEntity target = event.getEntity();
 		DamageSource source = event.getSource();
 		float newAmount = event.getAmount();
-		if (source.getEntity() instanceof Player player) {
-			int impaling = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.IMPALING, player); // ToDo: Override via Datapack
-			if (impaling > 0 && EntityHelper.isAffectedByImpaling(target)) {
-				newAmount *= 2.5F;
-			}
-		}
 		if (target instanceof Player player && source.is(DamageTypes.FELL_OUT_OF_WORLD) && newAmount > 0) {
 			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.VOID_PROTECTION, player);
 			if (voidProtection > 0) {

@@ -1,6 +1,10 @@
 {
   "values": [
     "minecraft:lightning_bolt",
+    "minecraft:falling_block",
+    "minecraft:falling_anvil",
+    "minecraft:falling_stalactite",
+    "minecraft:mace_smash",
     "#minecraft:damages_helmet"
   ]
 }

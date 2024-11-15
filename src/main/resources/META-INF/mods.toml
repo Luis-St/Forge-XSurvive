@@ -36,8 +36,8 @@ mandatory = false
 versionRange = "[${MinecraftVersion}-${XBackpackVersion},)"
 ordering = "BEFORE"
 
-[[dependencies.xsurvive]]
-modId = "xores"
-mandatory = true
-versionRange = "[${MinecraftVersion}-${XOresVersion},)"
-ordering = "BEFORE"
+#[[dependencies.xsurvive]]
+#modId = "xores"
+#mandatory = true
+#versionRange = "[${MinecraftVersion}-${XOresVersion},)"
+#ordering = "BEFORE"

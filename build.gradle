@@ -70,7 +70,7 @@ dependencies {
 	annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 	
 	implementation "net.luis:XBackpack:${MinecraftVersion}-${XBackpackVersion}"
-	/*implementation "net.luis:XOres:${MinecraftVersion}-${XOresVersion}"*/
+	implementation "net.luis:XOres:${MinecraftVersion}-${XOresVersion}"
 }
 
 compileJava.dependsOn(updateLicenses)

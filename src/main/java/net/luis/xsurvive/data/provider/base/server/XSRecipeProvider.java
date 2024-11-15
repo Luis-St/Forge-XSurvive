@@ -129,8 +129,7 @@ public class XSRecipeProvider extends RecipeProvider {
 	}
 	
 	protected void smeltingFurnaceRecipe(@NotNull RecipeCategory category, @NotNull TagKey<Item> input, @NotNull Item result) {
-		HolderSet<Item> inputItems = this.items.getOrThrow(input);
-		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(inputItems), result, 0.5F), input.location().getPath(), Ingredient.of(inputItems), result)
+		this.groupAndUnlock(SmeltingRecipeBuilder.of(category, Ingredient.of(this.items.getOrThrow(input)), result, 0.5F), input.location().getPath(), input, result)
 			.save(this.output, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, getId(result) + "_from_xsmelting").toString());
 	}
 	
@@ -141,11 +140,8 @@ public class XSRecipeProvider extends RecipeProvider {
 		return builder.group(group);
 	}
 	
-	protected @NotNull RecipeBuilder groupAndUnlock(@NotNull RecipeBuilder builder, @NotNull String group, @NotNull Ingredient ingredientCriterion, @NotNull Item itemCriterion) {
-		for (Holder<Item> item : ingredientCriterion.items()) {
-			Item actualItem = item.get();
-			builder.unlockedBy("has_" + getId(actualItem), this.has(actualItem));
-		}
+	protected @NotNull RecipeBuilder groupAndUnlock(@NotNull RecipeBuilder builder, @NotNull String group, @NotNull TagKey<Item> tagCriterion, @NotNull Item itemCriterion) {
+		builder.unlockedBy("has_" + tagCriterion.location().getPath(), this.has(tagCriterion));
 		return this.groupAndUnlock(builder, group, itemCriterion);
 	}
 	

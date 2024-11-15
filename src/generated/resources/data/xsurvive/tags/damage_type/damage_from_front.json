@@ -1,6 +1,16 @@
 {
   "values": [
     "minecraft:sting",
+    "minecraft:arrow",
+    "minecraft:trident",
+    "minecraft:mob_projectile",
+    "minecraft:spit",
+    "minecraft:wind_charge",
+    "minecraft:fireworks",
+    "minecraft:fireball",
+    "minecraft:unattributed_fireball",
+    "minecraft:wither_skull",
+    "minecraft:thrown",
     "#minecraft:is_projectile"
   ]
 }

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_charcoal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:charcoal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_logs": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "xsurvive:charcoal_from_xsmelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_logs",
+      "has_charcoal"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "xsurvive:charcoal_from_xsmelting"
+    ]
+  }
+}

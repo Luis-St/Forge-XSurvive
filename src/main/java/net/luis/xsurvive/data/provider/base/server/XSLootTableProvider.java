@@ -40,8 +40,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class XSLootTableProvider extends LootTableProvider {
 	
-	public XSLootTableProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> provider) {
-		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)), provider);
+	public XSLootTableProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookupProvider) {
+		super(generator.getPackOutput(), Set.of(), Lists.newArrayList(new SubProviderEntry(XSBlockLootSubProvider::new, LootContextParamSets.BLOCK)), lookupProvider);
 	}
 	
 	@Override
