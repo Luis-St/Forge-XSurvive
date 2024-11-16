@@ -10,6 +10,7 @@
 		"block.SugarCaneBlockMixin",
 		"block.WitherSkullBlockMixin",
 		"enchantment.EnchantmentHelperMixin",
+		"enchantment.EnchantmentMixin",
 		"entity.ai.AssignProfessionFromJobSiteMixin",
 		"entity.ai.EvokerSummonSpellGoalMixin",
 		"entity.ai.ResetProfessionMixin",
@@ -32,8 +33,6 @@
 		"entity.LivingEntityMixin",
 		"entity.ServerEntityMixin",
 		"item.BlockItemMixin",
-		"item.CreativeModeTabsMixin",
-		
 		"item.ItemStackMixin",
 		"menu.AnvilMenuMixin",
 		"menu.BeaconMenuMixin",

@@ -276,7 +276,7 @@ public class XSEnchantmentProvider {
 			Enchantment.definition(
 				itemLookup.getOrThrow(ItemTags.HOES),
 				2,
-				5,
+				1,
 				Enchantment.constantCost(20),
 				Enchantment.constantCost(50),
 				3,

@@ -51,40 +51,6 @@
       "apply": [
         {
           "model": "xsurvive:block/mystic_fire_side0",
-          "y": 180
-        },
-        {
-          "model": "xsurvive:block/mystic_fire_side1",
-          "y": 180
-        },
-        {
-          "model": "xsurvive:block/mystic_fire_side_alt0",
-          "y": 180
-        },
-        {
-          "model": "xsurvive:block/mystic_fire_side_alt1",
-          "y": 180
-        }
-      ],
-      "when": {
-        "OR": [
-          {
-            "south": "true"
-          },
-          {
-            "east": "false",
-            "north": "false",
-            "south": "false",
-            "up": "false",
-            "west": "false"
-          }
-        ]
-      }
-    },
-    {
-      "apply": [
-        {
-          "model": "xsurvive:block/mystic_fire_side0",
           "y": 90
         },
         {
@@ -104,6 +70,40 @@
         "OR": [
           {
             "east": "true"
+          },
+          {
+            "east": "false",
+            "north": "false",
+            "south": "false",
+            "up": "false",
+            "west": "false"
+          }
+        ]
+      }
+    },
+    {
+      "apply": [
+        {
+          "model": "xsurvive:block/mystic_fire_side0",
+          "y": 180
+        },
+        {
+          "model": "xsurvive:block/mystic_fire_side1",
+          "y": 180
+        },
+        {
+          "model": "xsurvive:block/mystic_fire_side_alt0",
+          "y": 180
+        },
+        {
+          "model": "xsurvive:block/mystic_fire_side_alt1",
+          "y": 180
+        }
+      ],
+      "when": {
+        "OR": [
+          {
+            "south": "true"
           },
           {
             "east": "false",
@@ -152,20 +152,16 @@
     {
       "apply": [
         {
-          "model": "xsurvive:block/mystic_fire_up0",
-          "y": 270
+          "model": "xsurvive:block/mystic_fire_up0"
         },
         {
-          "model": "xsurvive:block/mystic_fire_up1",
-          "y": 270
+          "model": "xsurvive:block/mystic_fire_up1"
         },
         {
-          "model": "xsurvive:block/mystic_fire_up_alt0",
-          "y": 270
+          "model": "xsurvive:block/mystic_fire_up_alt0"
         },
         {
-          "model": "xsurvive:block/mystic_fire_up_alt1",
-          "y": 270
+          "model": "xsurvive:block/mystic_fire_up_alt1"
         }
       ],
       "when": {

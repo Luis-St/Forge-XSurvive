@@ -19,9 +19,7 @@
 package net.luis.xsurvive.event.registry;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.server.commands.TestCommand;
 import net.luis.xsurvive.world.item.XSItemCooldowns;
-import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.item.alchemy.XSPotions;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.commands.RaidCommand;
@@ -49,7 +47,6 @@ public class RegisterEventHandler {
 	@SubscribeEvent
 	public static void registerCommands(@NotNull RegisterCommandsEvent event) {
 		RaidCommand.register(event.getDispatcher(), event.getBuildContext());
-		TestCommand.register(event.getDispatcher());
 	}
 	
 	@SubscribeEvent

@@ -27,6 +27,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -76,7 +77,7 @@ public class GoldenEnchantmentHelper {
 		ItemStack result = left.copy();
 		if (right.getItem() instanceof EnchantedGoldenBookItem) {
 			Holder<Enchantment> enchantment = getEnchantment(right);
-			if (enchantment != null && isGoldenEnchantment(enchantment)) {
+			if (enchantment != null && isEnchantment(enchantment)) {
 				int level = EnchantmentHelper.getItemEnchantmentLevel(enchantment, result);
 				if (isUpgradeEnchantment(enchantment) && enchantment.value().getMaxLevel() > level) {
 					increaseEnchantment(enchantment, result, false);

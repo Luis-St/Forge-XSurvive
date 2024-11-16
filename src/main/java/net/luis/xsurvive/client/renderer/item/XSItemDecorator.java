@@ -49,7 +49,9 @@ public class XSItemDecorator implements IItemDecorator {
 			if (!player.getCooldowns().isOnCooldown(stack)) {
 				double endAspectCooldown = PlayerProvider.getLocal(player).getEndAspectPercent();
 				if (endAspectCooldown > 0 && stack.getEnchantments().getLevel(XSEnchantments.ASPECT_OF_THE_END.getOrThrow(player)) > 0) {
-					graphics.fill(RenderType.guiOverlay(), xOffset, yOffset + Mth.floor(16.0 * (1.0 - endAspectCooldown)), xOffset + 16, Mth.ceil(16.0 * endAspectCooldown), Integer.MAX_VALUE);
+					int i = yOffset + Mth.floor(16.0F * (1.0F - endAspectCooldown));
+					int j = i + Mth.ceil(16.0F * endAspectCooldown);
+					graphics.fill(RenderType.gui(), xOffset, i, xOffset + 16, j, 200, Integer.MAX_VALUE);
 					return true;
 				}
 			}
