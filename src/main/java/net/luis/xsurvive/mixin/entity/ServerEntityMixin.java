@@ -20,11 +20,14 @@ package net.luis.xsurvive.mixin.entity;
 
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -73,7 +76,8 @@ public abstract class ServerEntityMixin {
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
 		if (forced || previousStack == null || ItemStack.isSameItemSameComponents(tridentStack, previousStack)) {
 			if (trident.level() instanceof ServerLevel level) {
-				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack));
+				Registry<Enchantment> registry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack, holder -> registry.getKey(holder.value())));
 			}
 		}
 		TRIDENT_STACK_REFERENCES.put(trident, tridentStack);

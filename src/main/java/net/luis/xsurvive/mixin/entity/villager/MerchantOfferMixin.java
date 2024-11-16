@@ -20,6 +20,7 @@ package net.luis.xsurvive.mixin.entity.villager;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +40,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MerchantOfferMixin {
 	
 	//region Mixin
-	@Shadow private ItemStack baseCostA;
+	@Shadow private ItemCost baseCostA;
 	@Shadow private int uses;
 	@Shadow private int maxUses;
 	@Shadow private int specialPriceDiff;
@@ -53,11 +54,12 @@ public abstract class MerchantOfferMixin {
 	
 	@Inject(method = "getCostA", at = @At("TAIL"), cancellable = true)
 	public void getCostA(@NotNull CallbackInfoReturnable<ItemStack> callback) {
-		int baseCount = this.baseCostA.getCount();
+		ItemStack stack = this.baseCostA.itemStack();
+		int baseCount = stack.getCount();
 		int demandCount = (int) Math.max(0, (double) (baseCount * this.demand) * this.priceMultiplier);
 		int count = Mth.clamp(baseCount + demandCount + this.specialPriceDiff, (int) (baseCount * 0.85), (int) (baseCount * 1.2));
-		int clamped = Mth.clamp(count, 1, this.baseCostA.getMaxStackSize());
-		callback.setReturnValue(this.baseCostA.copy().copyWithCount(clamped));
+		int clamped = Mth.clamp(count, 1, stack.getMaxStackSize());
+		callback.setReturnValue(stack.copyWithCount(clamped));
 	}
 	
 	@Inject(method = "getMaxUses", at = @At("HEAD"), cancellable = true)

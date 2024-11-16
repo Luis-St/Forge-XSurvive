@@ -55,14 +55,14 @@ public abstract class BeaconPowerButtonMixin extends BeaconScreen.BeaconScreenBu
 	
 	//region Mixin
 	@Shadow private BeaconScreen this$0;
-	@Shadow private MobEffect effect;
+	@Shadow private Holder<MobEffect> effect;
 	
 	private BeaconPowerButtonMixin(int x, int y) {
 		super(x, y);
 	}
 	
 	@Shadow
-	protected abstract MutableComponent createEffectDescription(@NotNull MobEffect effect);
+	protected abstract @NotNull MutableComponent createEffectDescription(@NotNull Holder<MobEffect> effect);
 	//endregion
 	
 	@Inject(at = @At("HEAD"), method = "updateStatus")

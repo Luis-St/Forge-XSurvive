@@ -21,11 +21,15 @@ package net.luis.xsurvive.world.item.enchantment;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.tag.XSEnchantmentTags;
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import static net.luis.xsurvive.world.item.EnchantedGoldenBookItem.*;
 import static net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper.*;
@@ -116,5 +120,20 @@ public class GoldenEnchantmentHelper {
 	
 	public static @NotNull GoldenEnchantmentInstance createGoldenInstance(@NotNull Holder<Enchantment> enchantment) {
 		return new GoldenEnchantmentInstance(enchantment, enchantment.value().getMaxLevel() + 1);
+	}
+	
+	public static @Nullable Component getFullname(@NotNull Holder<Enchantment> enchantment, int level) {
+		if (isEnchantment(enchantment)) {
+			if ((getMaxGoldenBookLevel(enchantment) >= level && level > enchantment.value().getMaxLevel()) || isUpgradeEnchantment(enchantment)) {
+				MutableComponent component = enchantment.value().description().copy();
+				component.append(" ").append(Component.translatable("enchantment.level." + level));
+				if (enchantment.value().getMaxLevel() >= level && level > 0) {
+					return component.withStyle(ChatFormatting.BLUE);
+				} else {
+					return component.withStyle(ChatFormatting.DARK_PURPLE);
+				}
+			}
+		}
+		return null;
 	}
 }

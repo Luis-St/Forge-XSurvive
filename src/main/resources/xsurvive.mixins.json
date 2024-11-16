@@ -9,7 +9,6 @@
 		"block.BaseFireBlockMixin",
 		"block.SugarCaneBlockMixin",
 		"block.WitherSkullBlockMixin",
-		"enchantment.EnchantmentMixin",
 		"enchantment.EnchantmentHelperMixin",
 		"entity.ai.AssignProfessionFromJobSiteMixin",
 		"entity.ai.EvokerSummonSpellGoalMixin",

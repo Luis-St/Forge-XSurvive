@@ -18,8 +18,10 @@
 
 package net.luis.xsurvive.mixin.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -39,8 +42,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(HumanoidArmorLayer.class)
 public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>> {
 	
-	@Inject(method = "getArmorModel", at = @At("HEAD"), remap = false)
-	private void getArmorModel(@NotNull S state, @NotNull EquipmentSlot slot, @NotNull ItemStack stack, A defaultModel, @NotNull CallbackInfoReturnable<A> callback) {
-		GlintColorHandler.setStack(stack);
+	@Inject(method = "renderArmorPiece", at = @At("HEAD"), remap = false)
+	private void renderArmorPiece(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, @NotNull ItemStack itemStack, @NotNull EquipmentSlot slot, int light, @NotNull A model, @NotNull S state, @NotNull CallbackInfo callback) {
+		GlintColorHandler.setStack(itemStack);
 	}
 }

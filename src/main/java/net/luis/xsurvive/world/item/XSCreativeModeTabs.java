@@ -66,7 +66,7 @@ public class XSCreativeModeTabs {
 			}).build();
 		});
 		TABS.register("golden_book", () -> {
-			return CreativeModeTab.builder().title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".runes")).icon(() -> {
+			return CreativeModeTab.builder().title(Component.translatable("item_tab." + XSurvive.MOD_ID + ".golden_book")).icon(() -> {
 				return new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
 			}).displayItems((parameters, populator) -> {
 				HolderLookup.RegistryLookup<Enchantment> lookup = parameters.holders().lookupOrThrow(Registries.ENCHANTMENT);

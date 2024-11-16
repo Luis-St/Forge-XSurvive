@@ -66,7 +66,7 @@ public class XSEnchantmentTagsProvider extends TagsProvider<Enchantment> {
 		this.tag(XSEnchantmentTags.GOLDEN_ENCHANTMENT)
 			.add(MULTI_DROP, ENDER_SLAYER, FROST_ASPECT, POISON_ASPECT, EXPERIENCE, BLASTING, HARVESTING, EXPLOSION, REACHING, GROWTH)
 			.add(Enchantments.PROTECTION, Enchantments.FIRE_PROTECTION, Enchantments.FEATHER_FALLING, Enchantments.BLAST_PROTECTION, Enchantments.PROJECTILE_PROTECTION)
-			.add(Enchantments.SHARPNESS, Enchantments.BANE_OF_ARTHROPODS, Enchantments.FIRE_ASPECT, Enchantments.IMPALING)
+			.add(Enchantments.SHARPNESS, Enchantments.BANE_OF_ARTHROPODS, Enchantments.SMITE, Enchantments.FIRE_ASPECT, Enchantments.IMPALING)
 			.add(Enchantments.RESPIRATION, Enchantments.DEPTH_STRIDER, Enchantments.SOUL_SPEED, Enchantments.KNOCKBACK, Enchantments.LOOTING, Enchantments.SWEEPING_EDGE)
 			.add(Enchantments.EFFICIENCY, Enchantments.UNBREAKING, Enchantments.FORTUNE, Enchantments.POWER, Enchantments.PUNCH, Enchantments.LUCK_OF_THE_SEA)
 			.add(Enchantments.LURE, Enchantments.LOYALTY, Enchantments.RIPTIDE, Enchantments.QUICK_CHARGE, Enchantments.PIERCING, Enchantments.SWIFT_SNEAK);

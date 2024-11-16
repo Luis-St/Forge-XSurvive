@@ -22,6 +22,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.core.XSResourceKeys;
 import net.luis.xsurvive.core.components.XSDataComponents;
 import net.luis.xsurvive.world.level.block.XSBlocks;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -49,55 +50,55 @@ public class XSItems {
 		return new EnchantedGoldenBookItem(properties.stacksTo(1).rarity(Rarity.RARE));
 	});
 	public static final RegistryObject<Item> WHITE_RUNE = register("white_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.WHITE.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.WHITE.getId()));
 	});
 	public static final RegistryObject<Item> ORANGE_RUNE = register("orange_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.ORANGE.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.ORANGE.getId()));
 	});
 	public static final RegistryObject<Item> MAGENTA_RUNE = register("magenta_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.MAGENTA.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.MAGENTA.getId()));
 	});
 	public static final RegistryObject<Item> LIGHT_BLUE_RUNE = register("light_blue_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_BLUE.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_BLUE.getId()));
 	});
 	public static final RegistryObject<Item> YELLOW_RUNE = register("yellow_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.YELLOW.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.YELLOW.getId()));
 	});
 	public static final RegistryObject<Item> LIME_RUNE = register("lime_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIME.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIME.getId()));
 	});
 	public static final RegistryObject<Item> PINK_RUNE = register("pink_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.PINK.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.PINK.getId()));
 	});
 	public static final RegistryObject<Item> GRAY_RUNE = register("gray_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.GRAY.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.GRAY.getId()));
 	});
 	public static final RegistryObject<Item> LIGHT_GRAY_RUNE = register("light_gray_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_GRAY.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_GRAY.getId()));
 	});
 	public static final RegistryObject<Item> CYAN_RUNE = register("cyan_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.CYAN.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.CYAN.getId()));
 	});
 	public static final RegistryObject<Item> PURPLE_RUNE = register("purple_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.PURPLE.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.PURPLE.getId()));
 	});
 	public static final RegistryObject<Item> BLUE_RUNE = register("blue_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BLUE.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BLUE.getId()));
 	});
 	public static final RegistryObject<Item> BROWN_RUNE = register("brown_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BROWN.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BROWN.getId()));
 	});
 	public static final RegistryObject<Item> GREEN_RUNE = register("green_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.GREEN.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.GREEN.getId()));
 	});
 	public static final RegistryObject<Item> RED_RUNE = register("red_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.RED.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.RED.getId()));
 	});
 	public static final RegistryObject<Item> BLACK_RUNE = register("black_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BLACK.getId()));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.BLACK.getId()));
 	});
 	public static final RegistryObject<Item> RAINBOW_RUNE = register("rainbow_rune", (properties) -> {
-		return new Item(properties.stacksTo(1).component(XSDataComponents.GLINT_COLOR.get(), 16));
+		return new Item(properties.stacksTo(1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), 16));
 	});
 	public static final RegistryObject<Item> HONEY_MELON_SEEDS = register("honey_melon_seeds", (properties) -> {
 		return new BlockItem(XSBlocks.HONEY_MELON_STEM.get(), properties.useItemDescriptionPrefix());
@@ -131,7 +132,7 @@ public class XSItems {
 					new MobEffectInstance(MobEffects.DIG_SPEED, 2400, 1)
 				)
 			)).build()
-		).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_BLUE.getId()));
+		).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_BLUE.getId()));
 	});
 	public static final RegistryObject<Item> CURSED_ENDER_EYE = register("cursed_eye_of_ender", Item::new);
 	

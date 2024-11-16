@@ -125,7 +125,11 @@ public class XSEnchantmentHelper {
 	
 	public static void addEnchantment(@NotNull EnchantmentInstance instance, @NotNull ItemStack stack, boolean present) {
 		ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(stack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY));
-		if ((!hasEnchantment(instance.enchantment, stack) || present) && EnchantmentHelper.isEnchantmentCompatible(enchantments.keySet(), instance.enchantment)) {
+		if (!hasEnchantment(instance.enchantment, stack)) {
+			if (EnchantmentHelper.isEnchantmentCompatible(enchantments.keySet(), instance.enchantment)) {
+				enchantments.set(instance.enchantment, instance.level);
+			}
+		} else if (present) {
 			enchantments.set(instance.enchantment, instance.level);
 		}
 		EnchantmentHelper.setEnchantments(stack, enchantments.toImmutable());

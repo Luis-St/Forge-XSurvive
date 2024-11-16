@@ -28,6 +28,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -43,8 +44,14 @@ import java.util.concurrent.CompletableFuture;
 
 public class XSItemTagsProvider extends ItemTagsProvider {
 	
-	public XSItemTagsProvider(@NotNull DataGenerator generator, @NotNull CompletableFuture<HolderLookup.Provider> lookupProvider, @NotNull CompletableFuture<TagsProvider.TagLookup<Block>> blockTagsProvider, @NotNull ExistingFileHelper existingFileHelper) {
-		super(generator.getPackOutput(), lookupProvider, blockTagsProvider, XSurvive.MOD_ID, existingFileHelper);
+	public XSItemTagsProvider(
+		@NotNull DataGenerator generator,
+		@NotNull CompletableFuture<HolderLookup.Provider> lookupProvider,
+		@NotNull CompletableFuture<TagsProvider.TagLookup<Item>> xoresParentProvider,
+		@NotNull CompletableFuture<TagsProvider.TagLookup<Block>> blockTagsProvider,
+		@NotNull ExistingFileHelper existingFileHelper
+	) {
+		super(generator.getPackOutput(), lookupProvider, xoresParentProvider, blockTagsProvider, XSurvive.MOD_ID, existingFileHelper);
 	}
 	
 	@Override

@@ -84,7 +84,7 @@ public abstract class EnchantmentHelperMixin {
 		}
 	}
 	
-	@Inject(method = "enchantItem", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "enchantItem(Lnet/minecraft/util/RandomSource;Lnet/minecraft/world/item/ItemStack;ILjava/util/stream/Stream;)Lnet/minecraft/world/item/ItemStack;", at = @At("HEAD"), cancellable = true)
 	private static void enchantItem(@NotNull RandomSource rng, @NotNull ItemStack originalStack, int cost, @NotNull Stream<Holder<Enchantment>> enchantmentStream, @NotNull CallbackInfoReturnable<ItemStack> callback) {
 		if (originalStack.getItem() instanceof EnchantedGoldenBookItem) {
 			List<Holder<Enchantment>> enchantments = enchantmentStream.filter(GoldenEnchantmentHelper::isEnchantment).toList();
