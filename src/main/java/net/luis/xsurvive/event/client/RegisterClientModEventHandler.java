@@ -21,11 +21,9 @@ package net.luis.xsurvive.event.client;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.client.gui.screens.inventory.tooltip.ClientShulkerBoxTooltip;
 import net.luis.xsurvive.client.renderer.item.XSItemDecorator;
-import net.luis.xsurvive.world.entity.XSEntityTypes;
 import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxContent;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -66,10 +64,5 @@ public class RegisterClientModEventHandler {
 		for (Item item : ForgeRegistries.ITEMS) {
 			event.register(item, new XSItemDecorator(Minecraft.getInstance()));
 		}
-	}
-	
-	@SubscribeEvent
-	public static void registerRenderers(EntityRenderersEvent.@NotNull RegisterRenderers event) {
-		event.registerEntityRenderer(XSEntityTypes.CURSED_ENDER_EYE.get(), (context) -> new ThrownItemRenderer<>(context, 1.0F, true));
 	}
 }

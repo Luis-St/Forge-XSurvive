@@ -23,7 +23,6 @@
 		"entity.monster.WitherSkeletonMixin",
 		"entity.monster.ZombieVillagerMixin",
 		"entity.projectile.ArrowMixin",
-		"entity.projectile.EyeOfEnderMixin",
 		"entity.projectile.WitherSkullMixin",
 		"entity.villager.MerchantOfferMixin",
 		"entity.villager.PoiTypesMixin",

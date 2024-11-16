@@ -126,8 +126,6 @@ public class XSLanguageProvider extends LanguageProvider {
 		
 		this.add(XSurvive.MOD_ID + ".commands.gamma.get", "Gamma value is set to {0}");
 		this.add(XSurvive.MOD_ID + ".commands.gamma.success", "Successfully sets the gamma value to {0}");
-		
-		this.add("message.xsurvive.sleeping", "Sleeping was disabled to increase the difficulty");
 	}
 	
 	private void add(@NotNull Potion potion) {

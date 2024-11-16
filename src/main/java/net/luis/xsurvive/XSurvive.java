@@ -25,7 +25,6 @@ import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.tag.*;
 import net.luis.xsurvive.world.damagesource.XSDamageTypes;
 import net.luis.xsurvive.world.effect.XSMobEffects;
-import net.luis.xsurvive.world.entity.XSEntityTypes;
 import net.luis.xsurvive.world.entity.ai.village.XSPoiTypes;
 import net.luis.xsurvive.world.entity.npc.XSVillagerProfessions;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
@@ -81,7 +80,6 @@ public class XSurvive {
 		XSMenuTypes.MENU_TYPES.register(eventBus);
 		XSRecipeTypes.RECIPE_TYPES.register(eventBus);
 		XSRecipeSerializers.RECIPE_SERIALIZERS.register(eventBus);
-		XSEntityTypes.ENTITY_TYPES.register(eventBus);
 		XSRecipeBookCategories.RECIPE_BOOK_CATEGORY.register(eventBus);
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> XSSearchRecipeBookCategory::register);
 		XSBiomeTags.register();

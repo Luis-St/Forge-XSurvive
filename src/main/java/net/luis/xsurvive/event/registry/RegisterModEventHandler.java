@@ -52,7 +52,6 @@ public class RegisterModEventHandler {
 			event.accept(XSItems.DIAMOND_APPLE);
 			event.accept(XSItems.ENCHANTED_DIAMOND_APPLE);
 		} else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-			event.accept(XSItems.CURSED_ENDER_EYE);
 			event.accept(XSBlocks.SMELTING_FURNACE);
 		} else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 			event.accept(XSItems.HONEY_MELON_SEEDS);

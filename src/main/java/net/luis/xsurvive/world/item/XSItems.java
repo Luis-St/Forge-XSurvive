@@ -134,7 +134,6 @@ public class XSItems {
 			)).build()
 		).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.LIGHT_BLUE.getId()));
 	});
-	public static final RegistryObject<Item> CURSED_ENDER_EYE = register("cursed_eye_of_ender", Item::new);
 	
 	private static <T extends Item> @NotNull RegistryObject<T> register(@NotNull String name, @NotNull Function<Item.Properties, T> item) {
 		return register(name, new Item.Properties(), item);
