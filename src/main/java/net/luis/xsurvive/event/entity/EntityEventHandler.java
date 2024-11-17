@@ -48,6 +48,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.monster.breeze.Breeze;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
@@ -100,6 +101,8 @@ public class EntityEventHandler {
 							}
 							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.0 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.0 : 1.5
 							EntityHelper.addAttributeModifier(living, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.5
+						} else if (living instanceof Breeze) {
+							// ToDo
 						} else if (living instanceof Enemy || living instanceof AbstractGolem) {
 							EntityHelper.addAttributeModifier(living, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, isHard ? 1.5 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 0.5
 							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.5 : 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 2.0

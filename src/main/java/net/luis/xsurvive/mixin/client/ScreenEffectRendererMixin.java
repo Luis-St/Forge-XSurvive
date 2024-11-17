@@ -24,9 +24,9 @@ import com.mojang.math.Axis;
 import net.luis.xsurvive.client.EntityFireTypeHelper;
 import net.luis.xsurvive.world.entity.EntityProvider;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.CoreShaders;
+import net.minecraft.client.renderer.ScreenEffectRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
@@ -53,27 +53,29 @@ public abstract class ScreenEffectRendererMixin {
 		RenderSystem.enableBlend();
 		Player player = minecraft.player;
 		if (player != null) {
-			TextureAtlasSprite textureSprite = EntityFireTypeHelper.getFireTextureSprite1(player, EntityProvider.get(player).getFireType());
-			RenderSystem.setShaderTexture(0, textureSprite.atlasLocation());
-			float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;
-			float textureSpriteV = (textureSprite.getV0() + textureSprite.getV1()) / 2.0F;
-			float innerU = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getU0(), textureSpriteU);
-			float outerU = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getU1(), textureSpriteU);
-			float innerV = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getV1(), textureSpriteV);
-			float outerV = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getV0(), textureSpriteV);
-			for (int i = 0; i < 2; ++i) {
-				stack.pushPose();
-				stack.translate(-(i * 2 - 1) * 0.24, -0.3, 0.0);
-				stack.mulPose(Axis.YP.rotationDegrees((i * 2 - 1) * 10.0F));
-				Matrix4f matrix = stack.last().pose();
-				BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-				bufferBuilder.addVertex(matrix, -0.5F, -0.5F, -0.5F).setUv(outerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
-				bufferBuilder.addVertex(matrix, 0.5F, -0.5F, -0.5F).setUv(innerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
-				bufferBuilder.addVertex(matrix, 0.5F, 0.5F, -0.5F).setUv(innerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
-				bufferBuilder.addVertex(matrix, -0.5F, 0.5F, -0.5F).setUv(outerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
-				BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
-				stack.popPose();
-			}
+			EntityProvider.getSafe(player).ifPresent(handler -> {
+				TextureAtlasSprite textureSprite = EntityFireTypeHelper.getFireTextureSprite1(player, handler.getFireType());
+				RenderSystem.setShaderTexture(0, textureSprite.atlasLocation());
+				float textureSpriteU = (textureSprite.getU0() + textureSprite.getU1()) / 2.0F;
+				float textureSpriteV = (textureSprite.getV0() + textureSprite.getV1()) / 2.0F;
+				float innerU = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getU0(), textureSpriteU);
+				float outerU = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getU1(), textureSpriteU);
+				float innerV = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getV1(), textureSpriteV);
+				float outerV = Mth.lerp(textureSprite.uvShrinkRatio(), textureSprite.getV0(), textureSpriteV);
+				for (int i = 0; i < 2; ++i) {
+					stack.pushPose();
+					stack.translate(-(i * 2 - 1) * 0.24, -0.3, 0.0);
+					stack.mulPose(Axis.YP.rotationDegrees((i * 2 - 1) * 10.0F));
+					Matrix4f matrix = stack.last().pose();
+					BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+					bufferBuilder.addVertex(matrix, -0.5F, -0.5F, -0.5F).setUv(outerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+					bufferBuilder.addVertex(matrix, 0.5F, -0.5F, -0.5F).setUv(innerU, innerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+					bufferBuilder.addVertex(matrix, 0.5F, 0.5F, -0.5F).setUv(innerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+					bufferBuilder.addVertex(matrix, -0.5F, 0.5F, -0.5F).setUv(outerU, outerV).setColor(1.0F, 1.0F, 1.0F, 0.9F);
+					BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
+					stack.popPose();
+				}
+			});
 		}
 		RenderSystem.disableBlend();
 		RenderSystem.depthMask(true);

@@ -28,6 +28,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipePropertySet;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerConfig;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -49,11 +50,11 @@ public class XSResourceKeys {
 	public static void register() {}
 	
 	public static @NotNull ResourceKey<Block> createBlockKey(@NotNull String name) {
-		return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
+		return net.minecraft.resources.ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 	
 	public static @NotNull ResourceKey<Item> createItemKey(@NotNull String name) {
-		return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
+		return net.minecraft.resources.ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
 	}
 	
 	public static @NotNull ResourceKey<DamageType> createDamageTypeKey(@NotNull String name) {
@@ -70,5 +71,9 @@ public class XSResourceKeys {
 	
 	public static @NotNull ResourceKey<RecipePropertySet> createRecipePropertySetKey(@NotNull String name) {
 		return ResourceKey.create(RecipePropertySet.TYPE_KEY, ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name));
+	}
+	
+	public static @NotNull ResourceKey<TrialSpawnerConfig> createVanillaTrialSpawnerConfigKey(@NotNull String name) {
+		return ResourceKey.create(Registries.TRIAL_SPAWNER_CONFIG, ResourceLocation.withDefaultNamespace(name));
 	}
 }
