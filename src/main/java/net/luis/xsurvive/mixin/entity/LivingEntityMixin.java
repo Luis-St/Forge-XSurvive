@@ -97,8 +97,8 @@ public abstract class LivingEntityMixin extends Entity implements ILivingEntity 
 	
 	@Inject(method = "<init>*", at = @At("RETURN"))
 	private void init(@NotNull CallbackInfo callback) {
-		if (this.level() instanceof ServerLevel && CustomAiManager.INSTANCE.hasFactory((LivingEntity) (Object) this)) {
-			this.customAi = CustomAiManager.INSTANCE.createFactory((LivingEntity) (Object) this, (ServerLevel) this.level());
+		if (this.level() instanceof ServerLevel serverLevel && CustomAiManager.INSTANCE.hasFactory((LivingEntity) (Object) this)) {
+			this.customAi = CustomAiManager.INSTANCE.createFactory((LivingEntity) (Object) this, serverLevel);
 		} else {
 			this.customAi = null;
 		}

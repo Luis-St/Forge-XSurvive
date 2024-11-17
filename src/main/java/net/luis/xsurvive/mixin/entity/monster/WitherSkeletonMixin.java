@@ -19,7 +19,6 @@
 package net.luis.xsurvive.mixin.entity.monster;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.ItemEquipmentHelper;
 import net.luis.xsurvive.world.item.ItemStackHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.minecraft.util.RandomSource;
@@ -65,22 +64,16 @@ public abstract class WitherSkeletonMixin extends AbstractSkeleton {
 	@Inject(method = "populateDefaultEquipmentSlots", at = @At("HEAD"), cancellable = true)
 	protected void populateDefaultEquipmentSlots(@NotNull RandomSource rng, @NotNull DifficultyInstance instance, @NotNull CallbackInfo callback) {
 		if (0.25 > rng.nextDouble()) {
-			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+			this.setItemSlot(EquipmentSlot.MAINHAND, ItemStackHelper.getBowForDifficulty(instance.getDifficulty()));
 		} else {
-			Item weapon = ItemEquipmentHelper.getWeaponWeightsForDifficulty(Math.max(2.75, instance.getEffectiveDifficulty())).next().getFirst();
-			if (weapon instanceof SwordItem) {
-				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(weapon));
-			} else {
-				this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
-				XSurvive.LOGGER.error("Fail to equip difficulty based Sword to Wither Skeleton, since weapon {} is not a Sword", weapon);
-			}
+			this.setItemSlot(EquipmentSlot.MAINHAND, ItemStackHelper.getSwordForDifficulty(instance.getDifficulty(), this));
 		}
 		callback.cancel();
 	}
 	
 	@Inject(method = "populateDefaultEquipmentEnchantments", at = @At("HEAD"))
 	protected void populateDefaultEquipmentEnchantments(@NotNull ServerLevelAccessor level, @NotNull RandomSource rng, @NotNull DifficultyInstance instance, @NotNull CallbackInfo callback) {
-		ItemStack stack = ItemStackHelper.setupItemForSlot(this, EquipmentSlot.MAINHAND, this.getItemInHand(InteractionHand.MAIN_HAND), instance.getSpecialMultiplier());
+		ItemStack stack = ItemStackHelper.setupItemForDifficulty(level.getDifficulty(), this, this.getItemInHand(InteractionHand.MAIN_HAND));
 		XSEnchantmentHelper.removeEnchantment(Enchantments.FLAME.getOrThrow(this), stack);
 		this.setItemSlot(EquipmentSlot.MAINHAND, stack);
 	}

@@ -27,6 +27,7 @@ import net.luis.xsurvive.world.entity.monster.ICreeper;
 import net.luis.xsurvive.world.entity.player.PlayerProvider;
 import net.luis.xsurvive.world.entity.projectile.IArrow;
 import net.luis.xsurvive.world.item.ItemStackHelper;
+import net.luis.xsurvive.world.item.WeaponType;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantmentHelper;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.luis.xsurvive.world.level.LevelHelper;
@@ -34,9 +35,9 @@ import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
@@ -78,108 +79,104 @@ import java.lang.reflect.Method;
 public class EntityEventHandler {
 	
 	private static final Method CAN_STAY_AT = ObfuscationReflectionHelper.findMethod(Shulker.class, "canStayAt", BlockPos.class, Direction.class);
-	public static final ResourceLocation MAX_HEALTH = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_max_health");
-	public static final ResourceLocation ATTACK_DAMAGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_attack_damage");
-	public static final ResourceLocation FOLLOW_RANGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_follow_range");
+	private static final ResourceLocation MAX_HEALTH = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_max_health");
+	private static final ResourceLocation ATTACK_DAMAGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_attack_damage");
+	private static final ResourceLocation FOLLOW_RANGE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "increase_follow_range");
 	
 	@SubscribeEvent
 	public static void entityJoinLevel(@NotNull EntityJoinLevelEvent event) {
-		if (event.getEntity() instanceof LivingEntity entity) {
-			if (!(entity instanceof Player)) {
-				if (entity instanceof EnderDragon || entity instanceof WitherBoss || entity instanceof ElderGuardian || entity instanceof Warden) {
-					AttributeInstance instance = entity.getAttribute(Attributes.MAX_HEALTH);
-					if (instance != null) {
-						instance.setBaseValue(1000.0);
-					}
-					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, 2.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 3.0
-				} else if (entity instanceof Enemy || entity instanceof AbstractGolem) {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, 3.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 4.0
-					EntityHelper.addAttributeModifier(entity, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
-					EntityHelper.addAttributeModifier(entity, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
-				} else {
-					EntityHelper.addAttributeModifier(entity, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
-				}
-				entity.setHealth(entity.getMaxHealth());
-			}
-		}
 		Entity entity = event.getEntity();
-		RandomSource rng = RandomSource.create();
-		if (entity instanceof Player player) {
-			PlayerProvider.get(player).broadcastChanges();
-		} else if (entity instanceof Blaze blaze) {
-			blaze.goalSelector.removeAllGoals(goal -> true);
-			blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
-			blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0));
-			blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0, 0.0F));
-			blaze.goalSelector.addGoal(8, new LookAtPlayerGoal(blaze, Player.class, 8.0F));
-			blaze.goalSelector.addGoal(8, new RandomLookAroundGoal(blaze));
-		} else if (entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.DROWNED || entity.getType() == EntityType.HUSK) {
-			if (entity instanceof Zombie zombie) {
-				DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombie.level(), zombie.blockPosition());
-				if (instance.getEffectiveDifficulty() > 0.0) {
-					EntityHelper.equipEntityForDifficulty(zombie, instance);
+		if (entity.level() instanceof ServerLevel serverLevel) {
+			RandomSource rng = serverLevel.getRandom();
+			Difficulty difficulty = serverLevel.getDifficulty();
+			if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+				boolean isHard = difficulty == Difficulty.HARD;
+				if (event.getEntity() instanceof LivingEntity living) {
+					if (!(living instanceof Player)) {
+						if (living instanceof EnderDragon || living instanceof WitherBoss || living instanceof ElderGuardian || living instanceof Warden) {
+							AttributeInstance instance = living.getAttribute(Attributes.MAX_HEALTH);
+							if (instance != null) {
+								instance.setBaseValue(1000.0);
+							}
+							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.0 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.0 : 1.5
+							EntityHelper.addAttributeModifier(living, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.5
+						} else if (living instanceof Enemy || living instanceof AbstractGolem) {
+							EntityHelper.addAttributeModifier(living, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, isHard ? 1.5 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 0.5
+							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.5 : 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 2.0
+							EntityHelper.addAttributeModifier(living, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.0
+						}
+						living.setHealth(living.getMaxHealth());
+					}
 				}
-				zombie.setCanBreakDoors(true);
+				if (entity instanceof Blaze blaze) {
+					blaze.goalSelector.removeAllGoals(goal -> true);
+					blaze.goalSelector.addGoal(4, new XSBlazeAttackGoal(blaze));
+					blaze.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(blaze, 1.0));
+					blaze.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(blaze, 1.0, 0.0F));
+					blaze.goalSelector.addGoal(8, new LookAtPlayerGoal(blaze, Player.class, 8.0F));
+					blaze.goalSelector.addGoal(8, new RandomLookAroundGoal(blaze));
+				}
+				if (entity.getType() == EntityType.ZOMBIE || entity.getType() == EntityType.DROWNED || entity.getType() == EntityType.HUSK) {
+					if (entity instanceof Zombie zombie) {
+						EntityHelper.equipEntityForDifficulty(serverLevel, WeaponType.SWORD, zombie);
+						if (isHard) {
+							zombie.setCanBreakDoors(true);
+						}
+					}
+				}
+				if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
+					iCreeper.setExplosionRadius(isHard ? 3 : 2);
+					if (isHard && 0.95 > rng.nextDouble()) {
+						iCreeper.setPowered(true);
+					}
+				}
+				if (entity instanceof Spider spider) {
+					spider.goalSelector.removeAllGoals(goal -> true);
+					spider.goalSelector.addGoal(1, new FloatGoal(spider));
+					spider.goalSelector.addGoal(3, new LeapAtTargetGoal(spider, 0.4F));
+					spider.goalSelector.addGoal(4, new XSSpiderAttackGoal(spider));
+					spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8));
+					spider.goalSelector.addGoal(6, new LookAtPlayerGoal(spider, Player.class, 8.0F));
+					spider.goalSelector.addGoal(6, new RandomLookAroundGoal(spider));
+					spider.targetSelector.removeAllGoals(goal -> true);
+					spider.targetSelector.addGoal(1, new HurtByTargetGoal(spider));
+					spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
+					spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
+				}
+				if (entity instanceof AbstractSkeleton skeleton && !(entity instanceof WitherSkeleton)) {
+					EntityHelper.equipEntityForDifficulty(serverLevel, WeaponType.BOW, skeleton);
+				}
+				if (entity instanceof ZombifiedPiglin zombifiedPiglin) {
+					zombifiedPiglin.targetSelector.removeAllGoals(goal -> true);
+					zombifiedPiglin.targetSelector.addGoal(1, new HurtByTargetGoal(zombifiedPiglin).setAlertOthers());
+					zombifiedPiglin.targetSelector.addGoal(2, new XSZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
+					zombifiedPiglin.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(zombifiedPiglin, true));
+					EntityHelper.equipEntityForDifficulty(serverLevel, WeaponType.SWORD, zombifiedPiglin);
+				}
+				if (entity instanceof Vex vex) {
+					vex.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForDifficulty(difficulty, vex, ItemStackHelper.getSwordForDifficulty(difficulty, vex)));
+				}
+				if (entity instanceof Pillager pillager) {
+					pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForDifficulty(difficulty, pillager, ItemStackHelper.getCrossbowForDifficulty(difficulty)));
+				}
+				if (entity instanceof Vindicator vindicator) {
+					vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForDifficulty(difficulty, vindicator, ItemStackHelper.getAxeForDifficulty(difficulty, vindicator)));
+				}
 			}
-		} else if (entity instanceof Creeper creeper && creeper instanceof ICreeper iCreeper) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(creeper.level(), creeper.blockPosition());
-			iCreeper.setExplosionRadius((int) Math.max(3.0, instance.getEffectiveDifficulty()));
-			if (instance.getSpecialMultiplier() >= 1.0 && 0.5 > rng.nextDouble()) {
-				iCreeper.setPowered(true);
-			}
-		} else if (entity instanceof Spider spider) {
-			spider.goalSelector.removeAllGoals(goal -> true);
-			spider.goalSelector.addGoal(1, new FloatGoal(spider));
-			spider.goalSelector.addGoal(3, new LeapAtTargetGoal(spider, 0.4F));
-			spider.goalSelector.addGoal(4, new XSSpiderAttackGoal(spider));
-			spider.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(spider, 0.8));
-			spider.goalSelector.addGoal(6, new LookAtPlayerGoal(spider, Player.class, 8.0F));
-			spider.goalSelector.addGoal(6, new RandomLookAroundGoal(spider));
-			spider.targetSelector.removeAllGoals(goal -> true);
-			spider.targetSelector.addGoal(1, new HurtByTargetGoal(spider));
-			spider.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(spider, Player.class, true));
-			spider.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(spider, IronGolem.class, true));
-		} else if (entity instanceof AbstractSkeleton skeleton && !(entity instanceof WitherSkeleton)) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(skeleton.level(), skeleton.blockPosition());
-			if (instance.getEffectiveDifficulty() > 0.0) {
-				EntityHelper.equipEntityForDifficulty(skeleton, instance);
-			}
-		} else if (entity instanceof ZombifiedPiglin zombifiedPiglin) {
-			zombifiedPiglin.targetSelector.removeAllGoals(goal -> true);
-			zombifiedPiglin.targetSelector.addGoal(1, new HurtByTargetGoal(zombifiedPiglin).setAlertOthers());
-			zombifiedPiglin.targetSelector.addGoal(2, new XSZombifiedPiglinAttackGoal<>(zombifiedPiglin, Player.class, true, false));
-			zombifiedPiglin.targetSelector.addGoal(3, new ResetUniversalAngerTargetGoal<>(zombifiedPiglin, true));
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(zombifiedPiglin.level(), zombifiedPiglin.blockPosition());
-			if (instance.getEffectiveDifficulty() > 0.0) {
-				EntityHelper.equipEntityForDifficulty(zombifiedPiglin, instance);
-			}
-		} else if (entity instanceof Vex vex) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vex.level(), vex.blockPosition());
-			if (instance.getEffectiveDifficulty() > 0.0) {
-				vex.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vex, EquipmentSlot.MAINHAND, ItemStackHelper.getSwordForDifficulty(vex, instance), instance.getSpecialMultiplier()));
-			}
-		} else if (entity instanceof Pillager pillager) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(pillager.level(), pillager.blockPosition());
-			if (instance.getEffectiveDifficulty() > 0.0) {
-				pillager.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(pillager, EquipmentSlot.MAINHAND, ItemStackHelper.getCrossbowForDifficulty(instance), instance.getSpecialMultiplier()));
-			}
-		} else if (entity instanceof Vindicator vindicator) {
-			DifficultyInstance instance = LevelHelper.getCurrentDifficultyAt(vindicator.level(), vindicator.blockPosition());
-			if (instance.getEffectiveDifficulty() > 0.0) {
-				vindicator.setItemInHand(InteractionHand.MAIN_HAND, ItemStackHelper.setupItemForSlot(vindicator, EquipmentSlot.MAINHAND, ItemStackHelper.getAxeForDifficulty(vindicator, instance), instance.getSpecialMultiplier()));
-			}
-		} else if (entity instanceof AbstractArrow abstractArrow && abstractArrow instanceof IArrow arrow) {
-			if (abstractArrow.getOwner() instanceof LivingEntity user && user.getMainHandItem().getItem() instanceof BowItem) {
-				int explosion = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPLOSION, user);
-				if (explosion > 0) {
-					arrow.setExplosionLevel(explosion);
-					user.getMainHandItem().hurtAndBreak(3, user, user.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+			if (entity instanceof AbstractArrow abstractArrow && abstractArrow instanceof IArrow arrow) {
+				if (abstractArrow.getOwner() instanceof LivingEntity user && user.getMainHandItem().getItem() instanceof BowItem) {
+					int explosion = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPLOSION, user);
+					if (explosion > 0) {
+						arrow.setExplosionLevel(explosion);
+						user.getMainHandItem().hurtAndBreak(3, user, user.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+					}
 				}
 			}
 		}
 		EntityProvider.get(entity).broadcastChanges();
-		if (entity instanceof Player) {
-			LevelProvider.get(entity.level()).broadcastChanges();
+		if (entity instanceof Player player) {
+			PlayerProvider.get(player).broadcastChanges();
+			LevelProvider.get(player.level()).broadcastChanges();
 		}
 	}
 	

@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -100,7 +101,9 @@ public abstract class ConduitBlockEntityMixin {
 		
 		if (blockEntity.destroyTarget != null) {
 			level.playSound(null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			if (level instanceof ServerLevel serverLevel) {
+				blockEntity.destroyTarget.hurtServer(serverLevel, level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			}
 		}
 		if (destroyTarget != blockEntity.destroyTarget) {
 			level.sendBlockUpdated(pos, state, state, 2);
