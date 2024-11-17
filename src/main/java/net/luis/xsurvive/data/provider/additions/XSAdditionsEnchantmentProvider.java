@@ -72,12 +72,12 @@ public class XSAdditionsEnchantmentProvider {
 		register(context, Enchantments.RIPTIDE, createRiptide(itemLookup));
 	}
 	
-	public static Enchantment.@NotNull Builder createPunch(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<EntityType<?>> entityTypeLookup) {
+	private static Enchantment.@NotNull Builder createPunch(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<EntityType<?>> entityTypeLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.BOW_ENCHANTABLE),
 					2,
-					3,
+					3, /* 2 -> 3 */
 					Enchantment.dynamicCost(12, 20),
 					Enchantment.dynamicCost(37, 20),
 					4,
@@ -86,7 +86,7 @@ public class XSAdditionsEnchantmentProvider {
 			)
 			.withEffect(
 				EnchantmentEffectComponents.KNOCKBACK,
-				new AddValue(LevelBasedValue.perLevel(1.0F)),
+				new AddValue(LevelBasedValue.perLevel(1.5F, 1.0F)), /* 1.0 + (level * 1.0) -> 1.5 + (level * 1.0) */
 				LootItemEntityPropertyCondition.hasProperties(
 					LootContext.EntityTarget.DIRECT_ATTACKER,
 					EntityPredicate.Builder.entity().of(entityTypeLookup, EntityTypeTags.ARROWS).build()
@@ -94,7 +94,7 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createFireProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
+	private static Enchantment.@NotNull Builder createFireProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
@@ -106,10 +106,10 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.ARMOR
 				)
 			)
-			.exclusiveWith(enchantmentLookup.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
+			.exclusiveWith(enchantmentLookup.getOrThrow(XSEnchantmentTags.DEFAULT_PROTECTION)) /* Custom Tag */
 			.withEffect(
 				EnchantmentEffectComponents.DAMAGE_PROTECTION,
-				new AddValue(LevelBasedValue.perLevel(2.5F)),
+				new AddValue(LevelBasedValue.perLevel(2.5F)), /* 2.0 -> 2.5 */
 				AllOfCondition.allOf(
 					DamageSourceCondition.hasDamageSource(
 						DamageSourcePredicate.Builder.damageType()
@@ -123,13 +123,13 @@ public class XSAdditionsEnchantmentProvider {
 				new EnchantmentAttributeEffect(
 					ResourceLocation.withDefaultNamespace("enchantment.fire_protection"),
 					Attributes.BURNING_TIME,
-					LevelBasedValue.perLevel(-0.2F),
+					LevelBasedValue.perLevel(-0.2F), /* -0.15 -> -0.2 */
 					AttributeModifier.Operation.ADD_MULTIPLIED_BASE
 				)
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createBlastProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
+	private static Enchantment.@NotNull Builder createBlastProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
@@ -141,10 +141,10 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.ARMOR
 				)
 			)
-			.exclusiveWith(enchantmentLookup.getOrThrow(EnchantmentTags.ARMOR_EXCLUSIVE))
+			.exclusiveWith(enchantmentLookup.getOrThrow(XSEnchantmentTags.DEFAULT_PROTECTION)) /* Custom Tag */
 			.withEffect(
 				EnchantmentEffectComponents.DAMAGE_PROTECTION,
-				new AddValue(LevelBasedValue.perLevel(2.5F)),
+				new AddValue(LevelBasedValue.perLevel(2.5F)), /* 2.0 -> 2.5 */
 				DamageSourceCondition.hasDamageSource(
 					DamageSourcePredicate.Builder.damageType()
 						.tag(TagPredicate.is(DamageTypeTags.IS_EXPLOSION))
@@ -156,13 +156,13 @@ public class XSAdditionsEnchantmentProvider {
 				new EnchantmentAttributeEffect(
 					ResourceLocation.withDefaultNamespace("enchantment.blast_protection"),
 					Attributes.EXPLOSION_KNOCKBACK_RESISTANCE,
-					LevelBasedValue.perLevel(0.2F),
+					LevelBasedValue.perLevel(0.2F), /* 0.15 -> 0.2 */
 					AttributeModifier.Operation.ADD_VALUE
 				)
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createProjectileProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
+	private static Enchantment.@NotNull Builder createProjectileProtection(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
@@ -174,10 +174,10 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.ARMOR
 				)
 			)
-			.exclusiveWith(enchantmentLookup.getOrThrow(XSEnchantmentTags.DEFAULT_PROTECTION))
+			.exclusiveWith(enchantmentLookup.getOrThrow(XSEnchantmentTags.DEFAULT_PROTECTION)) /* Custom Tag */
 			.withEffect(
 				EnchantmentEffectComponents.DAMAGE_PROTECTION,
-				new AddValue(LevelBasedValue.perLevel(2.5F)),
+				new AddValue(LevelBasedValue.perLevel(2.5F)), /* 2.0 -> 2.5 */
 				DamageSourceCondition.hasDamageSource(
 					DamageSourcePredicate.Builder.damageType()
 						.tag(TagPredicate.is(DamageTypeTags.IS_PROJECTILE))
@@ -186,12 +186,12 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createQuickCharge(@NotNull HolderGetter<Item> itemLookup) {
+	private static Enchantment.@NotNull Builder createQuickCharge(@NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
 					5,
-					4,
+					4, /* 3 -> 4 */
 					Enchantment.dynamicCost(12, 20),
 					Enchantment.constantCost(50),
 					2,
@@ -199,7 +199,7 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.OFFHAND
 				)
 			)
-			.withSpecialEffect(EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, new AddValue(LevelBasedValue.perLevel(-0.22F)))
+			.withSpecialEffect(EnchantmentEffectComponents.CROSSBOW_CHARGE_TIME, new AddValue(LevelBasedValue.perLevel(-0.22F))) /* -0.25 -> -0.22 */
 			.withSpecialEffect(
 				EnchantmentEffectComponents.CROSSBOW_CHARGING_SOUNDS,
 				List.of(
@@ -211,13 +211,13 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createThorns(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<DamageType> damageTypeLookup) {
+	private static Enchantment.@NotNull Builder createThorns(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<DamageType> damageTypeLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
 					itemLookup.getOrThrow(ItemTags.CHEST_ARMOR_ENCHANTABLE),
 					1,
-					4,
+					4, /* 3 -> 4 */
 					Enchantment.dynamicCost(10, 20),
 					Enchantment.dynamicCost(60, 20),
 					8,
@@ -229,17 +229,21 @@ public class XSAdditionsEnchantmentProvider {
 				EnchantmentTarget.VICTIM,
 				EnchantmentTarget.ATTACKER,
 				AllOf.entityEffects(
-					new DamageEntity(LevelBasedValue.perLevel(2.5F, 1.5F), LevelBasedValue.perLevel(2.5F, 1.5F), damageTypeLookup.getOrThrow(DamageTypes.THORNS)),
-					new ChangeItemDamage(LevelBasedValue.constant(1.0F))
+					new DamageEntity(
+						LevelBasedValue.perLevel(2.5F, 1.5F), /* const 1.0 -> level based 2.5 + (level * 1.5) */
+						LevelBasedValue.perLevel(2.5F, 1.5F), /* const 1.0 -> level based 2.5 + (level * 1.5) */
+						damageTypeLookup.getOrThrow(DamageTypes.THORNS)
+					),
+					new ChangeItemDamage(LevelBasedValue.constant(1.0F)) /* 2 -> 1 */
 				),
-				LootItemRandomChanceCondition.randomChance(EnchantmentLevelProvider.forEnchantmentLevel(LevelBasedValue.perLevel(0.25F)))
+				LootItemRandomChanceCondition.randomChance(EnchantmentLevelProvider.forEnchantmentLevel(LevelBasedValue.perLevel(0.25F)))  /* 0.15 -> 0.25 */
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createImpaling(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup, @NotNull HolderGetter<EntityType<?>> entityTypeLookup) {
+	private static Enchantment.@NotNull Builder createImpaling(@NotNull HolderGetter<Item> itemLookup, @NotNull HolderGetter<Enchantment> enchantmentLookup, @NotNull HolderGetter<EntityType<?>> entityTypeLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
-					itemLookup.getOrThrow(XSItemTags.IMPALING_WEAPONS),
+					itemLookup.getOrThrow(XSItemTags.IMPALING_WEAPONS), /* Custom Tag */
 					2,
 					5,
 					Enchantment.dynamicCost(1, 8),
@@ -259,7 +263,7 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createInfinity(@NotNull HolderGetter<Item> itemLookup) {
+	private static Enchantment.@NotNull Builder createInfinity(@NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
@@ -272,6 +276,7 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.MAINHAND
 				)
 			)
+			/* no exclusive */
 			.withEffect(
 				EnchantmentEffectComponents.AMMO_USE,
 				new SetValue(LevelBasedValue.constant(0.0F)),
@@ -279,7 +284,7 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createPiercing(@NotNull HolderGetter<Item> itemLookup) {
+	private static Enchantment.@NotNull Builder createPiercing(@NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
@@ -291,13 +296,14 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.MAINHAND
 				)
 			)
+			/* no exclusive */
 			.withEffect(
 				EnchantmentEffectComponents.PROJECTILE_PIERCING,
 				new AddValue(LevelBasedValue.perLevel(1.0F))
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createMultishot(@NotNull HolderGetter<Item> itemLookup) {
+	private static Enchantment.@NotNull Builder createMultishot(@NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.CROSSBOW_ENCHANTABLE),
@@ -309,6 +315,7 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.MAINHAND
 				)
 			)
+			/* no exclusive */
 			.withEffect(
 				EnchantmentEffectComponents.PROJECTILE_COUNT,
 				new AddValue(LevelBasedValue.perLevel(2.0F))
@@ -319,7 +326,7 @@ public class XSAdditionsEnchantmentProvider {
 			);
 	}
 	
-	public static Enchantment.@NotNull Builder createRiptide(@NotNull HolderGetter<Item> itemLookup) {
+	private static Enchantment.@NotNull Builder createRiptide(@NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 				Enchantment.definition(
 					itemLookup.getOrThrow(ItemTags.TRIDENT_ENCHANTABLE),
@@ -331,9 +338,10 @@ public class XSAdditionsEnchantmentProvider {
 					EquipmentSlotGroup.HAND
 				)
 			)
+			/* no exclusive */
 			.withSpecialEffect(
 				EnchantmentEffectComponents.TRIDENT_SPIN_ATTACK_STRENGTH,
-				new AddValue(LevelBasedValue.perLevel(1.5F, 0.75F))
+				new AddValue(LevelBasedValue.perLevel(2.0F, 1.0F)) /* 1.5 + (level * 0.75) -> 2.0 + (level * 1.0) */
 			)
 			.withSpecialEffect(
 				EnchantmentEffectComponents.TRIDENT_SOUND,
