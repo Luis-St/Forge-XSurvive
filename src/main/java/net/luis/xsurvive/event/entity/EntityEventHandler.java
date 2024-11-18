@@ -94,15 +94,17 @@ public class EntityEventHandler {
 				boolean isHard = difficulty == Difficulty.HARD;
 				if (event.getEntity() instanceof LivingEntity living) {
 					if (!(living instanceof Player)) {
-						if (living instanceof EnderDragon || living instanceof WitherBoss || living instanceof ElderGuardian || living instanceof Warden) {
+						if (living instanceof EnderDragon || living instanceof WitherBoss || living instanceof ElderGuardian || living instanceof Warden || living instanceof Breeze || living instanceof Ravager) {
+							double maxHealth = 1000.0;
+							if (living instanceof Breeze || living instanceof Ravager) {
+								maxHealth = 250.0;
+							}
 							AttributeInstance instance = living.getAttribute(Attributes.MAX_HEALTH);
 							if (instance != null) {
-								instance.setBaseValue(1000.0);
+								instance.setBaseValue(maxHealth);
 							}
 							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.0 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.0 : 1.5
 							EntityHelper.addAttributeModifier(living, Attributes.FOLLOW_RANGE, new AttributeModifier(FOLLOW_RANGE, 1.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= 2.5
-						} else if (living instanceof Breeze) {
-							// ToDo
 						} else if (living instanceof Enemy || living instanceof AbstractGolem) {
 							EntityHelper.addAttributeModifier(living, Attributes.MAX_HEALTH, new AttributeModifier(MAX_HEALTH, isHard ? 1.5 : 0.5, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 0.5
 							EntityHelper.addAttributeModifier(living, Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE, isHard ? 1.5 : 1.0, Operation.ADD_MULTIPLIED_TOTAL)); // *= isHard ? 2.5 : 2.0

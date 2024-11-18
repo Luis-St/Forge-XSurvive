@@ -38,6 +38,7 @@
 		"EndDragonFightMixin",
 		"NoiseBasedChunkGeneratorMixin",
 		"OreFeatureMixin",
+		"RaidMixin",
 		"ServerPlayerGameModeMixin"
 	],
 	"client": [

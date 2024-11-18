@@ -40,6 +40,10 @@ public record Trade(@NotNull ItemStack getCost, @NotNull ItemStack getSecondCost
 	
 	@Override
 	public @NotNull MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
-		return new MerchantOffer(new ItemCost(this.getCost.getItem(), this.getCost.getCount()), Optional.of(new ItemCost(this.getSecondCost.getItem(), this.getSecondCost.getCount())), this.getResult, this.getMaxUses, this.getVillagerXp, this.getPriceMultiplier);
+		Optional<ItemCost> secondCost = Optional.empty();
+		if (!this.getSecondCost.isEmpty()) {
+			secondCost = Optional.of(new ItemCost(this.getSecondCost.getItem(), this.getSecondCost.getCount()));
+		}
+		return new MerchantOffer(new ItemCost(this.getCost.getItem(), this.getCost.getCount()), secondCost, this.getResult, this.getMaxUses, this.getVillagerXp, this.getPriceMultiplier);
 	}
 }
