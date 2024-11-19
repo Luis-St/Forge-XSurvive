@@ -22,10 +22,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -33,18 +34,16 @@ import java.util.Objects;
  *
  */
 
-public record Trade(ItemStack getCost, ItemStack getSecondCost, ItemStack getResult, int getMaxUses, int getVillagerXp, float getPriceMultiplier) implements ItemListing {
+public record Trade(@NotNull ItemStack getCost, @NotNull ItemStack getSecondCost, @NotNull ItemStack getResult, int getMaxUses, int getVillagerXp, float getPriceMultiplier) implements ItemListing {
 	
 	public static final int[] VILLAGER_XP = { 2, 10, 20, 30, 40 };
 	
-	public Trade {
-		Objects.requireNonNull(getCost);
-		Objects.requireNonNull(getSecondCost);
-		Objects.requireNonNull(getResult);
-	}
-	
 	@Override
-	public MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
-		return new MerchantOffer(this.getCost, this.getSecondCost, this.getResult, this.getMaxUses, this.getVillagerXp, this.getPriceMultiplier);
+	public @NotNull MerchantOffer getOffer(@NotNull Entity villager, @NotNull RandomSource rng) {
+		Optional<ItemCost> secondCost = Optional.empty();
+		if (!this.getSecondCost.isEmpty()) {
+			secondCost = Optional.of(new ItemCost(this.getSecondCost.getItem(), this.getSecondCost.getCount()));
+		}
+		return new MerchantOffer(new ItemCost(this.getCost.getItem(), this.getCost.getCount()), secondCost, this.getResult, this.getMaxUses, this.getVillagerXp, this.getPriceMultiplier);
 	}
 }

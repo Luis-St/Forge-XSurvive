@@ -18,20 +18,26 @@
 
 package net.luis.xsurvive.event.fml;
 
+import com.google.common.collect.Maps;
 import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.dependency.DependencyCallWrapper;
 import net.luis.xsurvive.world.entity.ai.custom.*;
-import net.luis.xsurvive.world.item.alchemy.BrewingRecipeUtils;
-import net.luis.xsurvive.world.item.alchemy.XSPotions;
+import net.luis.xsurvive.world.item.crafting.XSRecipePropertySets;
+import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Optional;
 
 /**
  *
@@ -46,16 +52,10 @@ public class CommonSetupEventHandler {
 	public static void commonSetup(@NotNull FMLCommonSetupEvent event) {
 		DependencyCallWrapper.wrapCommonSetup();
 		event.enqueueWork(() -> {
-			registerBrewingRecipes();
 			registerCustomAis();
 			replaceEntityDimensions();
+			registerRecipePropertySet();
 		});
-	}
-	
-	private static void registerBrewingRecipes() {
-		BrewingRecipeUtils.addRecipes(Items.SNOWBALL, XSPotions.FROST.get(), XSPotions.LONG_FROST.get(), XSPotions.STRONG_FROST.get());
-		BrewingRecipeUtils.addRecipes(Items.WITHER_ROSE, XSPotions.WITHER.get(), XSPotions.LONG_WITHER.get(), XSPotions.STRONG_WITHER.get());
-		BrewingRecipeUtils.addRecipes(Items.IRON_PICKAXE, XSPotions.DIG_SPEED.get(), XSPotions.LONG_DIG_SPEED.get(), XSPotions.STRONG_DIG_SPEED.get());
 	}
 	
 	private static void registerCustomAis() {
@@ -66,5 +66,15 @@ public class CommonSetupEventHandler {
 	
 	private static void replaceEntityDimensions() {
 		EntityType.SHULKER_BULLET.dimensions = EntityDimensions.scalable(0.45F, 0.45F);
+	}
+	
+	private static void registerRecipePropertySet() {
+		Map<ResourceKey<RecipePropertySet>, RecipeManager.IngredientExtractor> ingredientExtractors = Maps.newHashMap(RecipeManager.RECIPE_PROPERTY_SETS);
+		ingredientExtractors.put(XSRecipePropertySets.XSMELTING_FURNACE_INPUT, forSingleInput(XSRecipeTypes.XSMELTING.get()));
+		RecipeManager.RECIPE_PROPERTY_SETS = ingredientExtractors;
+	}
+	
+	private static RecipeManager.@NotNull IngredientExtractor forSingleInput(RecipeType<? extends SingleItemRecipe> recipeType) {
+		return recipe -> recipe.getType() == recipeType && recipe instanceof SingleItemRecipe singleItemRecipe ? Optional.of(singleItemRecipe.input()) : Optional.empty();
 	}
 }

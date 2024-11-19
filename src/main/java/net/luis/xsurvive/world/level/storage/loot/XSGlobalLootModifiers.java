@@ -18,7 +18,7 @@
 
 package net.luis.xsurvive.world.level.storage.loot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.luis.xsurvive.XSurvive;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.*;
@@ -32,21 +32,21 @@ import net.minecraftforge.registries.*;
 @SuppressWarnings("CodeBlock2Expr")
 public class XSGlobalLootModifiers {
 	
-	public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XSurvive.MOD_ID);
+	public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, XSurvive.MOD_ID);
 	
-	public static final RegistryObject<Codec<SmeltingModifier>> SMELTING_MODIFIER = LOOT_MODIFIERS.register("smelting_modifier", () -> {
+	public static final RegistryObject<MapCodec<SmeltingModifier>> SMELTING_MODIFIER = LOOT_MODIFIERS.register("smelting_modifier", () -> {
 		return SmeltingModifier.CODEC;
 	});
-	public static final RegistryObject<Codec<MultiDropModifier>> MULTI_DROP_MODIFIER = LOOT_MODIFIERS.register("multi_drop_modifier", () -> {
+	public static final RegistryObject<MapCodec<MultiDropModifier>> MULTI_DROP_MODIFIER = LOOT_MODIFIERS.register("multi_drop_modifier", () -> {
 		return MultiDropModifier.CODEC;
 	});
-	public static final RegistryObject<Codec<RuneItemModifier>> RUNE_ITEM_MODIFIER = LOOT_MODIFIERS.register("rune_item_modifier", () -> {
+	public static final RegistryObject<MapCodec<RuneItemModifier>> RUNE_ITEM_MODIFIER = LOOT_MODIFIERS.register("rune_item_modifier", () -> {
 		return RuneItemModifier.CODEC;
 	});
-	public static final RegistryObject<Codec<GoldenBookModifier>> GOLDEN_BOOK_MODIFIER = LOOT_MODIFIERS.register("golden_book_modifier", () -> {
+	public static final RegistryObject<MapCodec<GoldenBookModifier>> GOLDEN_BOOK_MODIFIER = LOOT_MODIFIERS.register("golden_book_modifier", () -> {
 		return GoldenBookModifier.CODEC;
 	});
-	public static final RegistryObject<Codec<AdditionalChanceItemModifier>> ADDITIONAL_CHANCE_ITEM_MODIFIER = LOOT_MODIFIERS.register("additional_chance_item_modifier", () -> {
+	public static final RegistryObject<MapCodec<AdditionalChanceItemModifier>> ADDITIONAL_CHANCE_ITEM_MODIFIER = LOOT_MODIFIERS.register("additional_chance_item_modifier", () -> {
 		return AdditionalChanceItemModifier.CODEC;
 	});
 }

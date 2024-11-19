@@ -23,6 +23,7 @@ import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdatePlayerCapabilityPacket;
 import net.luis.xsurvive.world.effect.XSMobEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +42,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	private boolean changed;
 	private @Nullable BlockPos possibleContainerPos;
 	
-	public ServerPlayerHandler(ServerPlayer player) {
+	public ServerPlayerHandler(@NotNull ServerPlayer player) {
 		super(player);
 	}
 	
@@ -49,7 +50,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	public void tick() {
 		super.tick();
 		if (this.getPlayer().getRemainingFireTicks() > 0 || this.getLevel().dimensionType().ultraWarm()) {
-			if (this.getPlayer().removeEffect(XSMobEffects.FROST.get())) {
+			if (this.getPlayer().removeEffect(XSMobEffects.FROST.getHolder().orElseThrow())) {
 				this.frostTime = 0;
 				this.setChanged();
 			}
@@ -92,7 +93,7 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 		return 0 >= this.nextPhantomReset;
 	}
 	
-	public void setContainerPos(BlockPos pos) {
+	public void setContainerPos(@Nullable BlockPos pos) {
 		this.possibleContainerPos = pos == null ? null : pos.immutable();
 	}
 	
@@ -125,8 +126,8 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	
 	//region NBT
 	@Override
-	public @NotNull CompoundTag serializeDisk() {
-		CompoundTag tag = super.serializeDisk();
+	public @NotNull CompoundTag serializeDisk(HolderLookup.@NotNull Provider lookup) {
+		CompoundTag tag = super.serializeDisk(lookup);
 		tag.putInt("next_phantom_reset", this.nextPhantomReset);
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
@@ -134,8 +135,8 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public void deserializeDisk(@NotNull CompoundTag tag) {
-		super.deserializeDisk(tag);
+	public void deserializeDisk(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
+		super.deserializeDisk(lookup, tag);
 		this.nextPhantomReset = tag.getInt("next_phantom_reset");
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
@@ -147,16 +148,16 @@ public class ServerPlayerHandler extends AbstractPlayerHandler {
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializePersistent() {
-		CompoundTag tag = super.serializePersistent();
+	public @NotNull CompoundTag serializePersistent(HolderLookup.@NotNull Provider lookup) {
+		CompoundTag tag = super.serializePersistent(lookup);
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
 	}
 	
 	@Override
-	public void deserializePersistent(@NotNull CompoundTag tag) {
-		super.deserializePersistent(tag);
+	public void deserializePersistent(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
+		super.deserializePersistent(lookup, tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}

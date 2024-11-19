@@ -19,12 +19,22 @@
 package net.luis.xsurvive.client.gui.screens;
 
 import net.luis.xsurvive.XSurvive;
+import net.luis.xsurvive.client.XSSearchRecipeBookCategory;
 import net.luis.xsurvive.world.inventory.SmeltingFurnaceMenu;
+import net.luis.xsurvive.world.item.crafting.XSRecipeBookCategories;
 import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
-import net.minecraft.client.gui.screens.recipebook.SmeltingRecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.SearchRecipeBookCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -34,11 +44,17 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class SmeltingFurnaceScreen extends AbstractFurnaceScreen<SmeltingFurnaceMenu> {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation(XSurvive.MOD_ID, "textures/gui/container/smelting_furnace.png");
-	private static final ResourceLocation LIT_PROGRESS_SPRITE = new ResourceLocation("container/blast_furnace/lit_progress");
-	private static final ResourceLocation BURN_PROGRESS_SPRITE = new ResourceLocation("container/blast_furnace/burn_progress");
+	private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "textures/gui/container/smelting_furnace.png");
+	private static final ResourceLocation LIT_PROGRESS_SPRITE = ResourceLocation.withDefaultNamespace("container/blast_furnace/lit_progress");
+	private static final ResourceLocation BURN_PROGRESS_SPRITE = ResourceLocation.withDefaultNamespace("container/blast_furnace/burn_progress");
+	private static final Component FILTER_NAME = Component.translatable("gui.recipebook.toggleRecipes.smeltable");
+	private static final List<RecipeBookComponent.TabInfo> TABS = List.of(
+		new RecipeBookComponent.TabInfo(new ItemStack(Items.COMPASS), Optional.empty(), XSSearchRecipeBookCategory.SMELTING),
+		new RecipeBookComponent.TabInfo(Items.DEEPSLATE, XSRecipeBookCategories.XSMELTING_FURNACE_BLOCKS.get()),
+		new RecipeBookComponent.TabInfo(Items.BRICK, XSRecipeBookCategories.XSMELTING_FURNACE_MISC.get())
+	);
 	
-	public SmeltingFurnaceScreen(SmeltingFurnaceMenu smeltingMenu, Inventory inventory, Component component) {
-		super(smeltingMenu, new SmeltingRecipeBookComponent(), inventory, component, TEXTURE, LIT_PROGRESS_SPRITE, BURN_PROGRESS_SPRITE);
+	public SmeltingFurnaceScreen(@NotNull SmeltingFurnaceMenu smeltingMenu, @NotNull Inventory inventory, @NotNull Component component) {
+		super(smeltingMenu, inventory, component, FILTER_NAME, TEXTURE, LIT_PROGRESS_SPRITE, BURN_PROGRESS_SPRITE, TABS);
 	}
 }

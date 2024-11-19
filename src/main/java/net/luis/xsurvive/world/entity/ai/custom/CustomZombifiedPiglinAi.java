@@ -21,6 +21,7 @@ package net.luis.xsurvive.world.entity.ai.custom;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -30,7 +31,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class CustomZombifiedPiglinAi extends AbstractCustomAi<ZombifiedPiglin> {
 	
-	public CustomZombifiedPiglinAi(ZombifiedPiglin entity, ServerLevel level) {
+	public CustomZombifiedPiglinAi(@NotNull ZombifiedPiglin entity, @NotNull ServerLevel level) {
 		super(entity, level);
 	}
 	

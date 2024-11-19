@@ -19,8 +19,10 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.BaseSpawner;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +46,7 @@ public abstract class SpawnerBlockEntityMixin {
 	//endregion
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	public void init(BlockPos pos, BlockState state, CallbackInfo callback) {
+	public void init(@NotNull BlockPos pos, @NotNull BlockState state, @NotNull CallbackInfo callback) {
 		this.spawner.minSpawnDelay = 50;
 		this.spawner.maxSpawnDelay = 200;
 		this.spawner.spawnCount = 8;
@@ -52,8 +54,8 @@ public abstract class SpawnerBlockEntityMixin {
 		this.spawner.maxNearbyEntities = 12;
 	}
 	
-	@Inject(method = "load", at = @At("HEAD"))
-	public void load(@NotNull CompoundTag tag, CallbackInfo callback) {
+	@Inject(method = "loadAdditional", at = @At("HEAD"))
+	public void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider lookup, @NotNull CallbackInfo callback) {
 		if (tag.contains("MinSpawnDelay")) {
 			tag.remove("MinSpawnDelay");
 			tag.putShort("MinSpawnDelay", (short) 50);

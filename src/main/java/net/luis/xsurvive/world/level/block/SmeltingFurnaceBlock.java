@@ -44,7 +44,7 @@ public class SmeltingFurnaceBlock extends AbstractFurnaceBlock {
 	
 	public static final MapCodec<SmeltingFurnaceBlock> CODEC = simpleCodec(SmeltingFurnaceBlock::new);
 	
-	public SmeltingFurnaceBlock(Properties properties) {
+	public SmeltingFurnaceBlock(@NotNull Properties properties) {
 		super(properties);
 	}
 	

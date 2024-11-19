@@ -18,17 +18,19 @@
 
 package net.luis.xsurvive.world.item;
 
+import net.luis.xsurvive.core.components.XSDataComponents;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
+
+import static net.minecraft.core.component.DataComponents.*;
 
 /**
  *
@@ -36,56 +38,45 @@ import java.util.Map;
  *
  */
 
-public class EnchantedGoldenBookItem extends GlintColorItem {
+public class EnchantedGoldenBookItem extends Item {
 	
-	public EnchantedGoldenBookItem(Properties properties) {
-		super(properties, DyeColor.YELLOW.getId());
+	public EnchantedGoldenBookItem(@NotNull Properties properties) {
+		super(properties.component(ENCHANTMENTS, ItemEnchantments.EMPTY).component(ENCHANTMENT_GLINT_OVERRIDE, true).component(XSDataComponents.GLINT_COLOR.get(), DyeColor.YELLOW.getId()));
 	}
 	
-	public static @NotNull ItemStack createForEnchantment(Enchantment enchantment) {
+	public static @NotNull ItemStack createForEnchantment(@NotNull Holder<Enchantment> enchantment) {
 		ItemStack stack = new ItemStack(XSItems.ENCHANTED_GOLDEN_BOOK.get());
-		((EnchantedGoldenBookItem) stack.getItem()).setEnchantment(stack, enchantment);
+		setEnchantment(stack, enchantment);
 		return stack;
 	}
 	
 	@Override
-	public boolean isEnchantable(@NotNull ItemStack stack) {
-		return true;
-	}
-	
-	@Override
-	public void appendHoverText(@NotNull ItemStack stack, Level level, @NotNull List<Component> components, @NotNull TooltipFlag tooltip) {
-		super.appendHoverText(stack, level, components, tooltip);
-		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+	public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> components, @NotNull TooltipFlag tooltip) {
+		super.appendHoverText(stack, context, components, tooltip);
+		ItemEnchantments enchantments = stack.getOrDefault(ENCHANTMENTS, ItemEnchantments.EMPTY);
 		if (!enchantments.isEmpty()) {
-			Enchantment enchantment = this.getEnchantment(stack);
+			Holder<Enchantment> enchantment = getEnchantment(stack);
 			if (enchantment != null) {
-				components.add(Component.translatable(enchantment.getDescriptionId()).withStyle(ChatFormatting.DARK_PURPLE));
+				components.add(enchantment.value().description().plainCopy().withStyle(ChatFormatting.DARK_PURPLE));
 			}
 		}
 	}
 	
-	@Override
-	public int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-		if (this.getEnchantment(stack) == enchantment) {
-			return 1;
-		}
-		return 0;
-	}
-	
-	public @Nullable Enchantment getEnchantment(@NotNull ItemStack stack) {
+	public static @Nullable Holder<Enchantment> getEnchantment(@NotNull ItemStack stack) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+			ItemEnchantments enchantments = stack.getOrDefault(ENCHANTMENTS, ItemEnchantments.EMPTY);
 			if (enchantments.size() == 1) {
-				return enchantments.keySet().stream().toList().get(0);
+				return enchantments.keySet().stream().toList().getFirst();
 			}
 		}
 		return null;
 	}
 	
-	public void setEnchantment(@NotNull ItemStack stack, Enchantment enchantment) {
+	public static void setEnchantment(@NotNull ItemStack stack, Holder<Enchantment> enchantment) {
 		if (stack.getItem() instanceof EnchantedGoldenBookItem) {
-			EnchantmentHelper.setEnchantments(Map.of(enchantment, 1), stack);
+			ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+			enchantments.set(enchantment, 1);
+			stack.set(ENCHANTMENTS, enchantments.toImmutable());
 		}
 	}
 }

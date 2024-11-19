@@ -24,8 +24,11 @@ import net.luis.xsurvive.client.DoubleRangeOption;
 import net.luis.xsurvive.client.gui.screens.EnderChestScreen;
 import net.luis.xsurvive.client.gui.screens.SmeltingFurnaceScreen;
 import net.luis.xsurvive.world.inventory.XSMenuTypes;
+import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
@@ -60,6 +63,7 @@ public class ClientSetupEventHandler {
 		XSurvive.LOGGER.info("Gamma is now {}", minecraft.options.gamma.get());
 		XSurvive.LOGGER.info("Glint speed is now {}", minecraft.options.glintSpeed.get());
 		XSurvive.LOGGER.info("Glint strength is now {}", minecraft.options.glintStrength.get());
+		setBlockRenderTypes();
 	}
 	
 	private static void replaceGammaOption(@NotNull Minecraft minecraft) {
@@ -112,5 +116,11 @@ public class ClientSetupEventHandler {
 				RenderSystem.setShaderGlintAlpha(value);
 			}
 		});
+	}
+	
+	public static void setBlockRenderTypes() {
+		ItemBlockRenderTypes.setRenderLayer(XSBlocks.MYSTIC_FIRE.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(XSBlocks.HONEY_MELON_STEM.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(XSBlocks.ATTACHED_HONEY_MELON_STEM.get(), RenderType.cutout());
 	}
 }

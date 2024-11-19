@@ -1,0 +1,11 @@
+{
+  "type": "xsurvive:xsmelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.5,
+  "group": "charcoal",
+  "ingredient": "minecraft:charcoal",
+  "result": {
+    "id": "minecraft:coal"
+  }
+}

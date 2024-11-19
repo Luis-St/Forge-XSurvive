@@ -20,11 +20,14 @@ package net.luis.xsurvive.mixin.entity;
 
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateTridentGlintColorPacket;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -51,18 +54,18 @@ public abstract class ServerEntityMixin {
 	@Shadow private Entity entity;
 	
 	@Shadow
-	protected abstract void broadcastAndSend(Packet<?> packet);
+	protected abstract void broadcastAndSend(@NotNull Packet<?> packet);
 	//endregion
 	
 	@Inject(method = "sendDirtyEntityData", at = @At("HEAD"))
-	private void sendDirtyEntityData(CallbackInfo callback) {
+	private void sendDirtyEntityData(@NotNull CallbackInfo callback) {
 		if (this.entity instanceof ThrownTrident trident) {
 			this.broadcastThrownTrident(trident, false);
 		}
 	}
 	
 	@Inject(method = "sendPairingData", at = @At("HEAD"))
-	private void sendPairingData(ServerPlayer player, Consumer<Packet<?>> send, CallbackInfo callback) {
+	private void sendPairingData(@NotNull ServerPlayer player, @NotNull Consumer<Packet<?>> send, @NotNull CallbackInfo callback) {
 		if (this.entity instanceof ThrownTrident trident) {
 			this.broadcastThrownTrident(trident, true);
 		}
@@ -71,9 +74,10 @@ public abstract class ServerEntityMixin {
 	private void broadcastThrownTrident(@NotNull ThrownTrident trident, boolean forced) {
 		ItemStack tridentStack = trident.getPickupItemStackOrigin().copy();
 		ItemStack previousStack = TRIDENT_STACK_REFERENCES.get(trident);
-		if (forced || previousStack == null || ItemStack.isSameItemSameTags(tridentStack, previousStack)) {
+		if (forced || previousStack == null || ItemStack.isSameItemSameComponents(tridentStack, previousStack)) {
 			if (trident.level() instanceof ServerLevel level) {
-				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack));
+				Registry<Enchantment> registry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+				XSNetworkHandler.INSTANCE.sendToPlayersInLevel(level, new UpdateTridentGlintColorPacket(trident.getId(), tridentStack, holder -> registry.getKey(holder.value())));
 			}
 		}
 		TRIDENT_STACK_REFERENCES.put(trident, tridentStack);

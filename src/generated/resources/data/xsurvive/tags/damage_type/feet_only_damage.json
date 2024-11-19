@@ -1,6 +1,7 @@
 {
   "values": [
     "minecraft:hot_floor",
+    "minecraft:campfire",
     "minecraft:fall",
     "minecraft:dragon_breath",
     "minecraft:stalagmite"

@@ -19,13 +19,18 @@
 package net.luis.xsurvive.world.item.trading.dynamic;
 
 import com.google.common.collect.Lists;
+import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.*;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
 
@@ -35,14 +40,16 @@ import static net.luis.xsurvive.world.item.trading.dynamic.DynamicTradeHelper.*;
  *
  */
 
+@SuppressWarnings("deprecation")
 public class DynamicPotionTrades {
 	
 	public static @NotNull ItemListing randomPotion(int villagerLevel) {
 		return (villager, rng) -> {
 			Potion potion = random(Lists.newArrayList(ForgeRegistries.POTIONS.getValues()), rng);
 			int emeralds = Math.min(getEmeraldCount(rng, potion.getEffects()), 64);
-			return new MerchantOffer(new ItemStack(Items.EMERALD, emeralds), PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER), PotionUtils.setPotion(new ItemStack(Items.POTION), potion), 16, getVillagerXp(villagerLevel),
-				0.2F);
+			ItemCost waterBottle = new ItemCost(Items.POTION.builtInRegistryHolder(), 1, DataComponentPredicate.builder().expect(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER)).build());
+			ItemStack potionItem = PotionContents.createItemStack(Items.POTION, ForgeRegistries.POTIONS.getDelegateOrThrow(potion));
+			return new MerchantOffer(new ItemCost(Items.EMERALD, emeralds), Optional.of(waterBottle), potionItem, 16, getVillagerXp(villagerLevel), 0.2F);
 		};
 	}
 	

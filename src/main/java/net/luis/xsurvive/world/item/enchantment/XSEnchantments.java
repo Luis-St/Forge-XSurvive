@@ -19,11 +19,12 @@
 package net.luis.xsurvive.world.item.enchantment;
 
 import net.luis.xsurvive.XSurvive;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.luis.xsurvive.core.XSResourceKeys;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -31,65 +32,25 @@ import net.minecraftforge.registries.*;
  *
  */
 
-@SuppressWarnings("CodeBlock2Expr")
 public class XSEnchantments {
 	
-	private static final EquipmentSlot[] ARMOR_SLOTS = {
-		EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
-	};
-	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, XSurvive.MOD_ID);
-	public static final RegistryObject<MultiDropEnchantment> MULTI_DROP = ENCHANTMENTS.register("multi_drop", () -> {
-		return new MultiDropEnchantment(Rarity.VERY_RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<EnderSlayerEnchantment> ENDER_SLAYER = ENCHANTMENTS.register("ender_slayer", () -> {
-		return new EnderSlayerEnchantment(Rarity.UNCOMMON, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<FrostAspectEnchantment> FROST_ASPECT = ENCHANTMENTS.register("frost_aspect", () -> {
-		return new FrostAspectEnchantment(Rarity.RARE, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<PoisonAspectEnchantment> POISON_ASPECT = ENCHANTMENTS.register("poison_aspect", () -> {
-		return new PoisonAspectEnchantment(Rarity.RARE, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<ExperienceEnchantment> EXPERIENCE = ENCHANTMENTS.register("experience", () -> {
-		return new ExperienceEnchantment(Rarity.UNCOMMON, XSEnchantmentCategory.TOOLS_AND_WEAPONS, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<SmeltingEnchantment> SMELTING = ENCHANTMENTS.register("smelting", () -> {
-		return new SmeltingEnchantment(Rarity.RARE, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<BreakingCurseEnchantment> CURSE_OF_BREAKING = ENCHANTMENTS.register("curse_of_breaking", () -> {
-		return new BreakingCurseEnchantment(Rarity.VERY_RARE, EnchantmentCategory.BREAKABLE, EquipmentSlot.values());
-	});
-	public static final RegistryObject<HarmingCurseEnchantment> CURSE_OF_HARMING = ENCHANTMENTS.register("curse_of_harming", () -> {
-		return new HarmingCurseEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.WEAPONS, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<VoidWalkerEnchantment> VOID_WALKER = ENCHANTMENTS.register("void_walker", () -> {
-		return new VoidWalkerEnchantment(Rarity.VERY_RARE, EnchantmentCategory.ARMOR_FEET, EquipmentSlot.FEET);
-	});
-	public static final RegistryObject<BlastingEnchantment> BLASTING = ENCHANTMENTS.register("blasting", () -> {
-		return new BlastingEnchantment(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<ThunderboltEnchantment> THUNDERBOLT = ENCHANTMENTS.register("thunderbolt", () -> {
-		return new ThunderboltEnchantment(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<VoidProtectionEnchantment> VOID_PROTECTION = ENCHANTMENTS.register("void_protection", () -> {
-		return new VoidProtectionEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.ELYTRA, EquipmentSlot.CHEST);
-	});
-	public static final RegistryObject<HarvestingEnchantment> HARVESTING = ENCHANTMENTS.register("harvesting", () -> {
-		return new HarvestingEnchantment(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<ReplantingEnchantment> REPLANTING = ENCHANTMENTS.register("replanting", () -> {
-		return new ReplantingEnchantment(Rarity.RARE, XSEnchantmentCategory.HOE, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<AspectOfTheEndEnchantment> ASPECT_OF_THE_END = ENCHANTMENTS.register("aspect_of_the_end", () -> {
-		return new AspectOfTheEndEnchantment(Rarity.VERY_RARE, EnchantmentCategory.WEAPON, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<ExplosionEnchantment> EXPLOSION = ENCHANTMENTS.register("explosion", () -> {
-		return new ExplosionEnchantment(Rarity.RARE, EnchantmentCategory.BOW, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<ReachingEnchantment> REACHING = ENCHANTMENTS.register("reaching", () -> {
-		return new ReachingEnchantment(Rarity.VERY_RARE, XSEnchantmentCategory.TOOLS, EquipmentSlot.MAINHAND);
-	});
-	public static final RegistryObject<GrowthEnchantment> GROWTH = ENCHANTMENTS.register("growth", () -> {
-		return new GrowthEnchantment(Rarity.COMMON, EnchantmentCategory.ARMOR, ARMOR_SLOTS);
-	});
+	public static final ResourceKey<Enchantment> MULTI_DROP = XSResourceKeys.createEnchantmentKey("multi_drop");
+	public static final ResourceKey<Enchantment> ENDER_SLAYER = XSResourceKeys.createEnchantmentKey("ender_slayer");
+	public static final ResourceKey<Enchantment> FROST_ASPECT = XSResourceKeys.createEnchantmentKey("frost_aspect");
+	public static final ResourceKey<Enchantment> POISON_ASPECT = XSResourceKeys.createEnchantmentKey("poison_aspect");
+	public static final ResourceKey<Enchantment> EXPERIENCE = XSResourceKeys.createEnchantmentKey("experience");
+	public static final ResourceKey<Enchantment> SMELTING = XSResourceKeys.createEnchantmentKey("smelting");
+	public static final ResourceKey<Enchantment> CURSE_OF_HARMING = XSResourceKeys.createEnchantmentKey("curse_of_harming");
+	public static final ResourceKey<Enchantment> VOID_WALKER = XSResourceKeys.createEnchantmentKey("void_walker");
+	public static final ResourceKey<Enchantment> BLASTING = XSResourceKeys.createEnchantmentKey("blasting");
+	public static final ResourceKey<Enchantment> THUNDERBOLT = XSResourceKeys.createEnchantmentKey("thunderbolt");
+	public static final ResourceKey<Enchantment> VOID_PROTECTION = XSResourceKeys.createEnchantmentKey("void_protection");
+	public static final ResourceKey<Enchantment> HARVESTING = XSResourceKeys.createEnchantmentKey("harvesting");
+	public static final ResourceKey<Enchantment> REPLANTING = XSResourceKeys.createEnchantmentKey("replanting");
+	public static final ResourceKey<Enchantment> ASPECT_OF_THE_END = XSResourceKeys.createEnchantmentKey("aspect_of_the_end");
+	public static final ResourceKey<Enchantment> EXPLOSION = XSResourceKeys.createEnchantmentKey("explosion");
+	public static final ResourceKey<Enchantment> REACHING = XSResourceKeys.createEnchantmentKey("reaching");
+	public static final ResourceKey<Enchantment> GROWTH = XSResourceKeys.createEnchantmentKey("growth");
+	
+	public static void register() {}
 }

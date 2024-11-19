@@ -18,17 +18,20 @@
 
 package net.luis.xsurvive.data;
 
+import com.google.common.collect.Lists;
+import net.luis.xores.tags.XOItemTags;
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.data.provider.XSBuiltinProvider;
-import net.luis.xsurvive.data.provider.block.XSBlockStateProvider;
-import net.luis.xsurvive.data.provider.item.XSItemModelProvider;
-import net.luis.xsurvive.data.provider.language.XSLanguageProvider;
-import net.luis.xsurvive.data.provider.loot.XSGlobalLootModifierProvider;
-import net.luis.xsurvive.data.provider.loottable.XSLootTableProvider;
-import net.luis.xsurvive.data.provider.recipe.XSRecipeProvider;
-import net.luis.xsurvive.data.provider.recipe.additions.XSAdditionsRecipeProvider;
-import net.luis.xsurvive.data.provider.tag.*;
+import net.luis.xsurvive.data.provider.additions.XSAdditionsRecipeProvider;
+import net.luis.xsurvive.data.provider.base.client.*;
+import net.luis.xsurvive.data.provider.base.server.*;
+import net.luis.xsurvive.data.provider.base.server.tag.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,6 +43,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+import static net.luis.xsurvive.data.provider.XSBuiltinProvider.*;
 
 /**
  *
@@ -59,25 +65,41 @@ public class GatherDataEventHandler {
 		String type = System.getProperty("xsurvive.data.include");
 		if (event.includeDev()) {
 			if ("mod".equalsIgnoreCase(type)) {
+				var provider = generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), createProvider(), Set.of(XSurvive.MOD_ID)));
+				CompletableFuture<HolderLookup.Provider> lookupProvider = provider.getFullRegistries();
 				generator.addProvider(event.includeClient(), new XSBlockStateProvider(generator, event.getExistingFileHelper()));
 				generator.addProvider(event.includeClient(), new XSItemModelProvider(generator, event.getExistingFileHelper()));
 				generator.addProvider(event.includeClient(), new XSLanguageProvider(generator));
-				generator.addProvider(event.includeServer(), new XSLootTableProvider(generator));
-				generator.addProvider(event.includeServer(), new XSRecipeProvider(generator));
-				XSBlockTagsProvider blockTagsProvider = new XSBlockTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper());
+				generator.addProvider(event.includeServer(), new XSLootTableProvider(generator, lookupProvider));
+				generator.addProvider(event.includeServer(), new XSRecipeProvider.Runner(generator, lookupProvider));
+				XSBlockTagsProvider blockTagsProvider = new XSBlockTagsProvider(generator, lookupProvider, event.getExistingFileHelper());
 				generator.addProvider(event.includeServer(), blockTagsProvider);
-				generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
-				generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
-				generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
-				generator.addProvider(event.includeServer(), new XSDamageTypeTagsProvider(generator, event.getLookupProvider(), event.getExistingFileHelper()));
-				generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator));
-				generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), XSBuiltinProvider.createProvider(), Set.of(XSurvive.MOD_ID)));
+				generator.addProvider(event.includeServer(), new XSItemTagsProvider(generator, lookupProvider, CompletableFuture.completedFuture(createXOresItemTagLookup()), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSPoiTypeTagsProvider(generator, lookupProvider, event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSBiomeTagsProvider(generator, lookupProvider, event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSDamageTypeTagsProvider(generator, lookupProvider, event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSEnchantmentTagsProvider(generator, lookupProvider, event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSEntityTypeTagsProvider(generator, lookupProvider, event.getExistingFileHelper()));
+				generator.addProvider(event.includeServer(), new XSGlobalLootModifierProvider(generator, lookupProvider));
+				
 			}
 			if ("additions".equalsIgnoreCase(type)) {
 				setupDatapackGeneration("xsurvive_additions");
-				generator.addProvider(event.includeServer(), new XSAdditionsRecipeProvider(generator));
+				var provider = generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(generator.getPackOutput(), event.getLookupProvider(), createAdditionsProvider(), Set.of(XSurvive.MOD_ID, "minecraft")));
+				CompletableFuture<HolderLookup.Provider> lookupProvider = provider.getFullRegistries();
+				generator.addProvider(event.includeServer(), new XSAdditionsRecipeProvider.Runner(generator, lookupProvider));
 			}
 		}
+	}
+	
+	private static TagsProvider.@NotNull TagLookup<Item> createXOresItemTagLookup() {
+		List<TagKey<Item>> tags = Lists.newArrayList(XOItemTags.ELYTRA_CHESTPLATES);
+		return tag -> {
+			if (tags.contains(tag)) {
+				return Optional.of(TagBuilder.create());
+			}
+			return Optional.empty();
+		};
 	}
 	
 	private static void setupDatapackGeneration(@NotNull String packName) throws IOException {

@@ -36,16 +36,16 @@ public class RarityList<T> {
 	private final Rarity rarity;
 	private final List<T> values;
 	
-	public RarityList(Rarity rarity) {
+	public RarityList(@NotNull Rarity rarity) {
 		this(rarity, Lists.newArrayList());
 	}
 	
 	@SafeVarargs
-	public RarityList(Rarity rarity, T... values) {
+	public RarityList(@NotNull Rarity rarity, T @NotNull ... values) {
 		this(rarity, Lists.newArrayList(values));
 	}
 	
-	public RarityList(Rarity rarity, List<T> values) {
+	public RarityList(@NotNull Rarity rarity, @NotNull List<T> values) {
 		this.rarity = rarity;
 		this.values = Lists.newArrayList(values);
 	}

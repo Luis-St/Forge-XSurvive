@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientLevelHandler extends AbstractLevelHandler {
 	
-	public ClientLevelHandler(Level level) {
+	public ClientLevelHandler(@NotNull Level level) {
 		super(level);
 	}
 	

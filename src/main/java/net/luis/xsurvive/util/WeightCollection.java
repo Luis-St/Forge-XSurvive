@@ -45,7 +45,7 @@ public class WeightCollection<T> {
 		this(new Random());
 	}
 	
-	public WeightCollection(Random random) {
+	public WeightCollection(@NotNull Random random) {
 		this.map = Maps.newTreeMap();
 		this.random = random;
 	}
@@ -56,7 +56,7 @@ public class WeightCollection<T> {
 		list.forEach((pair) -> this.add(pair.getFirst(), pair.getSecond()));
 	}
 	
-	public static <E> @NotNull Codec<WeightCollection<E>> codec(Codec<E> codec) {
+	public static <E> @NotNull Codec<WeightCollection<E>> codec(@NotNull Codec<E> codec) {
 		return RecordCodecBuilder.create((instance) -> {
 			return instance.group(Codec.pair(Codec.INT.fieldOf("weight").codec(), codec.fieldOf("value").codec()).listOf().fieldOf("weights").forGetter(WeightCollection::asList)).apply(instance, WeightCollection::new);
 		});

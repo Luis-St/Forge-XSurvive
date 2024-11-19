@@ -63,7 +63,7 @@ public class XSVillagerProfessions {
 	});
 	
 	private static @NotNull VillagerProfession register(@NotNull String name, @Nullable SoundEvent workSound) {
-		ResourceLocation location = new ResourceLocation(XSurvive.MOD_ID, name);
+		ResourceLocation location = ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, name);
 		return new VillagerProfession(location.toString(), (holder) -> holder.is(location), (holder) -> holder.is(location), ImmutableSet.of(), ImmutableSet.of(), workSound);
 	}
 }

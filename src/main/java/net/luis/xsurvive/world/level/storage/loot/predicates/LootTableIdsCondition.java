@@ -20,6 +20,7 @@ package net.luis.xsurvive.world.level.storage.loot.predicates;
 
 import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -38,7 +39,7 @@ import java.util.List;
 @SuppressWarnings("CodeBlock2Expr")
 public class LootTableIdsCondition implements LootItemCondition {
 	
-	public static final Codec<LootTableIdsCondition> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final MapCodec<LootTableIdsCondition> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
 		return instance.group(Codec.list(ResourceLocation.CODEC).fieldOf("loot_table_ids").forGetter((condition) -> {
 			return condition.lootTables;
 		})).apply(instance, LootTableIdsCondition::new);
@@ -46,7 +47,7 @@ public class LootTableIdsCondition implements LootItemCondition {
 	
 	private final List<ResourceLocation> lootTables;
 	
-	public LootTableIdsCondition(List<ResourceLocation> lootTables) {
+	public LootTableIdsCondition(@NotNull List<ResourceLocation> lootTables) {
 		this.lootTables = lootTables;
 	}
 	
@@ -64,13 +65,13 @@ public class LootTableIdsCondition implements LootItemCondition {
 		
 		private final List<ResourceLocation> lootTables;
 		
-		public Builder(ResourceLocation lootTable) {
+		public Builder(@NotNull ResourceLocation lootTable) {
 			this.lootTables = Lists.newArrayList();
 			this.add(lootTable);
 		}
 		
 		public @NotNull Builder add(@NotNull String lootTable) {
-			return this.add(new ResourceLocation(lootTable));
+			return this.add(ResourceLocation.withDefaultNamespace(lootTable));
 		}
 		
 		public @NotNull Builder add(@NotNull ResourceLocation lootTable) {

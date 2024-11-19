@@ -15,7 +15,11 @@
         "minecraft:chests/ruined_portal",
         "minecraft:chests/stronghold_crossing",
         "minecraft:chests/underwater_ruin_big",
-        "minecraft:chests/woodland_mansion"
+        "minecraft:chests/woodland_mansion",
+        "minecraft:chests/trial_chambers/reward_common",
+        "minecraft:chests/trial_chambers/reward_rare",
+        "minecraft:chests/trial_chambers/reward_ominous_common",
+        "minecraft:chests/trial_chambers/reward_ominous_rare"
       ]
     }
   ]

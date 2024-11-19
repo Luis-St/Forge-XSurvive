@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.entity.boss;
 
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -51,7 +52,7 @@ public abstract class WitherBossMixin extends Monster {
 	@Shadow private int destroyBlocksTick;
 	@Shadow private ServerBossEvent bossEvent;
 	
-	private WitherBossMixin(EntityType<? extends Monster> entityType, Level level) {
+	private WitherBossMixin(@NotNull EntityType<? extends Monster> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	
@@ -62,18 +63,18 @@ public abstract class WitherBossMixin extends Monster {
 	public abstract void setInvulnerableTicks(int invulnerableTicks);
 	//endregion
 	
-	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {
-		if (this.isInvulnerableTo(source)) {
+	@Inject(method = "hurtServer", at = @At("HEAD"), cancellable = true)
+	public void hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float amount, @NotNull CallbackInfoReturnable<Boolean> callback) {
+		if (this.isInvulnerableToBase(source)) {
 			callback.setReturnValue(false);
-		} else if (!source.is(DamageTypeTags.IS_DROWNING) && !(source.getEntity() instanceof WitherBoss)) {
-			if (this.getInvulnerableTicks() > 0 && source.is(DamageTypes.FELL_OUT_OF_WORLD)) {
+		} else if (!source.is(DamageTypeTags.IS_DROWNING) && !source.is(DamageTypeTags.WITHER_IMMUNE_TO) && !(source.getEntity() instanceof WitherBoss)) {
+			if (this.getInvulnerableTicks() > 0 && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 				callback.setReturnValue(false);
 			} else {
 				if (source.getDirectEntity() instanceof AbstractArrow arrow && 4 > arrow.getPierceLevel()) {
 					callback.setReturnValue(false);
 				} else {
-					if (source.getEntity() instanceof LivingEntity livingEntity && !(livingEntity instanceof Player) && livingEntity.getMobType() == this.getMobType()) {
+					if (source.getEntity() instanceof LivingEntity livingEntity && !(livingEntity instanceof Player)) {
 						callback.setReturnValue(false);
 					} else {
 						if (this.destroyBlocksTick <= 0) {
@@ -82,7 +83,7 @@ public abstract class WitherBossMixin extends Monster {
 						for (int i = 0; i < this.idleHeadUpdates.length; ++i) {
 							this.idleHeadUpdates[i] += 3;
 						}
-						callback.setReturnValue(super.hurt(source, amount));
+						callback.setReturnValue(super.hurtServer(level, source, amount));
 					}
 				}
 			}

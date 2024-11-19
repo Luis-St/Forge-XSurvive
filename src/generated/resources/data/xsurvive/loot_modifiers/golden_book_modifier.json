@@ -7,7 +7,8 @@
         "minecraft:chests/stronghold_library",
         "minecraft:chests/bastion_treasure",
         "minecraft:chests/end_city_treasure",
-        "minecraft:chests/ancient_city"
+        "minecraft:chests/ancient_city",
+        "minecraft:chests/trial_chambers/reward_ominous_rare"
       ]
     }
   ],
@@ -42,7 +43,12 @@
             "minecraft:piercing",
             "minecraft:fire_aspect",
             "xsurvive:frost_aspect",
-            "xsurvive:poison_aspect"
+            "xsurvive:poison_aspect",
+            "minecraft:respiration",
+            "minecraft:sweeping_edge",
+            "minecraft:quick_charge",
+            "minecraft:riptide",
+            "minecraft:impaling"
           ]
         },
         "weight": 40
@@ -52,18 +58,15 @@
           "rarity": "very_rare",
           "values": [
             "minecraft:feather_falling",
-            "minecraft:respiration",
             "minecraft:depth_strider",
-            "minecraft:sweeping",
             "minecraft:unbreaking",
             "minecraft:fortune",
             "minecraft:looting",
             "minecraft:loyalty",
-            "minecraft:riptide",
-            "minecraft:quick_charge",
             "minecraft:luck_of_the_sea",
             "minecraft:lure",
-            "xsurvive:replanting"
+            "minecraft:density",
+            "minecraft:breach"
           ]
         },
         "weight": 25
@@ -83,7 +86,6 @@
   "extra_end_treasure": {
     "rarity": "treasure",
     "values": [
-      "xsurvive:void_walker",
       "xsurvive:void_protection",
       "xsurvive:aspect_of_the_end"
     ]
@@ -97,7 +99,8 @@
   "extra_overworld_treasure": {
     "rarity": "treasure",
     "values": [
-      "minecraft:swift_sneak"
+      "minecraft:swift_sneak",
+      "minecraft:wind_burst"
     ]
   },
   "golden_book_count": 1

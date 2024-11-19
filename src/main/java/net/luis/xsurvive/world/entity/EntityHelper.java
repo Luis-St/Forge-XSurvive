@@ -18,29 +18,29 @@
 
 package net.luis.xsurvive.world.entity;
 
-import com.google.common.collect.Lists;
-import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.util.WeightCollection;
-import net.luis.xsurvive.world.item.ItemEquipmentHelper;
 import net.luis.xsurvive.world.item.ItemStackHelper;
+import net.luis.xsurvive.world.item.WeaponType;
 import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -53,14 +53,6 @@ import java.util.stream.Stream;
 
 public class EntityHelper {
 	
-	public static boolean isAffectedByEnderSlayer(@NotNull Entity entity) {
-		return entity instanceof EnderMan || entity instanceof Endermite || entity instanceof Shulker;
-	}
-	
-	public static boolean isAffectedByImpaling(@NotNull LivingEntity entity) {
-		return entity instanceof WaterAnimal || entity.getMobType() == MobType.WATER;
-	}
-	
 	public static boolean isAffectedByFrost(@NotNull Entity entity) {
 		return entity instanceof MagmaCube || entity instanceof Ghast || entity instanceof Blaze || entity instanceof Strider;
 	}
@@ -68,46 +60,48 @@ public class EntityHelper {
 	public static int getGrowthLevel(@NotNull LivingEntity entity, @NotNull EquipmentSlot slot, @NotNull ItemStack stack) {
 		int growth = 0;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-			if (equipmentSlot.getType() == EquipmentSlot.Type.ARMOR) {
+			ItemEnchantments enchantments;
+			if (equipmentSlot.getType() == Type.HUMANOID_ARMOR) {
 				if (equipmentSlot == slot) {
-					growth += stack.getEnchantmentLevel(XSEnchantments.GROWTH.get());
+					enchantments = stack.getEnchantments();
 				} else {
-					growth += entity.getItemBySlot(equipmentSlot).getEnchantmentLevel(XSEnchantments.GROWTH.get());
+					enchantments = entity.getItemBySlot(equipmentSlot).getEnchantments();
 				}
+				growth += enchantments.getLevel(XSEnchantments.GROWTH.getOrThrow(entity));
 			}
 		}
 		return growth;
 	}
 	
-	public static void updateAttributeModifier(@NotNull Player player, @NotNull Attribute attribute, @NotNull Operation operation, @NotNull UUID uuid, @NotNull String name, int to, int from, double multiplier) {
-		AttributeInstance instance = player.getAttribute(attribute);
-		if (instance != null) {
-			AttributeModifier modifier = new AttributeModifier(uuid, XSurvive.MOD_NAME + name, to * multiplier, operation);
-			boolean hasModifier = instance.getModifier(uuid) != null;
-			if (to == from && !hasModifier) {
-				instance.addTransientModifier(modifier);
-			} else if (to != from) {
-				if (hasModifier) {
-					instance.removeModifier(uuid);
-					instance.addTransientModifier(modifier);
-				} else {
-					instance.addTransientModifier(modifier);
-				}
-			}
+	public static void equipEntityForDifficulty(@NotNull ServerLevel level, @Nullable WeaponType weapon, @NotNull LivingEntity entity) {
+		Difficulty difficulty = level.getDifficulty();
+		if (difficulty == Difficulty.PEACEFUL || difficulty == Difficulty.EASY) {
+			return;
 		}
-	}
-	
-	public static void equipEntityForDifficulty(@NotNull LivingEntity entity, @NotNull DifficultyInstance instance) {
-		double difficulty = instance.getEffectiveDifficulty();
-		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot != EquipmentSlot.OFFHAND && entity.getItemBySlot(slot).isEmpty() && (entity.getRandom().nextDouble() / 2.0) + 0.5 * instance.getSpecialMultiplier() > entity.getRandom().nextDouble()) {
-				WeightCollection<List<Item>> itemWeights = slot == EquipmentSlot.MAINHAND ? ItemEquipmentHelper.getWeaponWeightsForDifficulty(difficulty) : ItemEquipmentHelper.getArmorWeightsForDifficulty(difficulty);
-				if (!itemWeights.isEmpty()) {
-					entity.setItemSlot(slot, ItemStackHelper.setupRandomItemForSlot(entity, slot, Lists.newArrayList(itemWeights.next()), instance.getSpecialMultiplier()));
+		List<EquipmentSlot> slots = Stream.of(EquipmentSlot.values()).filter((slot) -> slot.getType() != Type.ANIMAL_ARMOR && slot != EquipmentSlot.OFFHAND).collect(Collectors.toList());
+		Collections.shuffle(slots, () -> entity.getRandom().nextLong());
+		
+		int slotsEquipped = 0;
+		for (EquipmentSlot slot : slots) {
+			if (!entity.getItemBySlot(slot).isEmpty()) {
+				continue;
+			}
+			double rng = Math.max(0, entity.getRandom().nextDouble() - (slotsEquipped * 0.075));
+			boolean equip = rng > (difficulty == Difficulty.HARD ? 0.4 : 0.5);
+			if (equip) {
+				ItemStack equipment = ItemStack.EMPTY;
+				if (slot == EquipmentSlot.MAINHAND && weapon != null) {
+					equipment = ItemStackHelper.getWeaponForDifficulty(difficulty, weapon, entity);
+				} else if (slot.getType() == Type.HUMANOID_ARMOR) {
+					equipment = ItemStackHelper.getArmorForDifficulty(difficulty, slot);
+				}
+				if (!equipment.isEmpty()) {
+					entity.setItemSlot(slot, ItemStackHelper.setupItemForDifficulty(difficulty, entity, equipment));
 					if (entity instanceof Monster monster) {
 						monster.setDropChance(slot, slot.getType() == Type.HAND ? 0.04F : 0.02F);
 					}
 				}
+				++slotsEquipped;
 			}
 		}
 	}
@@ -119,27 +113,35 @@ public class EntityHelper {
 		return level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(vecX * clipDistance, vecY * clipDistance, vecZ * clipDistance), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getLocation();
 	}
 	
-	public static void addAttributeModifier(@NotNull LivingEntity entity, @NotNull Attribute attribute, @NotNull AttributeModifier modifier) {
+	public static void updateAttributeModifier(@NotNull Player player, @NotNull Holder<Attribute> attribute, @NotNull Operation operation, @NotNull ResourceLocation location, int to, int from, double multiplier) {
+		AttributeInstance instance = player.getAttribute(attribute);
+		if (instance != null) {
+			AttributeModifier modifier = new AttributeModifier(location, to * multiplier, operation);
+			boolean hasModifier = instance.getModifier(location) != null;
+			if (to == from && !hasModifier) {
+				instance.addTransientModifier(modifier);
+			} else if (to != from) {
+				if (hasModifier) {
+					instance.removeModifier(location);
+					instance.addTransientModifier(modifier);
+				} else {
+					instance.addTransientModifier(modifier);
+				}
+			}
+		}
+	}
+	
+	public static void addAttributeModifier(@NotNull LivingEntity entity, @NotNull Holder<Attribute> attribute, @NotNull AttributeModifier modifier) {
 		AttributeMap attributes = entity.getAttributes();
 		if (attributes.hasAttribute(attribute)) {
 			AttributeInstance instance = attributes.getInstance(attribute);
-			if (instance != null && instance.getModifier(modifier.getId()) == null) {
+			if (instance != null && instance.getModifier(modifier.id()) == null) {
 				instance.addPermanentModifier(modifier);
 			}
 		}
 	}
 	
-	public static List<ItemStack> getArmorItems(@NotNull LivingEntity entity) {
-		return Stream.of(EquipmentSlot.values()).filter(EquipmentSlot::isArmor).map(entity::getItemBySlot).collect(Collectors.toList());
-	}
-	
-	public static boolean isWearing(@NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
-		return getArmorItems(entity).stream().allMatch(predicate);
-	}
-	
 	public static boolean isUsingItem(@NotNull LivingEntity entity, @NotNull Predicate<ItemStack> predicate) {
-		ItemStack main = entity.getMainHandItem();
-		ItemStack off = entity.getOffhandItem();
-		return predicate.test(main) || predicate.test(off);
+		return predicate.test(entity.getMainHandItem()) || predicate.test(entity.getOffhandItem());
 	}
 }

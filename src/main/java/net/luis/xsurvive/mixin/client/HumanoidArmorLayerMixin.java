@@ -18,15 +18,19 @@
 
 package net.luis.xsurvive.mixin.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.luis.xsurvive.client.renderer.item.GlintColorHandler;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -35,12 +39,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  *
  */
 
-@SuppressWarnings("unused")
 @Mixin(HumanoidArmorLayer.class)
-public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> {
+public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>> {
 	
-	@Inject(method = "getArmorModelHook", at = @At("HEAD"), remap = false)
-	private void getArmorModelHook(T entity, ItemStack stack, EquipmentSlot slot, A model, CallbackInfoReturnable<A> callback) {
-		GlintColorHandler.setStack(stack);
+	@Inject(method = "renderArmorPiece", at = @At("HEAD"), remap = false)
+	private void renderArmorPiece(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, @NotNull ItemStack itemStack, @NotNull EquipmentSlot slot, int light, @NotNull A model, @NotNull S state, @NotNull CallbackInfo callback) {
+		GlintColorHandler.setStack(itemStack);
 	}
 }

@@ -22,6 +22,7 @@ import net.luis.xsurvive.server.capability.ServerLevelHandler;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.luis.xsurvive.world.level.block.entity.IBeaconBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.*;
@@ -58,21 +59,21 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	
 	//region Mixin
 	@Shadow private int levels;
-	@Shadow private MobEffect primaryPower;
-	@Shadow private MobEffect secondaryPower;
+	@Shadow private Holder<MobEffect> primaryPower;
+	@Shadow private Holder<MobEffect> secondaryPower;
 	
-	private BeaconBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+	private BeaconBlockEntityMixin(@NotNull BlockEntityType<?> type, @NotNull BlockPos pos, @NotNull BlockState state) {
 		super(type, pos, state);
 	}
 	//endregion
 	
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
-	private static void applyEffects(@NotNull Level level, BlockPos pos, int beaconLevel, @Nullable MobEffect primary, @Nullable MobEffect secondary, CallbackInfo callback) {
+	private static void applyEffects(@NotNull Level level, @NotNull BlockPos pos, int beaconLevel, @Nullable Holder<MobEffect> primary, @Nullable Holder<MobEffect> secondary, @NotNull CallbackInfo callback) {
 		if (level instanceof ServerLevel && primary != null && level.getBlockEntity(pos) instanceof IBeaconBlockEntity beacon) {
 			int area = beaconLevel * 20 + 20;
 			if (beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK) && !beacon.isBeaconBaseShared()) {
 				for (Player player : level.getEntitiesOfClass(Player.class, getArea(level, pos, area * 3))) {
-					for (MobEffect effect : getEffects(beaconLevel, primary == MobEffects.JUMP)) {
+					for (Holder<MobEffect> effect : getEffects(beaconLevel, primary == MobEffects.JUMP)) {
 						player.addEffect(new MobEffectInstance(effect, (10 + beaconLevel * 10) * 20, beaconLevel, true, true));
 					}
 				}
@@ -93,12 +94,12 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 		}
 	}
 	
-	private static @NotNull AABB getArea(@NotNull Level level, BlockPos pos, int area) {
-		return new AABB(pos).inflate(area).setMinY(level.getMinBuildHeight()).setMaxY(level.getMaxBuildHeight());
+	private static @NotNull AABB getArea(@NotNull Level level, @NotNull BlockPos pos, int area) {
+		return new AABB(pos).inflate(area).setMinY(level.getMinY()).setMaxY(level.getMaxY());
 	}
 	
-	private static @NotNull List<MobEffect> getEffects(int beaconLevel, boolean includeJump) {
-		List<MobEffect> effects = switch (beaconLevel) {
+	private static @NotNull List<Holder<MobEffect>> getEffects(int beaconLevel, boolean includeJump) {
+		List<Holder<MobEffect>> effects = switch (beaconLevel) {
 			case 1 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED);
 			case 2 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE);
 			case 3 -> List.of(MobEffects.MOVEMENT_SPEED, MobEffects.DIG_SPEED, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST);
@@ -112,7 +113,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	}
 	
 	@Inject(method = "setLevel", at = @At("RETURN"))
-	public void setLevel(Level level, CallbackInfo callback) {
+	public void setLevel(@NotNull Level level, @NotNull CallbackInfo callback) {
 		if (level instanceof ServerLevel) {
 			ServerLevelHandler handler = LevelProvider.getServer(level);
 			handler.addBeaconPosition(this.getBlockPos());
@@ -121,7 +122,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	}
 	
 	@Inject(method = "setRemoved", at = @At("HEAD"))
-	public void setRemoved(CallbackInfo callback) {
+	public void setRemoved(@NotNull CallbackInfo callback) {
 		if (this.getLevel() instanceof ServerLevel level) {
 			ServerLevelHandler handler = LevelProvider.getServer(level);
 			handler.removeBeaconPosition(this.getBlockPos());
@@ -135,7 +136,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	}
 	
 	@Override
-	public List<AABB> getBeaconBase() {
+	public @NotNull List<AABB> getBeaconBase() {
 		List<AABB> base = new ArrayList<>();
 		AABB area = new AABB(Vec3.atLowerCornerOf(this.getBlockPos()), Vec3.atLowerCornerOf(this.getBlockPos()));
 		for (int i = 0; i < this.levels; i++) {
@@ -145,7 +146,7 @@ public abstract class BeaconBlockEntityMixin extends BlockEntity implements IBea
 	}
 	
 	@Override
-	public List<Block> getBeaconBaseBlocks() {
+	public @NotNull List<Block> getBeaconBaseBlocks() {
 		HashSet<Block> blocks = new HashSet<>();
 		List<AABB> base = this.getBeaconBase();
 		for (AABB basePart : base) {

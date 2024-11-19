@@ -50,7 +50,7 @@ public enum XSNetworkHandler {
 	private SimpleChannel simpleChannel;
 	
 	public void initChannel() {
-		this.simpleChannel = ChannelBuilder.named(new ResourceLocation(XSurvive.MOD_ID, "simple_channel")).acceptedVersions((status, version) -> true).simpleChannel();
+		this.simpleChannel = ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "simple_channel")).acceptedVersions((status, version) -> true).simpleChannel();
 	}
 	
 	public void registerPackets() {
@@ -60,8 +60,9 @@ public enum XSNetworkHandler {
 		this.registerPacket(UpdateLevelCapabilityPacket.class, UpdateLevelCapabilityPacket::encode, UpdateLevelCapabilityPacket::new, UpdateLevelCapabilityPacket::handle);
 	}
 	
-	private <T extends NetworkPacket> void registerPacket(Class<T> clazz, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, CustomPayloadEvent.Context> consumer) {
-		this.simpleChannel.messageBuilder(clazz, this.id++, NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <T extends NetworkPacket> void registerPacket(@NotNull Class<T> clazz, @NotNull BiConsumer<T, FriendlyByteBuf> encoder, @NotNull Function<FriendlyByteBuf, T> decoder, @NotNull BiConsumer<T, CustomPayloadEvent.Context> consumer) {
+		this.simpleChannel.messageBuilder(clazz, this.id++, (NetworkDirection) NetworkDirection.PLAY_TO_CLIENT).encoder(encoder).decoder(decoder).consumerMainThread(consumer).add();
 	}
 	
 	public @NotNull SimpleChannel getChannel() {
@@ -86,7 +87,7 @@ public enum XSNetworkHandler {
 		this.getChannel().send(packet, PacketDistributor.ALL.noArg());
 	}
 	
-	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet, ServerPlayer... players) {
+	public <T extends NetworkPacket> void sendToPlayers(@NotNull T packet, ServerPlayer @NotNull ... players) {
 		List<Connection> connections = Lists.newArrayList(players).stream().map((player) -> player.connection.getConnection()).collect(Collectors.toList());
 		this.getChannel().send(packet, PacketDistributor.NMLIST.with(connections));
 	}

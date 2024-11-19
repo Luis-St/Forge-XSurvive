@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "honey",
+  "ingredients": [
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice",
+    "xsurvive:honey_melon_slice"
+  ],
+  "result": {
+    "count": 1,
+    "id": "xsurvive:honey_melon"
+  }
+}

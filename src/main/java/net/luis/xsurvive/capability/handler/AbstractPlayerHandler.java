@@ -20,6 +20,7 @@ package net.luis.xsurvive.capability.handler;
 
 import net.luis.xsurvive.world.entity.player.IPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.Mth;
@@ -52,7 +53,7 @@ public class AbstractPlayerHandler implements IPlayer {
 	protected int startEndAspectCooldown;
 	@Nullable protected BlockPos containerPos;
 	
-	protected AbstractPlayerHandler(Player player) {
+	protected AbstractPlayerHandler(@NotNull Player player) {
 		this.player = player;
 	}
 	
@@ -140,16 +141,16 @@ public class AbstractPlayerHandler implements IPlayer {
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk(HolderLookup.@NotNull Provider lookup) {
 		CompoundTag tag = this.serialize();
-		tag.put("ender_chest", this.enderChest.serializeNBT());
+		tag.put("ender_chest", this.enderChest.serializeNBT(lookup));
 		return tag;
 	}
 	
 	@Override
-	public void deserializeDisk(@NotNull CompoundTag tag) {
+	public void deserializeDisk(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
 		this.deserialize(tag);
-		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
+		this.enderChest.deserializeNBT(lookup, tag.getCompound("ender_chest"));
 	}
 	
 	@Override
@@ -165,24 +166,24 @@ public class AbstractPlayerHandler implements IPlayer {
 	public void deserializeNetwork(@NotNull CompoundTag tag) {
 		this.deserialize(tag);
 		if (tag.contains("container_pos")) {
-			this.containerPos = NbtUtils.readBlockPos(tag.getCompound("container_pos"));
+			this.containerPos = NbtUtils.readBlockPos(tag, "container_pos").orElseThrow();
 		} else {
 			this.containerPos = null;
 		}
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializePersistent() {
+	public @NotNull CompoundTag serializePersistent(HolderLookup.@NotNull Provider lookup) {
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", this.tick);
-		tag.put("ender_chest", this.enderChest.serializeNBT());
+		tag.put("ender_chest", this.enderChest.serializeNBT(lookup));
 		return tag;
 	}
 	
 	@Override
-	public void deserializePersistent(@NotNull CompoundTag tag) {
+	public void deserializePersistent(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
 		this.tick = tag.getInt("tick");
-		this.enderChest.deserializeNBT(tag.getCompound("ender_chest"));
+		this.enderChest.deserializeNBT(lookup, tag.getCompound("ender_chest"));
 	}
 	//endregion
 }

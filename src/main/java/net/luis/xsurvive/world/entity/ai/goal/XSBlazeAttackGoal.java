@@ -23,6 +23,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumSet;
 
@@ -39,7 +41,7 @@ public class XSBlazeAttackGoal extends Goal {
 	private int attackTime;
 	private int lastSeen;
 	
-	public XSBlazeAttackGoal(Blaze blaze) {
+	public XSBlazeAttackGoal(@NotNull Blaze blaze) {
 		this.blaze = blaze;
 		this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
@@ -83,7 +85,7 @@ public class XSBlazeAttackGoal extends Goal {
 					return;
 				} else if (0 >= this.attackTime) {
 					this.attackTime = 20;
-					this.blaze.doHurtTarget(target);
+					this.blaze.doHurtTarget(getServerLevel(this.blaze), target);
 				}
 				this.blaze.getMoveControl().setWantedPosition(target.getX(), target.getY(), target.getZ(), 1.0);
 			} else if (distance < this.getFollowDistance() * this.getFollowDistance() && seeTarget) {
@@ -108,7 +110,8 @@ public class XSBlazeAttackGoal extends Goal {
 							this.blaze.level().levelEvent(null, 1018, this.blaze.blockPosition(), 0);
 						}
 						for (int i = 0; i < 3; ++i) {
-							SmallFireball fireball = new SmallFireball(this.blaze.level(), this.blaze, this.blaze.getRandom().triangle(distanceX, 2.297 * direction), distanceY, this.blaze.getRandom().triangle(distanceZ, 2.297 * direction));
+							Vec3 vec3 = new Vec3(this.blaze.getRandom().triangle(distanceX, 2.297 * direction), distanceY, this.blaze.getRandom().triangle(distanceZ, 2.297 * direction));
+							SmallFireball fireball = new SmallFireball(this.blaze.level(), this.blaze, vec3.normalize());
 							fireball.setPos(fireball.getX(), this.blaze.getY(0.5D) + 0.5D, fireball.getZ());
 							this.blaze.level().addFreshEntity(fireball);
 						}

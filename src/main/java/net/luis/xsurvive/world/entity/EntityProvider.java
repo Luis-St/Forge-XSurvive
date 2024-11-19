@@ -22,6 +22,7 @@ import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.capability.ClientEntityHandler;
 import net.luis.xsurvive.server.capability.ServerEntityHandler;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.capabilities.Capability;
@@ -79,12 +80,12 @@ public class EntityProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializeNBT() {
-		return this.entityCapability.serializeDisk();
+	public @NotNull CompoundTag serializeNBT(HolderLookup.@NotNull Provider lookup) {
+		return this.entityCapability.serializeDisk(lookup);
 	}
 	
 	@Override
-	public void deserializeNBT(@NotNull CompoundTag tag) {
-		this.entityCapability.deserializeDisk(tag);
+	public void deserializeNBT(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
+		this.entityCapability.deserializeDisk(lookup, tag);
 	}
 }

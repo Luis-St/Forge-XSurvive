@@ -45,7 +45,7 @@ import static net.minecraft.world.level.block.SugarCaneBlock.*;
 public abstract class SugarCaneBlockMixin extends Block implements BonemealableBlock {
 	
 	//region Mixin
-	private SugarCaneBlockMixin(Properties properties) {
+	private SugarCaneBlockMixin(@NotNull Properties properties) {
 		super(properties);
 	}
 	//endregion

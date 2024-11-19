@@ -18,13 +18,14 @@
 
 package net.luis.xsurvive.world.level.storage.loot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.luis.xsurvive.util.Chance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("CodeBlock2Expr")
 public class AdditionalChanceItemModifier extends LootModifier {
 	
-	public static final Codec<AdditionalChanceItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final MapCodec<AdditionalChanceItemModifier> CODEC = RecordCodecBuilder.mapCodec((instance) -> {
 		return LootModifier.codecStart(instance).and(instance.group(ForgeRegistries.ITEMS.getCodec().fieldOf("additional_item").forGetter((modifier) -> {
 			return modifier.additionalItem;
 		}), Chance.CODEC.fieldOf("chance").forGetter((modifier) -> {
@@ -50,19 +51,19 @@ public class AdditionalChanceItemModifier extends LootModifier {
 	private final Item additionalItem;
 	private final Chance chance;
 	
-	public AdditionalChanceItemModifier(LootItemCondition[] conditions, Item additionalItem, Chance chance) {
+	public AdditionalChanceItemModifier(LootItemCondition @NotNull [] conditions, @NotNull Item additionalItem, @NotNull Chance chance) {
 		super(conditions);
 		this.additionalItem = additionalItem;
 		this.chance = chance;
 	}
 	
 	@Override
-	public @NotNull Codec<AdditionalChanceItemModifier> codec() {
+	public @NotNull MapCodec<AdditionalChanceItemModifier> codec() {
 		return XSGlobalLootModifiers.ADDITIONAL_CHANCE_ITEM_MODIFIER.get();
 	}
 	
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(@NotNull LootTable lootTable, @NotNull ObjectArrayList<ItemStack> generatedLoot, @NotNull LootContext context) {
 		if (this.chance.result()) {
 			generatedLoot.add(new ItemStack(this.additionalItem));
 		}

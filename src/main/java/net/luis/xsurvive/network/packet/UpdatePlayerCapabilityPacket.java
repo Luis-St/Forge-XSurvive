@@ -38,7 +38,7 @@ public class UpdatePlayerCapabilityPacket implements NetworkPacket {
 	
 	private final CompoundTag tag;
 	
-	public UpdatePlayerCapabilityPacket(CompoundTag tag) {
+	public UpdatePlayerCapabilityPacket(@NotNull CompoundTag tag) {
 		this.tag = tag;
 	}
 	

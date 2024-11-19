@@ -26,6 +26,8 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
@@ -47,27 +49,41 @@ import java.util.Optional;
 @Mixin(EntityRenderDispatcher.class)
 public abstract class EntityRenderDispatcherMixin {
 	
+	private static final ThreadLocal<Entity> ENTITY = new ThreadLocal<>();
+	
 	//region Mixin
 	@Shadow public Camera camera;
 	
 	@Shadow
-	private static void fireVertex(PoseStack.Pose pose, VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {
-		
-	}
+	private static void fireVertex(PoseStack.@NotNull Pose pose, @NotNull VertexConsumer vertexConsumer, float x, float y, float z, float u, float v) {}
 	//endregion
 	
+	@Inject(method = "render", at = @At("HEAD"))
+	private void renderHead(@NotNull Entity entity, double x, double y, double z, float partialTicks, @NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, int light, @NotNull CallbackInfo callback) {
+		ENTITY.set(entity);
+	}
+	
+	@Inject(method = "render", at = @At("TAIL"))
+	private void renderTail(@NotNull Entity entity, double x, double y, double z, float partialTicks, @NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, int light, @NotNull CallbackInfo callback) {
+		ENTITY.remove();
+	}
+	
 	@Inject(method = "renderFlame", at = @At("HEAD"), cancellable = true)
-	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, Entity entity, Quaternionf quaternion, CallbackInfo callback) {
+	private void renderFlame(@NotNull PoseStack stack, @NotNull MultiBufferSource bufferSource, @NotNull EntityRenderState entityRenderState, @NotNull Quaternionf quaternion, @NotNull CallbackInfo callback) {
+		if (ENTITY.get() == null) {
+			return;
+		}
+		Entity entity = ENTITY.get();
 		Optional<IEntity> optional = EntityProvider.getSafe(entity).resolve();
 		if (optional.isPresent()) {
 			EntityFireType fireType = optional.get().getFireType();
 			TextureAtlasSprite fireTextureSprite0 = EntityFireTypeHelper.getFireTextureSprite0(entity, fireType);
 			TextureAtlasSprite fireTextureSprite1 = EntityFireTypeHelper.getFireTextureSprite1(entity, fireType);
 			stack.pushPose();
-			float width = entity.getBbWidth() * 1.4F;
+			float width = entityRenderState.boundingBoxWidth * 1.4F;
 			stack.scale(width, width, width);
 			float xOffset = 0.5F;
-			float height = entity.getBbHeight() / width;
+			float height = entityRenderState.boundingBoxWidth / width;
 			float yOffset = 0.0F;
 			stack.mulPose(quaternion);
 			stack.translate(0.0, 0.0, -0.3F + ((int) height) * 0.02F);

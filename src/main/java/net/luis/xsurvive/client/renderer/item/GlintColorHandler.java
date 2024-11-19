@@ -18,15 +18,12 @@
 
 package net.luis.xsurvive.client.renderer.item;
 
-import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.capability.XSCapabilities;
 import net.luis.xsurvive.client.renderer.XSurviveRenderType;
-import net.luis.xsurvive.world.item.IGlintColor;
+import net.luis.xsurvive.core.components.XSDataComponents;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -41,30 +38,18 @@ public class GlintColorHandler {
 	
 	private static final ThreadLocal<ItemStack> STACK = new ThreadLocal<>();
 	
-	public static ItemStack getStack() {
+	public static @Nullable ItemStack getStack() {
 		return STACK.get();
 	}
 	
-	public static void setStack(ItemStack stack) {
+	public static void setStack(@NotNull ItemStack stack) {
 		STACK.set(stack);
 	}
 	
 	private static int getColor() {
 		ItemStack stack = getStack();
 		if (stack != null && !stack.isEmpty()) {
-			LazyOptional<IGlintColor> optional = stack.getCapability(XSCapabilities.GLINT_COLOR, null);
-			if (optional.isPresent()) {
-				return optional.orElseThrow(NullPointerException::new).getGlintColor(stack);
-			} else if (stack.getItem() instanceof IGlintColor glintColor) {
-				return glintColor.getGlintColor(stack);
-			} else if (stack.hasTag() && stack.getOrCreateTag().contains(XSurvive.MOD_NAME)) {
-				CompoundTag tag = stack.getOrCreateTag().getCompound(XSurvive.MOD_NAME);
-				if (tag.contains(XSurvive.MOD_NAME + "GlintColor")) {
-					return tag.getInt(XSurvive.MOD_NAME + "GlintColor");
-				} else if (tag.contains(XSurvive.MOD_NAME + "ItemColor")) {
-					return tag.getInt(XSurvive.MOD_NAME + "ItemColor");
-				}
-			}
+			return stack.getOrDefault(XSDataComponents.GLINT_COLOR.get(), -1);
 		}
 		return -1;
 	}
@@ -79,18 +64,6 @@ public class GlintColorHandler {
 	
 	public static @NotNull RenderType getEntityGlint() {
 		return renderType(XSurviveRenderType.entityGlint, RenderType::entityGlint);
-	}
-	
-	public static @NotNull RenderType getGlintDirect() {
-		return renderType(XSurviveRenderType.glintDirect, RenderType::glintDirect);
-	}
-	
-	public static @NotNull RenderType getEntityGlintDirect() {
-		return renderType(XSurviveRenderType.entityGlintDirect, RenderType::entityGlintDirect);
-	}
-	
-	public static @NotNull RenderType getArmorGlint() {
-		return renderType(XSurviveRenderType.armorGlint, RenderType::armorGlint);
 	}
 	
 	public static @NotNull RenderType getArmorEntityGlint() {

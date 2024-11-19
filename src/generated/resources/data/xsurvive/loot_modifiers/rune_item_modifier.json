@@ -13,7 +13,10 @@
         "minecraft:chests/bastion_treasure",
         "minecraft:chests/end_city_treasure",
         "minecraft:chests/ancient_city",
-        "minecraft:chests/ancient_city_ice_box"
+        "minecraft:chests/ancient_city_ice_box",
+        "minecraft:chests/trial_chambers/reward_rare",
+        "minecraft:chests/trial_chambers/reward_rare",
+        "minecraft:chests/trial_chambers/reward_ominous_common"
       ]
     }
   ],

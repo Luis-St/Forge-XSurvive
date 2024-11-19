@@ -20,6 +20,7 @@ package net.luis.xsurvive.capability.handler;
 
 import net.luis.xsurvive.world.entity.EntityFireType;
 import net.luis.xsurvive.world.entity.IEntity;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +37,7 @@ public class AbstractEntityHandler implements IEntity {
 	private int tick;
 	protected EntityFireType fireType = EntityFireType.NONE;
 	
-	protected AbstractEntityHandler(Entity entity) {
+	protected AbstractEntityHandler(@NotNull Entity entity) {
 		this.entity = entity;
 	}
 	
@@ -69,12 +70,12 @@ public class AbstractEntityHandler implements IEntity {
 	}
 	
 	@Override
-	public @NotNull CompoundTag serializeDisk() {
+	public @NotNull CompoundTag serializeDisk(HolderLookup.@NotNull Provider lookup) {
 		return this.serialize();
 	}
 	
 	@Override
-	public void deserializeDisk(@NotNull CompoundTag tag) {
+	public void deserializeDisk(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
 		this.deserialize(tag);
 	}
 	

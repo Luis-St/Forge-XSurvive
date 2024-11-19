@@ -48,22 +48,20 @@ import java.util.UUID;
 public abstract class ZombieVillagerMixin extends Zombie {
 	
 	//region Mixin
-	private ZombieVillagerMixin(EntityType<? extends Zombie> entityType, Level level) {
+	private ZombieVillagerMixin(@NotNull EntityType<? extends Zombie> entityType, @NotNull Level level) {
 		super(entityType, level);
 	}
 	
 	@Shadow
-	protected abstract void startConverting(UUID uuid, int time);
+	protected abstract void startConverting(@NotNull UUID uuid, int time);
 	//endregion
 	
 	@Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
-	public void mobInteract(@NotNull Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> callback) {
+	public void mobInteract(@NotNull Player player, @NotNull InteractionHand hand, @NotNull CallbackInfoReturnable<InteractionResult> callback) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(Items.ENCHANTED_GOLDEN_APPLE)) {
 			if (this.hasEffect(MobEffects.WEAKNESS)) {
-				if (!player.getAbilities().instabuild) {
-					stack.shrink(1);
-				}
+				stack.consume(1, player);
 				if (!this.level().isClientSide) {
 					this.startConverting(player.getUUID(), this.random.nextInt(2401) + 3600);
 				}

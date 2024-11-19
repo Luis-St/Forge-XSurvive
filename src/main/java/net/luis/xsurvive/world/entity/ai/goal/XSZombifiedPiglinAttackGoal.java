@@ -22,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -31,7 +32,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class XSZombifiedPiglinAttackGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
 	
-	public XSZombifiedPiglinAttackGoal(ZombifiedPiglin zombifiedPiglin, Class<T> targetType, boolean mustSee, boolean mustReach) {
+	public XSZombifiedPiglinAttackGoal(@NotNull ZombifiedPiglin zombifiedPiglin, @NotNull Class<T> targetType, boolean mustSee, boolean mustReach) {
 		super(zombifiedPiglin, targetType, mustSee, mustReach);
 	}
 	

@@ -34,7 +34,7 @@ public class XSRecipeTypes {
 	
 	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, XSurvive.MOD_ID);
 	
-	public static final RegistryObject<RecipeType<SmeltingRecipe>> SMELTING = RECIPE_TYPES.register("xsurvive_smelting", () -> {
-		return RecipeType.simple(new ResourceLocation(XSurvive.MOD_ID, "xsurvive_smelting"));
+	public static final RegistryObject<RecipeType<XSmeltingRecipe>> XSMELTING = RECIPE_TYPES.register("xsurvive_smelting", () -> {
+		return RecipeType.simple(ResourceLocation.fromNamespaceAndPath(XSurvive.MOD_ID, "xsurvive_smelting"));
 	});
 }

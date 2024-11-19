@@ -37,30 +37,30 @@ public class XSPotions {
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, XSurvive.MOD_ID);
 	
 	public static final RegistryObject<Potion> FROST = POTIONS.register("frost", () -> {
-		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 3600));
+		return new Potion("frost", new MobEffectInstance(XSMobEffects.FROST.getHolder().orElseThrow(), 3600));
 	});
 	public static final RegistryObject<Potion> LONG_FROST = POTIONS.register("long_frost", () -> {
-		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 9600));
+		return new Potion("long_frost", new MobEffectInstance(XSMobEffects.FROST.getHolder().orElseThrow(), 9600));
 	});
 	public static final RegistryObject<Potion> STRONG_FROST = POTIONS.register("strong_frost", () -> {
-		return new Potion(new MobEffectInstance(XSMobEffects.FROST.get(), 1800, 1));
+		return new Potion("strong_frost", new MobEffectInstance(XSMobEffects.FROST.getHolder().orElseThrow(), 1800, 1));
 	});
 	public static final RegistryObject<Potion> WITHER = POTIONS.register("wither", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.WITHER, 600));
+		return new Potion("wither", new MobEffectInstance(MobEffects.WITHER, 600));
 	});
 	public static final RegistryObject<Potion> LONG_WITHER = POTIONS.register("long_wither", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.WITHER, 1200));
+		return new Potion("long_wither", new MobEffectInstance(MobEffects.WITHER, 1200));
 	});
 	public static final RegistryObject<Potion> STRONG_WITHER = POTIONS.register("strong_wither", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.WITHER, 400, 1));
+		return new Potion("strong_wither", new MobEffectInstance(MobEffects.WITHER, 400, 1));
 	});
 	public static final RegistryObject<Potion> DIG_SPEED = POTIONS.register("haste", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
+		return new Potion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
 	});
 	public static final RegistryObject<Potion> LONG_DIG_SPEED = POTIONS.register("long_haste", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
+		return new Potion("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
 	});
 	public static final RegistryObject<Potion> STRONG_DIG_SPEED = POTIONS.register("strong_haste", () -> {
-		return new Potion(new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
+		return new Potion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
 	});
 }

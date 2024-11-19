@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.end.EndDragonFight;
 import net.minecraft.world.level.levelgen.feature.EndPodiumFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -45,7 +46,7 @@ public abstract class EndDragonFightMixin {
 	//endregion
 	
 	@Inject(method = "spawnExitPortal", at = @At("HEAD"), cancellable = true)
-	private void spawnExitPortal(boolean active, CallbackInfo callback) {
+	private void spawnExitPortal(boolean active, @NotNull CallbackInfo callback) {
 		EndPodiumFeature endpodiumfeature = new EndPodiumFeature(active);
 		endpodiumfeature.place(FeatureConfiguration.NONE, this.level, this.level.getChunkSource().getGenerator(), RandomSource.create(), new BlockPos(0, 75, 0));
 		for (int i = -1; i <= 1; i++) {

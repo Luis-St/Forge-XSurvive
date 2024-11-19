@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.menu;
 
 import net.luis.xsurvive.world.level.LevelProvider;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.inventory.BeaconMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -45,9 +46,9 @@ public abstract class BeaconMenuMixin {
 	//endregion
 	
 	@Inject(method = "updateEffects", at = @At("TAIL"))
-	public void updateEffects(Optional<MobEffect> primary, Optional<MobEffect> secondary, CallbackInfo callback) {
+	public void updateEffects(Optional<Holder<MobEffect>> primary, Optional<Holder<MobEffect>> secondary, CallbackInfo callback) {
 		if (this.access != ContainerLevelAccess.NULL) {
-			this.access.execute((level, pos) -> LevelProvider.getServer(level).setBeaconEffects(pos, primary.orElse(null), secondary.orElse(null)));
+			this.access.execute((level, pos) -> LevelProvider.getServer(level).setBeaconEffects(pos, primary.orElseThrow(), secondary.orElseThrow()));
 		}
 	}
 }

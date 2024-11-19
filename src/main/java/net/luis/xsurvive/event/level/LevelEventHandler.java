@@ -62,16 +62,16 @@ public class LevelEventHandler {
 		BlockPos pos = new BlockPos(event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 		BlockState state = event.getState();
 		int xp = event.getExpToDrop();
-		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE.get(), player);
-		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP.get(), player);
-		int fortune = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player);
-		int blasting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.BLASTING.get(), player);
-		int harvesting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.HARVESTING.get(), player);
+		int experience = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.EXPERIENCE, player);
+		int multiDrop = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.MULTI_DROP, player);
+		int fortune = XSEnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player);
+		int blasting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.BLASTING, player);
+		int harvesting = XSEnchantmentHelper.getEnchantmentLevel(XSEnchantments.HARVESTING, player);
 		if (xp > 0 && experience > 0) {
 			event.setExpToDrop((xp * ((experience + 1) * ((experience * 2) + fortune))) * (multiDrop + 1));
 		}
 		if (blasting > 0) {
-			player.level().explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.NONE);
+			player.level().explode(player, pos.getX(), pos.getY(), pos.getZ(), 2.0F * (blasting + 1), Level.ExplosionInteraction.BLOCK);
 		}
 		if (harvesting > 0 && event.getState().is(BlockTags.LOGS) && event.getLevel() instanceof Level level) {
 			WoodHarvester.harvest(level, pos, state.getBlock(), harvesting, player);
@@ -88,7 +88,7 @@ public class LevelEventHandler {
 	@SubscribeEvent
 	public static void createSpawnPosition(@NotNull CreateSpawnPosition event) {
 		if (event.getLevel() instanceof ServerLevel level) {
-			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().registryOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
+			Pair<BlockPos, Holder<Structure>> pair = level.getChunkSource().getGenerator().findNearestMapStructure(level, getHolderSet(level.getLevel().registryAccess().lookupOrThrow(Registries.STRUCTURE)), BlockPos.ZERO, 100, false);
 			if (pair != null) {
 				ChunkPos pos = level.getChunk(pair.getFirst()).getPos();
 				BlockPos spawnPos = getSpawnPos(level, pos);
@@ -102,7 +102,7 @@ public class LevelEventHandler {
 	}
 	
 	private static @NotNull HolderSet<Structure> getHolderSet(@NotNull Registry<Structure> registry) {
-		return HolderSet.direct(registry.getHolderOrThrow(BuiltinStructures.VILLAGE_PLAINS));
+		return HolderSet.direct(registry.getOrThrow(BuiltinStructures.VILLAGE_PLAINS));
 	}
 	
 	private static @Nullable BlockPos getSpawnPos(@NotNull ServerLevel level, @NotNull ChunkPos pos) {

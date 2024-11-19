@@ -44,13 +44,11 @@ public enum EntityFireType {
 	}
 	
 	public static EntityFireType byBlock(@NotNull Block fireBlock) {
-		if (fireBlock instanceof FireBlock) {
-			return FIRE;
-		} else if (fireBlock instanceof SoulFireBlock) {
-			return SOUL_FIRE;
-		} else if (fireBlock instanceof MysticFireBlock) {
-			return MYSTIC_FIRE;
-		}
-		return NONE;
+		return switch (fireBlock) {
+			case FireBlock block -> FIRE;
+			case SoulFireBlock soulFireBlock -> SOUL_FIRE;
+			case MysticFireBlock mysticFireBlock -> MYSTIC_FIRE;
+			default -> NONE;
+		};
 	}
 }

@@ -19,17 +19,18 @@
 package net.luis.xsurvive.mixin.item;
 
 import net.luis.xsurvive.XSurvive;
-import net.luis.xsurvive.world.item.enchantment.IEnchantment;
+import net.luis.xsurvive.world.item.enchantment.GoldenEnchantmentHelper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -41,44 +42,23 @@ import java.util.Set;
 public abstract class CreativeModeTabsMixin {
 	
 	@Inject(method = "generateEnchantmentBookTypesOnlyMaxLevel", at = @At("HEAD"), cancellable = true)
-	private static void generateEnchantmentBookTypesOnlyMaxLevel(CreativeModeTab.Output populator, HolderLookup<Enchantment> lookup, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
-		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isAllowedOnBooks()) {
-				if (enchantment instanceof IEnchantment ench) {
-					if (!ench.isUpgradeEnchantment()) {
-						for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
-							populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)), visibility);
-						}
-					}
-				} else {
-					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-					XSurvive.LOGGER.info("A deprecate vanilla logic is called");
-					for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
-						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i)), visibility);
-					}
-				}
-			}
-		}
+	private static void generateEnchantmentBookTypesOnlyMaxLevel(CreativeModeTab.@NotNull Output populator, @NotNull HolderLookup<Enchantment> lookup, CreativeModeTab.@NotNull TabVisibility visibility, @NotNull CallbackInfo callback) {
+		lookup.listElements().filter(GoldenEnchantmentHelper::isEnchantment).filter(Predicate.not(GoldenEnchantmentHelper::isUpgradeEnchantment)).forEach(holder -> {
+			ItemStack book = EnchantmentHelper.createBook(new EnchantmentInstance(holder, holder.value().getMaxLevel()));
+			populator.accept(book, visibility);
+		});
 		callback.cancel();
 	}
 	
 	@Inject(method = "generateEnchantmentBookTypesAllLevels", at = @At("HEAD"), cancellable = true)
-	private static void generateEnchantmentBookTypesAllLevels(CreativeModeTab.Output populator, HolderLookup<Enchantment> lookup, Set<EnchantmentCategory> categories, CreativeModeTab.TabVisibility visibility, CallbackInfo callback) {
-		for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
-			if (enchantment.isAllowedOnBooks()) {
-				if (enchantment instanceof IEnchantment ench) {
-					if (enchantment.allowedInCreativeTab(Items.ENCHANTED_BOOK, categories) && !ench.isUpgradeEnchantment()) {
-						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
-					}
-				} else {
-					XSurvive.LOGGER.error("Enchantment '{}' is not a instance of IEnchantment", ForgeRegistries.ENCHANTMENTS.getKey(enchantment));
-					XSurvive.LOGGER.info("A deprecate vanilla logic is called");
-					if (enchantment.allowedInCreativeTab(Items.ENCHANTED_BOOK, categories)) {
-						populator.accept(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, enchantment.getMaxLevel())));
-					}
-				}
-			}
-		}
+	private static void generateEnchantmentBookTypesAllLevels(CreativeModeTab.@NotNull Output populator, @NotNull HolderLookup<Enchantment> lookup, CreativeModeTab.@NotNull TabVisibility visibility, @NotNull CallbackInfo callback) {
+		lookup.listElements().filter(GoldenEnchantmentHelper::isEnchantment).filter(Predicate.not(GoldenEnchantmentHelper::isUpgradeEnchantment)).forEach(holder -> {
+			Enchantment enchantment = holder.value();
+			IntStream.rangeClosed(enchantment.getMinLevel(), enchantment.getMaxLevel()).forEach(level -> {
+				ItemStack book = EnchantmentHelper.createBook(new EnchantmentInstance(holder, level));
+				populator.accept(book, visibility);
+			});
+		});
 		callback.cancel();
 	}
 }

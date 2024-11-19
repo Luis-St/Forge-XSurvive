@@ -3,7 +3,18 @@
   "conditions": [
     {
       "condition": "minecraft:match_tool",
-      "predicate": {}
+      "predicate": {
+        "predicates": {
+          "minecraft:enchantments": [
+            {
+              "enchantments": "xsurvive:multi_drop",
+              "levels": {
+                "min": 1
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

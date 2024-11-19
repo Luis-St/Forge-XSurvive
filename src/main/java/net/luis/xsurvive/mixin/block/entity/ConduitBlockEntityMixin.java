@@ -19,6 +19,7 @@
 package net.luis.xsurvive.mixin.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -53,12 +54,12 @@ public abstract class ConduitBlockEntityMixin {
 	
 	//region Mixin
 	@Shadow
-	private static LivingEntity findDestroyTarget(Level level, BlockPos pos, UUID uuid) {
+	private static LivingEntity findDestroyTarget(@NotNull Level level, @NotNull BlockPos pos, @NotNull UUID uuid) {
 		return null;
 	}
 	
 	@Shadow
-	private static AABB getDestroyRangeAABB(BlockPos pos) {
+	private static AABB getDestroyRangeAABB(@NotNull BlockPos pos) {
 		return null;
 	}
 	//endregion
@@ -70,7 +71,7 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "applyEffects", at = @At("HEAD"), cancellable = true)
-	private static void applyEffects(@NotNull Level level, @NotNull BlockPos pos, @NotNull List<BlockPos> shapeBlocks, CallbackInfo callback) {
+	private static void applyEffects(@NotNull Level level, @NotNull BlockPos pos, @NotNull List<BlockPos> shapeBlocks, @NotNull CallbackInfo callback) {
 		int range = (shapeBlocks.size() / 7 * 16) * 2;
 		AABB aabb = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1).inflate(range).expandTowards(0.0, level.getHeight(), 0.0);
 		for (Player player : level.getEntitiesOfClass(Player.class, aabb)) {
@@ -82,7 +83,7 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "updateDestroyTarget", at = @At("HEAD"), cancellable = true)
-	private static void updateDestroyTarget(Level level, BlockPos pos, BlockState state, @NotNull List<BlockPos> shapeBlocks, @NotNull ConduitBlockEntity blockEntity, CallbackInfo callback) {
+	private static void updateDestroyTarget(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull List<BlockPos> shapeBlocks, @NotNull ConduitBlockEntity blockEntity, @NotNull CallbackInfo callback) {
 		LivingEntity destroyTarget = blockEntity.destroyTarget;
 		if (30 > shapeBlocks.size()) {
 			blockEntity.destroyTarget = null;
@@ -100,7 +101,9 @@ public abstract class ConduitBlockEntityMixin {
 		
 		if (blockEntity.destroyTarget != null) {
 			level.playSound(null, blockEntity.destroyTarget.getX(), blockEntity.destroyTarget.getY(), blockEntity.destroyTarget.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-			blockEntity.destroyTarget.hurt(level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			if (level instanceof ServerLevel serverLevel) {
+				blockEntity.destroyTarget.hurtServer(serverLevel, level.damageSources().magic(), shapeBlocks.size() >= 42 ? 8.0F : 4.0F);
+			}
 		}
 		if (destroyTarget != blockEntity.destroyTarget) {
 			level.sendBlockUpdated(pos, state, state, 2);
@@ -109,7 +112,7 @@ public abstract class ConduitBlockEntityMixin {
 	}
 	
 	@Inject(method = "getDestroyRangeAABB", at = @At("HEAD"), cancellable = true)
-	private static void getDestroyRangeAABB(BlockPos pos, @NotNull CallbackInfoReturnable<AABB> callback) {
+	private static void getDestroyRangeAABB(@NotNull BlockPos pos, @NotNull CallbackInfoReturnable<AABB> callback) {
 		callback.setReturnValue(new AABB(pos).inflate(24.0));
 	}
 }

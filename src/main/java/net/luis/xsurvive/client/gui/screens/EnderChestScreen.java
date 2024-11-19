@@ -21,6 +21,7 @@ package net.luis.xsurvive.client.gui.screens;
 import net.luis.xsurvive.world.inventory.EnderChestMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -34,9 +35,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class EnderChestScreen extends AbstractContainerScreen<EnderChestMenu> {
 	
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
+	private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
 	
-	public EnderChestScreen(EnderChestMenu menu, Inventory inventory, Component component) {
+	public EnderChestScreen(@NotNull EnderChestMenu menu, @NotNull Inventory inventory, @NotNull Component component) {
 		super(menu, inventory, component);
 		this.imageHeight = 222;
 		this.inventoryLabelY = this.imageHeight - 94;
@@ -51,9 +52,9 @@ public class EnderChestScreen extends AbstractContainerScreen<EnderChestMenu> {
 	
 	@Override
 	protected void renderBg(@NotNull GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
-		int i = (this.width - this.imageWidth) / 2;
-		int j = (this.height - this.imageHeight) / 2;
-		graphics.blit(TEXTURE, i, j, 0, 0, this.imageWidth, 125);
-		graphics.blit(TEXTURE, i, j + 125, 0, 126, this.imageWidth, 96);
+		int x = (this.width - this.imageWidth) / 2;
+		int y = (this.height - this.imageHeight) / 2;
+		graphics.blit(RenderType::guiTextured, TEXTURE, x, y, 0.0F, 0.0F, this.imageWidth, 6 * 18 + 17, 256, 256);
+		graphics.blit(RenderType::guiTextured, TEXTURE, x, y + 6 * 18 + 17, 0.0F, 126.0F, this.imageWidth, 96, 256, 256);
 	}
 }

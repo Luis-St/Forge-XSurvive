@@ -1,0 +1,11 @@
+{
+  "type": "xsurvive:xsmelting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.5,
+  "group": "black",
+  "ingredient": "minecraft:black_terracotta",
+  "result": {
+    "id": "minecraft:black_glazed_terracotta"
+  }
+}

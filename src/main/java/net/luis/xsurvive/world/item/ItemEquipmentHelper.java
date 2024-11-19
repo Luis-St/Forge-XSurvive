@@ -18,13 +18,17 @@
 
 package net.luis.xsurvive.world.item;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import net.luis.xores.world.item.XOItems;
 import net.luis.xsurvive.util.WeightCollection;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -32,69 +36,150 @@ import java.util.List;
  *
  */
 
-public class ItemEquipmentHelper {
+class ItemEquipmentHelper {
 	
-	public static @NotNull WeightCollection<List<Item>> getWeaponWeightsForDifficulty(double difficulty) {
+	//region Weights
+	public static @NotNull WeightCollection<List<Item>> getWeaponWeights(@NotNull Difficulty difficulty) {
 		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
-		if (difficulty >= 5.5) {
-			itemWeights.add(1, ItemHelper.getEnderiteWeapons());
+		if (difficulty == Difficulty.HARD) {
+			itemWeights.add(10, getEnderiteWeapons());
+			itemWeights.add(20, getNetheriteWeapons());
+			itemWeights.add(35, getDiamondWeapons());
 		}
-		if (difficulty >= 4.5) {
-			itemWeights.add(10, ItemHelper.getNetheriteWeapons());
-		}
-		if (difficulty >= 3.5) {
-			itemWeights.add(40, ItemHelper.getDiamondWeapons());
-		}
-		if (difficulty >= 2.75) {
-			itemWeights.add(30, ItemHelper.getIronWeapons());
-		}
-		if (3.5 >= difficulty && difficulty >= 1.75) {
-			itemWeights.add(20, ItemHelper.getStoneWeapons());
-		}
-		if (2.75 >= difficulty && difficulty >= 1.0) {
-			itemWeights.add(10, ItemHelper.getGoldWeapons());
-		}
-		if (1.75 >= difficulty) {
-			itemWeights.add(5, ItemHelper.getWoodWeapons());
-		}
+		itemWeights.add(50, getIronWeapons());
+		itemWeights.add(difficulty == Difficulty.HARD ? 35 : 50, getStoneWeapons());
+		itemWeights.add(difficulty == Difficulty.HARD ? 15 : 25, getGoldWeapons());
+		itemWeights.add(1, getWoodWeapons());
 		return itemWeights;
 	}
 	
-	public static @NotNull WeightCollection<Item> getCrossbowWeightsForDifficulty(double difficulty) {
+	public static @NotNull WeightCollection<Item> getBowWeights(@NotNull Difficulty difficulty) {
 		WeightCollection<Item> itemWeights = new WeightCollection<>();
-		if (difficulty >= 5.5) {
-			itemWeights.add(10, XOItems.ENDERITE_CROSSBOW.get());
+		if (difficulty == Difficulty.HARD) {
+			itemWeights.add(5, XOItems.ENDERITE_BOW.get());
+			itemWeights.add(10, XOItems.NETHERITE_BOW.get());
 		}
-		if (difficulty >= 4.0) {
-			itemWeights.add(30, XOItems.NETHERITE_CROSSBOW.get());
-		}
-		itemWeights.add(4.0 >= difficulty ? 50 : 80, Items.CROSSBOW);
+		itemWeights.add(90, Items.BOW);
 		return itemWeights;
 	}
 	
-	public static @NotNull WeightCollection<List<Item>> getArmorWeightsForDifficulty(double difficulty) {
-		WeightCollection<List<Item>> itemWeights = new WeightCollection<>();
-		if (difficulty >= 5.5) {
-			itemWeights.add(1, ItemHelper.getEnderiteArmor());
+	public static @NotNull WeightCollection<Item> getCrossbowWeights(@NotNull Difficulty difficulty) {
+		WeightCollection<Item> itemWeights = new WeightCollection<>();
+		if (difficulty == Difficulty.HARD) {
+			itemWeights.add(5, XOItems.ENDERITE_CROSSBOW.get());
+			itemWeights.add(10, XOItems.NETHERITE_CROSSBOW.get());
 		}
-		if (difficulty >= 4.5) {
-			itemWeights.add(10, ItemHelper.getNetheriteArmor());
-		}
-		if (difficulty >= 3.5) {
-			itemWeights.add(40, ItemHelper.getDiamondArmor());
-		}
-		if (difficulty >= 2.75) {
-			itemWeights.add(30, ItemHelper.getIronArmor());
-		}
-		if (3.5 >= difficulty && difficulty >= 1.75) {
-			itemWeights.add(20, ItemHelper.getChainArmor());
-		}
-		if (2.75 >= difficulty && difficulty >= 1.0) {
-			itemWeights.add(10, ItemHelper.getGoldArmor());
-		}
-		if (1.75 >= difficulty) {
-			itemWeights.add(5, ItemHelper.getLeatherArmor());
-		}
+		itemWeights.add(90, Items.CROSSBOW);
 		return itemWeights;
 	}
+	
+	public static @NotNull WeightCollection<Map<EquipmentSlot, Item>> getArmorWeights(@NotNull Difficulty difficulty) {
+		WeightCollection<Map<EquipmentSlot, Item>> itemWeights = new WeightCollection<>();
+		if (difficulty == Difficulty.HARD) {
+			itemWeights.add(10, getEnderiteArmor());
+			itemWeights.add(20, getNetheriteArmor());
+			itemWeights.add(35, getDiamondArmor());
+		}
+		itemWeights.add(50, getIronArmor());
+		itemWeights.add(difficulty == Difficulty.HARD ? 35 : 50, getChainArmor());
+		itemWeights.add(difficulty == Difficulty.HARD ? 15 : 25, getGoldArmor());
+		itemWeights.add(1, getLeatherArmor());
+		return itemWeights;
+	}
+	//endregion
+	
+	//region Armor
+	private static @NotNull Map<EquipmentSlot, Item> getLeatherArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.LEATHER_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.LEATHER_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.LEATHER_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.LEATHER_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getGoldArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.GOLDEN_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.GOLDEN_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.GOLDEN_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.GOLDEN_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getChainArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.CHAINMAIL_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.CHAINMAIL_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.CHAINMAIL_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.CHAINMAIL_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getIronArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.IRON_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.IRON_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.IRON_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.IRON_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getDiamondArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.DIAMOND_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.DIAMOND_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.DIAMOND_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.DIAMOND_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getNetheriteArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, Items.NETHERITE_HELMET);
+		items.put(EquipmentSlot.CHEST, Items.NETHERITE_CHESTPLATE);
+		items.put(EquipmentSlot.LEGS, Items.NETHERITE_LEGGINGS);
+		items.put(EquipmentSlot.FEET, Items.NETHERITE_BOOTS);
+		return items;
+	}
+	
+	private static @NotNull Map<EquipmentSlot, Item> getEnderiteArmor() {
+		Map<EquipmentSlot, Item> items = Maps.newHashMap();
+		items.put(EquipmentSlot.HEAD, XOItems.ENDERITE_HELMET.get());
+		items.put(EquipmentSlot.CHEST, XOItems.ENDERITE_CHESTPLATE.get());
+		items.put(EquipmentSlot.LEGS, XOItems.ENDERITE_LEGGINGS.get());
+		items.put(EquipmentSlot.FEET, XOItems.ENDERITE_BOOTS.get());
+		return items;
+	}
+	//endregion
+	
+	//region Weapons
+	private static @NotNull List<Item> getWoodWeapons() {
+		return Lists.newArrayList(Items.WOODEN_SWORD, Items.WOODEN_AXE);
+	}
+	
+	private static @NotNull List<Item> getGoldWeapons() {
+		return Lists.newArrayList(Items.GOLDEN_SWORD, Items.GOLDEN_AXE);
+	}
+	
+	private static @NotNull List<Item> getStoneWeapons() {
+		return Lists.newArrayList(Items.STONE_SWORD, Items.STONE_AXE);
+	}
+	
+	private static @NotNull List<Item> getIronWeapons() {
+		return Lists.newArrayList(Items.IRON_SWORD, Items.IRON_AXE);
+	}
+	
+	private static @NotNull List<Item> getDiamondWeapons() {
+		return Lists.newArrayList(Items.DIAMOND_SWORD, Items.DIAMOND_AXE);
+	}
+	
+	private static @NotNull List<Item> getNetheriteWeapons() {
+		return Lists.newArrayList(Items.NETHERITE_SWORD, Items.NETHERITE_AXE);
+	}
+	
+	private static @NotNull List<Item> getEnderiteWeapons() {
+		return Lists.newArrayList(XOItems.ENDERITE_SWORD.get(), XOItems.ENDERITE_AXE.get());
+	}
+	//endregion
 }

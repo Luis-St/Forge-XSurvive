@@ -18,12 +18,15 @@
 
 package net.luis.xsurvive.mixin.item;
 
-import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxTooltip;
+import net.luis.xsurvive.world.inventory.tooltip.ShulkerBoxContent;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
@@ -48,12 +51,12 @@ import java.util.*;
 public abstract class BlockItemMixin extends Item {
 	
 	//region Mixin
-	private BlockItemMixin(Properties properties) {
+	private BlockItemMixin(@NotNull Properties properties) {
 		super(properties);
 	}
 	
 	@Shadow
-	public abstract Block getBlock();
+	public abstract @NotNull Block getBlock();
 	//endregion
 	
 	@Inject(method = "canFitInsideContainerItems", at = @At("HEAD"), cancellable = true)
@@ -64,18 +67,18 @@ public abstract class BlockItemMixin extends Item {
 	@Override
 	public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack stack) {
 		if (this.getBlock() instanceof ShulkerBoxBlock) {
-			CompoundTag tag = BlockItem.getBlockEntityData(stack);
-			if (tag != null && tag.contains("Items", 9)) {
-				ListTag listTag = tag.getList("Items", 10);
-				List<ItemStack> stacks = new ArrayList<>(listTag.stream().map(CompoundTag.class::cast).map(ItemStack::of).toList());
-				return Optional.of(new ShulkerBoxTooltip(stacks));
+			if (stack.has(DataComponents.CONTAINER)) {
+				ItemContainerContents containerContents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+				return Optional.of(new ShulkerBoxContent(new ArrayList<>(containerContents.stream().toList())));
 			}
 		}
 		return super.getTooltipImage(stack);
 	}
 	
+	//ItemStack p_40572_, Item.TooltipContext p_327780_, List<Component> p_40574_, TooltipFlag p_40575_
+	
 	@Inject(method = "appendHoverText", at = @At("HEAD"), cancellable = true)
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag, CallbackInfo callback) {
+	public void appendHoverText(@NotNull ItemStack stack, Item.@NotNull TooltipContext context, @NotNull List<Component> components, @NotNull TooltipFlag flag, @NotNull CallbackInfo callback) {
 		if (this.getBlock() instanceof ShulkerBoxBlock) {
 			callback.cancel();
 		}

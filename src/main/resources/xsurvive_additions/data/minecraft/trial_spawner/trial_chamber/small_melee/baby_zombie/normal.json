@@ -1,0 +1,18 @@
+{
+  "simultaneous_mobs": 8.0,
+  "simultaneous_mobs_added_per_player": 2.0,
+  "spawn_potentials": [
+    {
+      "data": {
+        "entity": {
+          "IsBaby": 1,
+          "id": "minecraft:zombie"
+        }
+      },
+      "weight": 1
+    }
+  ],
+  "ticks_between_spawn": 20,
+  "total_mobs": 35.0,
+  "total_mobs_added_per_player": 7.5
+}

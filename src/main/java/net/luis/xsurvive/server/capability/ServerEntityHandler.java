@@ -22,6 +22,7 @@ import net.luis.xsurvive.capability.handler.AbstractEntityHandler;
 import net.luis.xsurvive.network.XSNetworkHandler;
 import net.luis.xsurvive.network.packet.UpdateEntityCapabilityPacket;
 import net.luis.xsurvive.world.entity.EntityFireType;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +40,7 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	private int lastSync;
 	private boolean changed;
 	
-	public ServerEntityHandler(Entity entity) {
+	public ServerEntityHandler(@NotNull Entity entity) {
 		super(entity);
 	}
 	
@@ -80,23 +81,21 @@ public class ServerEntityHandler extends AbstractEntityHandler {
 	
 	//region NBT
 	@Override
-	public @NotNull CompoundTag serializeDisk() {
-		CompoundTag tag = super.serializeDisk();
+	public @NotNull CompoundTag serializeDisk(HolderLookup.@NotNull Provider lookup) {
+		CompoundTag tag = super.serializeDisk(lookup);
 		tag.putInt("last_sync", this.lastSync);
 		tag.putBoolean("changed", this.changed);
 		return tag;
 	}
 	
 	@Override
-	public void deserializeDisk(@NotNull CompoundTag tag) {
-		super.deserializeDisk(tag);
+	public void deserializeDisk(HolderLookup.@NotNull Provider lookup, @NotNull CompoundTag tag) {
+		super.deserializeDisk(lookup, tag);
 		this.lastSync = tag.getInt("last_sync");
 		this.changed = tag.getBoolean("changed");
 	}
 	
 	@Override
-	public void deserializeNetwork(@NotNull CompoundTag tag) {
-		
-	}
+	public void deserializeNetwork(@NotNull CompoundTag tag) {}
 	//endregion
 }

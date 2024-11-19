@@ -57,8 +57,8 @@ public abstract class ServerPlayerGameModeMixin {
 	@Inject(method = "destroyBlock", at = @At(value = "RETURN", ordinal = 5), locals = LocalCapture.CAPTURE_FAILHARD)
 	public void destroyBlock(@NotNull BlockPos pos, CallbackInfoReturnable<Boolean> callback, BlockState state) {
 		BlockState belowState = this.level.getBlockState(pos.below());
-		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.REPLANTING.get(), this.player);
-		int replanting = entry.getValue().getEnchantmentLevel(XSEnchantments.REPLANTING.get());
+		Entry<EquipmentSlot, ItemStack> entry = XSEnchantmentHelper.getItemWithEnchantment(XSEnchantments.REPLANTING.getOrThrow(this.player), this.player);
+		int replanting = XSEnchantmentHelper.getEnchantmentLevel(this.player, XSEnchantments.REPLANTING, entry.getValue());
 		if (replanting > 0 && this.level.getBlockState(pos).isAir()) {
 			if (state != null) {
 				boolean replanted = false;
@@ -71,7 +71,7 @@ public abstract class ServerPlayerGameModeMixin {
 				} else if (state.getBlock() instanceof StemBlock block && state.getValue(StemBlock.AGE) >= 7) {
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
 				} else if (state.getBlock() instanceof AttachedStemBlock block) {
-					Optional<Item> optional = this.level.registryAccess().registryOrThrow(Registries.ITEM).getOptional(block.seed);
+					Optional<Item> optional = this.level.registryAccess().lookupOrThrow(Registries.ITEM).getOptional(block.seed);
 					if (optional.isPresent() && optional.get() instanceof BlockItem blockItem && blockItem.getBlock() instanceof StemBlock stemBlock) {
 						replanted = this.level.setBlock(pos, stemBlock.defaultBlockState(), 3);
 					}
@@ -89,7 +89,7 @@ public abstract class ServerPlayerGameModeMixin {
 						this.level.destroyBlock(pos.above(), true, this.player);
 					}
 					replanted = this.level.setBlock(pos, block.defaultBlockState(), 3);
-				} else if (state.getBlock() instanceof SugarCaneBlock block && !(belowState.getBlock() instanceof SugarCaneBlock) && block.canSurvive(state, this.level, pos)) {
+				} else if (state.getBlock() instanceof SugarCaneBlock block && !(belowState.getBlock() instanceof SugarCaneBlock) && state.canSurvive(this.level, pos)) {
 					if (this.level.getBlockState(pos.above()).getBlock() instanceof SugarCaneBlock) {
 						this.level.destroyBlock(pos.above(), true, this.player);
 					}
@@ -100,12 +100,7 @@ public abstract class ServerPlayerGameModeMixin {
 					replanted = this.level.setBlock(pos, Blocks.PITCHER_CROP.defaultBlockState(), 3);
 				}
 				if (replanted) {
-					entry.getValue().hurtAndBreak(3, this.player, (player) -> {
-						EquipmentSlot slot = entry.getKey();
-						if (slot != null) {
-							player.broadcastBreakEvent(slot);
-						}
-					});
+					entry.getValue().hurtAndBreak(3, this.player, entry.getKey());
 				}
 			} else {
 				XSurvive.LOGGER.error("Fail to apply replanting logic, since a previous Mod modified the Block");

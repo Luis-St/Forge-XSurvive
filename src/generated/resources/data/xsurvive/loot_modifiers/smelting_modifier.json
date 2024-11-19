@@ -4,14 +4,16 @@
     {
       "condition": "minecraft:match_tool",
       "predicate": {
-        "enchantments": [
-          {
-            "enchantment": "xsurvive:smelting",
-            "levels": {
-              "min": 1
+        "predicates": {
+          "minecraft:enchantments": [
+            {
+              "enchantments": "xsurvive:smelting",
+              "levels": {
+                "min": 1
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   ]

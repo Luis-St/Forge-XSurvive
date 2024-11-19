@@ -18,11 +18,14 @@
 
 package net.luis.xsurvive.mixin.item;
 
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
-import net.minecraft.world.entity.Entity;
+import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
+import net.minecraft.core.component.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.*;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,21 +41,17 @@ import java.util.function.Consumer;
  */
 
 @Mixin(ItemStack.class)
-@SuppressWarnings("DataFlowIssue")
-public abstract class ItemStackMixin {
+public abstract class ItemStackMixin implements DataComponentHolder {
 	
 	//region Mixin
 	@Shadow
-	public abstract <T extends LivingEntity> void hurtAndBreak(int damage, T livingEntity, Consumer<T> consumer);
+	public abstract @NotNull Item getItem();
 	//endregion
 	
-	@Inject(method = "inventoryTick", at = @At("TAIL"))
-	public void inventoryTick(Level level, Entity entity, int slot, boolean selected, CallbackInfo callback) {
-		if (entity instanceof LivingEntity livingEntity) {
-			int breakingCurse = ((ItemStack) (Object) this).getEnchantmentLevel(XSEnchantments.CURSE_OF_BREAKING.get());
-			if (breakingCurse > 0 && level.getGameTime() % 100 == 0) {
-				this.hurtAndBreak(breakingCurse * 2, livingEntity, (e) -> {});
-			}
+	@Inject(method = "addToTooltip", at = @At("HEAD"), cancellable = true)
+	private void addToTooltip(@NotNull DataComponentType<?> dataComponent, Item.@NotNull TooltipContext context, @NotNull Consumer<Component> action, @NotNull TooltipFlag tooltipFlag, @NotNull CallbackInfo callback) {
+		if (dataComponent == DataComponents.ENCHANTMENTS && this.getItem() instanceof EnchantedGoldenBookItem) {
+			callback.cancel();
 		}
 	}
 }

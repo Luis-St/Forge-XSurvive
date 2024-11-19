@@ -22,8 +22,7 @@ import net.luis.xsurvive.XSurvive;
 import net.luis.xsurvive.world.item.XSItems;
 import net.luis.xsurvive.world.level.block.XSBlocks;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -35,6 +34,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  *
@@ -52,7 +52,6 @@ public class RegisterModEventHandler {
 			event.accept(XSItems.DIAMOND_APPLE);
 			event.accept(XSItems.ENCHANTED_DIAMOND_APPLE);
 		} else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-			event.accept(XSItems.CURSED_ENDER_EYE);
 			event.accept(XSBlocks.SMELTING_FURNACE);
 		} else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 			event.accept(XSItems.HONEY_MELON_SEEDS);
@@ -69,8 +68,9 @@ public class RegisterModEventHandler {
 	
 	private static void addServerPack(@NotNull AddPackFindersEvent event, @NotNull String packName, @NotNull String displayName, @NotNull PackSource source) {
 		Path resourcePath = ModList.get().getModFileById(XSurvive.MOD_ID).getFile().findResource(packName);
-		PathPackResources.PathResourcesSupplier resourcesSupplier = new PathPackResources.PathResourcesSupplier(resourcePath, false);
-		Pack pack = Pack.readMetaAndCreate("builtin/" + packName, Component.literal(displayName), false, resourcesSupplier, PackType.SERVER_DATA, Pack.Position.TOP, source);
+		PackLocationInfo info = new PackLocationInfo("builtin/" + packName, Component.literal(displayName), PackSource.FEATURE, Optional.empty());
+		PackSelectionConfig config = new PackSelectionConfig(false, Pack.Position.TOP, false);
+		Pack pack = Pack.readMetaAndCreate(info, new PathPackResources.PathResourcesSupplier(resourcePath), PackType.SERVER_DATA, config);
 		event.addRepositorySource(packConsumer -> packConsumer.accept(pack));
 	}
 }

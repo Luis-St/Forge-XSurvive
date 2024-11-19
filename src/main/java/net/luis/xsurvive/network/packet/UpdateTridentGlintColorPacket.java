@@ -19,13 +19,25 @@
 package net.luis.xsurvive.network.packet;
 
 import net.luis.xsurvive.client.XSClientPacketHandler;
+import net.luis.xsurvive.core.components.XSDataComponents;
 import net.luis.xsurvive.network.NetworkPacket;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -37,29 +49,34 @@ import org.jetbrains.annotations.NotNull;
 public class UpdateTridentGlintColorPacket implements NetworkPacket {
 	
 	private final int tridentEntityId;
-	private final ItemStack tridentStack;
+	private final int glintColor;
+	private final Set<ResourceLocation> enchantments;
 	
-	public UpdateTridentGlintColorPacket(int tridentEntityId, ItemStack tridentStack) {
+	public UpdateTridentGlintColorPacket(int tridentEntityId, @NotNull ItemStack tridentStack, @NotNull Function<Holder<Enchantment>, ResourceLocation> enchantmentMapper) {
 		this.tridentEntityId = tridentEntityId;
-		this.tridentStack = tridentStack;
+		this.glintColor = tridentStack.getOrDefault(XSDataComponents.GLINT_COLOR.get(), -1);
+		ItemEnchantments enchantments = tridentStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
+		this.enchantments = enchantments.keySet().stream().map(enchantmentMapper).collect(Collectors.toSet());
 	}
 	
 	public UpdateTridentGlintColorPacket(@NotNull FriendlyByteBuf buffer) {
 		this.tridentEntityId = buffer.readInt();
-		this.tridentStack = buffer.readItem();
+		this.glintColor = buffer.readInt();
+		this.enchantments = new HashSet<>(buffer.readList(FriendlyByteBuf::readResourceLocation));
 	}
 	
 	@Override
 	public void encode(@NotNull FriendlyByteBuf buffer) {
 		buffer.writeInt(this.tridentEntityId);
-		buffer.writeItem(this.tridentStack);
+		buffer.writeInt(this.glintColor);
+		buffer.writeCollection(this.enchantments, FriendlyByteBuf::writeResourceLocation);
 	}
 	
 	@Override
 	public void handle(@NotNull CustomPayloadEvent.Context context) {
 		context.enqueueWork(() -> {
 			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-				XSClientPacketHandler.handleTridentGlintColorUpdate(this.tridentEntityId, this.tridentStack);
+				XSClientPacketHandler.handleTridentGlintColorUpdate(this.tridentEntityId, this.glintColor, this.enchantments);
 			});
 		});
 	}

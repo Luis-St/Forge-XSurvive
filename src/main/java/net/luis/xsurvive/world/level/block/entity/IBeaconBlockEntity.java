@@ -22,12 +22,14 @@ import com.google.common.collect.Sets;
 import net.luis.xsurvive.world.level.ILevel;
 import net.luis.xsurvive.world.level.LevelProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.List;
@@ -40,15 +42,16 @@ import java.util.List;
 
 public interface IBeaconBlockEntity {
 	
-	static int getAmplifier(BlockPos playerPos, Level level, BlockPos current, int beaconLevel, int area, MobEffect effect, int defaultAmplifier) {
+	@SuppressWarnings("deprecation")
+	static int getAmplifier(@NotNull BlockPos playerPos, @NotNull Level level, @NotNull BlockPos current, int beaconLevel, int area, Holder<MobEffect> effect, int defaultAmplifier) {
 		ILevel iLevel = LevelProvider.get(level);
 		List<BlockPos> positions = iLevel.getBeaconPositions(playerPos, area);
 		positions.remove(current);
 		int amplifier = 0;
 		for (BlockPos position : positions) {
-			MobEffect primary = iLevel.getPrimaryBeaconEffect(position).orElse(null);
+			Holder<MobEffect> primary = iLevel.getPrimaryBeaconEffect(position).orElse(null);
 			if (level.getBlockEntity(position) instanceof IBeaconBlockEntity beacon && !beacon.isBeaconBaseShared() && primary != null) {
-				if ((primary == effect && !beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) || beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK)) {
+				if ((primary.is(effect) && !beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) || beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK)) {
 					amplifier++;
 				}
 			}
@@ -59,14 +62,15 @@ public interface IBeaconBlockEntity {
 		return Mth.clamp(amplifier, 0, beaconLevel);
 	}
 	
-	static boolean isEffectStacked(BlockPos playerPos, Level level, BlockPos current, int area, MobEffect effect) {
+	@SuppressWarnings("deprecation")
+	static boolean isEffectStacked(@NotNull BlockPos playerPos, @NotNull Level level, @NotNull BlockPos current, int area, @NotNull Holder<MobEffect> effect) {
 		ILevel iLevel = LevelProvider.get(level);
 		List<BlockPos> positions = iLevel.getBeaconPositions(playerPos, area);
 		positions.remove(current);
 		for (BlockPos position : positions) {
-			MobEffect primary = iLevel.getPrimaryBeaconEffect(position).orElse(null);
+			Holder<MobEffect> primary = iLevel.getPrimaryBeaconEffect(position).orElse(null);
 			if (level.getBlockEntity(position) instanceof IBeaconBlockEntity beacon && !beacon.isBeaconBaseShared() && primary != null) {
-				if ((primary == effect && !beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) || beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK)) {
+				if ((primary.is(effect) && !beacon.isBaseFullOf(Blocks.NETHERITE_BLOCK)) || beacon.isBaseFullOf(Blocks.DIAMOND_BLOCK, Blocks.NETHERITE_BLOCK)) {
 					return true;
 				}
 			}
@@ -76,20 +80,20 @@ public interface IBeaconBlockEntity {
 	
 	int getBeaconLevel();
 	
-	List<AABB> getBeaconBase();
+	@NotNull List<AABB> getBeaconBase();
 	
 	boolean isBeaconBaseShared();
 	
-	List<Block> getBeaconBaseBlocks();
+	@NotNull List<Block> getBeaconBaseBlocks();
 	
-	default boolean isBaseFullOf(Block block) {
+	default boolean isBaseFullOf(@NotNull Block block) {
 		List<Block> blocks = this.getBeaconBaseBlocks();
-		return blocks.size() == 1 && blocks.get(0) == block;
+		return blocks.size() == 1 && blocks.getFirst() == block;
 	}
 	
-	default boolean isBaseFullOf(Block block, Block... allowed) {
+	default boolean isBaseFullOf(@NotNull Block block, Block @NotNull ... allowed) {
 		List<Block> blocks = this.getBeaconBaseBlocks();
-		if (blocks.size() == 1 && blocks.get(0) == block) {
+		if (blocks.size() == 1 && blocks.getFirst() == block) {
 			return true;
 		}
 		HashSet<Block> allowedBlocks = Sets.newHashSet(allowed);
