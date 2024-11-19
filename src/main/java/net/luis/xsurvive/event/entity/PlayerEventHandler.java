@@ -124,7 +124,7 @@ public class PlayerEventHandler {
 	
 	@SubscribeEvent
 	public static void breakSpeed(@NotNull BreakSpeed event) {
-		if (event.getState().is(Blocks.SPAWNER)) {
+		if (event.getState().is(Blocks.SPAWNER) || event.getState().is(Blocks.TRIAL_SPAWNER) || event.getState().is(Blocks.VAULT)) {
 			event.setCanceled(true);
 		}
 	}
@@ -192,24 +192,6 @@ public class PlayerEventHandler {
 	@SubscribeEvent
 	public static void playerRespawn(@NotNull PlayerRespawnEvent event) {
 		PlayerProvider.get(event.getEntity()).broadcastChanges();
-	}
-	
-	@SubscribeEvent
-	public static void playerSleepInBed(@NotNull PlayerSleepInBedEvent event) {
-		if (!event.getEntity().getAbilities().instabuild) {
-			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-			event.getEntity().displayClientMessage(Component.translatable("message.xsurvive.sleeping"), true);
-			if (event.getEntity().level() instanceof ServerLevel level && (level.isRaining() || level.isThundering())) {
-				level.setWeatherParameters(6000, 0, false, false);
-			}
-			if (event.getEntity() instanceof ServerPlayer player) {
-				ServerPlayerHandler handler = PlayerProvider.getServer(player);
-				if (handler.canResetPhantomSpawn()) {
-					player.getStats().setValue(player, Stats.CUSTOM.get(Stats.TIME_SINCE_REST), 0);
-					handler.setNextPhantomReset(player.level().getDifficulty().getId() + Mth.nextInt(player.getRandom(), 6, 10));
-				}
-			}
-		}
 	}
 	
 	@SubscribeEvent

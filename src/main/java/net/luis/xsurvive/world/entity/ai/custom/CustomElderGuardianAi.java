@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 
 /**
  *
@@ -39,7 +40,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 public class CustomElderGuardianAi extends AbstractCustomAi<ElderGuardian> {
 	
-	public CustomElderGuardianAi(ElderGuardian entity, ServerLevel level) {
+	public CustomElderGuardianAi(@NotNull ElderGuardian entity, @NotNull ServerLevel level) {
 		super(entity, level);
 	}
 	

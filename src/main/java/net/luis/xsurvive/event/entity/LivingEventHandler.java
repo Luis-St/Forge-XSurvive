@@ -86,12 +86,13 @@ public class LivingEventHandler {
 						}
 					}
 				}
-				if (thunderbolt > 0 && player.level() instanceof ServerLevel serverLevel) {
+				if (thunderbolt > 0 && player.level() instanceof ServerLevel serverLevel && serverLevel.getServer().overworld() == serverLevel) {
 					LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, serverLevel);
 					lightningBolt.setPos(target.getX(), target.getY(), target.getZ());
 					serverLevel.addFreshEntity(lightningBolt);
 					if (RNG.nextInt(5) == 0) {
 						serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10000.0F, 0.8F + RNG.nextFloat() * 0.2F);
+						serverLevel.setWeatherParameters(0, ServerLevel.THUNDER_DURATION.sample(serverLevel.getRandom()), true, true);
 					}
 					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 30, 4, false, false), lightningBolt);
 				}
@@ -101,10 +102,10 @@ public class LivingEventHandler {
 			int voidProtection = XSEnchantmentHelper.getEnchantmentLevel(player, XSEnchantments.VOID_PROTECTION, player.getItemBySlot(EquipmentSlot.CHEST));
 			if (voidProtection > 0) {
 				float percent = switch (voidProtection) {
-					case 1 -> 1.0F;
-					case 2 -> 0.75F;
-					case 3 -> 0.5F;
-					case 4 -> 0.25F;
+					case 1 -> 0.8F;
+					case 2 -> 0.6F;
+					case 3 -> 0.4F;
+					case 4 -> 0.2F;
 					default -> 0.0F;
 				};
 				event.setCanceled(RNG.nextDouble() > percent);

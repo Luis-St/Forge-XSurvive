@@ -16,7 +16,6 @@
     "xsurvive:harvesting",
     "xsurvive:explosion",
     "xsurvive:growth",
-    "xsurvive:curse_of_harming",
-    "xsurvive:curse_of_breaking"
+    "xsurvive:curse_of_harming"
   ]
 }

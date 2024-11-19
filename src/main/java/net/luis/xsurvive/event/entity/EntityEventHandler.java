@@ -207,8 +207,8 @@ public class EntityEventHandler {
 		event.setAttackDamage(event.getAttackDamage() * 1.5F);
 	}
 	
-	@SubscribeEvent
-	public static void projectileImpact(@NotNull ProjectileImpactEvent event) {
+	/*@SubscribeEvent
+	public static void projectileImpact(@NotNull ProjectileImpactEvent event) { // Event not fired -> replaced with Mixin
 		Projectile projectile = event.getProjectile();
 		if (projectile instanceof IArrow arrow) {
 			int explosionLevel = arrow.getExplosionLevel();
@@ -239,7 +239,7 @@ public class EntityEventHandler {
 				}
 			}
 		}
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void shulkerTeleport(@NotNull EntityTeleportEvent.EnderEntity event) {

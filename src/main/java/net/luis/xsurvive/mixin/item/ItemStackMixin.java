@@ -19,16 +19,12 @@
 package net.luis.xsurvive.mixin.item;
 
 import net.luis.xsurvive.world.item.EnchantedGoldenBookItem;
-import net.luis.xsurvive.world.item.enchantment.XSEnchantments;
 import net.minecraft.core.component.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,26 +41,12 @@ import java.util.function.Consumer;
  */
 
 @Mixin(ItemStack.class)
-@SuppressWarnings("DataFlowIssue")
 public abstract class ItemStackMixin implements DataComponentHolder {
 	
 	//region Mixin
 	@Shadow
 	public abstract @NotNull Item getItem();
-	
-	@Shadow
-	public abstract <T extends LivingEntity> void hurtAndBreak(int damage, @NotNull ServerLevel level, @NotNull ServerPlayer player, @NotNull Consumer<Item> action);
 	//endregion
-	
-	@Inject(method = "inventoryTick", at = @At("TAIL"))
-	public void inventoryTick(@NotNull Level level, @NotNull Entity entity, int slot, boolean selected, @NotNull CallbackInfo callback) {
-		if (entity instanceof ServerPlayer player) {
-			int breakingCurse = EnchantmentHelper.getItemEnchantmentLevel(XSEnchantments.CURSE_OF_BREAKING.getOrThrow(level), ((ItemStack) (Object) this));
-			if (breakingCurse > 0 && level.getGameTime() % 100 == 0) {
-				this.hurtAndBreak(breakingCurse * 2, player.serverLevel(), player, (item) -> {});
-			}
-		}
-	}
 	
 	@Inject(method = "addToTooltip", at = @At("HEAD"), cancellable = true)
 	private void addToTooltip(@NotNull DataComponentType<?> dataComponent, Item.@NotNull TooltipContext context, @NotNull Consumer<Component> action, @NotNull TooltipFlag tooltipFlag, @NotNull CallbackInfo callback) {

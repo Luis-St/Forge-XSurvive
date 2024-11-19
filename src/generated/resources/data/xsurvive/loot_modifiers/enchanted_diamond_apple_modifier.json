@@ -12,7 +12,9 @@
         "minecraft:chests/bastion_treasure",
         "minecraft:chests/desert_pyramid",
         "minecraft:chests/ruined_portal",
-        "minecraft:chests/woodland_mansion"
+        "minecraft:chests/woodland_mansion",
+        "minecraft:chests/trial_chambers/reward_ominous_common",
+        "minecraft:chests/trial_chambers/reward_ominous_rare"
       ]
     }
   ]

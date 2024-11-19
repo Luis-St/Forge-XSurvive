@@ -58,7 +58,6 @@ public class XSEnchantmentProvider {
 		register(context, XSEnchantments.POISON_ASPECT, createPoisonAspect(itemLookup));
 		register(context, XSEnchantments.EXPERIENCE, createExperience(itemLookup));
 		register(context, XSEnchantments.SMELTING, createSmelting(itemLookup));
-		register(context, XSEnchantments.CURSE_OF_BREAKING, createCurseOfBreaking(itemLookup));
 		register(context, XSEnchantments.CURSE_OF_HARMING, createCurseOfHarming(itemLookup));
 		register(context, XSEnchantments.VOID_WALKER, createVoidWalker(enchantmentLookup, itemLookup));
 		register(context, XSEnchantments.BLASTING, createBlasting(enchantmentLookup, itemLookup));
@@ -182,20 +181,6 @@ public class XSEnchantmentProvider {
 		);
 	}
 	
-	public static Enchantment.@NotNull Builder createCurseOfBreaking(@NotNull HolderGetter<Item> itemLookup) {
-		return Enchantment.enchantment(
-			Enchantment.definition(
-				itemLookup.getOrThrow(ItemTags.DURABILITY_ENCHANTABLE),
-				1,
-				1,
-				Enchantment.constantCost(25),
-				Enchantment.constantCost(50),
-				4,
-				EquipmentSlotGroup.ANY
-			)
-		);
-	}
-	
 	public static Enchantment.@NotNull Builder createVoidWalker(@NotNull HolderGetter<Enchantment> enchantmentLookup, @NotNull HolderGetter<Item> itemLookup) {
 		return Enchantment.enchantment(
 			Enchantment.definition(
@@ -248,7 +233,7 @@ public class XSEnchantmentProvider {
 				itemLookup.getOrThrow(XSItemTags.CHEST_WEARABLE),
 				itemLookup.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
 				1,
-				1,
+				4,
 				Enchantment.constantCost(20),
 				Enchantment.constantCost(50),
 				4,

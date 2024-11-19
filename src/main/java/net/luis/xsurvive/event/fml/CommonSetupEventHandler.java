@@ -27,6 +27,7 @@ import net.luis.xsurvive.world.item.crafting.XSRecipeTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

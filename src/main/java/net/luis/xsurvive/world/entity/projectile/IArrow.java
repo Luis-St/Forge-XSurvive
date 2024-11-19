@@ -26,7 +26,7 @@ package net.luis.xsurvive.world.entity.projectile;
 
 public interface IArrow {
 	
-	int getExplosionLevel();
+	/*int getExplosionLevel();*/
 	
 	void setExplosionLevel(int explosionLevel);
 }

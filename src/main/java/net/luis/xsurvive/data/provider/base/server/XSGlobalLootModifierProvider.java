@@ -94,13 +94,19 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 				.add(BASTION_TREASURE.location())
 				.add(END_CITY_TREASURE.location())
 				.add(ANCIENT_CITY.location())
-				.add(ANCIENT_CITY_ICE_BOX.location()).build()
+				.add(ANCIENT_CITY_ICE_BOX.location())
+				.add(TRIAL_CHAMBERS_REWARD_RARE.location())
+				.add(TRIAL_CHAMBERS_REWARD_RARE.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_COMMON.location())
+				.build()
 		}, 2, createRuneWeights()));
 		this.add("golden_book_modifier", new GoldenBookModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder(STRONGHOLD_LIBRARY.location())
 				.add(BASTION_TREASURE.location())
 				.add(END_CITY_TREASURE.location())
-				.add(ANCIENT_CITY.location()).build()
+				.add(ANCIENT_CITY.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_RARE.location())
+				.build()
 		}, 1,
 			createEnchantmentWeights(enchantmentLookup::getOrThrow),
 			LootModifierHelper.getExtraOverworldTreasure(enchantmentLookup::getOrThrow),
@@ -117,7 +123,12 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 				.add(RUINED_PORTAL.location())
 				.add(STRONGHOLD_CROSSING.location())
 				.add(UNDERWATER_RUIN_BIG.location())
-				.add(WOODLAND_MANSION.location()).build()
+				.add(WOODLAND_MANSION.location())
+				.add(TRIAL_CHAMBERS_REWARD_COMMON.location())
+				.add(TRIAL_CHAMBERS_REWARD_RARE.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_COMMON.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_RARE.location())
+				.build()
 		}, XSItems.DIAMOND_APPLE.get(), Chance.of(0.05)));
 		this.add("enchanted_diamond_apple_modifier", new AdditionalChanceItemModifier(new LootItemCondition[] {
 			new LootTableIdsCondition.Builder(SIMPLE_DUNGEON.location())
@@ -126,7 +137,10 @@ public class XSGlobalLootModifierProvider extends GlobalLootModifierProvider {
 				.add(BASTION_TREASURE.location())
 				.add(DESERT_PYRAMID.location())
 				.add(RUINED_PORTAL.location())
-				.add(WOODLAND_MANSION.location()).build()
+				.add(WOODLAND_MANSION.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_COMMON.location())
+				.add(TRIAL_CHAMBERS_REWARD_OMINOUS_RARE.location())
+				.build()
 		}, XSItems.ENCHANTED_DIAMOND_APPLE.get(), Chance.of(0.01)));
 	}
 	

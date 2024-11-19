@@ -40,7 +40,6 @@ public class XSEnchantments {
 	public static final ResourceKey<Enchantment> POISON_ASPECT = XSResourceKeys.createEnchantmentKey("poison_aspect");
 	public static final ResourceKey<Enchantment> EXPERIENCE = XSResourceKeys.createEnchantmentKey("experience");
 	public static final ResourceKey<Enchantment> SMELTING = XSResourceKeys.createEnchantmentKey("smelting");
-	public static final ResourceKey<Enchantment> CURSE_OF_BREAKING = XSResourceKeys.createEnchantmentKey("curse_of_breaking");
 	public static final ResourceKey<Enchantment> CURSE_OF_HARMING = XSResourceKeys.createEnchantmentKey("curse_of_harming");
 	public static final ResourceKey<Enchantment> VOID_WALKER = XSResourceKeys.createEnchantmentKey("void_walker");
 	public static final ResourceKey<Enchantment> BLASTING = XSResourceKeys.createEnchantmentKey("blasting");
