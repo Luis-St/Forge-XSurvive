@@ -19,6 +19,8 @@
 package net.luis.xsurvive;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.luis.xsurvive.client.XSSearchRecipeBookCategory;
 import net.luis.xsurvive.core.components.XSDataComponents;
 import net.luis.xsurvive.network.XSNetworkHandler;
@@ -91,4 +93,11 @@ public class XSurvive {
 		XSNetworkHandler.INSTANCE.initChannel();
 		XSNetworkHandler.INSTANCE.registerPackets();
 	}
+	
+	private static final Codec<Test> TEST_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+		Codec.STRING.fieldOf("name").forGetter(Test::name),
+		Codec.INT.fieldOf("age").forGetter(Test::age)
+	).apply(instance, Test::new));
+	
+	private record Test(String name, int age) {}
 }
